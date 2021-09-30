@@ -1,0 +1,6 @@
+rootProject.name = 'nftgram-service'
+include 'core'
+include 'web'
+include 'batch'
+include 'admin'
+

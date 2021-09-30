@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+group 'com.nftgram'
+version '0.0.1-SNAPSHOT'
+
+bootJar{
+    enabled = true;
+}
+jar {
+    enabled = false;
+    archivesBaseName = 'nftgram-admin';
+}
+
+dependencies {
+    implementation 'com.nftgram:core:0.0.1-SNAPSHOT'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.webjars.bower:jquery:3.5.1'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time'
+
+    implementation 'org.webjars:bootstrap-table:1.16.0'
+
+    implementation 'org.webjars:bootstrap:4.3.1'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'junit:junit:4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+test {
+    useJUnitPlatform()
+}
