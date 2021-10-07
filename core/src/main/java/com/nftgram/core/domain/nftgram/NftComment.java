@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Builder
-@Table(name = "nft")
+@Table
 public class NftComment {
 
     @Id

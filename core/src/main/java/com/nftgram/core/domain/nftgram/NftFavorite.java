@@ -11,8 +11,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Builder
-@Table(name = "nft_favorite" ,
-        uniqueConstraints = {@UniqueConstraint(
+@Table( uniqueConstraints = {@UniqueConstraint(
             columnNames = {"nft_id" , "nft_member_id"}
     )}
 )

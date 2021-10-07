@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Builder
+@Table
 public class NftMember  extends BaseEntity {
 
 

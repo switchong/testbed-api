@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Builder
+@Table
 public class NftCollection  extends BaseEntity {
 
     @Id

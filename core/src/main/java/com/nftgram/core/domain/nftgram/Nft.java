@@ -4,32 +4,34 @@ package com.nftgram.core.domain.nftgram;
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.value.MaketType;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Entity
 @Builder
-@Table(name = "nft")
+@Table
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Nft  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftId;  //PK
 
-    @Column(name = "asset_contract_address", nullable = false)
+    @Column(nullable = false)
     private String assetContractAddress; //UK
 
 
-    @Column(name = "token_id", nullable = false , length = 300)
+    @Column(nullable = false , length = 300)
     private String tokenId; //UK
 
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "maket_type" , nullable = false , length = 10)
+    @Column(nullable = false , length = 10)
     private MaketType maketType;
 
     @Column(nullable = false)
@@ -103,11 +105,19 @@ public class Nft  extends BaseEntity {
     private String lastSaleProfileImageUrl;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "nft_asst_id" , nullable = false)
     private NftAsset nftAsset;
 
+
     @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "nft_collection_id" , nullable = false)
     private NftCollection nftCollection;
 
+
+
+
+    @OneToOne(mappedBy = "nft" , cascade = {CascadeType.PERSIST, CascadeType.DETACH}, orphanRemoval = true)
+    private  List<NftProperty> nftProperties;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "active_status" , nullable = false , length = 10)

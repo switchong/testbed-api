@@ -7,8 +7,8 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Getter
-@MappedSuperclass
-
+@Entity
+@Table
 public class  AdminMember  extends BaseEntity {
 
     @Id
