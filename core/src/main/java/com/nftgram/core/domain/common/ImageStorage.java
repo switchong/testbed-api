@@ -1,15 +1,17 @@
 package com.nftgram.core.domain.common;
 
-
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.common.value.FileType;
 import com.nftgram.core.domain.common.value.ImageType;
 import com.nftgram.core.domain.common.value.TableType;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
 @Builder

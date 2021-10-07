@@ -8,27 +8,28 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Builder
 @Table
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Nft  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftId;  //PK
 
+    @OneToOne(fetch = FetchType.LAZY , optional = false)
+    @JoinColumn(name = "nft_member_id", nullable = false)
+    private NftMember nftMember;
+
     @Column(nullable = false)
     private String assetContractAddress; //UK
 
-
     @Column(nullable = false , length = 300)
     private String tokenId; //UK
-
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false , length = 10)
@@ -36,10 +37,6 @@ public class Nft  extends BaseEntity {
 
     @Column(nullable = false)
     private Long marketId;
-
-
-    @OneToOne(fetch = FetchType.LAZY , optional = false)
-    private NftMember nftMember;
 
     @Column(nullable = false)
     private String ownerUserName;
@@ -108,19 +105,65 @@ public class Nft  extends BaseEntity {
     @JoinColumn(name = "nft_asst_id" , nullable = false)
     private NftAsset nftAsset;
 
-
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "nft_collection_id" , nullable = false)
     private NftCollection nftCollection;
 
-
-
-
     @OneToOne(mappedBy = "nft" , cascade = {CascadeType.PERSIST, CascadeType.DETACH}, orphanRemoval = true)
-    private  List<NftProperty> nftProperties;
+    private List<NftProperty> nftProperties = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "active_status" , nullable = false , length = 10)
     private ActiveStatus activeStatus;
 
+    @Transient
+    private Integer propertyOrder;
+
+    @Builder
+    public Nft(NftMember nftMember, String assetContractAddress, String tokenId, MaketType maketType, Long marketId,
+               String ownerUserName, String ownerProfileImageUrl, String ownerContractAddress, String createUserName,
+               String createProfileImageUrl, String createContractAddress, String name, String description, Long numSales,
+               String imageUrl, String imageOriginalUrl, String openseaLink, String externalLink, Long likeCount,
+               Long favoriteCount, Long viewCount, String collectionName, LocalDate lastSaleDate, String lastSaleContractAddress,
+               String lastSaleUserName, String lastSaleProfileImageUrl, NftAsset nftAsset, NftCollection nftCollection, List<NftProperty> nftProperties) {
+        this.nftMember = nftMember;
+        this.assetContractAddress = assetContractAddress;
+        this.tokenId = tokenId;
+        this.maketType = maketType;
+        this.marketId = marketId;
+        this.ownerUserName = ownerUserName;
+        this.ownerProfileImageUrl = ownerProfileImageUrl;
+        this.ownerContractAddress = ownerContractAddress;
+        this.createUserName = createUserName;
+        this.createProfileImageUrl = createProfileImageUrl;
+        this.createContractAddress = createContractAddress;
+        this.name = name;
+        this.description = description;
+        this.numSales = numSales;
+        this.imageUrl = imageUrl;
+        this.imageOriginalUrl = imageOriginalUrl;
+        this.openseaLink = openseaLink;
+        this.externalLink = externalLink;
+        this.likeCount = likeCount;
+        this.favoriteCount = favoriteCount;
+        this.viewCount = viewCount;
+        this.collectionName = collectionName;
+        this.lastSaleDate = lastSaleDate;
+        this.lastSaleContractAddress = lastSaleContractAddress;
+        this.lastSaleUserName = lastSaleUserName;
+        this.lastSaleProfileImageUrl = lastSaleProfileImageUrl;
+        this.nftAsset = nftAsset;
+        this.nftCollection = nftCollection;
+        this.activeStatus = ActiveStatus.ACTIVE;
+
+        for (NftProperty nftProperty : nftProperties) {
+            addNftProperty(nftProperty);
+        }
+    }
+
+    public void addNftProperty(NftProperty nftProperty) {
+        this.propertyOrder += 1;
+        nftProperty.addNft(this);
+        this.nftProperties.add(nftProperty);
+    }
 }

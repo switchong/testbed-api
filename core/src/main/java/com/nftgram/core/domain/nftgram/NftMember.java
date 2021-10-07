@@ -4,28 +4,28 @@ package com.nftgram.core.domain.nftgram;
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.ImageStorage;
 import com.nftgram.core.domain.nftgram.value.WalletType;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Builder
 @Table
 public class NftMember  extends BaseEntity {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftMemberId;  //PK
 
-    @Column(name = "wallet_contract_address" , nullable = false)
+    @Column(nullable = false)
     private String walletContractAddress; //UK
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "wallet_type" , nullable = false , length = 10)
+    @Column(nullable = false , length = 10)
     private WalletType walletType;
 
     @Column(nullable = false)
@@ -49,7 +49,17 @@ public class NftMember  extends BaseEntity {
     @Column(name = "image_id", nullable = false)
     private ImageStorage imageStorage;
 
-
-
-
+    @Builder
+    public NftMember(String walletContractAddress, WalletType walletType, String displayStype,
+                     String username, String instagram, String twitter, String facebook, String discode, ImageStorage imageStorage) {
+        this.walletContractAddress = walletContractAddress;
+        this.walletType = walletType;
+        this.displayStype = displayStype;
+        this.username = username;
+        this.instagram = instagram;
+        this.twitter = twitter;
+        this.facebook = facebook;
+        this.discode = discode;
+        this.imageStorage = imageStorage;
+    }
 }

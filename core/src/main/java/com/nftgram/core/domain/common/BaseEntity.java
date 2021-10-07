@@ -18,9 +18,6 @@ public abstract class BaseEntity {
     @LastModifiedDate
     protected  LocalDateTime  updateDate; // 수정일자
 
-
-    protected  LocalDateTime lastLoginDate; // 최근 로그인일
-
-
+    protected  LocalDateTime lastLoginDate; // 최근 로그인 일자
 
 }

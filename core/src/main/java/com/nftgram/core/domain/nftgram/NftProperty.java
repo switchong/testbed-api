@@ -1,22 +1,19 @@
 package com.nftgram.core.domain.nftgram;
 
-
+import com.mysema.commons.lang.Assert;
 import lombok.*;
 
 import javax.persistence.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-@Builder
 @Table
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class NftProperty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long propId;
-
 
     @ManyToOne(fetch = FetchType.LAZY , optional = false)
     @JoinColumn(name = "nft_id" ,nullable = false)
@@ -31,4 +28,17 @@ public class NftProperty {
     @Column(nullable = false)
     private Long traitCount;
 
+    private Integer order;
+
+    @Builder
+    public NftProperty(String traitType, String traitValue, Long traitCount, Integer order) {
+        this.traitType = traitType;
+        this.traitValue = traitValue;
+        this.traitCount = traitCount;
+        this.order = order;
+    }
+
+    public void addNft(Nft nft) {
+        this.nft = nft;
+    }
 }

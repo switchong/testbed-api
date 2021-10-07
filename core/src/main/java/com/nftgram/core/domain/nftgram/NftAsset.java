@@ -3,11 +3,14 @@ package com.nftgram.core.domain.nftgram;
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.nftgram.value.ContractSchema;
 import com.nftgram.core.domain.nftgram.value.ContractType;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
 @Builder

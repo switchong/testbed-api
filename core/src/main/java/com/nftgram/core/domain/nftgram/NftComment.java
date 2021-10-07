@@ -2,11 +2,14 @@ package com.nftgram.core.domain.nftgram;
 
 
 import com.nftgram.core.domain.common.value.ActiveStatus;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
 @Builder
@@ -23,7 +26,7 @@ public class NftComment {
 
     @ManyToOne(fetch = FetchType.LAZY , optional = false)
     @JoinColumn(name = "nft_member_id" , nullable = false)
-    private  NftMember nftMember;
+    private NftMember nftMember;
 
     @Column(nullable = false , length = 66)
     private String assetContractAddress;
