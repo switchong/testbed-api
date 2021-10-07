@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.mysql.nftgram.nft;
+package com.nftgram.core.domain.mysql.nftgram;
 
 
 import com.nftgram.core.domain.BaseEntity;
@@ -19,26 +19,35 @@ public class Nft  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftId;  //PK
 
-    @Column(name = "asset_Contract_Address" , nullable = false)
+    @Column(name = "asset_Contract_Address", nullable = false)
     private String assetContractAddress; //UK
 
 
-    @Column(name = "tokenId"  , nullable = false)
-    private  String tokenId; //UK
+    @Column(name = "tokenId", nullable = false , length = 300)
+    private String tokenId; //UK
 
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "maket_type" , nullable = false , length = 10)
     private MaketType maketType;
 
-    private int marketId;
+    @Column(nullable = false)
+    private Long marketId;
 
-    private  NftMember nftMember;
 
-    private  String ownerUserName;
+    @OneToOne(fetch = FetchType.LAZY , optional = false)
+    private NftMember nftMember;
 
-    private String ownerProfileLmageUrl;
+    private String ownerUserName;
+
+    private String ownerProfileImageUrl;
+
     private String ownerContractAddress;
+
     private String createUserName;
+
     private String createProfileImageUrl;
+
     private String createContractAddress;
 
     private String name;
@@ -65,21 +74,23 @@ public class Nft  extends BaseEntity {
 
     private LocalDate lastSaleDate;
 
-    private  String lastSaleContractAddress;
+    private String lastSaleContractAddress;
 
     private String lastSaleUserName;
 
     private String lastSaleProfileImageUrl;
 
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    private NftAsset nftAsset;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    private NftCollection nftCollection;
+
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "active_status" , nullable = false , length = 10)
     private ActiveStatus activeStatus;
-
-
-
-
-
-
 
 
 }

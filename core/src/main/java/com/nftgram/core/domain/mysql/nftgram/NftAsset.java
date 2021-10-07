@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.mysql.nftgram.nft;
+package com.nftgram.core.domain.mysql.nftgram;
 
 import com.nftgram.core.domain.BaseEntity;
 import com.nftgram.core.domain.mysql.nftgram.value.ContractSchema;
@@ -17,13 +17,17 @@ public class NftAsset  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftAssetId;  //PK
 
-    @Column(name = "asset_Contract_Address" , nullable = false)
+    @Column(name = "asset_contract_address" , nullable = false)
     private String assetContractAddress; //UK
 
     private String assetContractName;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "contract_type" , nullable = false ,  length = 10)
     private ContractType contractType;
 
+    @Enumerated(value = EnumType.STRING )
+    @Column(name = "contract_schema"  , nullable = false , length =  10)
     private ContractSchema contractSchema;
 
     private  String  assetContractDescription;

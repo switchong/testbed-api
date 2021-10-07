@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.mysql.nftgram.nft;
+package com.nftgram.core.domain.mysql.nftgram;
 
 import com.nftgram.core.domain.BaseEntity;
 import com.nftgram.core.domain.mysql.common.value.ActiveStatus;
@@ -25,7 +25,12 @@ public class NftFavorite extends BaseEntity {
     private NftMember  nftMember;
 
     private String assetContractAddress;
+
     private String tokenId;
+
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "active_status" , nullable = false , length = 10)
     private ActiveStatus activeStatus;
 
 

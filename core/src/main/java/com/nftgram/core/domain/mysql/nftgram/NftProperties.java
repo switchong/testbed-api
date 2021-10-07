@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.mysql.nftgram.nft;
+package com.nftgram.core.domain.mysql.nftgram;
 
 
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.mysql.common;
+package com.nftgram.core.domain.mysql.admin;
 
 
 import com.nftgram.core.domain.BaseEntity;

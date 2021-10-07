@@ -1,8 +1,8 @@
-package com.nftgram.core.domain.mysql.nftgram.nft;
+package com.nftgram.core.domain.mysql.nftgram;
 
 
 import com.nftgram.core.domain.BaseEntity;
-import com.nftgram.core.domain.mysql.nftgram.storage.ImageStorage;
+import com.nftgram.core.domain.mysql.common.ImageStorage;
 import com.nftgram.core.domain.mysql.nftgram.value.WalletType;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,9 +20,11 @@ public class NftMember  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftMemberId;  //PK
 
-    @Column(name = "wallet_Contract_Address" , nullable = false)
+    @Column(name = "wallet_contract_address" , nullable = false)
     private String walletContractAddress; //UK
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "wallet_type" , nullable = false , length = 10)
     private WalletType walletType;
 
     private String displayStype;
@@ -39,6 +41,8 @@ public class NftMember  extends BaseEntity {
 
     @Column(name = "image_id", nullable = false)
     private ImageStorage imageStorage;
-    //private bgImageId imageStorage;
+
+
+
 
 }

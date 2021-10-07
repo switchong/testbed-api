@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.mysql.nftgram.nft;
+package com.nftgram.core.domain.mysql.nftgram;
 
 
 import com.nftgram.core.domain.mysql.common.value.ActiveStatus;
@@ -31,5 +31,7 @@ public class NftComment {
 
     private Long parent;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "active_status" , nullable = false , length = 10)
     private ActiveStatus activeStatus;
 }
