@@ -1,4 +1,4 @@
-package com.nftgram.core.domain;
+package com.nftgram.core.domain.common;
 
 
 import lombok.Getter;

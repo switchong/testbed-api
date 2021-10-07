@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.mysql.nftgram.value;
+package com.nftgram.core.domain.nftgram.value;
 
 
 public enum ContractSchema {

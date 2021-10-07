@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.mysql.nftgram;
+package com.nftgram.core.domain.nftgram;
 
 
 import lombok.Builder;
@@ -21,5 +21,6 @@ public class NftProperties {
     @Column(name = "trait_value" , nullable = false  ,  length = 50)
     private String traitValue;
 
-    private int traitCount;
+    @Column(nullable = false)
+    private Long traitCount;
 }

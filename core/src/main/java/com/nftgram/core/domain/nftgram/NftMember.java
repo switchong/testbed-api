@@ -1,9 +1,9 @@
-package com.nftgram.core.domain.mysql.nftgram;
+package com.nftgram.core.domain.nftgram;
 
 
-import com.nftgram.core.domain.BaseEntity;
-import com.nftgram.core.domain.mysql.common.ImageStorage;
-import com.nftgram.core.domain.mysql.nftgram.value.WalletType;
+import com.nftgram.core.domain.common.BaseEntity;
+import com.nftgram.core.domain.common.ImageStorage;
+import com.nftgram.core.domain.nftgram.value.WalletType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -27,16 +27,22 @@ public class NftMember  extends BaseEntity {
     @Column(name = "wallet_type" , nullable = false , length = 10)
     private WalletType walletType;
 
+    @Column(nullable = false)
     private String displayStype;
 
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String instagram;
 
+    @Column(nullable = false)
     private String twitter;
 
+    @Column(nullable = false)
     private String facebook;
 
+    @Column(nullable = false)
     private String discode;
 
     @Column(name = "image_id", nullable = false)

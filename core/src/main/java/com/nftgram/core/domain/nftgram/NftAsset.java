@@ -1,8 +1,8 @@
-package com.nftgram.core.domain.mysql.nftgram;
+package com.nftgram.core.domain.nftgram;
 
-import com.nftgram.core.domain.BaseEntity;
-import com.nftgram.core.domain.mysql.nftgram.value.ContractSchema;
-import com.nftgram.core.domain.mysql.nftgram.value.ContractType;
+import com.nftgram.core.domain.common.BaseEntity;
+import com.nftgram.core.domain.nftgram.value.ContractSchema;
+import com.nftgram.core.domain.nftgram.value.ContractType;
 import lombok.Builder;
 import lombok.Getter;
 

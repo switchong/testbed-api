@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.mysql.common.value;
+package com.nftgram.core.domain.common.value;
 
 public enum FileType {
 

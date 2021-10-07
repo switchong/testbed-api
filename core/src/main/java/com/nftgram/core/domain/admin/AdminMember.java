@@ -1,7 +1,7 @@
-package com.nftgram.core.domain.mysql.admin;
+package com.nftgram.core.domain.admin;
 
 
-import com.nftgram.core.domain.BaseEntity;
+import com.nftgram.core.domain.common.BaseEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -18,7 +18,10 @@ public class  AdminMember  extends BaseEntity {
     @Column(name = "admin_id" , nullable = false)
     private String adminId;
 
+
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String name;
 }
