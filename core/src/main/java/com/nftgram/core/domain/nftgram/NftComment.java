@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 @Entity
 @Getter
 @Builder
@@ -43,4 +43,6 @@ public class NftComment {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "active_status" , nullable = false , length = 10)
     private ActiveStatus activeStatus;
+
+
 }

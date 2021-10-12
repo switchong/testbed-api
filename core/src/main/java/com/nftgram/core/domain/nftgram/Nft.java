@@ -109,7 +109,7 @@ public class Nft  extends BaseEntity {
     @JoinColumn(name = "nft_collection_id" , nullable = false)
     private NftCollection nftCollection;
 
-    @OneToOne(mappedBy = "nft" , cascade = {CascadeType.PERSIST, CascadeType.DETACH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "nft" , cascade = {CascadeType.PERSIST, CascadeType.DETACH}, orphanRemoval = true)
     private List<NftProperty> nftProperties = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING)
