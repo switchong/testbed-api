@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.4.11'
+        springBootVersion = '2.3.3.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -11,8 +11,8 @@ buildscript {
 }
 
 plugins {
-    id 'org.springframework.boot' version '2.4.11' apply false
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '2.3.3.RELEASE' apply false
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
     id 'com.gorylenko.gradle-git-properties' version '2.2.0'
 }
@@ -22,7 +22,7 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
-    group = 'com.profit'
+    group = 'com.nftgram'
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '1.8'
 
