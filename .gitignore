@@ -2,5 +2,8 @@
 /.gradle/
 /.idea/
 /core/build/
-/api/build/
+/batch/build/
+/admin/build/
+/core/out/
 /batch/out/
+/admin/out/
