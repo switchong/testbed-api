@@ -7,9 +7,10 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
+
 @ComponentScan(basePackages = "com.nftgram.*")
 @SpringBootApplication
-public class WebApplication {
+public class WebApplication  {
 
     @PostConstruct
     public void timezoneSetting() {
