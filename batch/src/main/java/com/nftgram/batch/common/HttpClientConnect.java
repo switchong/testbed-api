@@ -15,15 +15,16 @@ import java.util.ArrayList;
 @Component
 public class HttpClientConnect {
 
-    private String apiUrl = "https://api.opensea.io/api/v1";
+    private String apiUrl;
 
-    private OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client;
 
-    public HttpClientConnect() {
-
+    HttpClientConnect() {
+        this.apiUrl = "https://api.opensea.io/api/v1";
+        this.client = new OkHttpClient();
     }
 
-    public ArrayList getRequestUrl (String url) {
+    public Object requestAssetsUrl (String url) {
         if (url == null) {
             url = "/assets?order_direction=desc&offset=0&limit=20";
         }

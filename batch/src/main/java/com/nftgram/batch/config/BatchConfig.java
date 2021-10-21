@@ -1,6 +1,6 @@
 package com.nftgram.batch.config;
 
-import com.nftgram.batch.common.*;
+import com.nftgram.core.common.util.date.DateTimeUtil;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;

@@ -1,4 +1,4 @@
-package com.nftgram.batch.common;
+package com.nftgram.core.common.util.date;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
