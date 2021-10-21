@@ -46,7 +46,7 @@ public class NftMember  extends BaseEntity {
     @Column(nullable = false)
     private String discode;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private ImageStorage imageStorage;
 

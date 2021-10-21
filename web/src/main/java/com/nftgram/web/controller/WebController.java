@@ -1,4 +1,4 @@
-package com.nftgram.web.web;
+package com.nftgram.web.controller;
 
 
 import lombok.AllArgsConstructor;
