@@ -24,10 +24,10 @@ public class NftProperty {
     @Column(nullable = false , length = 30)
     private String traitType;
 
-    @Column(nullable = true  ,  length = 50)
+    @Column(length = 50)
     private String traitValue;
 
-    @Column(nullable = true)
+    @Column
     private Long traitCount;
 
     private Integer order;
