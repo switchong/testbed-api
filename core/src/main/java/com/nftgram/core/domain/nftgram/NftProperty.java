@@ -19,15 +19,15 @@ public class NftProperty {
 
     @ManyToOne(fetch = FetchType.LAZY , optional = false)
     @JoinColumn(name = "nft_id" ,nullable = false)
-    private Long nftId;
+    private Nft nft;
 
     @Column(nullable = false , length = 30)
     private String traitType;
 
-    @Column(length = 50)
+    @Column(nullable = true  ,  length = 50)
     private String traitValue;
 
-    @Column
+    @Column(nullable = true)
     private Long traitCount;
 
     private Integer order;
@@ -40,7 +40,7 @@ public class NftProperty {
         this.order = order;
     }
 
-    public void addNft(Long nftId) {
-        this.nftId = nftId;
+    public void addNft(Nft nft) {
+        this.nft = nft;
     }
 }
