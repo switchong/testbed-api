@@ -30,10 +30,10 @@ public class NftProperty {
     @Column
     private Long traitCount;
 
-    private Integer order;
+    private Long order;
 
     @Builder
-    public NftProperty(String traitType, String traitValue, Long traitCount, Integer order) {
+    public NftProperty(String traitType, String traitValue, Long traitCount, Long order) {
         this.traitType = traitType;
         this.traitValue = traitValue;
         this.traitCount = traitCount;
