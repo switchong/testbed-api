@@ -1,7 +1,9 @@
 package com.nftgram.core.domain.nftgram;
 
-import com.mysema.commons.lang.Assert;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -17,15 +19,15 @@ public class NftProperty {
 
     @ManyToOne(fetch = FetchType.LAZY , optional = false)
     @JoinColumn(name = "nft_id" ,nullable = false)
-    private Nft nft;
+    private Long nftId;
 
     @Column(nullable = false , length = 30)
     private String traitType;
 
-    @Column(nullable = false  ,  length = 50)
+    @Column(length = 50)
     private String traitValue;
 
-    @Column(nullable = false)
+    @Column
     private Long traitCount;
 
     private Integer order;
@@ -38,7 +40,7 @@ public class NftProperty {
         this.order = order;
     }
 
-    public void addNft(Nft nft) {
-        this.nft = nft;
+    public void addNft(Long nftId) {
+        this.nftId = nftId;
     }
 }
