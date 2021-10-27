@@ -53,9 +53,6 @@ subprojects {
         // https://mvnrepository.com/artifact/joda-time/joda-time
         implementation group: 'joda-time', name: 'joda-time', version: '2.10.10'
 
-        // https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp
-        implementation group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5'
-
         // https://mvnrepository.com/artifact/org.json/json
         implementation group: 'org.json', name: 'json', version: '20210307'
 

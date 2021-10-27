@@ -9,10 +9,10 @@ group 'com.nftgram'
 version '0.0.1-SNAPSHOT'
 
 bootJar{
-    enabled = false;
+    enabled = false
 }
 jar {
-    enabled = true;
+    enabled = true
 }
 
 dependencies {
@@ -33,17 +33,6 @@ test {
     useJUnitPlatform()
 }
 
-configurations {
-    querydsl.extendsFrom compileClasspath
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
-    }
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
 def querydslSrcDir = 'src/main/generated'
 
 querydsl {
@@ -57,6 +46,17 @@ sourceSets {
         java {
             srcDirs = ['src/main/java', querydslSrcDir]
         }
+    }
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
     }
 }
 
