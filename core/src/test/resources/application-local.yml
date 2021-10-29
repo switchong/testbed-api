@@ -12,3 +12,22 @@ opensea:
   single_contract_uri: "/asset_contract/"
   events_uri: "/events"
   collections_uri: "/collections"
+
+
+logging:
+  level:
+    com:
+      stabybiz: debug
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+      springframework:
+        boot:
+          autoconfigure: OFF
+        hibernate:
+          SQL: debug
+        batch: debug
+        test: error
+

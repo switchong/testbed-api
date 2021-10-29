@@ -3,7 +3,6 @@ package com.nftgram.core.domain.nftgram;
 
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.ImageStorage;
-import com.nftgram.core.domain.nftgram.value.WalletType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,46 +20,45 @@ public class NftMember  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftMemberId;  //PK
 
-    @Column(nullable = false)
-    private String walletContractAddress; //UK
+    @Column(nullable = false, length = 50)
+    private String nftMemberUserId; //UK
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false , length = 10)
-    private WalletType walletType;
+    @Column(nullable = false, length = 100)
+    private String password;
 
-    @Column(nullable = false)
-    private String displayStype;
+    @Column
+    private String displayStyle;
 
-    @Column(nullable = false)
+    @Column
     private String username;
 
-    @Column(nullable = false)
+    @Column
     private String instagram;
 
-    @Column(nullable = false)
+    @Column
     private String twitter;
 
-    @Column(nullable = false)
+    @Column
     private String facebook;
 
-    @Column(nullable = false)
-    private String discode;
+    @Column
+    private String discord;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private ImageStorage imageStorage;
 
     @Builder
-    public NftMember(String walletContractAddress, WalletType walletType, String displayStype,
-                     String username, String instagram, String twitter, String facebook, String discode, ImageStorage imageStorage) {
-        this.walletContractAddress = walletContractAddress;
-        this.walletType = walletType;
-        this.displayStype = displayStype;
+    public NftMember(String nftMemberUserId, String password, String displayStyle,
+                     String username, String instagram, String twitter, String facebook, String discord, ImageStorage imageStorage) {
+        this.nftMemberUserId = nftMemberUserId;
+        this.password = password;
+        this.displayStyle = displayStyle;
         this.username = username;
         this.instagram = instagram;
         this.twitter = twitter;
         this.facebook = facebook;
-        this.discode = discode;
+        this.discord = discord;
         this.imageStorage = imageStorage;
     }
 }

@@ -1,8 +1,10 @@
 package com.nftgram.core.domain.nftgram;
 
 
+import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.value.WalletType;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,16 +26,23 @@ public class NftMemberWallet {
     @JoinColumn(name = "nft_memberId")
     private NftMember nftMember;
 
-
     @Column(nullable = false)
     private String walletContractAddress;
 
-
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false , length = 10)
+    @Column(name = "wallet_type", nullable = false , length = 10)
     private WalletType walletType;
 
-    @Column(nullable = false)
-    private String userName;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "active_status" , nullable = false , length = 10)
+    private ActiveStatus activeStatus;
+
+    @Builder
+    public NftMemberWallet(NftMember nftMember, String walletContractAddress) {
+        this.nftMember = nftMember;
+        this.walletContractAddress = walletContractAddress;
+        this.walletType = WalletType.METAMASK;
+        this.activeStatus = ActiveStatus.ACTIVE;
+    }
 
 }
