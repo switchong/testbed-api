@@ -172,7 +172,7 @@ var Gallery = (function() {
 		defaults = {
 			speed : 800,
 			easing : 'ease-in-out',
-			margin : 400
+			margin : 600
 		},
 		// css transitions and 3d transforms support
 		support = { transitions : Modernizr.csstransitions, transforms3d : Modernizr.csstransforms3d },
@@ -260,8 +260,8 @@ var Gallery = (function() {
 
 			// add navigation
 			if( this.totalItems > 1 ) {
-				this.$navPrev = $( '<span class="gr-prev">prev</span>' ).on( 'click', $.proxy( this.navigate, this, 'prev' ) );
-				this.$navNext = $( '<span class="gr-next">next</span>' ).on( 'click', $.proxy( this.navigate, this, 'next' ) );
+				this.$navPrev = $( '<span class="gr-prev bi bi-caret-right">prev</span>' ).on( 'click', $.proxy( this.navigate, this, 'prev' ) );
+				this.$navNext = $( '<span class="gr-next bi bi-caret-left">next</span>' ).on( 'click', $.proxy( this.navigate, this, 'next' ) );
 				this.$nav = $( '<nav/>' ).append( this.$navPrev, this.$navNext ).appendTo( $gallery );
 			}
 
@@ -316,7 +316,8 @@ var Gallery = (function() {
 				wallmargins = 150,
 				wall = this.walls[ this.currentWall ],
 				totalLeft = 0, lastItemW = 0,
-				wallMarginLeft = 0, sumWidths = 0;
+				//2021 - 10 -21 갤러리 간격 조절부분
+				wallMarginLeft = 0, sumWidths = 100;
 
 			for( var i = 0; i < wall.itemsCount; ++i ) {
 

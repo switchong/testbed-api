@@ -18,7 +18,7 @@ public class NftMember  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long nftMemberId;  //PK
+    private Long nftMemberId;
 
     @Column(nullable = false, length = 50)
     private String nftMemberUserId; //UK
