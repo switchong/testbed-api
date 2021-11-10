@@ -3,6 +3,7 @@ package com.nftgram.core.domain.nftgram;
 
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.ImageStorage;
+import com.nftgram.core.domain.member.MemberStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,8 +21,8 @@ public class NftMember  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftMemberId;
 
-    @Column(nullable = false, length = 50)
-    private String nftMemberUserId; //UK
+    @Column(nullable = false, name = "nft_member_user_id",length = 50)
+    private String nftMemberUserId;
 
     @Column(nullable = false, length = 100)
     private String password;
@@ -47,6 +48,11 @@ public class NftMember  extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private ImageStorage imageStorage;
+
+
+    @Column(nullable = false , length = 8)
+    @Enumerated(value = EnumType.STRING)
+    private MemberStatus memberStatus;
 
     @Builder
     public NftMember(String nftMemberUserId, String password, String displayStyle,

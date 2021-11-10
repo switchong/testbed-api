@@ -23,4 +23,5 @@ public abstract class BaseEntity {
 
     protected  LocalDateTime lastLoginDate; // 최근 로그인 일자
 
+
 }

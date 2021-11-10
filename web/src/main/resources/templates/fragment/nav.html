@@ -50,9 +50,15 @@
                         <li class="nav-item"><a class="nav-link" href="#!">My COLLECTION</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">img1</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">img2</a></li>
-                        <li class="nav-item"><a class="btn btn-outline-dark " th:onclick="|location.href='@{/gallery}'|">Sign In</a></li>
+
+
+
                         <li class="nav-item"><a class="btn btn-outline-dark " th:onclick="|location.href='@{/login}'|">Sign In</a></li>
-                        <li class="nav-item"><a class="btn btn-outline-dark " href="/login">Sign In</a></li>
+                        <div th:if="${param.error}"  class="alert alert-danger" role="alert">
+                            Invalid username and password
+                        </div>
+
+
                     </ul>
                 </div>
             </div>

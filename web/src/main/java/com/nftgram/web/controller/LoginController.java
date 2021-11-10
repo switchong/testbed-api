@@ -1,19 +1,29 @@
 package com.nftgram.web.controller;
 
 
-
 import com.nftgram.web.controller.service.LoginService;
 import com.nftgram.web.dto.request.NftMemberRequest;
+import com.nftgram.web.dto.response.NftMemberLoginResponse;
 import lombok.RequiredArgsConstructor;
 
+import org.apache.logging.log4j.message.Message;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.security.GeneralSecurityException;
 
 
-//@RequestMapping("/login")
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -21,42 +31,48 @@ public class LoginController {
 
     private final LoginService loginService;
 
+
     @GetMapping("/login")
     public String login(Model model){
         model.addAttribute("NftMemberRequest" , new NftMemberRequest());
         return  "login/nft_login";
     }
 
+    /*
+    *  회원 로그인 처리
+    *
+    * */
+    @PostMapping("/login")
+    public String loginProcess(@Valid NftMemberRequest request,
+                               BindingResult result ,
+                               HttpServletResponse  response ) throws GeneralSecurityException, UnsupportedEncodingException, UserPrincipalNotFoundException {
 
-//    @PostMapping("/login")
-//    public String login(@ModelAttribute @Validated LoginForm loginForm,
-//                        BindingResult bindingResult,
-//                        @RequestParam(defaultValue = "/") String redirectURL,
-//                        HttpServletRequest request){
-//        if (bindingResult.hasErrors()){
-//            return "login/loginForm";
-//        }
-//        //2021 11-01 확인필요 long valueOf
-//        NftMember loginMember = loginService.login(Long.valueOf(loginForm.getNftMemberId()), loginForm.getPassword());
-//
-//        if (loginMember == null){
-//            bindingResult.reject("loginFail" , "아이디 또는 비밀번호가 맞지 않습니다.");
-//            return "login/loginForm";
-//        }
-//
-//        HttpSession session = request.getSession();
-//        session.setAttribute(SessionConstants.LOGIN_MEMBER , loginMember);
-//
-//        return "redirect:"+ redirectURL;
-//
-//    }
-//
-//    @PostMapping("logout")
-//    public String logout(HttpServletRequest request){
-//        HttpSession session =request.getSession(false);
-//        if (session != null){
-//            session.invalidate();
-//        }
-//        return "redirect:/";
-//    }
+        if (result.hasErrors()){
+            return "login/nft_login";
+
+        }
+
+        NftMemberLoginResponse loginResponse = (NftMemberLoginResponse) loginService.login(request);
+
+        if (!loginResponse.isLoginFlag()){
+            FieldError fieldError = (FieldError)  loginResponse.getData();
+            result.addError(fieldError);
+            return "login/nft_login";
+        }
+
+        Cookie memberInfo = (Cookie) loginResponse.getData();
+        response.addCookie(memberInfo);
+
+        //return "redirect:/";
+        return "gallery/gallery";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session =request.getSession(false);
+        if (session != null){
+            session.invalidate();
+        }
+        return "redirect:/";
+    }
 }

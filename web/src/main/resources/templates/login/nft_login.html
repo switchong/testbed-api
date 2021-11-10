@@ -17,9 +17,9 @@
 <div class="container">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-    <form action="login" th:action th:object="${login}" method="post">
+    <form action="login" th:action="${login}" th:object="${login}"  method="post">
 
-            <div style="margin-top:30px;">
+            <div style="margin-top:100px;">
                 <h4 style="text-align:center">SIGN IN</h4>
 <!--                <input type="text" class="form-control" placeholder="가입 이메일" required="" th:field="*{nftId}" />-->
                 <input type="text" class="form-control" placeholder="아이디" required=""  />
@@ -57,7 +57,7 @@
                         type="button">SIGN UP</a></p>
             </div>
         </div>
-
+        <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
     </form>
     </div>
 </div> <!-- /container -->

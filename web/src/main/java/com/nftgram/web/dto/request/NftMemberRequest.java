@@ -10,8 +10,7 @@ import javax.validation.constraints.NotBlank;
 public class NftMemberRequest {
 
     @NotBlank
-    @Id
-    private String nftId;
+    private String nftMemberUserId;
 
     @NotBlank
     private String password;
