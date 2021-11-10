@@ -1,5 +1,52 @@
 spring:
-  profiles: local
+
+
+  datasource :
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:testdb;
+      username: sa
+      password:
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 100
+
+    hibernate:
+      ddl-auto: create
+
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    generate-ddl: true
+
+  thymeleaf:
+    prefix: classpath:templates/
+    check-template-location: true
+    suffix: .html
+    cache: false
+
+logging:
+  level:
+    com:
+      staby: debug
+    org:
+      springframework:
+        boot:
+          autoconfigure: INFO
+      hibernate:
+        SQL: debug
+#  profiles: local
+
+nftgram:
+  cookie:
+    key: NftMember
+    domainName: web-local.nftgram.co.kr
+  aes256:
+    secretKey:
 
 opensea:
   api_url: https://api.opensea.io/api/v1
