@@ -21,39 +21,40 @@ public class Nft  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftId;  //PK
 
-    @OneToOne(fetch = FetchType.LAZY , optional = false)
-    @JoinColumn(name = "nft_member_id", nullable = false)
-    private NftMember nftMember;
-
-    @Column(nullable = false)
+    @Column(nullable = false , length = 80)
     private String assetContractAddress; //UK
 
     @Column(nullable = false , length = 300)
     private String tokenId; //UK
 
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false , length = 10)
+    @Column(nullable = false)
     private MaketType maketType;
 
     @Column(nullable = false)
     private Long marketId;
 
-    @Column(nullable = false)
+    @OneToOne(fetch = FetchType.LAZY , optional = false)
+    @JoinColumn(name = "nft_member_id", nullable = false)
+    private NftMember nftMember;
+
+
+    @Column(nullable = false ,length = 100)
     private String ownerUserName;
 
     @Column(nullable = false)
     private String ownerProfileImageUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false  , length = 80)
     private String ownerContractAddress;
 
-    @Column(nullable = false)
+    @Column(nullable = false , length = 100)
     private String createUserName;
 
     @Column(nullable = false)
     private String createProfileImageUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false , length = 80)
     private String createContractAddress;
 
     @Column(nullable = false , length = 100)
@@ -92,10 +93,10 @@ public class Nft  extends BaseEntity {
     @Column(nullable = false)
     private LocalDate lastSaleDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false ,length = 80)
     private String lastSaleContractAddress;
 
-    @Column(nullable = false)
+    @Column(nullable = false ,length = 100)
     private String lastSaleUserName;
 
     @Column(nullable = false)
@@ -113,7 +114,7 @@ public class Nft  extends BaseEntity {
     private List<NftProperty> nftProperties = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "active_status" , nullable = false , length = 10)
+    @Column(name = "active_status" , nullable = false)
     private ActiveStatus activeStatus;
 
     @Transient

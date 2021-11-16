@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Builder
+
 @Table
 public class NftCollection  extends BaseEntity {
 
@@ -20,7 +20,7 @@ public class NftCollection  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long nftCollectionId;  //PK
 
-    @Column(nullable = false)
+    @Column(nullable = false , length = 80)
     private String collectionName;
 
     @Column(nullable = false)
@@ -35,25 +35,48 @@ public class NftCollection  extends BaseEntity {
     @Column(nullable = false)
     private String collectionLargeImageUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false , length = 100)
     private String collectionRequireEmail;
 
-    @Column(nullable = false)
+    @Column(nullable = false , length = 100)
     private String collectionDiscordUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false , length = 50)
     private String collectionSlug;
 
-    @Column(nullable = false)
+    @Column(nullable = false , length = 100)
     private String collectionTelegramUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false ,length = 100)
     private String collectionTwitterUsername;
 
-    @Column(nullable = false)
+    @Column(nullable = false ,length = 100)
     private String collectionInstagramUsername;
 
-    @Column(nullable = false)
+    @Column(nullable = false ,length = 100)
     private String collectionWikiUrl;
 
+    @Builder
+    public NftCollection(String collectionName,
+                         String collectionDescription,
+                         String collectionBannerImageUrl,
+                         String collectionImageUrl,
+                         String collectionLargeImageUrl,
+                         String collectionRequireEmail,
+                         String collectionDiscordUrl,
+                         String collectionSlug,
+                         String collectionTelegramUrl, String collectionTwitterUsername, String collectionInstagramUsername, String collectionWikiUrl) {
+        this.collectionName = collectionName;
+        this.collectionDescription = collectionDescription;
+        this.collectionBannerImageUrl = collectionBannerImageUrl;
+        this.collectionImageUrl = collectionImageUrl;
+        this.collectionLargeImageUrl = collectionLargeImageUrl;
+        this.collectionRequireEmail = collectionRequireEmail;
+        this.collectionDiscordUrl = collectionDiscordUrl;
+        this.collectionSlug = collectionSlug;
+        this.collectionTelegramUrl = collectionTelegramUrl;
+        this.collectionTwitterUsername = collectionTwitterUsername;
+        this.collectionInstagramUsername = collectionInstagramUsername;
+        this.collectionWikiUrl = collectionWikiUrl;
+    }
 }

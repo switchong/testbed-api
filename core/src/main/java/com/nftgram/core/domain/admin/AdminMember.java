@@ -18,12 +18,12 @@ public class  AdminMember  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ald;
 
-    @Column(name = "admin_id" , nullable = false)
+    @Column(name = "admin_id" , nullable = false , length = 50)
     private String adminId;
 
-    @Column(nullable = false)
+    @Column(nullable = false ,length = 100)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false ,length = 100)
     private String name;
 }

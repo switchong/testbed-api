@@ -22,14 +22,14 @@ public class ImageStorage {
     private Long imageId;
 
     @Enumerated(value =  EnumType.STRING)
-    @Column(name = "table_type" , nullable = false , length = 10)
+    @Column(name = "table_type" , nullable = false)
     private TableType tableType;
 
     @Column(nullable = false)
     private Long parentId;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "image_type" , nullable = false , length = 10)
+    @Column(name = "image_type" , nullable = false)
     private ImageType imageType;
 
     @Column(nullable = false)
@@ -45,10 +45,10 @@ public class ImageStorage {
     private String fileSize;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "file_type" , nullable = false , length = 10)
+    @Column(name = "file_type" , nullable = false)
     private FileType fileType;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "active_status" , nullable = false , length = 10)
+    @Column(name = "active_status" , nullable = false)
     private ActiveStatus activeStatus;
 }

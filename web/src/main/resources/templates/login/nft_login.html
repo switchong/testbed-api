@@ -22,14 +22,16 @@
             <div style="margin-top:100px;">
                 <h4 style="text-align:center">SIGN IN</h4>
 <!--                <input type="text" class="form-control" placeholder="가입 이메일" required="" th:field="*{nftId}" />-->
-                <input type="text" class="form-control" placeholder="아이디" required=""  />
+                <input type="text" class="form-control"  placeholder="아이디" required=""  />
+<!--                <input type="text" id="nftId" name="nftId" th:field="*{nftId}" th:errorclass="error-input" th:value="*{nftId}" />-->
+<!--                <span th:if="${#fields.hasErrors('nftId')}" th:errors="*{nftId}" class="error-messages">error!</span>-->
             </div>
             <div style="margin-top:5px;">
                 <input type="password" class="form-control" placeholder="비밀번호" required=""  />
             </div>
-<!--        <div th:if="${#fields.hasGlobalErrors()}">-->
-<!--            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>-->
-<!--        </div>-->
+<!--            <div th:if="${#fields.hasGlobalErrors()}">-->
+<!--                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>-->
+<!--            </div>-->
 
 <!--        <div>-->
 <!--            <label for="nftId">로그인 ID</label>-->
@@ -51,10 +53,11 @@
             <div class="mb-2">
                 <button class="w-100 btn btn-primary btn-lg" type="submit">SIGN IN</button>
             </div>
+
             <div class="col">
                 <p style="text-align:center;s"><a class="" onclick="location.href='items.html'"
-                        th:onclick="|location.href='@{/}'|"
-                        type="button">SIGN UP</a></p>
+                                                  th:onclick="|location.href='@{signup}'|"
+                                                  type="button">SIGN UP</a></p>
             </div>
         </div>
         <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">

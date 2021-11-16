@@ -1,5 +1,6 @@
 package com.nftgram.core.domain.nftgram;
 
+import com.nftgram.core.domain.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table
-public class NftProperty {
+public class NftProperty extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,21 +25,19 @@ public class NftProperty {
     @Column(nullable = false , length = 30)
     private String traitType;
 
-    @Column(length = 50)
+    @Column(nullable = false , length = 50)
     private String traitValue;
 
-    @Column
-    private Long traitCount;
+    @Column(nullable = false)
+    private Long orderCount;
 
-    @Column
-    private Long orderSort;
 
     @Builder
-    public NftProperty(String traitType, String traitValue, Long traitCount, Long orderSort) {
+    public NftProperty(String traitType, String traitValue, Long orderCount) {
         this.traitType = traitType;
         this.traitValue = traitValue;
-        this.traitCount = traitCount;
-        this.orderSort = orderSort;
+        this.orderCount =  orderCount;
+
     }
 
     public void addNft(Nft nft) {

@@ -25,43 +25,37 @@ public class LoginService {
     private final PasswordEncoder passwordEncoder;
     private final NftMemberLoginManager nftMemberLoginManager;
 
-//    public NftMember login(Long nftMemberId , String password){
-//        return nftMemberRepository.findById(Long.valueOf(nftMemberId))
-//                .filter(m -> m.getPassword().equals(password))
-//                .orElse(null);
-//    }
 
-
-    public Object login(NftMemberRequest request) throws GeneralSecurityException , UserPrincipalNotFoundException{
+//    public Object login(NftMemberRequest request) throws GeneralSecurityException , UserPrincipalNotFoundException{
 //
-        Optional<NftMember> findNftMemberUser = nftMemberRepository.findByNftMemberUserIdAndMemberStatus(request.getNftMemberUserId(), MemberStatus.ACTIVE);
-
-        if (!findNftMemberUser.isPresent()){
-            return NftMemberLoginResponse.builder()
-                    .loginFlag(false)
-                    .data(new FieldError("nftMemberLoginRequest", "nftMemberUserId" ,"입력하신 아이디가 존재하지 않습니다"))
-                    .build();
-        }
-
-        NftMember nftMember = findNftMemberUser.get();
-
-        if (!nftMember.getMemberStatus().equals(MemberStatus.ACTIVE)){
-            return  inspectMemberValidity(nftMember);
-        }
-
-        if (!passwordEncoder.matches(request.getPassword() , nftMember.getPassword())){
-            return NftMemberLoginResponse.builder()
-                    .loginFlag(false)
-                    .data(new FieldError("nftMemberLoginRequest" , "password" , "입력한 패스워드가 일치하지 않습니다"))
-                    .build();
-
-        }
-
-        return NftMemberLoginResponse.builder()
-                .loginFlag(true)
-                .data(nftMember)
-                .build();
-    }
+//
+//        Optional<NftMember> findNftMemberUser = nftMemberRepository.findByNftMemberUserIdAndMemberStatus(request.getNftMemberUserId(), MemberStatus.ACTIVE);
+//        if (!findNftMemberUser.isPresent()){
+//            return NftMemberLoginResponse.builder()
+//                    .loginFlag(false)
+//                    .data(new FieldError("nftMemberLoginRequest", "nftMemberUserId" ,"입력하신 아이디가 존재하지 않습니다"))
+//                    .build();
+//        }
+//
+//        NftMember nftMember = findNftMemberUser.get();
+//
+//        if (!nftMember.getMemberStatus().equals(MemberStatus.ACTIVE)){
+//            return  inspectMemberValidity(nftMember);
+//        }
+//
+//        if (!passwordEncoder.matches(request.getPassword() , nftMember.getPassword())){
+//            return NftMemberLoginResponse.builder()
+//                    .loginFlag(false)
+//                    .data(new FieldError("nftMemberLoginRequest" , "password" , "입력한 패스워드가 일치하지 않습니다"))
+//                    .build();
+//
+//        }
+//
+//        return NftMemberLoginResponse.builder()
+//                .loginFlag(true)
+//                .data(nftMember)
+//                .build();
+//    }
 
 
     private NftMemberLoginResponse inspectMemberValidity(NftMember nftMember) {

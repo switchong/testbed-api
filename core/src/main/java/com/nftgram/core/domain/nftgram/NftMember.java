@@ -14,35 +14,34 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table
 public class NftMember  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftMemberId;
 
-    @Column(nullable = false, name = "nft_member_user_id",length = 50)
+    @Column(nullable = false, length = 100)
     private String nftMemberUserId;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String password;
 
-    @Column
+    @Column(nullable = false)
     private String displayStyle;
 
-    @Column
+    @Column(nullable = false)
     private String username;
 
-    @Column
+    @Column(nullable = false)
     private String instagram;
 
-    @Column
+    @Column(nullable = false ,length = 100)
     private String twitter;
 
-    @Column
+    @Column(nullable = false , length = 100)
     private String facebook;
 
-    @Column
+    @Column(nullable = false , length = 100)
     private String discord;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,7 +49,7 @@ public class NftMember  extends BaseEntity {
     private ImageStorage imageStorage;
 
 
-    @Column(nullable = false , length = 8)
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private MemberStatus memberStatus;
 

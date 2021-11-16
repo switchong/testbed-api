@@ -1,6 +1,7 @@
 package com.nftgram.core.domain.nftgram;
 
 
+import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.value.WalletType;
 import lombok.AccessLevel;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 
-public class NftMemberWallet {
+public class NftMemberWallet extends BaseEntity {
 
 
     @Id
@@ -26,15 +27,15 @@ public class NftMemberWallet {
     @JoinColumn(name = "nft_memberId")
     private NftMember nftMember;
 
-    @Column(nullable = false)
+    @Column(nullable = false , length = 80)
     private String walletContractAddress;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "wallet_type", nullable = false , length = 10)
+    @Column(name = "wallet_type", nullable = false)
     private WalletType walletType;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "active_status" , nullable = false , length = 10)
+    @Column(name = "active_status" , nullable = false)
     private ActiveStatus activeStatus;
 
     @Builder
