@@ -45,9 +45,15 @@ logging:
 nftgram:
   cookie:
     key: NftMember
-    domainName: web-local.nftgram.co.kr
+    domainName: www-local.nftgram.io
   aes256:
     secretKey:
+
+resurrection:
+  access_token: 12000000
+  refresh_token: 604800000
+  secret_key: secretkey
+
 
 opensea:
   api_url: https://api.opensea.io/api/v1

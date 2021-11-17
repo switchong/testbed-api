@@ -1,4 +1,4 @@
-package com.nftgram.web.controller;
+package com.nftgram.web.gallery.controller;
 
 
 import lombok.RequiredArgsConstructor;
