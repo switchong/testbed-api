@@ -14,17 +14,17 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table
+@Table(name = "nft")
 public class Nft  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftId;  //PK
 
-    @Column(nullable = false , length = 80)
+    @Column(nullable = false , unique = true, length = 80)
     private String assetContractAddress; //UK
 
-    @Column(nullable = false , length = 300)
+    @Column(nullable = false , unique = true, length = 300)
     private String tokenId; //UK
 
     @Enumerated(value = EnumType.STRING)
@@ -35,75 +35,75 @@ public class Nft  extends BaseEntity {
     private Long marketId;
 
     @OneToOne(fetch = FetchType.LAZY , optional = false)
-    @JoinColumn(name = "nft_member_id", nullable = false)
+    @JoinColumn(name = "nft_member_id")
     private NftMember nftMember;
 
 
-    @Column(nullable = false ,length = 100)
+    @Column(length = 100)
     private String ownerUserName;
 
-    @Column(nullable = false)
+    @Column
     private String ownerProfileImageUrl;
 
-    @Column(nullable = false  , length = 80)
+    @Column(length = 80)
     private String ownerContractAddress;
 
-    @Column(nullable = false , length = 100)
-    private String createUserName;
+    @Column(length = 100)
+    private String creatorUserName;
 
-    @Column(nullable = false)
-    private String createProfileImageUrl;
+    @Column
+    private String creatorProfileImageUrl;
 
-    @Column(nullable = false , length = 80)
-    private String createContractAddress;
+    @Column(length = 80)
+    private String creatorContractAddress;
 
     @Column(nullable = false , length = 100)
     private String name;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
+    @Column
     private Long numSales;
 
-    @Column(nullable = false)
+    @Column
     private String imageUrl;
 
-    @Column(nullable = false)
+    @Column
     private String imageOriginalUrl;
 
-    @Column(nullable = false)
+    @Column
     private String openseaLink;
 
-    @Column(nullable = false)
+    @Column
     private String externalLink;
 
-    @Column(nullable = false)
+    @Column
     private Long likeCount;
 
-    @Column(nullable = false)
+    @Column
     private Long favoriteCount;
 
-    @Column(nullable = false)
+    @Column
     private Long viewCount;
 
-    @Column(nullable = false)
+    @Column
     private String collectionName;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate lastSaleDate;
 
-    @Column(nullable = false ,length = 80)
+    @Column(length = 80)
     private String lastSaleContractAddress;
 
-    @Column(nullable = false ,length = 100)
+    @Column(length = 100)
     private String lastSaleUserName;
 
-    @Column(nullable = false)
+    @Column
     private String lastSaleProfileImageUrl;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "nft_asst_id" , nullable = false)
+    @JoinColumn(name = "nft_asset_id" , nullable = false)
     private NftAsset nftAsset;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -122,8 +122,8 @@ public class Nft  extends BaseEntity {
 
     @Builder
     public Nft(NftMember nftMember, String assetContractAddress, String tokenId, MaketType maketType, Long marketId,
-               String ownerUserName, String ownerProfileImageUrl, String ownerContractAddress, String createUserName,
-               String createProfileImageUrl, String createContractAddress, String name, String description, Long numSales,
+               String ownerUserName, String ownerProfileImageUrl, String ownerContractAddress, String creatorUserName,
+               String creatorProfileImageUrl, String creatorContractAddress, String name, String description, Long numSales,
                String imageUrl, String imageOriginalUrl, String openseaLink, String externalLink, Long likeCount,
                Long favoriteCount, Long viewCount, String collectionName, LocalDate lastSaleDate, String lastSaleContractAddress,
                String lastSaleUserName, String lastSaleProfileImageUrl, NftAsset nftAsset, NftCollection nftCollection, List<NftProperty> nftProperties) {
@@ -135,9 +135,9 @@ public class Nft  extends BaseEntity {
         this.ownerUserName = ownerUserName;
         this.ownerProfileImageUrl = ownerProfileImageUrl;
         this.ownerContractAddress = ownerContractAddress;
-        this.createUserName = createUserName;
-        this.createProfileImageUrl = createProfileImageUrl;
-        this.createContractAddress = createContractAddress;
+        this.creatorUserName = creatorUserName;
+        this.creatorProfileImageUrl = creatorProfileImageUrl;
+        this.creatorContractAddress = creatorContractAddress;
         this.name = name;
         this.description = description;
         this.numSales = numSales;

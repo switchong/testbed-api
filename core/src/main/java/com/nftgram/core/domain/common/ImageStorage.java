@@ -5,7 +5,6 @@ import com.nftgram.core.domain.common.value.FileType;
 import com.nftgram.core.domain.common.value.ImageType;
 import com.nftgram.core.domain.common.value.TableType;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,30 +21,30 @@ public class ImageStorage {
     private Long imageId;
 
     @Enumerated(value =  EnumType.STRING)
-    @Column(name = "table_type" , nullable = false)
+    @Column(name = "table_type")
     private TableType tableType;
 
-    @Column(nullable = false)
+    @Column
     private Long parentId;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "image_type" , nullable = false)
+    @Column(name = "image_type")
     private ImageType imageType;
 
-    @Column(nullable = false)
+    @Column
     private String realPath;
 
-    @Column(nullable = false)
+    @Column
     private String filePath;
 
-    @Column(nullable = false)
+    @Column
     private String fileName;
 
-    @Column(nullable = false)
-    private String fileSize;
+    @Column
+    private Long fileSize;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "file_type" , nullable = false)
+    @Column(name = "file_type")
     private FileType fileType;
 
     @Enumerated(value = EnumType.STRING)

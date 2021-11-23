@@ -3,10 +3,9 @@ package com.nftgram.core.domain.nftgram;
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.nftgram.value.ContractSchema;
 import com.nftgram.core.domain.nftgram.value.ContractType;
-import lombok.AccessLevel;
+import com.nftgram.core.domain.nftgram.value.ContractTypeConverter;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -20,27 +19,30 @@ public class NftAsset  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftAssetId;  //PK
 
-    @Column(name = "asset_contract_address" , nullable = false ,length = 80)
+    @Column(name = "asset_contract_address" , nullable = false , unique = true ,length = 80)
     private String assetContractAddress; //UK
 
     @Column(nullable = false , length = 100)
     private String assetContractName;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "contract_type" , nullable = false)
+    @Convert(converter = ContractTypeConverter.class)
+    @Column(name = "contract_type")
     private ContractType contractType;
 
     @Enumerated(value = EnumType.STRING )
-    @Column(name = "contract_schema"  , nullable = false)
+    @Column(name = "contract_schema")
     private ContractSchema contractSchema;
 
-    private  String  assetContractDescription;
+    @Column(columnDefinition = "TEXT")
+    private String  assetContractDescription;
 
-    @Column(nullable = false , length = 100)
+    @Column(length = 100)
     private  String assetContractSymbol;
 
-    private String assetContractOwner;
+    @Column
+    private Long assetContractOwner;
 
+    @Column
     private String assetContractImageUrl;
 
     @Column(nullable = false , length = 80)
@@ -53,7 +55,7 @@ public class NftAsset  extends BaseEntity {
                     ContractSchema contractSchema,
                     String assetContractDescription,
                     String assetContractSymbol,
-                    String assetContractOwner, String assetContractImageUrl, String assetContractPayoutAddress) {
+                    Long assetContractOwner, String assetContractImageUrl, String assetContractPayoutAddress) {
         this.assetContractAddress = assetContractAddress;
         this.assetContractName = assetContractName;
         this.contractType = contractType;

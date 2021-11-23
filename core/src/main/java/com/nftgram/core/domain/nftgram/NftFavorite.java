@@ -2,10 +2,7 @@ package com.nftgram.core.domain.nftgram;
 
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.value.ActiveStatus;
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -28,10 +25,10 @@ public class NftFavorite extends BaseEntity {
     @JoinColumn(name = "nft_member_id" , nullable = false)
     private NftMember  nftMember;
 
-    @Column(nullable = false , length = 80)
+    @Column(length = 80)
     private String assetContractAddress;
 
-    @Column(nullable = false)
+    @Column
     private String tokenId;
 
     @Enumerated(value = EnumType.STRING)

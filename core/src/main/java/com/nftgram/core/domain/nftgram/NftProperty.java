@@ -28,7 +28,7 @@ public class NftProperty extends BaseEntity {
     @Column(nullable = false , length = 50)
     private String traitValue;
 
-    @Column(nullable = false)
+    @Column
     private Long orderCount;
 
 

@@ -27,10 +27,10 @@ public class NftLike extends BaseEntity {
     @JoinColumn(name = "nft_member_id" , nullable = false)
     private NftMember nftMember;
 
-    @Column(nullable = false , length = 80)
+    @Column(length = 80)
     private String assetContractAddress;
 
-    @Column(nullable = false)
+    @Column
     private String tokenId;
 
     @Enumerated(value = EnumType.STRING)

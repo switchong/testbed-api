@@ -8,6 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,5 +25,14 @@ public abstract class BaseEntity {
 
     protected  LocalDateTime lastLoginDate; // 최근 로그인 일자
 
+    @PrePersist
+    public void prePersist() {
+        this.createDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updateDate = LocalDateTime.now();
+    }
 
 }

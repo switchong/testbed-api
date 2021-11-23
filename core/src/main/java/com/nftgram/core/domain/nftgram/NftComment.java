@@ -3,10 +3,8 @@ package com.nftgram.core.domain.nftgram;
 
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.value.ActiveStatus;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -30,33 +28,37 @@ public class NftComment extends BaseEntity {
     @JoinColumn(name = "nft_member_id" , nullable = false)
     private NftMember nftMember;
 
-    @Column(nullable = false , length = 80)
+    @Column(length = 80)
     private String assetContractAddress;
 
-    @Column(nullable = false)
+    @Column
     private String tokenId;
 
-    @Column(nullable = false)
+    @Column
     private Long depth;
 
-    @Column(nullable = false)
+    @Column
     private Long parent;
 
+    @Column
+    private String title;
 
-    private Long comment;
+    @Column(columnDefinition = "TEXT")
+    private String comment;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "active_status" , nullable = false)
     private ActiveStatus activeStatus;
 
     @Builder
-    public NftComment(Nft nft, NftMember nftMember, String assetContractAddress, String tokenId, Long depth, Long parent, Long commentw) {
+    public NftComment(Nft nft, NftMember nftMember, String assetContractAddress, String tokenId, Long depth, Long parent, String title, String comment) {
         this.nft = nft;
         this.nftMember = nftMember;
         this.assetContractAddress = assetContractAddress;
         this.tokenId = tokenId;
         this.depth = depth;
         this.parent = parent;
+        this.title = title;
         this.comment = comment;
         this.activeStatus = ActiveStatus.ACTIVE;
     }

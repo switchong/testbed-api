@@ -2,46 +2,43 @@ package com.nftgram.core.domain.nftgram;
 
 
 import com.nftgram.core.domain.common.BaseEntity;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Entity
 @Getter
-
-@Table
+@Table(name = "nft_collection")
 public class NftCollection  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long nftCollectionId;  //PK
 
-    @Column(nullable = false , length = 80)
+    @Column(nullable = false, length = 80)
     private String collectionName;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String collectionDescription;
 
-    @Column(nullable = false)
+    @Column
     private String collectionBannerImageUrl;
 
-    @Column(nullable = false)
+    @Column
     private String collectionImageUrl;
 
-    @Column(nullable = false)
+    @Column
     private String collectionLargeImageUrl;
 
-    @Column(nullable = false , length = 100)
+    @Column(length = 100)
     private String collectionRequireEmail;
 
-    @Column(nullable = false , length = 100)
+    @Column(length = 100)
     private String collectionDiscordUrl;
 
-    @Column(nullable = false , length = 50)
+    @Column(nullable = false , length = 100)
     private String collectionSlug;
 
     @Column(nullable = false , length = 100)
