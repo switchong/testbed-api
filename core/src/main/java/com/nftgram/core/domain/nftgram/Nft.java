@@ -4,7 +4,10 @@ package com.nftgram.core.domain.nftgram;
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.value.MaketType;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -117,6 +120,9 @@ public class Nft  extends BaseEntity {
     @Column(name = "active_status" , nullable = false)
     private ActiveStatus activeStatus;
 
+    @Column(name = "border_image_id")
+    private Long borderImageId;
+
     @Transient
     private Integer propertyOrder;
 
@@ -126,7 +132,7 @@ public class Nft  extends BaseEntity {
                String creatorProfileImageUrl, String creatorContractAddress, String name, String description, Long numSales,
                String imageUrl, String imageOriginalUrl, String openseaLink, String externalLink, Long likeCount,
                Long favoriteCount, Long viewCount, String collectionName, LocalDate lastSaleDate, String lastSaleContractAddress,
-               String lastSaleUserName, String lastSaleProfileImageUrl, NftAsset nftAsset, NftCollection nftCollection, List<NftProperty> nftProperties) {
+               String lastSaleUserName, String lastSaleProfileImageUrl, NftAsset nftAsset, NftCollection nftCollection, List<NftProperty> nftProperties, Long borderImageId) {
         this.nftMember = nftMember;
         this.assetContractAddress = assetContractAddress;
         this.tokenId = tokenId;
@@ -156,6 +162,7 @@ public class Nft  extends BaseEntity {
         this.nftAsset = nftAsset;
         this.nftCollection = nftCollection;
         this.activeStatus = ActiveStatus.ACTIVE;
+        this.borderImageId = borderImageId;
 
         for (NftProperty nftProperty : nftProperties) {
             addNftProperty(nftProperty);

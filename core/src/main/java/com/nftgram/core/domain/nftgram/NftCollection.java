@@ -17,6 +17,9 @@ public class NftCollection  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long nftCollectionId;  //PK
 
+    @Column(nullable = false , unique = true, length = 100)
+    private String collectionSlug;
+
     @Column(nullable = false, length = 80)
     private String collectionName;
 
@@ -38,19 +41,16 @@ public class NftCollection  extends BaseEntity {
     @Column(length = 100)
     private String collectionDiscordUrl;
 
-    @Column(nullable = false , length = 100)
-    private String collectionSlug;
-
-    @Column(nullable = false , length = 100)
+    @Column(length = 100)
     private String collectionTelegramUrl;
 
-    @Column(nullable = false ,length = 100)
+    @Column(length = 100)
     private String collectionTwitterUsername;
 
-    @Column(nullable = false ,length = 100)
+    @Column(length = 100)
     private String collectionInstagramUsername;
 
-    @Column(nullable = false ,length = 100)
+    @Column(length = 100)
     private String collectionWikiUrl;
 
     @Builder

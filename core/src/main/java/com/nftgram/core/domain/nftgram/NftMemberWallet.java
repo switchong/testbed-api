@@ -22,12 +22,11 @@ public class NftMemberWallet extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long nftMemberWalletId;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nft_memberId")
     private NftMember nftMember;
 
-    @Column(nullable = false , length = 80)
+    @Column(nullable = false , length = 80, unique = true)
     private String walletContractAddress;
 
     @Enumerated(value = EnumType.STRING)

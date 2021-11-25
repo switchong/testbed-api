@@ -10,7 +10,7 @@ public enum MemberStatus {
 
     SUSPEND("일시정지"),
 
-    REMOVE("삭제");
+    REMOVE("탙퇴");
 
 
     private final String typeName;

@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -20,28 +21,28 @@ public class NftMember  extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftMemberId;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String nftMemberUserId;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column
     private String displayStyle;
 
-    @Column(nullable = false)
+    @Column
     private String username;
 
-    @Column(nullable = false)
+    @Column
     private String instagram;
 
-    @Column(nullable = false ,length = 100)
+    @Column(length = 100)
     private String twitter;
 
-    @Column(nullable = false , length = 100)
+    @Column(length = 100)
     private String facebook;
 
-    @Column(nullable = false , length = 100)
+    @Column(length = 100)
     private String discord;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -49,13 +50,16 @@ public class NftMember  extends BaseEntity {
     private ImageStorage imageStorage;
 
 
-    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "member_status", nullable = false)
     private MemberStatus memberStatus;
+
+    @Column
+    private LocalDateTime lastLoginDate;
 
     @Builder
     public NftMember(String nftMemberUserId, String password, String displayStyle,
-                     String username, String instagram, String twitter, String facebook, String discord, ImageStorage imageStorage) {
+                     String username, String instagram, String twitter, String facebook, String discord, MemberStatus memberStatus, ImageStorage imageStorage) {
         this.nftMemberUserId = nftMemberUserId;
         this.password = password;
         this.displayStyle = displayStyle;
@@ -64,6 +68,8 @@ public class NftMember  extends BaseEntity {
         this.twitter = twitter;
         this.facebook = facebook;
         this.discord = discord;
+        this.memberStatus = memberStatus.ACTIVE;
         this.imageStorage = imageStorage;
     }
+
 }
