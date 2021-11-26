@@ -3,11 +3,11 @@ package com.nftgram.core.domain.nftgram;
 
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.ImageStorage;
+import com.nftgram.core.domain.dto.NftMemberDto;
+//import com.nftgram.core.domain.dto.NftMemberSignupRequestDto;
 import com.nftgram.core.domain.member.MemberStatus;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
+@Setter
 public class NftMember  extends BaseEntity {
 
     @Id
@@ -71,5 +72,14 @@ public class NftMember  extends BaseEntity {
         this.memberStatus = memberStatus.ACTIVE;
         this.imageStorage = imageStorage;
     }
+
+    public NftMember(NftMemberDto request) {
+        nftMemberUserId  = request.getNftMemberUserId();
+        password = request.getPassword();
+    }
+
+//    public void encryptPassword(PasswordEncoder passwordEncoder) {
+//        password = passwordEncoder.encode(password);
+//    }
 
 }

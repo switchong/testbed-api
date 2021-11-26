@@ -1,25 +1,31 @@
 package com.nftgram.core.domain.member;
 
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-
+@Getter
+@RequiredArgsConstructor
 public enum MemberStatus {
 
 
-    ACTIVE("활동중"),
+    ACTIVE("ACTIVE","활동중"),
 
-    SUSPEND("일시정지"),
+    SUSPEND("SUSPEND","일시정지"),
 
-    REMOVE("탙퇴");
+    REMOVE("REMOVE" ,"삭제");
 
 
-    private final String typeName;
-
-    MemberStatus(String typeName){
-        this.typeName = typeName;
-    }
-
-    private String getTypeName(){
-        return typeName;
-    }
+//    private final String typeName;
+//
+//
+//    MemberStatus(String typeName){
+//        this.typeName = typeName;
+//    }
+//
+//    private String getTypeName(){
+//        return typeName;
+//    }
+    private final String key;
+    private final String title;
 }

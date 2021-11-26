@@ -1,28 +1,41 @@
 spring:
-
+  profiles: local
 
   datasource :
     hikari:
-      driver-class-name: org.h2.Driver
-#      jdbc-url: jdbc:h2:mem:testdb;
-      url: jdbc:h2:tcp://localhost/~/testdb
-      username: sa
-      password:
+#            driver-class-name: org.h2.Driver
+#            jdbc-url: jdbc:h2:~/test;AUTO_SERVER=true
+#            jdbc-url: jdbc:h2:tcp://localhost/~/testdb;AUTO_SERVER=true
+#            username: sa
+#            password:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: nftbatch
+      password: "!vhdkdnj1234"
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/nftgram?serverTimezone=Asia/Seoul
 
   jpa:
     properties:
       hibernate:
-        show_sql: false
+        show_sql: true
         format_sql: true
         use_sql_comments: true
         default_batch_fetch_size: 100
 
     hibernate:
-      ddl-auto: create
+      #      ddl-auto: none
+      ddl-auto: none
 
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    database-platform: org.hibernate.dialect.H2Dialect
+    #    database-platform: H2
     open-in-view: false
     generate-ddl: true
+
+    h2:
+      console:
+        enabled: true
+        path: /h2-console
 
   thymeleaf:
     prefix: classpath:templates/
@@ -36,10 +49,12 @@ logging:
       staby: debug
     org:
       springframework:
+#        security: debug
         boot:
           autoconfigure: INFO
       hibernate:
         SQL: debug
+        type: trace
 #  profiles: local
 
 nftgram:
@@ -49,11 +64,15 @@ nftgram:
   aes256:
     secretKey:
 
-resurrection:
-  access_token: 12000000
-  refresh_token: 604800000
-  secret_key: secretkey
 
+# JWT
+jwt:
+  secret: YOUR_SECRET_KEY
+  access-expired: 1800 # 30(분) - 단위 (초)
+
+#web:
+#  resources:
+#    add-mappings: false
 
 opensea:
   api_url: https://api.opensea.io/api/v1

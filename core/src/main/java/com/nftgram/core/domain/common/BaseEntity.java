@@ -11,6 +11,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Getter
 @MappedSuperclass
@@ -32,5 +33,6 @@ public abstract class BaseEntity {
     public void preUpdate() {
         this.updateDate = LocalDateTime.now();
     }
+
 
 }
