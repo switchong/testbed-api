@@ -3,7 +3,7 @@ package com.nftgram.core.domain.nftgram;
 
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.value.ActiveStatus;
-import com.nftgram.core.domain.nftgram.value.MaketType;
+import com.nftgram.core.domain.nftgram.value.MarketType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,15 +32,13 @@ public class Nft  extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    private MaketType maketType;
+    private MarketType marketType;
 
     @Column(nullable = false)
     private Long marketId;
 
-    @OneToOne(fetch = FetchType.LAZY , optional = false)
-    @JoinColumn(name = "nft_member_id")
-    private NftMember nftMember;
-
+    @Column(name = "nft_member_id")
+    private Long nft_member_id;
 
     @Column(length = 100)
     private String ownerUserName;
@@ -127,16 +125,16 @@ public class Nft  extends BaseEntity {
     private Integer propertyOrder;
 
     @Builder
-    public Nft(NftMember nftMember, String assetContractAddress, String tokenId, MaketType maketType, Long marketId,
+    public Nft(Long nft_member_id, String assetContractAddress, String tokenId, MarketType marketType, Long marketId,
                String ownerUserName, String ownerProfileImageUrl, String ownerContractAddress, String creatorUserName,
                String creatorProfileImageUrl, String creatorContractAddress, String name, String description, Long numSales,
                String imageUrl, String imageOriginalUrl, String openseaLink, String externalLink, Long likeCount,
                Long favoriteCount, Long viewCount, String collectionName, LocalDate lastSaleDate, String lastSaleContractAddress,
                String lastSaleUserName, String lastSaleProfileImageUrl, NftAsset nftAsset, NftCollection nftCollection, List<NftProperty> nftProperties, Long borderImageId) {
-        this.nftMember = nftMember;
+        this.nft_member_id = nft_member_id;
         this.assetContractAddress = assetContractAddress;
         this.tokenId = tokenId;
-        this.maketType = maketType;
+        this.marketType = marketType;
         this.marketId = marketId;
         this.ownerUserName = ownerUserName;
         this.ownerProfileImageUrl = ownerProfileImageUrl;

@@ -1,6 +1,6 @@
 package com.nftgram.core.domain.nftgram.value;
 
-public enum MaketType {
+public enum MarketType {
 
     OPENSEA,
     RAROBLE

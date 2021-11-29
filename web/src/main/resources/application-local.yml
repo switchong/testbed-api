@@ -39,7 +39,7 @@ spring:
 
   thymeleaf:
     prefix: classpath:templates/
-    check-template-location: true
+    check-template-location: false
     suffix: .html
     cache: false
 

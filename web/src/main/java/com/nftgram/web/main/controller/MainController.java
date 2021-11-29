@@ -1,17 +1,13 @@
 package com.nftgram.web.main.controller;
 
-import com.nftgram.core.domain.dto.NftMemberDto;
 import com.nftgram.core.domain.nftgram.Nft;
-import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.web.main.dto.MainResponse;
-import com.nftgram.web.member.service.LoginService;
+import com.nftgram.web.main.service.MainService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -19,18 +15,25 @@ import java.text.ParseException;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class MainController {
 
-
-    private final LoginService loginService;
+    private final MainService mainService;
 
     @GetMapping("/")
-    public String Main(Model model) throws GeneralSecurityException, UnsupportedEncodingException, ParseException {
-        MainResponse mainResponse = new MainResponse();
+    public String Main(Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException, ParseException {
+        String name = "";
+        Long nftId = Long.valueOf(1);
 
-        Nft nft = mainResponse.getNft();
+//        List<MainResponse> mainResponse = mainService.nftSearch(name);
 
+        Page<Nft> mainResponseAll = mainService.getNftListAll(pageable);
+
+//        ArrayList<Nft> mainResponse = mainService.nftIdSearch(nftId);
+
+        model.addAttribute("nftList",mainResponseAll);
+
+
+//        System.out.print("NFT:::::"+mainResponse.get(0));
 
         return "index";
     }

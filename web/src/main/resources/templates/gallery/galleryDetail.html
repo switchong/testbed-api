@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="/fragment/header.html :: fragment-header" />
+
+
+<link th:href="@{/css/gallery/gallery.css}" rel="stylesheet" />
+<link th:href="@{/css/gallery/default.css}" rel="stylesheet" />
+<script th:src="@{/js/scripts.js}"></script>
+
+<body>
+<nav th:replace="/fragment/nav.html :: fragment-nav"></nav>
+
+<div class="container2">
+        <div id="gr-gallery" class="gr-gallery">
+            <div class="gallery_nav">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    RECENTLY LISTED
+                </button><br/>
+                <a href="http://tympanus.net/Development/3DBookShowcase/">section1</a><br/>
+                <div class="row">
+                    <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img1</a></div>
+                    <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img2</a></div>
+                    <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img3</a></div>
+                    <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img4</a></div>
+                </div>
+            </div>
+            <div class="gr-main">
+                <figure class="figure">
+                    <div class="mt-4">
+                        <img th:src="@{img/gallery/1.jpg}" alt="img01" />
+                    </div>
+
+                        <div class="mt-4">
+                        <h4><span style="color:yellow; border:1px solid #d1d1d1;">Title</span></h4>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                               <h4 style="color:yellow; border:1px solid #d1d1d1;">User Name</h4>
+                            </div>
+                            <div class="col-3">
+                                <h4 class="card-title" style="color:yellow; border:1px solid #d1d1d1;">EH</h4>
+
+                            </div>
+                            <div class="col-3">
+                                <h4 class="card-text" style="color:yellow; border:1px solid #d1d1d1;">LI</h4>
+                            </div>
+                        </div>
+
+                </figure>
+                <figure>
+                    <div class="mt-5">
+                        <img th:src="@{img/gallery/2.jpg}" alt="img02" />
+                    </div>
+                    <div class="mt-4">
+                        <h4><span style="color:yellow; border:1px solid #d1d1d1;">Title</span></h4>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <h4 style="color:yellow; border:1px solid #d1d1d1;">User Name</h4>
+                        </div>
+                        <div class="col-3">
+                            <h4 class="card-title" style="color:yellow; border:1px solid #d1d1d1;">EH</h4>
+
+                        </div>
+                        <div class="col-3">
+                            <h4 class="card-text" style="color:yellow; border:1px solid #d1d1d1;">LI</h4>
+                        </div>
+                    </div>
+                </figure>
+                <figure>
+                    <div class="mt-5">
+                        <img th:src="@{img/gallery/3.jpg}" alt="img03" />
+                    </div>
+                    <div class="mt-4">
+                        <h4><span style="color:yellow; border:1px solid #d1d1d1;">Title</span></h4>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <h4 style="color:yellow; border:1px solid #d1d1d1;">User Name</h4>
+                        </div>
+                        <div class="col-3">
+                            <h4 class="card-title" style="color:yellow; border:1px solid #d1d1d1;">EH</h4>
+
+                        </div>
+                        <div class="col-3">
+                            <h4 class="card-text" style="color:yellow; border:1px solid #d1d1d1;">LI</h4>
+                        </div>
+                    </div>
+                </figure>
+                <figure>
+                    <div class="mt-5">
+                        <img th:src="@{img/gallery/4.jpg}" alt="img04" />
+                    </div>
+                    <figcaption>1
+                        <p><span>Psyche entering Cupid's Garden, 1903</span></p>
+                        <div>
+                            <dl>
+                                <dt>Genre</dt><dd>mythological painting</dd>
+                                <dt>Technique</dt><dd>oil</dd>
+                                <dt>Material</dt><dd>canvas</dd>
+                                <dt>Dimensions</dt><dd>68.5 x 106.7 cm</dd>
+                                <dt>Gallery</dt><dd>Harris Museum and Art Gallery, Preston, Lancashire, UK</dd>
+                            </dl>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure>
+                    <div class="mt-5">
+                        <img th:src="@{img/gallery/5.jpg}" alt="img05" />
+                    </div>
+                    <figcaption>
+                        <p><span>Saint Cecilia, 1895</span></p>
+                        <div>
+                            <dl>
+                                <dt>Genre</dt><dd>religious painting</dd>
+                                <dt>Technique</dt><dd>oil</dd>
+                                <dt>Material</dt><dd>canvas</dd>
+                                <dt>Gallery</dt><dd>The Montreal Museum of Fine Arts, Montreal, Canada</dd>
+                            </dl>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure>
+                    <div class="mt-5">
+                        <img th:src="@{img/gallery/6.jpg}" alt="img06" />
+                    </div>
+                    <figcaption>
+                        <p><span>The Beautiful Lady Without Pity, 1893</span></p>
+                        <div>
+                            <dl>
+                                <dt>Genre</dt><dd>literary painting</dd>
+                                <dt>Technique</dt><dd>oil</dd>
+                                <dt>Material</dt><dd>canvas</dd>
+                                <dt>Dimensions</dt><dd>81 x 112 cm</dd>
+                                <dt>Gallery</dt><dd>Hessisches Landesmuseum, Darmstadt, Germany</dd>
+                            </dl>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure>
+                    <div class="mt-5">
+                        <img th:src="@{img/gallery/7.jpg}" alt="img07" />
+                    </div>
+                    <figcaption>
+                        <p><span>The Naiad, 1893</span></p>
+                        <div>
+                            <dl>
+                                <dt>Genre</dt><dd>mythological painting</dd>
+                                <dt>Technique</dt><dd>oil</dd>
+                                <dt>Material</dt><dd>canvas</dd>
+                                <dt>Dimensions</dt><dd>127 x 66 cm</dd>
+                                <dt>Gallery</dt><dd>Roy Miles Fine Paintings</dd>
+                            </dl>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure>
+    `               <div class="mt-5">
+                        <img th:src="@{img/gallery/8.jpg}" alt="img08" />
+                    </div>
+                    <figcaption>
+                        <p><span>Windflowers, 1902</span></p>
+                        <div>
+                            <dl>
+                                <dt>Genre</dt><dd>literary painting</dd>
+                                <dt>Technique</dt><dd>oil</dd>
+                                <dt>Material</dt><dd>canvas</dd>
+                                <dt>Dimensions</dt><dd>116.52 x 79.06 cm</dd>
+                                <dt>Gallery</dt><dd>Private Collection</dd>
+                            </dl>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure>
+                    <div class="mt-5">
+                        <img th:src="@{img/gallery/9.jpg}" alt="img09" />
+                    </div>
+                    <figcaption>
+                        <p><span>The Lady of Shalott, 1888</span></p>
+                        <div>
+                            <dl>
+                                <dt>Technique</dt><dd>oil</dd>
+                                <dt>Material</dt><dd>canvas</dd>
+                                <dt>Gallery</dt><dd>Tate Britain, London, England, UK</dd>
+                            </dl>
+                        </div>
+                    </figcaption>
+                </figure>
+                <figure>
+                    <div class="mt-5">
+                        <img th:src="@{img/gallery/10.jpg}" alt="img10" />
+                    </div>
+                    <figcaption>
+                        <p><span>The Awakening of Adonis, 1899</span></p>
+                        <div>
+                            <dl>
+                                <dt>Genre</dt><dd>mythological painting</dd>
+                                <dt>Technique</dt><dd>oil</dd>
+                                <dt>Material</dt><dd>canvas</dd>
+                                <dt>Dimensions</dt><dd>188 x 95.9 cm</dd>
+                                <dt>Gallery</dt><dd>Private Collection</dd>
+                            </dl>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div><!-- /container -->
+    <script th:src="@{js/gallery.js}"></script>
+    <script>
+                        $(function() {
+
+                            Gallery.init( {
+                                layout : [3,3,3,3]
+                            } );
+
+                        });
+    </script>
+
+</body>
+</html>
