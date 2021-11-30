@@ -1,4 +1,4 @@
-package com.nftgram.core.domain.nftgram;
+package com.nftgram.core.domain.token;
 
 
 import com.nftgram.core.domain.nftgram.NftMember;
@@ -11,19 +11,19 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class NftMemberAuthToken {
+public class Token {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tokenId;
+    private Long id;
 
     private String refreshToken;
 
     @OneToOne
-    @JoinColumn(name = "nft_member_id")
+    @JoinColumn(name = "user_id")
     private NftMember nftMember;
 
     @Builder
-    public NftMemberAuthToken(String refreshToken, NftMember nftMember) {
+    public Token(String refreshToken, NftMember nftMember) {
         this.refreshToken = refreshToken;
         this.nftMember = nftMember;
     }

@@ -1,37 +1,24 @@
 package com.nftgram.core.domain.dto;
 
 
-import com.nftgram.core.domain.member.MemberStatus;
-import com.nftgram.core.domain.nftgram.NftMember;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.io.Serializable;
 
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class NftMemberDto {
 
-@NoArgsConstructor
-@Getter
-@Setter
-@AllArgsConstructor
-public final class NftMemberDto {
 
     private String nftMemberUserId;
     private String password;
 
-
-//    public NftMemberDto(String nftMemberUserId, String password) {
-//        this.nftMemberUserId = nftMemberUserId;
-//        this.password = password;
-//
-//    }
-//
-//    public NftMember toEntity(){
-//        return NftMember.builder()
-//                .nftMemberUserId(nftMemberUserId)
-//                .password(password)
-//                .memberStatus(MemberStatus.ACTIVE)
-//                .build();
-//    }
+    public NftMemberDto(String nftMemberUserId, String password) {
+        this.nftMemberUserId = nftMemberUserId;
+        this.password = password;
+    }
 
 
 }

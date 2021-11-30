@@ -19,9 +19,6 @@ dependencies {
     implementation 'mysql:mysql-connector-java'
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-apt'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
     annotationProcessor 'com.querydsl:querydsl-apt'
     implementation 'com.querydsl:querydsl-sql-spring:4.3.1'
 
