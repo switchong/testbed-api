@@ -5,10 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface NftRepository  extends JpaRepository<Nft , Long> {
 
+    //    List<Nft> findAll();
     List<Nft> findAll();
 
     @Query(name = "Nft.findByOwnerUserName")
@@ -24,6 +26,12 @@ public interface NftRepository  extends JpaRepository<Nft , Long> {
     List<Nft> findByAssetContractAddress(@Param("assetContractAddress") String nftAddress);
 
     @Query(name = "Nft.findByNftId")
-    Nft findByNftId(@Param("nftId") Long nftId);
+    ArrayList<Nft> findByNftId(@Param("nftId") Long nftId);
+
+    @Query(name = "Nft.findByCollectionName")
+    List<Nft> findByCollectionName(@Param("collectionName") String collection);
+
+    @Query(name = "Nft.findByNftCollection")
+    List<Nft> findByNftCollection(@Param("NftCollectionId") Long collectionId);
 
 }

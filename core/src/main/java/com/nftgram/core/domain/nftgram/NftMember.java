@@ -3,6 +3,7 @@ package com.nftgram.core.domain.nftgram;
 
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.ImageStorage;
+import com.nftgram.core.domain.dto.NftMemberDto;
 import com.nftgram.core.domain.member.MemberStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -45,9 +46,8 @@ public class NftMember  extends BaseEntity {
     @Column(length = 100)
     private String discord;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id")
-    private ImageStorage imageStorage;
+    @Column(name = "bg_image_id")
+    private Long bgImageId;
 
 
     @Enumerated(value = EnumType.STRING)
@@ -59,7 +59,7 @@ public class NftMember  extends BaseEntity {
 
     @Builder
     public NftMember(String nftMemberUserId, String password, String displayStyle,
-                     String username, String instagram, String twitter, String facebook, String discord, MemberStatus memberStatus, ImageStorage imageStorage) {
+                     String username, String instagram, String twitter, String facebook, String discord, MemberStatus memberStatus, Long bgImageId) {
         this.nftMemberUserId = nftMemberUserId;
         this.password = password;
         this.displayStyle = displayStyle;
@@ -69,7 +69,12 @@ public class NftMember  extends BaseEntity {
         this.facebook = facebook;
         this.discord = discord;
         this.memberStatus = memberStatus.ACTIVE;
-        this.imageStorage = imageStorage;
+        this.bgImageId = bgImageId;
+    }
+
+    public NftMember(NftMemberDto request) {
+        nftMemberUserId  = request.getNftMemberUserId();
+        password = request.getPassword();
     }
 
 }

@@ -10,15 +10,41 @@
 <section class="py-5" >
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5">
+
+            <div class="col mb-5" th:each="nft: ${nftList}">
+                <!--/*@thymesVar id="nft" type="com.nftgram.core.domain.nftgram.Nft"*/-->
                 <div class="card h-100">
                     <!-- Product image-->
+                    <p>
+                        <!--<a class="btn btn-lg btn-secondary" href="/gallery" th:href="@{'/gallery/'+${nft.getNftCollection().getNftCollectionId()}}">-->
+                        <a class="btn btn-lg btn-secondary" href="/gallery" th:href="@{'/gallery/'+${nft.getCollectionName()}}">
+                            <img class="card-img-top" th:src="${nft.getImageUrl()}" th:alt="${nft.getName()}" />
+                        </a>
+                    </p>
+                    <!-- Product actions-->
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col">
+                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col">
+                                <p class="card-title">EH</p>
+                            </div>
+                            <div class="col">
+                                <p class="card-text">LI</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="col mb-5">
+                <div class="card h-100">
                     <p>
                         <a class="btn btn-lg btn-secondary" href="/gallery">
                     <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                         </a>
                     </p>
-                    <!-- Product actions-->
                     <div class="card bg-transparent">
                         <div class="text-left mt-3">
                             <a class="btn btn-outline-dark " href="#">Left</a>
@@ -31,11 +57,11 @@
 
             <div class="col mb-5">
                 <div class="card h-100">
-                    <!-- Product image-->
+                    &lt;!&ndash; Product image&ndash;&gt;
                     <a class="btn btn-lg btn-secondary" href="/gallery">
                     <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                     </a>
-                    <!-- Product actions-->
+                    &lt;!&ndash; Product actions&ndash;&gt;
                     <div class="card mb-3">
                         <div class="row g-0">
                             <div class="col">
@@ -50,127 +76,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product actions-->
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col">
-                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col">
-                                <p class="card-title">EH</p>
-                            </div>
-                            <div class="col">
-                                <p class="card-text">LI</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product actions-->
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col">
-                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col">
-                                <p class="card-title">EH</p>
-                            </div>
-                            <div class="col">
-                                <p class="card-text">LI</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product actions-->
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col">
-                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col">
-                                <p class="card-title">EH</p>
-                            </div>
-                            <div class="col">
-                                <p class="card-text">LI</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product actions-->
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col">
-                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col">
-                                <p class="card-title">EH</p>
-                            </div>
-                            <div class="col">
-                                <p class="card-text">LI</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product actions-->
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col">
-                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col">
-                                <p class="card-title">EH</p>
-                            </div>
-                            <div class="col">
-                                <p class="card-text">LI</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product actions-->
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col">
-                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col">
-                                <p class="card-title">EH</p>
-                            </div>
-                            <div class="col">
-                                <p class="card-text">LI</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </section>

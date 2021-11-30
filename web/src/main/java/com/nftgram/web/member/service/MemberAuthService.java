@@ -1,0 +1,89 @@
+package com.nftgram.web.member.service;
+
+import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.repository.NftMemberRepository;
+import com.nftgram.web.common.auth.MemberLoginManager;
+import com.nftgram.web.common.auth.MemberTokenManager;
+import com.nftgram.web.member.dto.request.NftMemberLoginRequest;
+import com.nftgram.web.member.dto.request.NftMemberSignupRequest;
+import com.nftgram.web.member.dto.response.NftMemberLoginResponse;
+import com.nftgram.web.member.dto.response.NftMemberSignupResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.Cookie;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.util.Objects;
+
+@RequiredArgsConstructor
+@Service
+public class MemberAuthService {
+
+    private final NftMemberRepository nftMemberRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final MemberLoginManager memberLoginManager;
+    private final MemberTokenManager memberTokenManager;
+
+    @Transactional
+    public NftMemberSignupResponse memberJoinProcess(NftMemberSignupRequest request) {
+        NftMember findNftMember = nftMemberRepository.findByNftMemberUserId(request.getId());
+        // 회원 유저 아이디 존재 여부 체크
+        if (!Objects.isNull(findNftMember)) {
+            return NftMemberSignupResponse.builder()
+                                        .flag(false)
+                                        .data("가입 및 입력하신 아이디는 이미 존재합니다.")
+                                        .build();
+        }
+
+        // 패스워드 검증
+        if (!request.getFirstPassword().equals(request.getSecondPassword())) {
+            return NftMemberSignupResponse.builder()
+                                        .flag(false)
+                                        .data("입력하신 패스워드가 동일하지 않습니다.")
+                                        .build();
+        }
+
+        // 회원가입 처리
+        NftMember newNftMember = NftMember.builder()
+                                        .nftMemberUserId(request.getId())
+                                        .password(passwordEncoder.encode(request.getFirstPassword()))
+                                        .build();
+
+        nftMemberRepository.save(newNftMember);
+
+        return NftMemberSignupResponse.builder().flag(true).build();
+    }
+
+    @Transactional(readOnly = true)
+    public NftMemberLoginResponse loginProcess(NftMemberLoginRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
+        // 유저 아이디 검색
+        NftMember findNftMember = nftMemberRepository.findByNftMemberUserId(request.getId());
+        if (Objects.isNull(findNftMember)) {
+            return NftMemberLoginResponse.builder()
+                                        .flag(false)
+                                        .data("입력하신 아이디가 존재하지 않습니다.")
+                                        .build();
+        }
+
+        // 패스워드 검증
+        if (passwordEncoder.matches(request.getPassword(), findNftMember.getPassword()) == false) {
+            return NftMemberLoginResponse.builder()
+                                        .flag(false)
+                                        .data("입력하신 패스워드가 일치하지 않습니다.")
+                                        .build();
+        }
+
+        // 쿠키 정보 생성
+        String makeToken = memberTokenManager.makeToken(findNftMember.getNftMemberId(), findNftMember.getNftMemberUserId());
+        Cookie nftMemberSessionInfo = memberLoginManager.save(makeToken, true);
+        return NftMemberLoginResponse.builder()
+                                .flag(true)
+                                .data(nftMemberSessionInfo)
+                                .build();
+    }
+
+
+}

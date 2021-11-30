@@ -1,4 +1,4 @@
-package com.nftgram.web.config;
+package com.nftgram.web.config.security;
 
 
 import lombok.RequiredArgsConstructor;

@@ -10,13 +10,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 public interface NftMemberRepository extends JpaRepository<NftMember , Long> {
 
-
    //@Query("select n from NftMember n where n.nftMemberUserId = ?1")
    //Optional<NftMember> findByNftMemberUserIdAndMemberStatus(String nftMemberUserId, MemberStatus nftMemberStatus);
    NftMember findByNftMemberUserIdAndPassword(String nftMemberUserId , String password);
    NftMember findByNftMemberUserId(String nftMemberUserId);
-
-
-
 
 }
