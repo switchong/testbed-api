@@ -60,15 +60,12 @@ logging:
 nftgram:
   cookie:
     key: NftMember
-    domainName: www-local.nftgram.io
+    domainName: local.nftgram.io
   aes256:
-    secretKey:
+    secretKey: 3021ACABD914C42D80C4E9D2D1BBA293
 
 
-# JWT
-jwt:
-  secret: YOUR_SECRET_KEY
-  access-expired: 1800 # 30(분) - 단위 (초)
+
 
 #web:
 #  resources:

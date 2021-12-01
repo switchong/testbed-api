@@ -50,7 +50,7 @@ public class MemberAuthConfig {
             writer = response.getWriter();
             writer.print("<script>");
             writer.print("alert('"+errorMsg+"');");
-            writer.print("location.href='/auth/login';");
+            writer.print("location.href='/auth/nft_login';");
             writer.print("</script>");
             writer.close();
             return writer;

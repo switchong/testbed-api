@@ -18,7 +18,7 @@ import java.security.GeneralSecurityException;
 @RequiredArgsConstructor
 public class MemberLoginManager {
 
-    private final MemberTokenManager memberAuthManager;
+    private final MemberTokenManager memberTokenManager;
 
     @Value("${nftgram.cookie.key}")
     private String cookieKey;
@@ -63,7 +63,10 @@ public class MemberLoginManager {
      */
     public NftMemberAuthDto getInfo() throws GeneralSecurityException, UnsupportedEncodingException {
         String memberToken = getToken();
-        return memberAuthManager.getTokenToMember(memberToken);
+        if (memberToken == null) {
+            return NftMemberAuthDto.builder().loginYN("N").build();
+        }
+        return memberTokenManager.getTokenToMember(memberToken);
     }
 
     /**

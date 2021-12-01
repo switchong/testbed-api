@@ -8,9 +8,11 @@ import com.nftgram.web.member.dto.response.NftMemberSignupResponse;
 import com.nftgram.web.member.service.MemberAuthService;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 
 
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,7 @@ import java.security.GeneralSecurityException;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+
 public class AuthController {
 
     private final MemberAuthService memberAuthService;
@@ -36,8 +39,9 @@ public class AuthController {
     private final MemberLoginManager memberLoginManager;
 
     @GetMapping("/login")
-    public String login(){
-        return  "login/nft_login";
+    public String login(Model model) {
+        model.addAttribute("nftMemberLoginRequest", new NftMemberLoginRequest());
+        return  "auth/nft_login";
     }
 
     /**
@@ -53,7 +57,7 @@ public class AuthController {
         if(!nftMemberLoginResponse.isFlag()) {
             FieldError fieldError = (FieldError) nftMemberLoginResponse.getData();
             result.addError(fieldError);
-            return "login/nft_login";
+            return "auth/nft_login";
         }
 
         Cookie memberInfo = (Cookie) nftMemberLoginResponse.getData();
@@ -67,8 +71,9 @@ public class AuthController {
      * @return
      */
     @GetMapping("/signup")
-    public String goSignup() {
-        return "login/signup";
+    public String goSignup(Model model) {
+        model.addAttribute("nftMemberSignupRequest", new NftMemberSignupRequest());
+        return "auth/signup";
     }
 
     /**
@@ -83,10 +88,11 @@ public class AuthController {
         if(!nftMemberSignupResponse.isFlag()) {
             FieldError fieldError = (FieldError) nftMemberSignupResponse.getData();
             result.addError(fieldError);
-            return "login/signup";
+
+            return "auth/signup";
         }
 
-        return "redirect:/login";
+        return "redirect:/auth/login";
     }
 
     /**
@@ -94,7 +100,7 @@ public class AuthController {
      * @param response
      * @return
      */
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletResponse response){
         Cookie expireCookie = memberLoginManager.expire();
         response.addCookie(expireCookie);

@@ -1,1 +1,8 @@
 spring:
+
+nftgram:
+  cookie:
+    key: NftMember
+    domainName: www.nftgram.io
+  aes256:
+    secretKey: FA692F858F33E675CE54566CF5BD892E

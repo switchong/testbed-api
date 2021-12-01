@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.FieldError;
 
 import javax.servlet.http.Cookie;
 import java.io.UnsupportedEncodingException;
@@ -34,7 +35,7 @@ public class MemberAuthService {
         if (!Objects.isNull(findNftMember)) {
             return NftMemberSignupResponse.builder()
                                         .flag(false)
-                                        .data("가입 및 입력하신 아이디는 이미 존재합니다.")
+                                        .data(customErrorMessage("id","가입 및 입력하신 아이디는 이미 존재합니다."))
                                         .build();
         }
 
@@ -42,7 +43,7 @@ public class MemberAuthService {
         if (!request.getFirstPassword().equals(request.getSecondPassword())) {
             return NftMemberSignupResponse.builder()
                                         .flag(false)
-                                        .data("입력하신 패스워드가 동일하지 않습니다.")
+                                        .data(customErrorMessage("firstPassword","입력하신 패스워드가 동일하지 않습니다."))
                                         .build();
         }
 
@@ -64,7 +65,7 @@ public class MemberAuthService {
         if (Objects.isNull(findNftMember)) {
             return NftMemberLoginResponse.builder()
                                         .flag(false)
-                                        .data("입력하신 아이디가 존재하지 않습니다.")
+                                        .data(customErrorMessage("id","입력하신 아이디가 존재하지 않습니다."))
                                         .build();
         }
 
@@ -72,7 +73,7 @@ public class MemberAuthService {
         if (passwordEncoder.matches(request.getPassword(), findNftMember.getPassword()) == false) {
             return NftMemberLoginResponse.builder()
                                         .flag(false)
-                                        .data("입력하신 패스워드가 일치하지 않습니다.")
+                                        .data(customErrorMessage("password","입력하신 패스워드가 일치하지 않습니다."))
                                         .build();
         }
 
@@ -85,5 +86,12 @@ public class MemberAuthService {
                                 .build();
     }
 
+    private FieldError customErrorMessage(String field, String message) {
+        return new FieldError("NftMemberSignupRequest", field, message);
+    }
+
+    private FieldError customErrorLoginMessage(String field , String message){
+        return new FieldError("NftMemberLoginRequest" , field , message);
+    }
 
 }

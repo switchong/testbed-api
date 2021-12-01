@@ -9,12 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NftMemberAuthDto {
 
+    private String loginYN;
+
     private Long nftMemberId;
 
     private String nftMemberUserId;
 
     @Builder
-    public NftMemberAuthDto(Long nftMemberId, String nftMemberUserId) {
+    public NftMemberAuthDto(String loginYN, Long nftMemberId, String nftMemberUserId) {
+        this.loginYN = loginYN;
         this.nftMemberId = nftMemberId;
         this.nftMemberUserId = nftMemberUserId;
     }
