@@ -28,10 +28,11 @@ public class GalleryController {
     }
 
     @GetMapping("/gallery/{collection}")
-    public String galleryDetail(Model model , @PathVariable("collection") String collection) {
+    public String galleryDetail(Model model , @PathVariable("collection") Long collectionId) {
 
 //        List<Nft> NftInfo = galleryService.getNftInfo(collection);
-        List<Nft> NftInfo = galleryService.NftCollectionList(collection);
+//        List<Nft> NftInfo = galleryService.NftCollectionList(collection);
+        List<Nft> NftInfo = galleryService.NftCollectionIdList(collectionId);
 
         model.addAttribute("nftInfo",NftInfo);
 

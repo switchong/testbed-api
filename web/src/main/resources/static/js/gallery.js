@@ -358,7 +358,23 @@ var Gallery = (function() {
 			// update wall element's width
 			var wallWidth = wallMarginLeft === 0 ? winsize.width : Math.ceil( wallMarginLeft + ( wall.itemsCount - 1 ) * Gallery.settings.margin + sumWidths + winsize.width / 2 - lastItemW / 2 );
 			$wallElem.css( 'width', wallWidth ).find( 'div.gr-floor' ).css( 'width', wallWidth );
+			console.log('renderWall'+$wallElem);
 
+			this.nftImageClick($wallElem);
+		},
+		nftImageClick : function( $wallElem ) {
+			var $wallElem = $wallElem || this.$mainWall,
+				wall = this.walls[ this.currentWall ];
+
+			$wallElem.find('img').on('click',function(){
+				var imgUrl = $(this).attr('src');
+				var nftId = $(this).data('nftid');
+				var href = $(this).data('layer-btn');
+				layer_popup(href);
+				var parent_figure = $('#nftLayout').find('#nft_'+nftId);
+				console.log(nftId);
+				console.log(parent_figure);
+			});
 		},
 		changeWall : function( dir ) {
 

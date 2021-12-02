@@ -1,16 +1,12 @@
 package com.nftgram.core.repository;
 
 
-import com.nftgram.core.domain.member.MemberStatus;
 import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.repository.custom.NftMemberCustomRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+public interface NftMemberRepository extends JpaRepository<NftMember , Long>, NftMemberCustomRepository {
 
-
-
-import java.util.Optional;
-public interface NftMemberRepository extends JpaRepository<NftMember , Long> {
-
-   NftMember findByNftMemberUserId(String nftMemberUserId);
+//   NftMember findByNftMemberUserId(String nftMemberUserId);
 
 
 }

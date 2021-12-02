@@ -1,0 +1,13 @@
+.wrap_layer_popup#nft-layer-content{width:550px;background-color:transparent}
+.wrap_layer_popup#nft-layer-content .pop_close{position:static;text-align:right}
+.wrap_layer_popup#nft-layer-content .pop_close a{display:inline-block}
+.wrap_layer_popup#nft-layer-content .nft-detail-container{position:relative;padding:0;height:550px;background-color:#fff}
+.wrap_layer_popup#nft-layer-content .nft-detail-container .nft-detail-wrapper .nft-home img{max-width:100%}
+/*.wrap_layer_popup#nft-layer-content .pop_cont .swiper-navigation{position:absolute;top:50%;left:0;z-index:10;width:100%}
+.wrap_layer_popup#nft-layer-content .pop_cont .swiper-navigation .arrows{position:absolute;top:-18px;width:62px;height:62px;text-indent:-1000%;background-image:url(../../img/popup/ico_poparr_inner.png);overflow:hidden}
+.wrap_layer_popup#nft-layer-content .pop_cont .swiper-navigation .arrows.prev{left:-20px;background-position:0 0}
+.wrap_layer_popup#nft-layer-content .pop_cont .swiper-navigation .arrows.next{right:-20px;background-position:-62px 0}*/
+.wrap_layer_popup#nft-layer-content .chg_list{position:fixed;top:0;right:0;bottom:0;left:0;margin:auto;width:1100px;height:81px}
+.wrap_layer_popup#nft-layer-content .chg_list .arrows{position:absolute;top:0;width:45px;height:81px;text-indent:-1000%;background-image:url(../../img/popup/ico_poparr_outer.png);overflow:hidden}
+.wrap_layer_popup#nft-layer-content .chg_list .arrows.prev{left:0;background-position:0 0}
+.wrap_layer_popup#nft-layer-content .chg_list .arrows.next{right:0;background-position:-45px 0}

@@ -1,8 +1,6 @@
 package com.nftgram.web.main.service;
 
 import com.nftgram.core.domain.nftgram.Nft;
-import com.nftgram.core.domain.nftgram.NftAsset;
-import com.nftgram.core.domain.nftgram.NftCollection;
 import com.nftgram.core.repository.NftAssetRepository;
 import com.nftgram.core.repository.NftCollectionRepository;
 import com.nftgram.core.repository.NftRepository;
@@ -13,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +18,7 @@ import java.util.List;
 @Service
 public class MainService {
 
+    private MainResponse mainResponse;
     private final NftRepository nftRepository;
     private final NftAssetRepository nftAssetRepository;
     private final NftCollectionRepository nftCollectionRepository;
@@ -46,21 +44,28 @@ public class MainService {
         return null;
     }
 
-    public ArrayList<MainResponse> nftIdSearch(Long nftId) {
-        ArrayList<Nft> nftInfo = nftRepository.findByNftId(nftId);
+    public Page<Nft> findAllPaging(Pageable pageable) throws ParseException{
+        return nftRepository.findAll(pageable);
+    }
+
+    public Page<Nft> findByNftId(Pageable pageable, Long nftId) {
+        Page<Nft> nftPage = nftRepository.findByNftId(pageable, nftId);;
 
         ArrayList<MainResponse> responses = new ArrayList<>();
 
-        for(int i = 0; i <= nftInfo.size();i++) {
-            String userName = nftInfo.get(i).getCreatorUserName();
-            Long likeCount = nftInfo.get(i).getLikeCount();
-            Long favoriteCount = nftInfo.get(i).getFavoriteCount();
-            String userProfileImageUrl = nftInfo.get(i).getCreatorProfileImageUrl();
-            String nftImageUrl = nftInfo.get(i).getImageUrl();
-            Long nftCollectionId = nftInfo.get(i).getNftCollection().getNftCollectionId();
-            LocalDateTime createDate = nftInfo.get(i).getCreateDate();
+/*
+        for(int i = 0; i <= 20;i++) {
+            String name = nftInfo.getContent().get(i).getName();
+            String userName = nftInfo.getContent().get(i).getCreatorUserName();
+            Long likeCount = nftInfo.getContent().get(i).getLikeCount();
+            Long favoriteCount = nftInfo.getContent().get(i).getFavoriteCount();
+            String userProfileImageUrl = nftInfo.getContent().get(i).getCreatorProfileImageUrl();
+            String nftImageUrl = nftInfo.getContent().get(i).getImageUrl();
+            Long nftCollectionId = nftInfo.getContent().get(i).getNftCollection().getNftCollectionId();
+            LocalDateTime createDate = nftInfo.getContent().get(i).getCreateDate();
 
             MainResponse response = MainResponse.builder()
+                    .name(name)
                     .username(userName)
                     .likeCount(likeCount)
                     .favoriteCount(favoriteCount)
@@ -70,13 +75,13 @@ public class MainService {
                     .localDate(createDate)
                     .build();
 
-            responses.add(response);
-        }
+            responses.add(i, response);
+        }*/
 
-        return responses;
+        return nftPage;
     }
 
-    public List<MainResponse> nftSearch(String name) {
+    public List<MainResponse> nftNameSearch(String name) {
         List<Nft> nftRepositoryName = nftRepository.findByName(name);
 
         List<MainResponse> mainResponse = (List<MainResponse>) MainResponse.builder()
@@ -90,4 +95,46 @@ public class MainService {
 
         return mainResponse;
     }
+
+    public List<MainResponse> findAllList(Pageable pageable)  throws ParseException {
+        Page<Nft> nftRepositoryAll = nftRepository.findAll(pageable);
+
+        List<MainResponse> response = new ArrayList<>();
+
+        nftRepositoryAll.forEach(nftInfo -> {
+            String userName = null;
+            String userImage = null;
+
+            if(nftInfo.getLastSaleProfileImageUrl() != null) {
+                userImage = nftInfo.getLastSaleProfileImageUrl();
+            } else if(nftInfo.getOwnerProfileImageUrl() != null) {
+                userImage = nftInfo.getOwnerProfileImageUrl();
+            } else if(nftInfo.getCreatorProfileImageUrl() != null) {
+                userImage = nftInfo.getCreatorProfileImageUrl();
+            }
+            if(nftInfo.getLastSaleUserName() != null) {
+                userName = nftInfo.getLastSaleUserName();
+            } else if(nftInfo.getOwnerUserName() != null) {
+                userName = nftInfo.getOwnerUserName();
+            } else if(nftInfo.getCreatorUserName() != null) {
+                userName = nftInfo.getCreatorUserName();
+            }
+            mainResponse = MainResponse.builder()
+                    .name(userName)
+                    .username(nftInfo.getCreatorUserName())
+                    .likeCount(nftInfo.getLikeCount())
+                    .favoriteCount(nftInfo.getFavoriteCount())
+                    .userImageUrl(userImage)
+                    .nftImageUrl(nftInfo.getImageUrl())
+                    .nftCollectionId(nftInfo.getNftCollection().getNftCollectionId())
+                    .localDate(nftInfo.getCreateDate())
+                    .build();
+            response.add(mainResponse);
+        });
+
+        return response;
+    }
+
+
+
 }

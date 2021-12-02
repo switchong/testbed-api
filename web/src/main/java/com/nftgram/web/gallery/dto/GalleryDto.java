@@ -1,5 +1,7 @@
-package com.nftgram.web.main.dto;
+package com.nftgram.web.gallery.dto;
 
+import com.nftgram.core.repository.NftCollectionRepository;
+import com.nftgram.core.repository.NftRepository;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,8 +11,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MainResponse {
-    private Boolean findFlag;
+public class GalleryDto {
+
+    private NftRepository nftRepository;
+
+    private NftCollectionRepository nftCollectionRepository;
+
+    private Long nftId;
 
     private String name;
 
@@ -29,7 +36,8 @@ public class MainResponse {
     private LocalDateTime localDate;
 
     @Builder
-    public MainResponse(String name, String username, Long likeCount, Long favoriteCount, String userImageUrl, String nftImageUrl,Long nftCollectionId , LocalDateTime localDate) {
+    public GalleryDto(Long nftId, String name, String username, Long likeCount, Long favoriteCount, String userImageUrl, String nftImageUrl,Long nftCollectionId , LocalDateTime localDate) {
+        this.nftId = nftId;
         this.name = name;
         this.username = username;
         this.likeCount = likeCount;
@@ -39,5 +47,4 @@ public class MainResponse {
         this.nftCollectionId = nftCollectionId;
         this.localDate = localDate;
     }
-
 }

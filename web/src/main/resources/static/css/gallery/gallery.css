@@ -123,6 +123,7 @@ body {
 	border-style: solid;
 	border-width: 24px;
 	border-color: transparent;
+	cursor: pointer;
 	-moz-border-image: url(../../img/gallery/frame.jpg) 69 74 69 64 fill repeat;
 	-webkit-border-image: url(../../img/gallery/frame.jpg) 69 69 70 66 repeat;
 	-o-border-image: url(../../img/gallery/frame.jpg) 69 69 70 66 repeat;

@@ -13,22 +13,22 @@
 
             <div class="col mb-5" th:each="nft: ${nftList}">
                 <!--/*@thymesVar id="nft" type="com.nftgram.core.domain.nftgram.Nft"*/-->
+                <!--/*@thymesVar id="nft" type="com.nftgram.web.main.dto.MainResponse"*/-->
                 <div class="card h-100">
                     <!-- Product image-->
                     <p>
-                        <!--<a class="btn btn-lg btn-secondary" href="/gallery" th:href="@{'/gallery/'+${nft.getNftCollection().getNftCollectionId()}}">-->
-                        <a class="btn btn-lg btn-secondary" href="/gallery" th:href="@{'/gallery/'+${nft.getCollectionName()}}">
-                            <img class="card-img-top" th:src="${nft.getImageUrl()}" th:alt="${nft.getName()}" />
+                        <a class="btn btn-lg btn-secondary" href="/gallery" th:href="@{'/gallery/'+${nft.nftCollectionId}}">
+                    <img class="card-img-top" th:src="${nft.nftImageUrl}" th:alt="${nft.name}" />
                         </a>
                     </p>
                     <!-- Product actions-->
                     <div class="card mb-3">
                         <div class="row g-0">
                             <div class="col">
-                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid rounded-start" alt="...">
+                                <img th:src="${nft.userImageUrl}" class="img-fluid rounded-start" alt="...">
                             </div>
                             <div class="col">
-                                <p class="card-title">EH</p>
+                                <p class="card-title" th:text="${nft.likeCount}">EH</p>
                             </div>
                             <div class="col">
                                 <p class="card-text">LI</p>
@@ -80,5 +80,6 @@
         </div>
     </div>
 </section>
+<div th:replace="/fragment/footer.html :: fragment-footer" />
 </body>
 </html>

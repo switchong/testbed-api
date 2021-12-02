@@ -21,4 +21,10 @@ public class GalleryService {
 
         return nftInfo;
     }
+    public List<Nft> NftCollectionIdList(Long collectionId) {
+        List<Nft> nftInfo = nftRepository.findByNftCollectionId(collectionId);
+
+        return nftInfo;
+    }
+
 }
