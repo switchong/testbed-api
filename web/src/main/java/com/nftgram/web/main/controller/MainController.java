@@ -21,21 +21,10 @@ public class MainController {
 
     @GetMapping("/")
     public String Main(Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException, ParseException {
-        String name = "";
-        Long nftId = Long.valueOf(1);
-
-//        List<MainResponse> mainResponse = mainService.nftSearch(name);
-
         List<MainResponse> mainResponseAll = mainService.findAllList(pageable);
-
-//        ArrayList<Nft> mainResponse = mainService.nftIdSearch(nftId);
 
         model.addAttribute("nftList",mainResponseAll);
 
-
-//        System.out.print("NFT:::::"+mainResponse.get(0));
-
         return "index";
     }
-
 }

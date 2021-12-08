@@ -97,7 +97,7 @@ public class MainService {
     }
 
     public List<MainResponse> findAllList(Pageable pageable)  throws ParseException {
-        Page<Nft> nftRepositoryAll = nftRepository.findAll(pageable);
+        List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable);
 
         List<MainResponse> response = new ArrayList<>();
 
@@ -112,20 +112,25 @@ public class MainService {
             } else if(nftInfo.getCreatorProfileImageUrl() != null) {
                 userImage = nftInfo.getCreatorProfileImageUrl();
             }
-            if(nftInfo.getLastSaleUserName() != null) {
+            if(nftInfo.getLastSaleUserName() != null && !nftInfo.getLastSaleUserName().equals("NullAddress")) {
                 userName = nftInfo.getLastSaleUserName();
-            } else if(nftInfo.getOwnerUserName() != null) {
+            } else if(nftInfo.getOwnerUserName() != null && !nftInfo.getOwnerUserName().equals("NullAddress")) {
                 userName = nftInfo.getOwnerUserName();
-            } else if(nftInfo.getCreatorUserName() != null) {
+            } else if(nftInfo.getCreatorUserName() != null && !nftInfo.getCreatorUserName().equals("NullAddress")) {
                 userName = nftInfo.getCreatorUserName();
             }
+            if(userName == null) {
+                userName = nftInfo.getCollectionName();
+            }
             mainResponse = MainResponse.builder()
-                    .name(userName)
-                    .username(nftInfo.getCreatorUserName())
+                    .nftId(nftInfo.getNftId())
+                    .name(nftInfo.getName())
+                    .username(userName)
                     .likeCount(nftInfo.getLikeCount())
                     .favoriteCount(nftInfo.getFavoriteCount())
                     .userImageUrl(userImage)
                     .nftImageUrl(nftInfo.getImageUrl())
+                    .nftCollectionName(nftInfo.getCollectionName())
                     .nftCollectionId(nftInfo.getNftCollection().getNftCollectionId())
                     .localDate(nftInfo.getCreateDate())
                     .build();

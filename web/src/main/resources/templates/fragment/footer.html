@@ -2,32 +2,113 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="fragment-footer">
-    <div class="dim-layer">
-        <div class="dimBg"></div>
-        <div id="nft-layer-pop" class="pop-layer wrap_layer_popup">
-            <div class="pop-container">
-                <div class="pop-conts">
-                    <!--content //-->
-                    <div class="wrap_layer_popup" id="nft-layer-content">
-                        <div class="pop_close"><a href="javascript:;" onclick="closeListening();"><img src="../../img/popup/ico_pop_close.png" alt="듣기 팝업 닫기 버튼"></a></div>
+    <div class="wrap_layer_popup" id="nft-layer-pop">
+        <input type="hidden" name="nft_id" value="" />
+        <input type="hidden" name="nft_image_url" value="" />
+        <input type="hidden" name="nft_name" value="" />
+        <input type="hidden" name="user_name" value="" />
+        <div class="pop_close">
+            <a href="javascript:void(0);" onclick="layerPopClose();" ><img th:src="@{../img/popup/ico_pop_close.png}" alt="팝업 닫기 버튼"></a>
+        </div>
 
-                        <div class="nft-detail-container">
-                            <div class="nft-detail-wrapper">
-                                <div class="nft-home">
+        <div class="nft-detail-container">
+            <div class="nft-detail-wrapper">
+                <div class="nft-form" id="nft-home">
+                    <div class="nft-image">
+                        <!--<img class="nft-image-home" src="" />-->
+                    </div>
+                </div>
+                <div class="nft-form" id="nft-info">
+                    <table class="info-table">
+                        <tr class="info-attribute attr-description" data-attr="description">
+                            <td>DESCRIPTION</td>
+                        </tr>
+                        <tr class="attribute-text attr-description-row">
+                            <td class="td-description">a</td>
+                        </tr>
+                        <tr class="info-attribute attr-properties" data-attr="properties">
+                            <td>PROPERTIES</td>
+                        </tr>
+                        <tr class="attribute-text attr-properties-row">
+                            <td class="td-properties">
+                                <div class="prop-info">
+                                    <p class="card-text">ACCESSORY</p>
+                                    <h3 class="card-text">EARING</h3>
+                                    <p class="card-text">25%</p>
                                 </div>
-                                <div class="nft-info">
-                                </div>
-                                <div class="nft-comment">
-                                </div>
-                            </div>
+                            </td>
+                        </tr>
+                        <tr class="info-attribute attr-detail" data-attr="detail">
+                            <td>DETAIL</td>
+                        </tr>
+                        <tr class="attribute-text attr-detail-row">
+                            <td class="td-detail">c</td>
+                        </tr>
+                        <tr class="info-attribute attr-about" data-attr="about">
+                            <td>ABOUT <span class="text-secondary"></span></td>
+                        </tr>
+                        <tr class="attribute-text attr-about-row">
+                            <td class="td-about">d</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="nft-form" id="nft-comment">
+                    <div class="comment-area">
+                        <div class="comment-top">
+                            <img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/>
                         </div>
-
-                        <div class="chg_list">
-                            <button type="button" class="arrows prev">PREV</button>
-                            <button type="button" class="arrows next">NEXT</button>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea3"></label>
+                            <textarea class="form-control" id="exampleFormControlTextarea3" rows="3" name="comment" value="" ></textarea>
+                            <button class="btn btn-primary comment_btn" >GRAM</button>
                         </div>
                     </div>
-                    <!--// content-->
+                    <div class="comment-list">
+                        <div class="comment-list-row">
+                            <div class="user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
+                            <div class="user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
+                            <div class="user-comment">DALDMALMWLDMAWLDWALMDALWDMAWLMDAWLMDWAL</div>
+                        </div>
+                        <div class="comment-list-row">
+                            <div class="user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
+                            <div class="user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
+                            <div class="user-comment">DALDMALMWLDMAWLDWALMDALWDMAWLMDAWLMDWAL</div>
+                        </div>
+                        <div class="comment-list-row">
+                            <div class="user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
+                            <div class="user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
+                            <div class="user-comment">DALDMALMWLDMAWLDWALMDALWDMAWLMDAWLMDWAL</div>
+                        </div>
+                        <div class="comment-list-row">
+                            <div class="user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
+                            <div class="user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
+                            <div class="user-comment">DALDMALMWLDMAWLDWALMDALWDMAWLMDAWLMDWAL</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nft-btn">
+                    <p><button class="btn nft-btn-form on" id="nft-btn-home" data-btn="home" >HOME</button></p>
+                    <p><button class="btn nft-btn-form" id="nft-btn-info" data-btn="info" >INFO</button></p>
+                    <p><button class="btn nft-btn-form mb-3" id="nft-btn-comment" data-btn="comment" >COMMENT</button></p>
+                    <p><button class="btn nft-btn-form" id="nft-btn-like" data-btn="like" >LIKE</button></p>
+                    <p><button class="btn nft-btn-form" id="nft-btn-market" data-btn="market" data-link="">MARKET</button></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chg-list">
+            <button type="button" class="arrows prev">PREV</button>
+            <button type="button" class="arrows next">NEXT</button>
+        </div>
+        <div class="nft-title-area">
+            <div class="nft-title-info">
+                <h4 class="nft-title">NFT TITLE #1232</h4>
+                <div class="nft-user-info">
+                    <div class="nft-title-user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
+                    <div class="nft-title-user">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
+                    <div class="nft-title-etc">
+                        <img th:src="@{../img/icon/like.png}" class="whIs20"/><span class="likeCount">0</span>
+                    </div>
                 </div>
             </div>
         </div>

@@ -162,7 +162,6 @@ $.fn.imagesLoaded = function( callback ) {
 };
 
 var Gallery = (function() {
-
 	var $gallery = $( '#gr-gallery' ),
 		$itemsContainer = $gallery.children( 'div.gr-main' ).hide(),
 		$items = $itemsContainer.find( 'figure' ),
@@ -192,6 +191,13 @@ var Gallery = (function() {
 		},
 		transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ] + '.cbpFWSlider',
 		transformName = transformNames[ Modernizr.prefixed( 'transform' ) ];
+	// 커스텀마이징 추가
+	var $itemCount = parseInt($items.length%3);
+	var $layoutArr = new Array();
+	for(var i=0;i<$itemCount;i++) {
+		$layoutArr.push(3);
+	}
+	var $wallCount = $layoutArr.length;
 
 	function init( settings ) {
 
@@ -212,7 +218,7 @@ var Gallery = (function() {
 	function Room( $items ) {
 
 		this.$el = $( '<div class="gr-room"><div class="gr-wall-main"><div class="gr-floor"></div></div></div>' ).insertAfter( $itemsContainer );
-		// todo: check the real perspective value for widths > x
+		// t_o_do: check the real perspective value for widths > x
 		// the problem here is that if the wall's width (window width) is too large, and the perspective value is too small.
 		// We will see the background in a certain poitn of time when the wall is rotating (at least in firefox)
 		// we need to adjust the value of the perspective according to the value of the current window's width
@@ -260,6 +266,8 @@ var Gallery = (function() {
 
 			// add navigation
 			if( this.totalItems > 1 ) {
+				$( '.chg-list .arrows.prev' ).on( 'click', $.proxy( this.navigate, this, 'prev' ) );
+				$( '.chg-list .arrows.next' ).on( 'click', $.proxy( this.navigate, this, 'next' ) );
 				this.$navPrev = $( '<span class="gr-prev bi bi-caret-right">prev</span>' ).on( 'click', $.proxy( this.navigate, this, 'prev' ) );
 				this.$navNext = $( '<span class="gr-next bi bi-caret-left">next</span>' ).on( 'click', $.proxy( this.navigate, this, 'next' ) );
 				this.$nav = $( '<nav/>' ).append( this.$navPrev, this.$navNext ).appendTo( $gallery );
@@ -304,6 +312,9 @@ var Gallery = (function() {
 
 			var perwall = Math.floor( this.totalItems / 4 ),
 				lastwall = perwall + this.totalItems % 4;
+			$.each($layoutArr, function(k, v){
+
+			});
 
 			return support.transforms3d ? [perwall,perwall,perwall,lastwall] : [this.totalItems];
 
@@ -363,21 +374,34 @@ var Gallery = (function() {
 			this.nftImageClick($wallElem);
 		},
 		nftImageClick : function( $wallElem ) {
-			var $wallElem = $wallElem || this.$mainWall,
-				wall = this.walls[ this.currentWall ];
+			var $wallElem = $wallElem || this.$mainWall;
 
 			$wallElem.find('img').on('click',function(){
-				var imgUrl = $(this).attr('src');
 				var nftId = $(this).data('nftid');
-				var href = $(this).data('layer-btn');
-				layer_popup(href);
-				var parent_figure = $('#nftLayout').find('#nft_'+nftId);
-				console.log(nftId);
-				console.log(parent_figure);
+				var PopId = "nft-layer-pop";
+				layerPopId(PopId);
+
+				var figureDom = $('#nft_'+nftId).clone();
+				// layer-popup
+				// $('#'+PopId).find('#nft-home').html("");	// 초기화
+
+				layerPopGallery(nftId);
+
+				// $('#'+PopId).find('#nft-home').append(figureDom);
+
 			});
 		},
-		changeWall : function( dir ) {
+		nftFigureClone : function(nftId) {
+			// $('#nft-layer-pop').find('#nft-home').html("");	// 초기화
 
+			var figureDom = $('#nft_'+nftId).clone();
+			// layer-popup 가져오기
+			layerPopGallery(nftId);
+
+			// $('#nft-layer-pop').find('#nft-home').append(figureDom);
+		},
+		changeWall : function( dir ) {
+			console.log("changeWall : "+dir);
 			// set origins
 			// change current wall's width to windows width and reorganize items accordingly:
 			this.$mainWall.css( {
@@ -600,7 +624,12 @@ var Gallery = (function() {
 				else {
 					this.$mainWall.stop().animate( { left : translationVal }, Gallery.settings.speed, $.proxy( afterAnim, this ) );
 				}
+				console.log("jump item: " + $item.find('img'));
+				var nftId = $item.find('img').data('nftid');
+				console.log("jump : " + nftId);
 
+
+				this.nftFigureClone(nftId);
 			}, this );
 
 			if( this.caption !== -1 ) {
@@ -612,6 +641,7 @@ var Gallery = (function() {
 
 		},
 		destroy : function() {
+			console.log("destroy");
 			this.$el.remove();
 			this.hideDescription();
 			this.$nav.remove();

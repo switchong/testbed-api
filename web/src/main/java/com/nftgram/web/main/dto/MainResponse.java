@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 public class MainResponse {
     private Boolean findFlag;
 
+    private Long nftId;
+
     private String name;
 
     private String username;
@@ -24,18 +26,22 @@ public class MainResponse {
 
     private String nftImageUrl;
 
+    private String nftCollectionName;
+
     private Long nftCollectionId;
 
     private LocalDateTime localDate;
 
     @Builder
-    public MainResponse(String name, String username, Long likeCount, Long favoriteCount, String userImageUrl, String nftImageUrl,Long nftCollectionId , LocalDateTime localDate) {
+    public MainResponse(Long nftId, String name, String username, Long likeCount, Long favoriteCount, String userImageUrl, String nftImageUrl,String nftCollectionName, Long nftCollectionId , LocalDateTime localDate) {
+        this.nftId = nftId;
         this.name = name;
         this.username = username;
         this.likeCount = likeCount;
         this.favoriteCount = favoriteCount;
         this.userImageUrl = userImageUrl;
         this.nftImageUrl = nftImageUrl;
+        this.nftCollectionName = nftCollectionName;
         this.nftCollectionId = nftCollectionId;
         this.localDate = localDate;
     }

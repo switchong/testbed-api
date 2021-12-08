@@ -4,22 +4,6 @@ $(document).ready(function($) {
     var pop       = $('#openListening');
     var audioFile = document.querySelector('.mp3_player');
 
-    var popSlider = new Swiper(pop.find('.swiper-container'), {
-        init: false,
-        loop: true,
-        slidesPerView: 1,
-        allowTouchMove: false,
-        navigation: {
-            prevEl: pop.find('.swiper-navigation .prev'),
-            nextEl: pop.find('.swiper-navigation .next'),
-        },
-        on: {
-            slideChangeTransitionStart: function() {
-                audioFile.pause();
-            }
-        }
-    });
-
     $('[data-mp3]').click(function(e) {
         e.preventDefault();
         var parentName = $(this).parent()[0].name;
@@ -32,80 +16,6 @@ $(document).ready(function($) {
             audioFile.src = 'https://korean-ndrm.siwonschool.com/Korea/listening/' + audioSrc + '-0' + step + '.mp3';
             audioFile.play();
         }
-    });
-
-    $('.chg_list > button').on("click",function(){
-        var cls = $(this).attr('class');
-        var cate_num = $("input[name=cate_num]").val();
-        var cate = parseInt($("input[name=cate]").val());
-        var gdx = parseInt($("input[name=gdx]").val());
-        var uid = $("input[name=uid]").val();
-
-        var l_uid = "";
-        var l_cate = cate;
-
-        // 페이지 내의 마지막 정보 가져오기
-        var last_eq = $('#listen_list > li').length-1;
-        var first_uid = $('#listen_list > li').eq(0).attr('id');	// uid
-        var last_uid = $('#listen_list > li').eq(last_eq).attr('id');	// uid
-        var last_page = $('#pagearea_listen_list > a').length;
-        console.log(last_uid);
-        // 카테고리 내의 gdx 증감
-        if(cls == "arrows prev") {
-            gdx--;
-        } else if(cls == "arrows next") {
-            gdx++;
-        }
-
-        if(gdx < 1) {
-            gdx = 4;
-            cate--;
-        } else if(gdx > 4) {
-            gdx = 1;
-            cate++;
-        }
-
-        if(cate < 1) {
-            cate = 1;
-            gdx = 1;
-        } else if(cate > 12) {
-            cate = 1;
-        }
-
-        // 카테고리로 검색시 롤링
-        if(cate_num > 0) {
-            l_cate = lpad(cate_num, 2, "0");	// 빈값채우기
-        } else {
-            l_cate = lpad(cate, 2, "0");	// 빈값채우기
-        }
-
-        l_uid = l_cate+"_"+"0"+gdx;
-
-        var page = parseInt($("input[name=page_"+obj+"]").val());
-        if(uid == first_uid && cls == "arrows prev") {
-            if(page >= 1) {
-                page--;
-            }
-            if(page > 0) {
-                $("input[name=page_"+obj+"]").val(page);
-                page_change(obj,page);
-            } else if (page == 0) {
-                alert("첫 페이지 입니다.");
-                return false;
-            }
-        } else if(uid == last_uid && cls == "arrows next") {
-            if(page < last_page) {
-                page++;
-                $("input[name=page_"+obj+"]").val(page);
-                page_change(obj,page);
-            } else {
-                alert("마지막 페이지 입니다.");
-                return false;
-            }
-        }
-
-        openListening(l_uid);
-
     });
 
     load_list(obj);
@@ -141,20 +51,6 @@ function openListening(uid) {
     $('input[name=cate]').val(cate);
     $('input[name=gdx]').val(gdx);
     $('input[name=uid]').val(uid);
-}
-
-function closeListening() {
-    var pop       = $('#nft-layer-content');
-    var slider    = document.querySelector('#nft-layer-content .swiper-container').swiper;
-    var audioFile = document.querySelector('.mp3_player');
-
-    audioFile.pause();
-    pop.fadeOut(function() {
-        slider.removeAllSlides();
-    });
-    $('.layer_popup_bg').fadeOut(function() {
-        $(this).remove();
-    });
 }
 
 function cateSelect(cate) {

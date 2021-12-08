@@ -8,33 +8,19 @@
 
 <!-- Section-->
 <section class="py-5" >
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-            <div class="col mb-5" th:each="nft: ${nftList}">
+    <div class="container px-4 px-lg-5 mt-5" id="nftgram_wrap">
+        <input type="hidden" name="page" value="1" />
+        <div class="card-deck" id="nftgram-list">
+            <div class="card" th:each="nft: ${nftList}">
                 <!--/*@thymesVar id="nft" type="com.nftgram.core.domain.nftgram.Nft"*/-->
                 <!--/*@thymesVar id="nft" type="com.nftgram.web.main.dto.MainResponse"*/-->
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <p>
-                        <a class="btn btn-lg btn-secondary" href="/gallery" th:href="@{'/gallery/'+${nft.nftCollectionId}}">
-                    <img class="card-img-top" th:src="${nft.nftImageUrl}" th:alt="${nft.name}" />
-                        </a>
-                    </p>
-                    <!-- Product actions-->
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col">
-                                <img th:src="${nft.userImageUrl}" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col">
-                                <p class="card-title" th:text="${nft.likeCount}">EH</p>
-                            </div>
-                            <div class="col">
-                                <p class="card-text">LI</p>
-                            </div>
-                        </div>
-                    </div>
+                <img class="card-img-top" th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-collectionid="${nft.nftCollectionId}" th:data-nid="${nft.nftId}" width="301px"  height="301px"/>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <img th:src="@{/img/icon/Profile_icon.png}" class="card-img-user" > <small class="text-muted" th:text="${nft.username}"></small>
+                    </h5>
+                    <p class="card-text" th:text="${nft.nftCollectionName}"></p>
+                    <p class="card-text"><small class="text-muted" th:text="${nft.localDate}"></small></p>
                 </div>
             </div>
 

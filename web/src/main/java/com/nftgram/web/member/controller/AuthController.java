@@ -7,21 +7,16 @@ import com.nftgram.web.member.dto.response.NftMemberLoginResponse;
 import com.nftgram.web.member.dto.response.NftMemberSignupResponse;
 import com.nftgram.web.member.service.MemberAuthService;
 import lombok.RequiredArgsConstructor;
-
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-
-
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -42,6 +37,18 @@ public class AuthController {
     public String login(Model model) {
         model.addAttribute("nftMemberLoginRequest", new NftMemberLoginRequest());
         return  "auth/nft_login";
+    }
+
+    @GetMapping("/mypage")
+    public String mypage(Model model) {
+        model.addAttribute("nftMemberLoginRequest", new NftMemberLoginRequest());
+        return  "member/mypage";
+    }
+
+    @GetMapping("/mywallet")
+    public String wallet(Model model) {
+        model.addAttribute("nftMemberLoginRequest", new NftMemberLoginRequest());
+        return  "member/mywallet";
     }
 
     /**

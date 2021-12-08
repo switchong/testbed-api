@@ -1,0 +1,24 @@
+@media  (min-width: 1200px) {
+    .container {
+        max-width: 1440px;
+    }
+}
+#navigation-top #navigation-country .nav-country{width: 1.863rem;height: 1.863rem;margin: 0.013rem 0 0.013rem;}
+#navigation-top #navigation-country .nav-country .nav-country-img{ cursor: pointer;width:1.5rem;height:1rem;}
+.gallery-view-type img{
+    cursor: pointer;
+}
+#nftgram-list .card {
+    flex: 0 0 17%;
+    margin-bottom: 15px;
+}
+img.card-img-top {
+    cursor: pointer;
+}
+#nftgram-list .card-body {
+    border-top: 1px solid rgba(0,0,0,.125);
+}
+#nftgram-list .card-body img.card-img-user {
+    width: 1.575rem;
+    height: 1.575rem;
+}
