@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Table
+@Table(name = "nft_comment")
 public class NftComment extends BaseEntity {
 
     @Id

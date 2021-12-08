@@ -12,6 +12,10 @@ public interface NftCustomRepository {
 
     Page<Nft> findAllPage(Pageable pageable);
 
+    List<Nft> findAllNft(Pageable pageable);
+
+    List<Nft> findAllNftGallery(Pageable pageable);
+
     List<Nft> findByNftCollectionId(Long nftCollectionId);
 
     List<Nft> findByOwnerUserName(String username);

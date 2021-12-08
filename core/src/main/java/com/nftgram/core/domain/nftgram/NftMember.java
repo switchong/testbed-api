@@ -2,7 +2,6 @@ package com.nftgram.core.domain.nftgram;
 
 
 import com.nftgram.core.domain.common.BaseEntity;
-import com.nftgram.core.domain.common.ImageStorage;
 import com.nftgram.core.domain.dto.NftMemberDto;
 import com.nftgram.core.domain.member.MemberStatus;
 import lombok.AccessLevel;
@@ -16,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
+@Table(name = "nft_member")
 public class NftMember  extends BaseEntity {
 
     @Id

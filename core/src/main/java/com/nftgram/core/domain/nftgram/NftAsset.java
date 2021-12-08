@@ -3,7 +3,6 @@ package com.nftgram.core.domain.nftgram;
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.nftgram.value.ContractSchema;
 import com.nftgram.core.domain.nftgram.value.ContractType;
-import com.nftgram.core.domain.nftgram.value.ContractTypeConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-@Table
+@Table(name = "nft_asset")
 public class NftAsset  extends BaseEntity {
 
     @Id
@@ -29,7 +28,7 @@ public class NftAsset  extends BaseEntity {
     @Column(nullable = false , length = 100)
     private String assetContractName;
 
-    @Convert(converter = ContractTypeConverter.class)
+    @Enumerated(value = EnumType.STRING )
     @Column(name = "contract_type")
     private ContractType contractType;
 
@@ -62,8 +61,8 @@ public class NftAsset  extends BaseEntity {
                     Long assetContractOwner, String assetContractImageUrl, String assetContractPayoutAddress) {
         this.assetContractAddress = assetContractAddress;
         this.assetContractName = assetContractName;
-        this.contractType = contractType;
-        this.contractSchema = contractSchema;
+        this.contractType = contractType.NFT;
+        this.contractSchema = contractSchema.ERC721;
         this.assetContractDescription = assetContractDescription;
         this.assetContractSymbol = assetContractSymbol;
         this.assetContractOwner = assetContractOwner;

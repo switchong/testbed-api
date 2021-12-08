@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
+@Table(name = "nft_favorite")
 public class NftFavorite extends BaseEntity {
 
     @Id
