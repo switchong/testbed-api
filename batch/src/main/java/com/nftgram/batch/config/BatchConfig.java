@@ -1,9 +1,9 @@
 package com.nftgram.batch.config;
 
 import com.nftgram.core.common.util.date.DateTimeUtil;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.json.JSONObject;
 
 import java.io.IOException;
