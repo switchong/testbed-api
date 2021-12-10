@@ -23,7 +23,7 @@ public class NftMemberWallet extends BaseEntity {
     private  Long nftMemberWalletId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nft_memberId")
+    @JoinColumn(name = "nft_member_id")
     private NftMember nftMember;
 
     @Column(nullable = false , length = 80, unique = true)

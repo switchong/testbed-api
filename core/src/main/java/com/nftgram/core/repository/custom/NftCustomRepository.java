@@ -31,4 +31,12 @@ public interface NftCustomRepository {
     List<Nft> findByCollectionName(String collection);
 
     List<Nft> findByNftCollection(Long collectionId);
+
+    Long updateNftViewCount(Long nftId);
+
+    Long countNftViewCount(Long nftId);
+
+    Long updateNftLikePuls(Long nftId, Long nftMemberId);
+
+    Long updateNftLikeMinus(Long nftId);
 }

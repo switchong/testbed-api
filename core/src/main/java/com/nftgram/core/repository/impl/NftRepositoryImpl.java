@@ -108,4 +108,45 @@ public class NftRepositoryImpl implements NftCustomRepository {
     public List<Nft> findByNftCollection(Long collectionId) {
         return null;
     }
+
+    @Override
+    public Long updateNftViewCount(Long nftId) {
+        Long result = queryFactory.update(nft)
+                .where(nft.nftId.eq(nftId))
+                .set(nft.viewCount, nft.viewCount.add(1))
+                .execute();
+
+        System.out.print(result);
+        return result;
+    }
+
+    @Override
+    public Long countNftViewCount(Long nftId) {
+        Long viewTotal = queryFactory.select(nft.viewCount)
+                .from(nft)
+                .where(nft.nftId.eq(nftId))
+                .fetchOne();
+
+        return viewTotal;
+    }
+
+    @Override
+    public Long updateNftLikePuls(Long nftId, Long nftMemberId) {
+        Long result = queryFactory.update(nft)
+                .where(nft.nftId.eq(nftId))
+                .set(nft.likeCount, nft.likeCount.add(1))
+                .execute();
+
+        return result;
+    }
+
+    @Override
+    public Long updateNftLikeMinus(Long nftId) {
+        Long result = queryFactory.update(nft)
+                .where(nft.nftId.eq(nftId))
+                .set(nft.likeCount, nft.likeCount.subtract(1))
+                .execute();
+        return result;
+    }
+
 }
