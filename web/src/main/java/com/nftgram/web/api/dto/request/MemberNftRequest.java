@@ -9,10 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CommonLikeUpdateRequest {
-
-    private Long nftId;
-
+public class MemberNftRequest {
     private Long nftMemberId;
-
 }

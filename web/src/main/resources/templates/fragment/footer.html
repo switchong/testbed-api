@@ -20,35 +20,43 @@
                 </div>
                 <div class="nft-form" id="nft-info">
                     <table class="info-table">
-                        <tr class="info-attribute attr-description" data-attr="description">
-                            <td>DESCRIPTION</td>
+                        <tr class="info-attribute" data-attr="description">
+                            <td>
+                                <div class="attr-description">DESCRIPTION</div>
+                            </td>
                         </tr>
-                        <tr class="attribute-text attr-description-row">
-                            <td class="td-description">a</td>
+                        <tr class="info-attribute-text attr-description-row">
+                            <td class="attr-description-row-text">a</td>
                         </tr>
-                        <tr class="info-attribute attr-properties" data-attr="properties">
-                            <td>PROPERTIES</td>
+                        <tr class="info-attribute" data-attr="properties">
+                            <td>
+                                <div class="attr-properties">PROPERTIES</div>
+                            </td>
                         </tr>
-                        <tr class="attribute-text attr-properties-row">
-                            <td class="td-properties">
+                        <tr class="info-attribute-text attr-properties-row">
+                            <td class="attr-properties-row-text">
                                 <div class="prop-info">
-                                    <p class="card-text">ACCESSORY</p>
-                                    <h3 class="card-text">EARING</h3>
-                                    <p class="card-text">25%</p>
+                                    <p class="prop-info-nft prop-type">ACCESSORY</p>
+                                    <p class="prop-info-nft prop-value">EARING</p>
+                                    <p class="prop-info-nft prop-per">25%</p>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="info-attribute attr-detail" data-attr="detail">
-                            <td>DETAIL</td>
+                        <tr class="info-attribute" data-attr="detail">
+                            <td>
+                                <div class="attr-detail">DETAIL</div>
+                            </td>
                         </tr>
-                        <tr class="attribute-text attr-detail-row">
-                            <td class="td-detail">c</td>
+                        <tr class="info-attribute-text attr-detail-row">
+                            <td class="attr-detail-row-text">c</td>
                         </tr>
-                        <tr class="info-attribute attr-about" data-attr="about">
-                            <td>ABOUT <span class="text-secondary"></span></td>
+                        <tr class="info-attribute" data-attr="about">
+                            <td>
+                                <div class="attr-about">ABOUT <span class="attr-about-span">COLLECTIONSSSS</span></div>
+                            </td>
                         </tr>
-                        <tr class="attribute-text attr-about-row">
-                            <td class="td-about">d</td>
+                        <tr class="info-attribute-text attr-about-row">
+                            <td class="attr-about-row-text">d</td>
                         </tr>
                     </table>
                 </div>
@@ -103,11 +111,16 @@
         <div class="nft-title-area">
             <div class="nft-title-info">
                 <h4 class="nft-title">NFT TITLE #1232</h4>
-                <div class="nft-user-info">
-                    <div class="nft-title-user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
-                    <div class="nft-title-user">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
-                    <div class="nft-title-etc">
-                        <img th:src="@{../img/icon/like.png}" class="whIs20"/><span class="likeCount">0</span>
+            </div>
+            <div class="nft-title-user-info">
+                <div class="nft-title-user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
+                <div class="nft-title-user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
+                <div class="nft-title-etc">
+                    <div class="etc-eth">
+                        <img th:src="@{../img/icon/Price_icon.png}" class="hIs24 wIs20"/><span class="ethPrice">0</span>
+                    </div>
+                    <div class="etc-like">
+                        <img th:src="@{../img/icon/Like_icon.png}" class="hIs24 wIs20"/><span class="likeCount" id="likeCount">0</span>
                     </div>
                 </div>
             </div>

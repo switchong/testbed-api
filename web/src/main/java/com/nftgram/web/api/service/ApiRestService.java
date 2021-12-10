@@ -1,8 +1,10 @@
 package com.nftgram.web.api.service;
 
 import com.nftgram.core.domain.nftgram.Nft;
+import com.nftgram.core.domain.nftgram.NftLike;
 import com.nftgram.core.repository.NftRepository;
-import com.nftgram.web.main.dto.MainResponse;
+import com.nftgram.core.repository.NftLikeRepository;
+import com.nftgram.web.common.dto.response.CommonNftResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,13 +19,14 @@ import java.util.List;
 @Transactional
 public class ApiRestService {
 
-    private MainResponse mainResponse;
+    private CommonNftResponse commonNftResponse;
     private final NftRepository nftRepository;
+    private final NftLikeRepository nftLikeRepository;
 
-    public List<MainResponse> findAllList(Pageable pageable)  throws ParseException {
+    public List<CommonNftResponse> findAllList(Pageable pageable)  throws ParseException {
         List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable);
 
-        List<MainResponse> response = new ArrayList<>();
+        List<CommonNftResponse> response = new ArrayList<>();
 
         nftRepositoryAll.forEach(nftInfo -> {
             String userName = null;
@@ -46,7 +49,7 @@ public class ApiRestService {
             if(userName == null) {
                 userName = nftInfo.getCollectionName();
             }
-            mainResponse = MainResponse.builder()
+            commonNftResponse = CommonNftResponse.builder()
                     .nftId(nftInfo.getNftId())
                     .name(nftInfo.getName())
                     .username(userName)
@@ -58,16 +61,26 @@ public class ApiRestService {
                     .nftCollectionId(nftInfo.getNftCollection().getNftCollectionId())
                     .localDate(nftInfo.getCreateDate())
                     .build();
-            response.add(mainResponse);
+            response.add(commonNftResponse);
         });
 
         return response;
     }
 
-    public boolean updateViewCount(Long nftId) {
+    public Long updateViewCount(Long nftId) {
+        Long result = nftRepository.updateNftViewCount(nftId);
 
+        Long viewTotal = nftRepository.countNftViewCount(nftId);
 
+        return viewTotal;
+    }
 
-        return true;
+    public Long updateLikeCount(Long nftId, Long nftMemberId) {
+        List<NftLike> nftLikeRepositories = nftLikeRepository.findNftLikeMemberId(nftId, nftMemberId);
+
+        Long result = nftRepository.updateNftLikePuls(nftId, nftMemberId);
+
+        return result;
+
     }
 }

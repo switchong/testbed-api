@@ -1,6 +1,5 @@
 package com.nftgram.web.api.dto.request;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CommonViewCountUpdateRequest {
+public class UpdateLikeCountRequest {
 
     private Long nftId;
-    
+
+    private Long likeFlag;
+
 }

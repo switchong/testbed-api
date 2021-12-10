@@ -47,7 +47,7 @@ function moreView(obj) {
         dataType: "json",
         async:false,
         success : function(data){
-            var html = toList(data.mainResponses);
+            var html = toList(data.nftList);
             // total += data.total;
             $("#"+obj).append(html);
 
@@ -81,3 +81,35 @@ function toList(list) {
     return html;
 }
 /* main auto-loading */
+
+function updateViewCount(nftId) {
+    if(nftId > 0) {
+        $.ajax({
+            url:"/api/upview",
+            type:"POST",
+            dataType: "json",
+            async:false,
+            data:{"nftId":nftId},
+            success : function(data){
+                console.log("updateViewCount : "+data);
+            }
+        });
+    }
+}
+
+function updateLike(likeFlag, nftId) {
+    if(nftId > 0) {
+        var likeCount = parseInt($('#likeCount').text());
+        $.ajax({
+            url:"/api/uplike",
+            type:"POST",
+            dataType: "json",
+            async:false,
+            data:{"nftId":nftId, "likeFlag":likeFlag},
+            success : function(data){
+                likeCount++;
+                console.log(likeCount);
+            }
+        });
+    }
+}

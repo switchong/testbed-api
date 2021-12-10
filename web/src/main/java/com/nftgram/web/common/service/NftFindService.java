@@ -1,4 +1,4 @@
-package com.nftgram.web.main.service;
+package com.nftgram.web.common.service;
 
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.repository.NftAssetRepository;
@@ -15,19 +15,51 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class MainService {
-
+public class NftFindService {
     private CommonNftResponse commonNftResponse;
     private final NftRepository nftRepository;
     private final NftAssetRepository nftAssetRepository;
     private final NftCollectionRepository nftCollectionRepository;
+
+    private List<CommonNftResponse> commonNftResponses = new ArrayList<>();
+
+    /**
+     * 메인 NFT 리스트 검색
+     * @param pageable
+     * @return
+     * @throws ParseException
+     */
 
     public List<CommonNftResponse> findAllList(Pageable pageable)  throws ParseException {
         List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable);
 
         List<CommonNftResponse> response = new ArrayList<>();
 
-        nftRepositoryAll.forEach(nftInfo -> {
+        response = setCommonNftResponses(nftRepositoryAll);
+
+        return response;
+    }
+
+    /**
+     * NFT 갤러리 collection_id 조회하여 검색
+     * @param collectionId
+     * @return
+     */
+    public List<CommonNftResponse> findByNftCollectionId(Long collectionId) {
+        List<Nft> GalleryList = nftRepository.findByNftCollectionId(collectionId);
+
+        return setCommonNftResponses(GalleryList);
+    }
+
+    /**
+     * NFT repository 데이터 공통 파싱
+     * @param nftList
+     * @return
+     */
+    public List<CommonNftResponse> setCommonNftResponses(List<Nft> nftList) {
+        List<CommonNftResponse> response = new ArrayList<>();
+
+        nftList.forEach(nftInfo -> {
             String userName = null;
             String userImage = null;
             Long likeCount = Long.valueOf(0);
@@ -81,7 +113,4 @@ public class MainService {
 
         return response;
     }
-
-
-
 }

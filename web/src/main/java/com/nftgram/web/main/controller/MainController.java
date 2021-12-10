@@ -1,6 +1,7 @@
 package com.nftgram.web.main.controller;
 
-import com.nftgram.web.main.dto.MainResponse;
+import com.nftgram.web.common.dto.response.CommonNftResponse;
+import com.nftgram.web.common.service.NftFindService;
 import com.nftgram.web.main.service.MainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +19,11 @@ import java.util.List;
 public class MainController {
 
     private final MainService mainService;
+    private final NftFindService nftFindService;
 
     @GetMapping("/")
     public String Main(Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException, ParseException {
-        List<MainResponse> mainResponseAll = mainService.findAllList(pageable);
+        List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable);
 
         model.addAttribute("nftList",mainResponseAll);
 

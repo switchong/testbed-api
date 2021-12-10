@@ -1,5 +1,6 @@
 package com.nftgram.web.api.dto.request;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CommonMainPagination {
-    private Long page;
-    private Long size;
+public class UpdateViewCountRequest {
 
+    private Long nftId;
+    
 }

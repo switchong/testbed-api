@@ -1,7 +1,5 @@
-package com.nftgram.web.gallery.dto;
+package com.nftgram.web.common.dto.response;
 
-import com.nftgram.core.repository.NftCollectionRepository;
-import com.nftgram.core.repository.NftRepository;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,11 +9,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GalleryDto {
+public class CommonNftResponse {
 
-    private NftRepository nftRepository;
-
-    private NftCollectionRepository nftCollectionRepository;
+    private Boolean findFlag;
 
     private Long nftId;
 
@@ -27,24 +23,41 @@ public class GalleryDto {
 
     private Long favoriteCount;
 
+    private Long viewCount;
+
+    private String marketLink;
+
     private String userImageUrl;
 
     private String nftImageUrl;
 
+    private String nftCollectionName;
+
     private Long nftCollectionId;
+
+    private String assetContractAddress;
+
+    private String tokenId;
 
     private LocalDateTime localDate;
 
     @Builder
-    public GalleryDto(Long nftId, String name, String username, Long likeCount, Long favoriteCount, String userImageUrl, String nftImageUrl,Long nftCollectionId , LocalDateTime localDate) {
+    public CommonNftResponse(Long nftId, String name, String username, Long likeCount, Long favoriteCount, Long viewCount, String marketLink, String userImageUrl, String nftImageUrl,
+                             String nftCollectionName, Long nftCollectionId, String assetContractAddress, String tokenId, LocalDateTime localDate) {
         this.nftId = nftId;
         this.name = name;
         this.username = username;
         this.likeCount = likeCount;
         this.favoriteCount = favoriteCount;
+        this.viewCount = viewCount;
+        this.marketLink = marketLink;
         this.userImageUrl = userImageUrl;
         this.nftImageUrl = nftImageUrl;
+        this.nftCollectionName = nftCollectionName;
         this.nftCollectionId = nftCollectionId;
+        this.assetContractAddress = assetContractAddress;
+        this.tokenId = tokenId;
         this.localDate = localDate;
     }
+
 }

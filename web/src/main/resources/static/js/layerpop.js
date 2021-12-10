@@ -18,12 +18,14 @@ $(document).ready(function(){
             nft_form.css({"display":"none","height":"100%"});
             $('#nft-'+btnName).css("display","block");
             if(btnName == "info") {
-                $('.attribute-text').removeClass("on");
-                $('.attribute-text').hide();
+                $('.info-attribute-text').removeClass("on");
+                $('.info-attribute-text').hide();
                 $('.info-attribute').eq(0).trigger('click');
             }
         } else if( btnName == "like") {
+            var likeFlag = btnForm.hasClass('on');
             alert('LIKE');
+            return false;
         } else if( btnName == "market") {
             var link = btnForm.data('link');
             if(link == "") {
@@ -37,8 +39,8 @@ $(document).ready(function(){
     $('.info-attribute').on('click',function(){
         var attr = $(this).data('attr');
         var attr_row = $('.attr-'+attr+'-row');
-        // $('.attribute-text').removeClass("on");
-        // $('.attribute-text').hide();
+        // $('.info-attribute-text').removeClass("on");
+        // $('.info-attribute-text').hide();
         if($(this).hasClass("on")) {
             $(this).removeClass("on");
             attr_row.hide();
@@ -84,6 +86,7 @@ function layerPopId(layerId, boxPosition){
 
 function layerPopGallery(nftId) {
     layerPopNftSet(nftId);
+    $('#nft-layer-pop .nft-btn').find('.nft-btn-form').eq(0).trigger('click');
     $('.nft-form').css({"display":"none","height":"100%"});
     $('#nft-home').css("display","block");
     $('#nft-home .nft-image').css("height","100%");
@@ -93,11 +96,16 @@ function layerPopGallery(nftId) {
 
     var imgSrc = figure.find('.card-img-top').attr('src');
     $('#nft-home .nft-image').css({"background":"url('"+imgSrc+"') no-repeat center"});
+
+    updateViewCount(nftId);
     return false;
 }
 function layerPopNftSet(nftId) {
+    var figure = $("#gr-gallery #nft_"+nftId);
+    var imgSrc = figure.find('.card-img-top').attr('src');
+
     $('input[name="nft_id"]').val(nftId);
-    $('input[name="nft_image_url"]').val(nftId);
+    $('input[name="nft_image_url"]').val(imgSrc);
     $('input[name="nft_name"]').val(nftId);
     $('input[name="user_name"]').val(nftId);
 }

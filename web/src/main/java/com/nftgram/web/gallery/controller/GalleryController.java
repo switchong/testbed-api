@@ -1,9 +1,9 @@
 package com.nftgram.web.gallery.controller;
 
 
-import com.nftgram.web.gallery.dto.response.GalleryResponse;
+import com.nftgram.web.common.dto.response.CommonNftResponse;
+import com.nftgram.web.common.service.NftFindService;
 import com.nftgram.web.gallery.service.GalleryService;
-import com.nftgram.web.main.service.MainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -17,13 +17,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GalleryController {
 
-    private final MainService mainService;
+    private final NftFindService nftFindService;
     private final GalleryService galleryService;
 
 
     @GetMapping("/gallery")
     public String gallery(Model model, Pageable pageable){
-        List<GalleryResponse> NftInfo = galleryService.findAllNftGallery(pageable);
+        List<CommonNftResponse> NftInfo = galleryService.findAllNftGallery(pageable);
 
         model.addAttribute("nftList",NftInfo);
 
@@ -33,7 +33,7 @@ public class GalleryController {
     @GetMapping("/gallery/{collection}")
     public String galleryDetail(Model model , @PathVariable("collection") Long collectionId) {
 
-        List<GalleryResponse> NftInfo = galleryService.findByNftCollectionId(collectionId);
+        List<CommonNftResponse> NftInfo = nftFindService.findByNftCollectionId(collectionId);
 
         model.addAttribute("nftInfo",NftInfo);
 
@@ -43,7 +43,7 @@ public class GalleryController {
     @GetMapping("/gallery/myfavorite")
     public String myfavorite(Model model, Pageable pageable) {
 
-        List<GalleryResponse> NftInfo = galleryService.findAllNftGallery(pageable);
+        List<CommonNftResponse> NftInfo = galleryService.findAllNftGallery(pageable);
 
         model.addAttribute("nftInfo",NftInfo);
 
@@ -53,7 +53,7 @@ public class GalleryController {
     @GetMapping("/gallery/mycollection")
     public String mycollection(Model model, Pageable pageable) {
 
-        List<GalleryResponse> NftInfo = galleryService.findAllNftGallery(pageable);
+        List<CommonNftResponse> NftInfo = galleryService.findAllNftGallery(pageable);
 
         model.addAttribute("nftInfo",NftInfo);
 
