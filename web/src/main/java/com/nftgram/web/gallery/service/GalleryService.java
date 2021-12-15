@@ -27,7 +27,7 @@ public class GalleryService {
     private List<CommonNftResponse> commonNftResponses = new ArrayList<>();
 
     public List<Nft> findByCollectionName(String collection) {
-        List<Nft> nftInfo = nftRepository.findByCollectionName(collection);
+        List<Nft> nftInfo = nftRepository.findByNftCollectionName(collection);
 
         return nftInfo;
     }

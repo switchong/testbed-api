@@ -8,6 +8,7 @@ import com.nftgram.web.common.dto.response.CommonNftResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class NftFindService {
     private CommonNftResponse commonNftResponse;
     private final NftRepository nftRepository;
@@ -29,7 +31,7 @@ public class NftFindService {
      * @return
      * @throws ParseException
      */
-
+    @Transactional(readOnly = true)
     public List<CommonNftResponse> findAllList(Pageable pageable)  throws ParseException {
         List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable);
 
@@ -45,6 +47,7 @@ public class NftFindService {
      * @param collectionId
      * @return
      */
+    @Transactional(readOnly = true)
     public List<CommonNftResponse> findByNftCollectionId(Long collectionId) {
         List<Nft> GalleryList = nftRepository.findByNftCollectionId(collectionId);
 
@@ -81,7 +84,8 @@ public class NftFindService {
                 userName = nftInfo.getCreatorUserName();
             }
             if(userName == null) {
-                userName = nftInfo.getCollectionName();
+                userName = "#null";
+//                userName = nftInfo.getCollectionName();
             }
             if(nftInfo.getLikeCount().toString() != "") {
                 likeCount = nftInfo.getLikeCount();

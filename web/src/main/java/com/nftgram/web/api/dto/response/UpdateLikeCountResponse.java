@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UpdateLikeCountPlusResponse {
-    private boolean loginFlag;
+public class UpdateLikeCountResponse {
+    private String loginFlag;
 
-    private boolean likeFlag;
+    private String likeFlag;
 
     private Long nftId;
 
@@ -19,7 +19,7 @@ public class UpdateLikeCountPlusResponse {
     private Long likeTotalCount;
 
     @Builder
-    public UpdateLikeCountPlusResponse(boolean loginFlag, boolean likeFlag, Long nftId, Long nftMemberId, Long likeTotalCount) {
+    public UpdateLikeCountResponse(String loginFlag, String likeFlag, Long nftId, Long nftMemberId, Long likeTotalCount) {
         this.loginFlag = loginFlag;
         this.likeFlag = likeFlag;
         this.nftId = nftId;

@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,7 +16,7 @@ public class NftCommentResponse {
 
     private Long nftId;
 
-    private Long nftMemberId;
+    private String user;
 
     private String assetContractAddress;
 
@@ -34,17 +34,17 @@ public class NftCommentResponse {
 
     private String isMine;
 
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
 
     @Builder
-    public NftCommentResponse(Long commId, Long nftId, Long nftMemberId, String assetContractAddress, String tokenId,
-                              Long depth, Long parent, String title, String comment, String activeStatus, String isMine, LocalDateTime createdDate) {
+    public NftCommentResponse(Long commId, Long nftId, String user, String assetContractAddress, String tokenId,
+                              Long depth, Long parent, String title, String comment, String activeStatus, String isMine, LocalDate createdDate) {
         if(isMine.isEmpty()) {
             isMine = "N";
         }
         this.commId = commId;
         this.nftId = nftId;
-        this.nftMemberId = nftMemberId;
+        this.user = user;
         this.assetContractAddress = assetContractAddress;
         this.tokenId = tokenId;
         this.depth = depth;

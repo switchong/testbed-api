@@ -7,25 +7,20 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NftPropertiesResponse {
-
-    private Long propId;
-
-    private Long nftId;
-
+public class NftPropertiesGroupResponse {
     private String traitType;
 
     private String traitValue;
 
-    private Long orderCount;
+    private Long traitCount;
+
+    private Short traitPercent;
 
     @Builder
-    public NftPropertiesResponse(Long propId, Long nftId, String traitType, String traitValue, Long orderCount) {
-        this.propId = propId;
-        this.nftId = nftId;
+    public NftPropertiesGroupResponse(String traitType, String traitValue, Long traitCount, Short traitPercent) {
         this.traitType = traitType;
         this.traitValue = traitValue;
-        this.orderCount = orderCount;
+        this.traitCount = traitCount;
+        this.traitPercent = traitPercent;
     }
-
 }

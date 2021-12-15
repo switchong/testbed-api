@@ -9,12 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class NftCommentRequest {
-//    private Long commId;
-
+public class NftCommentSaveRequest {
     private Long nftId;
 
-    private Long page;
+    private String comment;
 
-    private Long size;
 }

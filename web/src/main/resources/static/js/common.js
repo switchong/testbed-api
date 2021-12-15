@@ -1,7 +1,7 @@
 $(document).ready(function(){
     //nav country
     $('#navigation-country .nav-country').on('click',function(){
-        var country = $(this).data('country');
+        let country = $(this).data('country');
         if(country != "en") {
             alert("Comming soon!!");
             return false;
@@ -9,7 +9,7 @@ $(document).ready(function(){
     });
     // main nft image click
     $('#nftgram-list .card-img-top').on('click',function(){
-        var collectionId = $(this).data('collectionid');
+        let collectionId = $(this).data('collectionid');
         location.href="/gallery/"+collectionId;
     });
     // scroll auto load
@@ -24,7 +24,7 @@ $(document).ready(function(){
     });
     // view-type click event
     $('.gallery-view-type').on('click',function(){
-        var view_type = $(this).data('view');
+        let view_type = $(this).data('view');
         if(view_type == "list") {
             location.href="/";
         } else {
@@ -47,7 +47,7 @@ function moreView(obj) {
         dataType: "json",
         async:false,
         success : function(data){
-            var html = toList(data.nftList);
+            let html = toList(data.nftList);
             // total += data.total;
             $("#"+obj).append(html);
 
@@ -58,13 +58,13 @@ function moreView(obj) {
     });
     $('input[name="page"]').val(nextPage);
     $('#nftgram-list .card-img-top').on('click',function(){
-        var collectionId = $(this).data('collectionid');
+        let collectionId = $(this).data('collectionid');
         location.href="/gallery/"+collectionId;
     })
 }
 
 function toList(list) {
-    var html = '';
+    let html = '';
     $.each(list, function(key, nft){
         html += '<div class="card" >\n' +
             '                <img class="card-img-top" src="'+nft.nftImageUrl+'" alt="'+nft.name+'" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'" width="301px"  height="301px"/>\n' +
@@ -82,34 +82,107 @@ function toList(list) {
 }
 /* main auto-loading */
 
-function updateViewCount(nftId) {
+function getNftOne(nftId) {
+    $('input[name="nft_id"]').val(nftId);
+
+    let nftResult;
+    let method = "POST";
+    let url = "/api/nft";
+    let param = {"nftId":nftId};
     if(nftId > 0) {
-        $.ajax({
-            url:"/api/upview",
-            type:"POST",
-            dataType: "json",
-            async:false,
-            data:{"nftId":nftId},
-            success : function(data){
-                console.log("updateViewCount : "+data);
-            }
-        });
+        // getNftPropertiesCount();
+        nftResult = commonAjaxUrl(method, url, param);
+    }
+    return nftResult;
+}
+
+function getNftPropertiesCount() {
+    let method = "POST";
+    let url = "/api/nft/property";
+    let param = {};
+    propResult = commonAjaxUrl(method, url, param);
+
+    return propResult;
+}
+
+function updateViewCount(nftId) {
+    let method = "POST";
+    let url = "/api/upview";
+    let param = {"nftId":nftId};
+    if(nftId > 0) {
+        commonAjaxUrl(method, url, param);
     }
 }
 
 function updateLike(likeFlag, nftId) {
+    let result;
+    let method = "POST";
+    let url = "/api/uplike";
+    let param = {"nftId":nftId, "likeFlag":likeFlag};
+    let likeCount = parseInt($('#likeCount').text());
     if(nftId > 0) {
-        var likeCount = parseInt($('#likeCount').text());
+        result = commonAjaxUrl(method, url, param);
+        likeCount++;
+    }
+    $('#likeCount').text(likeCount);
+    return result;
+}
+
+function getCommentList(nftId) {
+    let commSize = 10;
+    let total = $('#nft-comment .comment-list .comment-list-row').length;
+    let nextPage = parseInt(total/commSize);
+    let currPage = parseInt($('input[name="nft_comment_page"]').val());
+
+    let result;
+    let row_html = '';
+    let method = "POST";
+    let url = "/api/comment/list";
+    let param = {"nftId":nftId,"page":nextPage,"size":commSize};
+    if(nftId > 0) {
+        result = commonAjaxUrl(method, url, param);
+        if(result.total > 0) {
+            $.each(result.commentResponseList, function(k, comm) {
+                row_html += '<div class="comment-list-row">\n' +
+                    '                            <div class="user-image"><img src="/img/icon/Profile_icon.png" class="whIs30"/></div>\n' +
+                    '                            <div class="user-info">'+comm.user+'<br><span class="time">'+comm.createdDate+'</span></div>\n' +
+                    '                            <div class="user-comment">'+$.nl2br(comm.comment)+'</div>\n' +
+                    '                        </div>';
+            });
+            if(currPage < nextPage) {
+                $('#nft-comment .comment-list').append(row_html);
+            } else {
+                $('#nft-comment .comment-list').html(row_html);
+            }
+            $('input[name="nft_comment_page"]').val(nextPage);
+        }
+
+    }
+    console.log(result);
+}
+
+function commonAjaxUrl (method, url, param) {
+    let ajaxResult;
+    if(method && url && param) {
         $.ajax({
-            url:"/api/uplike",
-            type:"POST",
+            url:url,
+            type:method,
             dataType: "json",
             async:false,
-            data:{"nftId":nftId, "likeFlag":likeFlag},
-            success : function(data){
-                likeCount++;
-                console.log(likeCount);
+            data:param,
+            success : function(result){
+                ajaxResult = result;
             }
         });
     }
+
+    return ajaxResult;
 }
+
+$.nl2br = function(tmpText){
+    return tmpText.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
+};
+
+$.br2nl = function(tmpText){
+    return tmpText.replace(/<br>/g, "\r");
+};

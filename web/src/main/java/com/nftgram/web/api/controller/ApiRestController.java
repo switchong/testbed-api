@@ -1,19 +1,24 @@
 package com.nftgram.web.api.controller;
 
 import com.nftgram.web.api.dto.MainPageDto;
+import com.nftgram.web.api.dto.request.GetNftOneRequest;
 import com.nftgram.web.api.dto.request.MemberNftRequest;
 import com.nftgram.web.api.dto.request.UpdateLikeCountRequest;
 import com.nftgram.web.api.dto.request.UpdateViewCountRequest;
+import com.nftgram.web.api.dto.response.GetNftOneResponse;
 import com.nftgram.web.api.dto.response.MemberNftResponse;
-import com.nftgram.web.api.dto.response.UpdateLikeCountPlusResponse;
+import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.api.service.ApiRestService;
 import com.nftgram.web.common.auth.MemberLoginManager;
+import com.nftgram.web.common.dto.NftCommentDto;
+import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.request.NftCommentRequest;
+import com.nftgram.web.common.dto.request.NftCommentSaveRequest;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
-import com.nftgram.web.common.dto.response.NftCommentResponse;
 import com.nftgram.web.common.service.NftCommentService;
 import com.nftgram.web.common.service.NftFindService;
 import com.nftgram.web.member.dto.NftMemberAuthDto;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +31,7 @@ import java.text.ParseException;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("api")
 public class ApiRestController {
 
@@ -34,19 +40,34 @@ public class ApiRestController {
     private final NftCommentService commentService;
     private final MemberLoginManager memberLoginManager;
 
-    public ApiRestController(ApiRestService apiRestService, NftFindService nftFindService, NftCommentService commentService, MemberLoginManager memberLoginManager) {
-        this.apiRestService = apiRestService;
-        this.nftFindService = nftFindService;
-        this.commentService = commentService;
-        this.memberLoginManager = memberLoginManager;
-    }
-
     @GetMapping("/main/page")
     public MainPageDto getMainPage(Pageable pageable) throws ParseException {
         List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable);
-        MainPageDto mainPageDto = new MainPageDto(mainResponseAll, mainResponseAll.size());
+        MainPageDto mainPageDto = MainPageDto.builder()
+                .total(mainResponseAll.size())
+                .nftList(mainResponseAll)
+                .build();
 
         return mainPageDto;
+    }
+
+    @PostMapping("/nft")
+    public GetNftOneResponse getNftOneResponse(GetNftOneRequest getNftOneRequest) throws GeneralSecurityException, UnsupportedEncodingException {
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+        }
+        GetNftOneResponse getNftOneResponse = apiRestService.getNftOneResponse(getNftOneRequest.getNftId(), memberId);
+
+        return getNftOneResponse;
+    }
+
+    @PostMapping("/nft/property")
+    public NftPropertiesGroupDto nftPropGroupResponse() {
+        NftPropertiesGroupDto propGroupResponse = apiRestService.nftPropertiesCountDto();
+
+        return propGroupResponse;
     }
 
     @PostMapping(value = "/upview", produces = "application/json")
@@ -57,31 +78,21 @@ public class ApiRestController {
     }
 
     @PostMapping(value = "/uplike", produces = "application/json")
-    public UpdateLikeCountPlusResponse updateLikeCountPlusResponse(UpdateLikeCountRequest likeUpdateRequest) throws GeneralSecurityException, UnsupportedEncodingException {
-        boolean loginFlag = false;
-        boolean likeFlag = false;
+    public UpdateLikeCountResponse updateLikeCountResponse(UpdateLikeCountRequest likeUpdateRequest) throws GeneralSecurityException, UnsupportedEncodingException {
         Long likeTotal = Long.valueOf(0);
-
-        NftMemberAuthDto authDto = memberLoginManager.getInfo();
-        if(authDto.getLoginYN().equals("Y")) {
-            loginFlag = true;
-        }
-
-        if(loginFlag == true) {
-            Long result = apiRestService.updateLikeCount(likeUpdateRequest.getNftId(), authDto.getNftMemberId());
-            if(result > 0) {
-                likeFlag = true;
-            }
-        }
-        UpdateLikeCountPlusResponse updateLikeCountPlusResponse = UpdateLikeCountPlusResponse.builder()
-                .loginFlag(loginFlag)
-                .likeFlag(likeFlag)
+        UpdateLikeCountResponse updateLikeCountResponse = UpdateLikeCountResponse.builder()
+                .loginFlag("N")
+                .likeFlag("N")
                 .nftId(likeUpdateRequest.getNftId())
-                .nftMemberId(authDto.getNftMemberId())
                 .likeTotalCount(likeTotal)
                 .build();
 
-        return updateLikeCountPlusResponse;
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            updateLikeCountResponse = apiRestService.updateLikeCount(likeUpdateRequest.getNftId(), authDto.getNftMemberId());
+        }
+
+        return updateLikeCountResponse;
     }
 
     @PostMapping(value = "/member/nft", produces = "application/json")
@@ -90,10 +101,33 @@ public class ApiRestController {
         return null;
     }
 
+    @PostMapping(value = "/comment/list", produces = "application/json")
+    public NftCommentDto nftCommentList(NftCommentRequest commentRequest) throws GeneralSecurityException, UnsupportedEncodingException {
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+        }
+        NftCommentDto isResult = commentService.commentResponseList(commentRequest, memberId);
+
+        return isResult;
+    }
+
     @PostMapping(value = "/comment/save", produces = "application/json")
-    public boolean NftCommentSave(NftCommentRequest commentRequest) {
-        boolean isResult = false;
-        NftCommentResponse commentResponse;
+    public Long nftCommentSave(NftCommentSaveRequest nftCommentSaveRequest) throws GeneralSecurityException, UnsupportedEncodingException {
+        Long isResult = Long.valueOf(0);
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+
+            isResult = commentService.commentSave(nftCommentSaveRequest, memberId);
+        } else {
+            isResult = Long.valueOf(2);
+        }
+
+
+
         return isResult;
     }
 }

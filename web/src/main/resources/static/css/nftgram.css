@@ -14,6 +14,7 @@
 }
 img.card-img-top {
     cursor: pointer;
+    height: 18rem;
 }
 #nftgram-list .card-body {
     border-top: 1px solid rgba(0,0,0,.125);

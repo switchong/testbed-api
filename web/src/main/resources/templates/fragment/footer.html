@@ -4,9 +4,7 @@
 <div th:fragment="fragment-footer">
     <div class="wrap_layer_popup" id="nft-layer-pop">
         <input type="hidden" name="nft_id" value="" />
-        <input type="hidden" name="nft_image_url" value="" />
-        <input type="hidden" name="nft_name" value="" />
-        <input type="hidden" name="user_name" value="" />
+        <input type="hidden" name="nft_comment_page" value="0" />
         <div class="pop_close">
             <a href="javascript:void(0);" onclick="layerPopClose();" ><img th:src="@{../img/popup/ico_pop_close.png}" alt="팝업 닫기 버튼"></a>
         </div>
@@ -72,26 +70,6 @@
                         </div>
                     </div>
                     <div class="comment-list">
-                        <div class="comment-list-row">
-                            <div class="user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
-                            <div class="user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
-                            <div class="user-comment">DALDMALMWLDMAWLDWALMDALWDMAWLMDAWLMDWAL</div>
-                        </div>
-                        <div class="comment-list-row">
-                            <div class="user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
-                            <div class="user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
-                            <div class="user-comment">DALDMALMWLDMAWLDWALMDALWDMAWLMDAWLMDWAL</div>
-                        </div>
-                        <div class="comment-list-row">
-                            <div class="user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
-                            <div class="user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
-                            <div class="user-comment">DALDMALMWLDMAWLDWALMDALWDMAWLMDAWLMDWAL</div>
-                        </div>
-                        <div class="comment-list-row">
-                            <div class="user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
-                            <div class="user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
-                            <div class="user-comment">DALDMALMWLDMAWLDWALMDALWDMAWLMDAWLMDWAL</div>
-                        </div>
                     </div>
                 </div>
                 <div class="nft-btn">
@@ -109,10 +87,10 @@
             <button type="button" class="arrows next">NEXT</button>
         </div>
         <div class="nft-title-area">
-            <div class="nft-title-info">
-                <h4 class="nft-title">NFT TITLE #1232</h4>
+            <div class="nft-title">
+                <h4 class="nft-title-info">NFT TITLE #1232</h4>
             </div>
-            <div class="nft-title-user-info">
+            <div class="nft-title-user">
                 <div class="nft-title-user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
                 <div class="nft-title-user-info">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
                 <div class="nft-title-etc">

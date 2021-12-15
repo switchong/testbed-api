@@ -1,21 +1,19 @@
 package com.nftgram.web.api.dto;
 
 import com.nftgram.web.common.dto.response.CommonNftResponse;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Setter
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MainPageDto {
     private int total;
     private List<CommonNftResponse> nftList;
 
-    public MainPageDto(List<CommonNftResponse> nftList, int total) {
-        this.nftList = nftList;
+    @Builder
+    public MainPageDto(int total, List<CommonNftResponse> nftList) {
         this.total = total;
+        this.nftList = nftList;
     }
 }

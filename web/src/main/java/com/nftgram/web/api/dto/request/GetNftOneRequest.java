@@ -1,4 +1,4 @@
-package com.nftgram.web.common.dto.request;
+package com.nftgram.web.api.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class NftCommentRequest {
-//    private Long commId;
-
+public class GetNftOneRequest {
     private Long nftId;
-
-    private Long page;
-
-    private Long size;
 }

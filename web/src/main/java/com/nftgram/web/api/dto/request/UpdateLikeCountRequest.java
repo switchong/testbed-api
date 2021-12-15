@@ -13,6 +13,6 @@ public class UpdateLikeCountRequest {
 
     private Long nftId;
 
-    private Long likeFlag;
+    private String likeFlag;
 
 }
