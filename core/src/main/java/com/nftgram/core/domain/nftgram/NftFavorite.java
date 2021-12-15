@@ -2,11 +2,13 @@ package com.nftgram.core.domain.nftgram;
 
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.value.ActiveStatus;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @Table(name = "nft_favorite")

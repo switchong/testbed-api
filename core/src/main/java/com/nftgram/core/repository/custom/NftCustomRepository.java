@@ -1,6 +1,7 @@
 package com.nftgram.core.repository.custom;
 
 import com.nftgram.core.domain.nftgram.Nft;
+import com.nftgram.core.dto.NftOneJoinDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,27 +17,22 @@ public interface NftCustomRepository {
 
     List<Nft> findAllNftGallery(Pageable pageable);
 
+    List<Nft> findByNftCollectionName(String collection);
+
     List<Nft> findByNftCollectionId(Long nftCollectionId);
 
-    List<Nft> findByOwnerUserName(String username);
+    NftOneJoinDto findByNftIdOne(Long nftId);
 
-    List<Nft> findByCreatorUserName(String username);
-
-    List<Nft> findByName(String nftName);
-
-    List<Nft> findByAssetContractAddress(String nftAddress);
-
-    Page<Nft> findByNftId(Pageable pageable,Long nftId);
-
-    List<Nft> findByCollectionName(String collection);
-
-    List<Nft> findByNftCollection(Long collectionId);
+    List<Nft> findByNftLikeMember(Pageable pageable, Long nftMemberId);
 
     Long updateNftViewCount(Long nftId);
 
     Long countNftViewCount(Long nftId);
 
-    Long updateNftLikePuls(Long nftId, Long nftMemberId);
+    Long countNftLikeCount(Long nftId);
 
-    Long updateNftLikeMinus(Long nftId);
+    void updateNftLikeCountPuls(Long nftId);
+
+    void updateNftLikeCountMinus(Long nftId);
+
 }

@@ -24,4 +24,12 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
         return result;
     }
 
+    @Override
+    public NftMember findByNftMemberId(Long nftMemberId) {
+        NftMember nftMemberResult = queryFactory.selectFrom(nftMember)
+                .where(nftMember.nftMemberId.eq(nftMemberId))
+                .fetchOne();
+        return nftMemberResult;
+    }
+
 }

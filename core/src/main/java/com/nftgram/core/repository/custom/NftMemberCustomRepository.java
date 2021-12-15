@@ -5,4 +5,6 @@ import com.nftgram.core.domain.nftgram.NftMember;
 public interface NftMemberCustomRepository {
 
     NftMember findByNftMemberUserId(String nftMemberUserId);
+
+    NftMember findByNftMemberId(Long nftMemberId);
 }
