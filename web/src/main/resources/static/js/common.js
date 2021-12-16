@@ -152,11 +152,7 @@ function getCommentList(nftId) {
                         '                        </div>';
                 }
             });
-            if(currPage < nextPage) {
-                $('#nft-comment .comment-list').append(row_html);
-            } else {
-                $('#nft-comment .comment-list').html(row_html);
-            }
+            $('#nft-comment .comment-list').append(row_html);
             $('input[name="nft_comment_page"]').val(nextPage);
         }
 
