@@ -31,7 +31,12 @@ $(document).ready(function(){
             location.href="/gallery";
 
         }
-    })
+    });
+    // wallet-btn
+    $('.nav-link .mywallet').on('click',function(){
+        // wallet check
+        // lod
+    });
 });
 
 /* main auto-loading */
@@ -81,6 +86,19 @@ function toList(list) {
     return html;
 }
 /* main auto-loading */
+
+
+function walletCheck() {
+    let nftResult;
+    let method = "POST";
+    let url = "/api/nft";
+    let param = {"nftId":nftId};
+    if(nftId > 0) {
+        // getNftPropertiesCount();
+        nftResult = commonAjaxUrl(method, url, param);
+    }
+    return nftResult;
+}
 
 function getNftOne(nftId) {
     $('input[name="nft_id"]').val(nftId);

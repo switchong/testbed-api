@@ -1,4 +1,4 @@
-package com.nftgram.core.common.util.opensea.dto.response;
+package com.nftgram.core.common.opensea.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

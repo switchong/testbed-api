@@ -1,10 +1,8 @@
-package com.nftgram.core.common.util.opensea.dto.response;
+package com.nftgram.core.common.opensea.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
-public class OpenseaSingleAssetsResponse {
+@JsonIgnoreProperties({"top_bid"})
+public class SingleAssetBack {
 
     @JsonProperty("id")
     private String id;
@@ -58,6 +56,10 @@ public class OpenseaSingleAssetsResponse {
     private Traits traits;
     @JsonProperty("lastSale")
     private LastSale lastSale;
+
+    public SingleAssetBack() {
+
+    }
 
     @Getter
     private class AssetContract {

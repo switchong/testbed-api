@@ -1,6 +1,7 @@
 package com.nftgram.web.member.controller;
 
 import com.nftgram.web.common.auth.MemberLoginManager;
+import com.nftgram.web.member.dto.NftMemberAuthDto;
 import com.nftgram.web.member.dto.request.NftMemberLoginRequest;
 import com.nftgram.web.member.service.MemberAuthService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,14 +24,24 @@ public class MemberController {
     private final MemberLoginManager memberLoginManager;
 
     @GetMapping("/mypage")
-    public String mypage(Model model) {
+    public String mypage(Model model) throws GeneralSecurityException, UnsupportedEncodingException {
         model.addAttribute("nftMemberLoginRequest", new NftMemberLoginRequest());
-        return  "member/mypage";
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            return  "member/mypage";
+        } else {
+            return  "auth/nft_login";
+        }
     }
 
     @GetMapping("/mywallet")
-    public String wallet(Model model) {
+    public String wallet(Model model) throws GeneralSecurityException, UnsupportedEncodingException {
         model.addAttribute("nftMemberLoginRequest", new NftMemberLoginRequest());
-        return  "member/mywallet";
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            return  "member/mywallet";
+        } else {
+            return  "auth/nft_login";
+        }
     }
 }

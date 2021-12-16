@@ -1,4 +1,4 @@
-package com.nftgram.core.common.util.security;
+package com.nftgram.core.common.security;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

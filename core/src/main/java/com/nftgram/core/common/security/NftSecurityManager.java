@@ -1,4 +1,4 @@
-package com.nftgram.core.common.util.security;
+package com.nftgram.core.common.security;
 
 
 import org.springframework.stereotype.Component;

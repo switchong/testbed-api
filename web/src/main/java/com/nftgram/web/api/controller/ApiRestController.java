@@ -7,6 +7,7 @@ import com.nftgram.web.api.dto.request.UpdateLikeCountRequest;
 import com.nftgram.web.api.dto.request.UpdateViewCountRequest;
 import com.nftgram.web.api.dto.response.GetNftOneResponse;
 import com.nftgram.web.api.dto.response.MemberNftResponse;
+import com.nftgram.web.api.dto.response.MemberWalletResponse;
 import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.api.service.ApiRestService;
 import com.nftgram.web.common.auth.MemberLoginManager;
@@ -99,6 +100,37 @@ public class ApiRestController {
     public MemberNftResponse GetMemberNftInfo(MemberNftRequest memberNftRequest) {
         MemberNftResponse memberNftResponse;
         return null;
+    }
+
+    @PostMapping(value = "/member/wallet/list", produces = "application/json")
+    public MemberWalletResponse memberWalletResponse() throws GeneralSecurityException, UnsupportedEncodingException {
+        String loginFlag = "N";
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+        }
+        MemberWalletResponse memberWalletResponse = MemberWalletResponse.builder()
+                .loginFlag(loginFlag)
+                .build();
+
+        return memberWalletResponse;
+    }
+
+    @PostMapping(value = "/member/wallet/save")
+    public Long memberWalletSave(String walletContractAddress) throws GeneralSecurityException, UnsupportedEncodingException {
+        Long isResult = Long.valueOf(0);
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+            isResult = apiRestService.memberWalletSave(walletContractAddress, memberId);
+        } else {
+            isResult = Long.valueOf(2); //Error
+        }
+
+        return isResult;
+
     }
 
     @PostMapping(value = "/comment/list", produces = "application/json")

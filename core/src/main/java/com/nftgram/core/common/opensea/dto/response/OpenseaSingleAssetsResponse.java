@@ -1,17 +1,18 @@
-package com.nftgram.core.common.util.opensea.dto.response;
+package com.nftgram.core.common.opensea.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.json.simple.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
-@ToString
-@JsonIgnoreProperties({"top_bid"})
-public class SingleAssetBack {
+@JsonIgnoreProperties(ignoreUnknown = true) // json 자동 ignore
+public class OpenseaSingleAssetsResponse implements Serializable {
 
     @JsonProperty("id")
     private String id;
@@ -45,24 +46,29 @@ public class SingleAssetBack {
     private String tokenMetadata;
 
     @JsonProperty("assetContract")
-    private List<AssetContract> assetContract = new ArrayList<>();
+    public JSONObject assetContract;
+
     @JsonProperty("collection")
-    private Collection collection;
+    public JSONObject collection;
+
     @JsonProperty("owner")
-    private AssetOwner owner;
+    public JSONObject owner;
+
     @JsonProperty("creator")
-    private AssetCreator creator;
+    public JSONObject creator;
+
     @JsonProperty("traits")
-    private Traits traits;
+    public ArrayList traits;
+
+    public JSONObject properties;
+
     @JsonProperty("lastSale")
-    private LastSale lastSale;
+    public JSONObject lastSale;
 
-    public SingleAssetBack() {
-
+    public OpenseaSingleAssetsResponse() {
     }
 
-    @Getter
-    private class AssetContract {
+    /*public class AssetContract {
         @JsonProperty("address")
         private String address;
         @JsonProperty("nftVersion")
@@ -86,10 +92,9 @@ public class SingleAssetBack {
         @JsonProperty("payoutAddress")
         private String payoutAddress;
 
-    }
+    }*/
 
-    @Getter
-    private class Collection {
+    public class Collection {
         @JsonProperty("bannerImageUrl")
         private String bannerImageUrl;
         @JsonProperty("chatUrl")
@@ -128,66 +133,11 @@ public class SingleAssetBack {
         private String wikiUrl;
     }
 
-    @Getter
-    private class AssetOwner {
-        @JsonProperty("user")
-        private ownerUser user;
-        @JsonProperty("profileImgUrl")
-        private String profileImgUrl;
-        @JsonProperty("address")
-        private String address;
-        @JsonProperty("config")
-        private String config;
-    }
 
     @Getter
-    private class AssetCreator {
-        @JsonProperty("user")
-        private creatorUser user;
-        @JsonProperty("profileImgUrl")
-        private String profileImgUrl;
-        @JsonProperty("address")
-        private String address;
-        @JsonProperty("config")
-        private String config;
+    @Setter
+    public static class LastSale {
     }
 
-    @Getter
-    private class Traits {
-        @JsonProperty("trait")
-        private Trait trait;
-    }
-
-    @Getter
-    private static class LastSale {
-    }
-
-    @Getter
-    private class ownerUser {
-        @JsonProperty("username")
-        private String username;
-    }
-
-    @Getter
-    private class creatorUser {
-        @JsonProperty("username")
-        private String username;
-    }
-
-    @Getter
-    private class Trait {
-        @JsonProperty("traitType")
-        private String traitType;
-        @JsonProperty("value")
-        private String value;
-        @JsonProperty("displayType")
-        private String displayType;
-        @JsonProperty("maxValue")
-        private String maxValue;
-        @JsonProperty("traitCount")
-        private String traitCount;
-        @JsonProperty("order")
-        private String order;
-    }
 
 }

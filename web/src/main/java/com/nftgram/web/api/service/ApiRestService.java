@@ -3,12 +3,10 @@ package com.nftgram.web.api.service;
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.NftLike;
 import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.domain.nftgram.NftMemberWallet;
 import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.NftPropGroupDto;
-import com.nftgram.core.repository.NftLikeRepository;
-import com.nftgram.core.repository.NftMemberRepository;
-import com.nftgram.core.repository.NftPropertyRepository;
-import com.nftgram.core.repository.NftRepository;
+import com.nftgram.core.repository.*;
 import com.nftgram.web.api.dto.response.GetNftOneResponse;
 import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
@@ -33,6 +31,7 @@ public class ApiRestService {
     private CommonNftResponse commonNftResponse;
     private final NftRepository nftRepository;
     private final NftMemberRepository nftMemberRepository;
+    private final NftMemberWalletRepository nftMemberWalletRepository;
     private final NftLikeRepository nftLikeRepository;
     private final NftPropertyRepository nftPropertyRepository;
     private Object typeArr;
@@ -212,6 +211,26 @@ public class ApiRestService {
                 .build();
 
         return updateLikeCountResponse;
+
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Long memberWalletSave(String walletContractAddress, Long memberId) {
+        Long isResult = Long.valueOf(1);
+
+        NftMember nftMember = nftMemberRepository.findByNftMemberId(memberId);
+
+        // NftMemberWallet Save
+        NftMemberWallet nftMemberWallet = NftMemberWallet.builder()
+                .nftMember(nftMember)
+                .walletContractAddress(walletContractAddress)
+                .build();
+
+        nftMemberWalletRepository.save(nftMemberWallet);
+//        Long walletId = nftMemberWalletRepository.walletBy
+
+        return isResult;
+
 
     }
 }
