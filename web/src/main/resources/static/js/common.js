@@ -143,11 +143,14 @@ function getCommentList(nftId) {
         result = commonAjaxUrl(method, url, param);
         if(result.total > 0) {
             $.each(result.commentResponseList, function(k, comm) {
-                row_html += '<div class="comment-list-row">\n' +
-                    '                            <div class="user-image"><img src="/img/icon/Profile_icon.png" class="whIs30"/></div>\n' +
-                    '                            <div class="user-info">'+comm.user+'<br><span class="time">'+comm.createdDate+'</span></div>\n' +
-                    '                            <div class="user-comment">'+$.nl2br(comm.comment)+'</div>\n' +
-                    '                        </div>';
+                let row_chk = $('#comment-row-'+comm.commId).length;
+                if(row_chk == 0) {
+                    row_html += '<div class="comment-list-row" id="comment-row-'+comm.commId+'">\n' +
+                        '                            <div class="user-image"><img src="/img/icon/Profile_icon.png" class="whIs30"/></div>\n' +
+                        '                            <div class="user-info">'+comm.user+'<br><span class="time">'+comm.createdDate+'</span></div>\n' +
+                        '                            <div class="user-comment">'+$.nl2br(comm.comment)+'</div>\n' +
+                        '                        </div>';
+                }
             });
             if(currPage < nextPage) {
                 $('#nft-comment .comment-list').append(row_html);
