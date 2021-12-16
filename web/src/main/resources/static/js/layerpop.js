@@ -163,6 +163,7 @@ function layerPopByNft(data) {
     let popup = $('#nft-layer-pop');
     let nft_info_form = popup.find('#nft-info');
     let nft_title_area = popup.find('.nft-title-area');
+    let nft_gallery_figure = $('figure#nft_'+data.nftId);
 
     // div nft-info
     nft_info_form.find('.attr-description-row td.attr-description-row-text').text($.nl2br(data.description));
@@ -191,7 +192,10 @@ function layerPopByNft(data) {
     nft_title_area.find('.nft-title .nft-title-info').text(data.name);
     nft_title_area.find('.nft-title-user-info').html(user_html);
     nft_title_area.find('.ethPrice').text(data.viewCount);
-    nft_title_area.find('#likeCount').text(data.likeCount);
+    nft_title_area.find('.likeCount').text(data.likeCount);
+
+    nft_gallery_figure.find('.viewCount').text(data.viewCount);
+    nft_gallery_figure.find('.likeCount').text(data.likeCount);
 
     if(data.likeFlag == "Y") {
         $('#nft-btn-like').addClass("on");
