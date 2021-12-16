@@ -8,6 +8,7 @@ import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.NftPropGroupDto;
 import com.nftgram.core.repository.*;
 import com.nftgram.web.api.dto.response.GetNftOneResponse;
+import com.nftgram.web.api.dto.response.MemberWalletResponse;
 import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
@@ -214,6 +215,28 @@ public class ApiRestService {
 
     }
 
+    @Transactional(readOnly = true)
+    public List<MemberWalletResponse> memberWalletResponses(Long memberId, String loginFlag) {
+        List<NftMemberWallet> nftMemberWallets = nftMemberWalletRepository.walletByMemberId(memberId);
+
+        List<MemberWalletResponse> responses = new ArrayList<>();
+
+        if(nftMemberWallets != null) {
+            nftMemberWallets.forEach(wallets -> {
+                MemberWalletResponse memberWalletResponse = MemberWalletResponse.builder()
+                        .loginFlag(loginFlag)
+                        .wId(wallets.getNftMemberWalletId())
+                        .wContractAddress(wallets.getWalletContractAddress())
+                        .wType(wallets.getWalletType())
+                        .createdDate(wallets.getCreateDate())
+                        .build();
+                responses.add(memberWalletResponse);
+            });
+        }
+
+        return responses;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public Long memberWalletSave(String walletContractAddress, Long memberId) {
         Long isResult = Long.valueOf(1);
@@ -226,8 +249,7 @@ public class ApiRestService {
                 .walletContractAddress(walletContractAddress)
                 .build();
 
-        nftMemberWalletRepository.save(nftMemberWallet);
-//        Long walletId = nftMemberWalletRepository.walletBy
+        nftMemberWalletRepository.saveAndFlush(nftMemberWallet);
 
         return isResult;
 

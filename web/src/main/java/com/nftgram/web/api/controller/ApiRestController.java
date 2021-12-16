@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -103,18 +104,23 @@ public class ApiRestController {
     }
 
     @PostMapping(value = "/member/wallet/list", produces = "application/json")
-    public MemberWalletResponse memberWalletResponse() throws GeneralSecurityException, UnsupportedEncodingException {
+    public List<MemberWalletResponse> memberWalletResponse() throws GeneralSecurityException, UnsupportedEncodingException {
         String loginFlag = "N";
         Long memberId = Long.valueOf(0);
+        List<MemberWalletResponse> memberWalletResponses = new ArrayList<>();
+
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         if(authDto.getLoginYN().equals("Y")) {
+            loginFlag = "Y";
             memberId = authDto.getNftMemberId();
-        }
-        MemberWalletResponse memberWalletResponse = MemberWalletResponse.builder()
-                .loginFlag(loginFlag)
-                .build();
 
-        return memberWalletResponse;
+            memberWalletResponses = apiRestService.memberWalletResponses(memberId, loginFlag);
+        } else {
+            MemberWalletResponse response = MemberWalletResponse.builder().loginFlag(loginFlag).build();
+            memberWalletResponses.add(response);
+        }
+
+        return memberWalletResponses;
     }
 
     @PostMapping(value = "/member/wallet/save")

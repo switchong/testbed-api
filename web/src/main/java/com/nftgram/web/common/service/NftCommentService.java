@@ -87,7 +87,7 @@ public class NftCommentService {
                 .parent(Long.valueOf(0))
                 .build();
 
-        commentRepository.save(nftComment);
+        commentRepository.saveAndFlush(nftComment);
 
 
 

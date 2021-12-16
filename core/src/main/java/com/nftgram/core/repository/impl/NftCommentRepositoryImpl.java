@@ -28,6 +28,7 @@ public class NftCommentRepositoryImpl implements NftCommentCustomRepository {
                 .join(nftComment.nftMember, nftMember)
                 .where(nftComment.nft.nftId.eq(nftId))
                 .where(nftComment.activeStatus.eq(ActiveStatus.ACTIVE))
+                .orderBy(nftComment.commId.desc())
                 .fetch();
 
         return result;

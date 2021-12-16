@@ -32,9 +32,11 @@ $(document).ready(function(){
 
         }
     });
-    // wallet-btn
-    $('.nav-link .mywallet').on('click',function(){
+    // mywallet-btn
+    $('.nav-link.mywallet').on('click',function(){
         // wallet check
+        let wResult = walletCheck();
+        //location.href="/member/mywallet";
         // lod
     });
 });
@@ -89,14 +91,10 @@ function toList(list) {
 
 
 function walletCheck() {
-    let nftResult;
     let method = "POST";
-    let url = "/api/nft";
-    let param = {"nftId":nftId};
-    if(nftId > 0) {
-        // getNftPropertiesCount();
-        nftResult = commonAjaxUrl(method, url, param);
-    }
+    let url = "/api/member/wallet/list";
+    let param = {};
+    let nftResult = commonAjaxUrl(method, url, param);
     return nftResult;
 }
 

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberWalletResponse {
@@ -17,11 +19,14 @@ public class MemberWalletResponse {
 
     private WalletType wType;
 
+    private LocalDateTime createdDate;
+
     @Builder
-    public MemberWalletResponse(String loginFlag, Long wId, String wContractAddress, WalletType wType) {
+    public MemberWalletResponse(String loginFlag, Long wId, String wContractAddress, WalletType wType, LocalDateTime createdDate) {
         this.loginFlag = loginFlag;
         this.wId = wId;
         this.wContractAddress = wContractAddress;
         this.wType = wType;
+        this.createdDate = createdDate;
     }
 }
