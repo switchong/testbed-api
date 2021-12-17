@@ -1,16 +1,16 @@
 package com.nftgram.core.opensea;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nftgram.core.common.util.opensea.OpenseaHttpClient;
-import com.nftgram.core.common.util.opensea.dto.request.OpenseaAssetsRequest;
-import com.nftgram.core.common.util.opensea.dto.response.OpenseaAssetsResponse;
-import org.json.simple.parser.JSONParser;
+import com.nftgram.core.common.opensea.OpenseaHttpClient;
+import com.nftgram.core.common.opensea.dto.request.OpenseaAssetsRequest;
+import com.nftgram.core.common.opensea.dto.response.OpenseaAssetsResponse;
+import com.nftgram.core.common.opensea.dto.response.OpenseaSingleAssetsResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 import static java.lang.System.out;
 
@@ -24,20 +24,35 @@ public class OpenseaAssetsTest {
     //@Disabled
     public void assetCall() throws Exception {
 
-        OpenseaAssetsRequest request = OpenseaAssetsRequest.of("pk","desc", 0, 50);
+        OpenseaAssetsRequest request = OpenseaAssetsRequest.of("pk","desc", 0, 50, "", "impact-theory-founders-key","");
         OpenseaAssetsResponse openseaAssetsResponse = openseaHttpClient.sendAssetsCall(request);
-        Object assets = openseaAssetsResponse.getAssets();
+        ArrayList assets = openseaAssetsResponse.getAssets();
 
+        OpenseaSingleAssetsResponse[] singleList = openseaAssetsResponse.setSingleAssetParse(assets);
+
+
+        HttpHeaders openseaHeader = openseaHttpClient.sendAssetsCallHeader(request);
+
+//        out.print(openseaAssetsResponse);
+        out.println("========================================================================================================================================================================================================================================================================================================================================================");
+        out.println("Length : " + singleList.length);
+        out.println("singleList[0] : " + singleList[0].getCollection());
+        out.println("request : " + request);
+        out.println("openseaHeader : " + openseaHeader);
+        out.println("openseaHttpClient : " + openseaHttpClient);
+//        out.println("openseaAssetsResponse = " + assets.get(0).getClass().getName());
         String assetString = openseaAssetsResponse.jsonStringConvert(assets);
 //        JSONObject assets = new OpenseaAssetsResponse(openseaHttpClient.sendAssetsCall(request));
 //        JSONObject obj = new JSONObject(assetString);
         ObjectMapper mapper = new ObjectMapper();
+//        mapper.writeValue(assets, assets);
 
-        JSONParser jsonParser = new JSONParser();
 
-        Map<String, String> map = new HashMap<>();
+//        JSONParser jsonParser = new JSONParser();
 
-        String json = mapper.writeValueAsString(assetString);
+//        Map<String, String> map = new HashMap<>();
+
+//        String json = mapper.writeValueAsString(assetString);
 
         /*
         * Object(ArrayList) > String
@@ -75,10 +90,18 @@ public class OpenseaAssetsTest {
 
 //        JSONArray assetsArray = (JSONArray) assets.get("assets");
 
-        System.out.println("========================================================================================================================================================================================================================================================================================================================================================");
-        out.println("request : " + request);
-        out.println("openseaAssetsResponse = " + assetString.getClass().getFields());
-        out.println("openseaAssetsResponse = " + assetString);
+
+//        assets.forEach(singleAsset->{
+//            JSONObject jsonObject = new JSONObject((Map) singleAsset);
+
+//            out.println(jsonObject);
+//        });
+//        OpenseaSingleAssetsResponse openseaSingleAssetsResponse = new OpenseaSingleAssetsResponse();
+
+//        out.println(jsonStr);
+//        out.println(openseaAssetsResponse.getOpenseaSingleAssetsResponses());
+//        out.println("openseaAssetsResponse = " + assets.get(0).toString());
+//        out.println("openseaAssetsResponse = " + assetList);
         out.println("========================================================================================================================================================================================================================================================================================================================================================");
     }
 }

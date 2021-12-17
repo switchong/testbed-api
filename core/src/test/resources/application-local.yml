@@ -1,6 +1,11 @@
 spring:
   profiles: local
 
+  jpa:
+    #show-sql: true
+    hibernate:
+      ddl-auto: create
+
 opensea:
   api_url: https://api.opensea.io/api/v1
   opensea_contract_address: "0x495f947276749ce646f68ac8c248420045cb7b5e"
@@ -27,7 +32,7 @@ logging:
         boot:
           autoconfigure: OFF
         hibernate:
-          SQL: debug
+          SQL: INFO
         batch: debug
         test: error
 

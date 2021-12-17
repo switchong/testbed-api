@@ -57,7 +57,8 @@ logging:
 nftgram:
   cookie:
     key: NftMember
-    domainName: local.nftgram.io
+#    domainName: local.nftgram.io
+    domainName: f51b-125-143-153-4.ngrok.io
   aes256:
     secretKey: 3021ACABD914C42D80C4E9D2D1BBA293
 
