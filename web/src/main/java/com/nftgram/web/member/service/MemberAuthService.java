@@ -78,10 +78,11 @@ public class MemberAuthService {
         }
 
         // 쿠키 정보 생성
+        boolean autoLoginFlag = false;
         String makeToken = memberTokenManager.makeToken(findNftMember.getNftMemberId(), findNftMember.getNftMemberUserId());
-        Cookie nftMemberSessionInfo = memberLoginManager.save(makeToken, true);
+        Cookie nftMemberSessionInfo = memberLoginManager.save(makeToken, autoLoginFlag);
         return NftMemberLoginResponse.builder()
-                                .flag(true)
+                                .flag(autoLoginFlag)
                                 .data(nftMemberSessionInfo)
                                 .build();
     }

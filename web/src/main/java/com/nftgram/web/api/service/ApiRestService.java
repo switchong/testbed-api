@@ -8,7 +8,7 @@ import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.NftPropGroupDto;
 import com.nftgram.core.repository.*;
 import com.nftgram.web.api.dto.response.GetNftOneResponse;
-import com.nftgram.web.api.dto.response.MemberWalletResponse;
+import com.nftgram.web.api.dto.response.MemberWalletResponses;
 import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
@@ -216,14 +216,14 @@ public class ApiRestService {
     }
 
     @Transactional(readOnly = true)
-    public List<MemberWalletResponse> memberWalletResponses(Long memberId, String loginFlag) {
+    public List<MemberWalletResponses> memberWalletResponses(Long memberId, String loginFlag) {
         List<NftMemberWallet> nftMemberWallets = nftMemberWalletRepository.walletByMemberId(memberId);
 
-        List<MemberWalletResponse> responses = new ArrayList<>();
+        List<MemberWalletResponses> responses = new ArrayList<>();
 
         if(nftMemberWallets != null) {
             nftMemberWallets.forEach(wallets -> {
-                MemberWalletResponse memberWalletResponse = MemberWalletResponse.builder()
+                MemberWalletResponses memberWalletResponse = MemberWalletResponses.builder()
                         .loginFlag(loginFlag)
                         .wId(wallets.getNftMemberWalletId())
                         .wContractAddress(wallets.getWalletContractAddress())

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberWalletResponse {
+public class MemberWalletResponses {
     private String loginFlag;
 
     private Long wId;
@@ -22,7 +22,7 @@ public class MemberWalletResponse {
     private LocalDateTime createdDate;
 
     @Builder
-    public MemberWalletResponse(String loginFlag, Long wId, String wContractAddress, WalletType wType, LocalDateTime createdDate) {
+    public MemberWalletResponses(String loginFlag, Long wId, String wContractAddress, WalletType wType, LocalDateTime createdDate) {
         this.loginFlag = loginFlag;
         this.wId = wId;
         this.wContractAddress = wContractAddress;

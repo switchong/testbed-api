@@ -7,7 +7,7 @@ import com.nftgram.web.api.dto.request.UpdateLikeCountRequest;
 import com.nftgram.web.api.dto.request.UpdateViewCountRequest;
 import com.nftgram.web.api.dto.response.GetNftOneResponse;
 import com.nftgram.web.api.dto.response.MemberNftResponse;
-import com.nftgram.web.api.dto.response.MemberWalletResponse;
+import com.nftgram.web.api.dto.response.MemberWalletResponses;
 import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.api.service.ApiRestService;
 import com.nftgram.web.common.auth.MemberLoginManager;
@@ -104,10 +104,10 @@ public class ApiRestController {
     }
 
     @PostMapping(value = "/member/wallet/list", produces = "application/json")
-    public List<MemberWalletResponse> memberWalletResponse() throws GeneralSecurityException, UnsupportedEncodingException {
+    public List<MemberWalletResponses> memberWalletResponse() throws GeneralSecurityException, UnsupportedEncodingException {
         String loginFlag = "N";
         Long memberId = Long.valueOf(0);
-        List<MemberWalletResponse> memberWalletResponses = new ArrayList<>();
+        List<MemberWalletResponses> memberWalletResponses = new ArrayList<>();
 
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         if(authDto.getLoginYN().equals("Y")) {
@@ -116,7 +116,7 @@ public class ApiRestController {
 
             memberWalletResponses = apiRestService.memberWalletResponses(memberId, loginFlag);
         } else {
-            MemberWalletResponse response = MemberWalletResponse.builder().loginFlag(loginFlag).build();
+            MemberWalletResponses response = MemberWalletResponses.builder().loginFlag(loginFlag).build();
             memberWalletResponses.add(response);
         }
 
