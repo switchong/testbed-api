@@ -72,7 +72,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                        nft.imageUrl.isNotEmpty(),
                        eqKeyword(keyword))
                 //.orderBy(nft.nftId.asc() , nft.likeCount.desc().nullsLast())
-                .orderBy(SortNftPage(sort) , nft.likeCount.desc().nullsLast())
+                .orderBy(SortNftPage("2") , nft.likeCount.desc().nullsLast())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

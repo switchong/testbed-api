@@ -2,10 +2,8 @@ package com.nftgram.core.repository.custom;
 
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.dto.NftOneJoinDto;
-import com.nftgram.core.dto.SearchCondition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 

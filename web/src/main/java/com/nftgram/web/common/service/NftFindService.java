@@ -1,18 +1,13 @@
 package com.nftgram.web.common.service;
 
 import com.nftgram.core.domain.nftgram.Nft;
-import com.nftgram.core.dto.SearchCondition;
 import com.nftgram.core.repository.NftAssetRepository;
 import com.nftgram.core.repository.NftCollectionRepository;
 import com.nftgram.core.repository.NftRepository;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
