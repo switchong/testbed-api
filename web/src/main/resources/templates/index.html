@@ -20,6 +20,10 @@
                         <img th:src="@{/img/icon/Profile_icon.png}" class="card-img-user" > <small class="text-muted" th:text="${nft.username}"></small>
                     </h5>
                     <p class="card-text" th:text="${nft.nftCollectionName}"></p>
+                    <p class="card-text" th:text="${nft.nftId}"></p>
+                    <p class="card-text" th:text="${nft.likeCount}"></p>
+                    <p class="card-text" th:text="${nft.viewCount}"></p>
+
                     <p class="card-text"><small class="text-muted" th:text="${nft.localDate}"></small></p>
                 </div>
             </div>

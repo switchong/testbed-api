@@ -14,12 +14,13 @@ $(document).ready(function(){
     });
     // scroll auto load
     if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        moreView("nftgram-list");
+        moreView("nftgram-list" );
+
     };
     // scroll auto load
     $(window).scroll(function(){
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
-            moreView("nftgram-list");
+            moreView("nftgram-list" );
         }
     });
     // view-type click event
@@ -41,34 +42,51 @@ $(document).ready(function(){
     });
 });
 
-/* main auto-loading */
+/* main auto-loading
+*  main search
+*/
 const size = 20;
-
 function moreView(obj) {
+
     let total = $('#nftgram-list .card').length;
     let nextPage = parseInt(total/size);
+    let keyword = $('#searchKeyword').val();
+    let sort = $('#howAsc').val();
+    let url = "/api/main/page?page=" + nextPage + "&size=" + size+ "&keyword=" + keyword;
+    if(sort != null) {
+        url += "&sort=" + sort;
+    }
 
-    $.ajax({
-        url:"/api/main/page?page="+nextPage+"&size="+size,
-        type:"GET",
-        dataType: "json",
-        async:false,
-        success : function(data){
-            let html = toList(data.nftList);
-            // total += data.total;
-            $("#"+obj).append(html);
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                let html = toList(data.nftList);
+                //total += data.total;
 
-            if(data.total < size) {
-                $(window).unbind();
+                $("#" + obj).append(html);
+
+                if (data.total < size) {
+                    $(window).unbind();
+                }
+
+            },
+            error : function (data){
+                alert("error!!!!!!");
             }
-        }
-    });
+        });
+
     $('input[name="page"]').val(nextPage);
     $('#nftgram-list .card-img-top').on('click',function(){
         let collectionId = $(this).data('collectionid');
         location.href="/gallery/"+collectionId;
     })
+
 }
+
+
 
 function toList(list) {
     let html = '';

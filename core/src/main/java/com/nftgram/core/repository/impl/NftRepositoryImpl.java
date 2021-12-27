@@ -4,12 +4,21 @@ import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.domain.nftgram.value.ContractType;
 import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.repository.custom.NftCustomRepository;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.nftgram.core.domain.nftgram.QNft.nft;
@@ -19,6 +28,7 @@ import static com.nftgram.core.domain.nftgram.QNftLike.nftLike;
 
 
 @Repository
+@Slf4j
 public class NftRepositoryImpl implements NftCustomRepository {
 
     private final JPAQueryFactory queryFactory;
@@ -37,6 +47,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return result;
     }
 
+
     public List<Nft> findAll() {
         List<Nft> result = queryFactory.selectFrom(nft)
                 .orderBy(nft.nftId.desc())
@@ -45,19 +56,30 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return result;
     }
 
+
+    /**
+     *
+     * Sort =  1. 등록순 2. 좋아요순 3.조회순
+     * @param keyword
+     * @return
+     */
     @Override
-    public List<Nft> findAllNft(Pageable pageable) {
+    public List<Nft> findAllNft(Pageable pageable  , String keyword , String sort )  {
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT))
-                .where(nft.imageUrl.ne(""))
-                .orderBy(nft.nftId.desc())
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                       nft.imageUrl.isNotEmpty(),
+                       eqKeyword(keyword))
+                //.orderBy(nft.nftId.asc() , nft.likeCount.desc().nullsLast())
+                .orderBy(SortNftPage(sort) , nft.likeCount.desc().nullsLast())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
         return result;
     }
+
+
 
     @Override
     public List<Nft> findAllNftGallery(Pageable pageable) {
@@ -91,6 +113,9 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return result;
     }
 
+
+
+
     @Override
     public NftOneJoinDto findByNftIdOne(Long nftId) {
         NftOneJoinDto nftResult = queryFactory.select(Projections.constructor(NftOneJoinDto.class, nft, nftAsset, nftCollection))
@@ -115,6 +140,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+
         return nftResult;
     }
 
@@ -163,5 +189,45 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .set(nft.likeCount, nft.likeCount.subtract(1))
                 .execute();
     }
+
+    public BooleanExpression eqKeyword(String keyword) {
+        if (StringUtils.isEmpty(keyword)) {
+            return null;
+        }
+        return nft.collectionName.like(keyword).or(nft.name.like(keyword)).or(nft.creatorUserName.like(keyword));
+    }
+    public OrderSpecifier<Long> SortNftPage(String sort) {
+
+        OrderSpecifier<Long> sortResult = null;
+        switch (sort) {
+            case "1" :
+                sortResult = nft.nftId.desc();
+                break;
+            case "2":
+                sortResult = nft.likeCount.desc();
+                break;
+            case  "3" :
+                sortResult = nft.viewCount.desc();
+            default:
+                sortResult = nft.nftId.asc();
+                break;
+        }
+
+
+        return sortResult;
+    }
+
+//    private List<OrderSpecifier> getOrderSpecifier(Sort sort) {
+//        List<OrderSpecifier> nftSortPage = new ArrayList<>();
+//        // Sort
+//        sort.stream().forEach(order -> {
+//            Order direction = order.isAscending() ? Order.ASC : Order.DESC ;
+//            String prop = order.getProperty();
+//            PathBuilder orderByExpression = new PathBuilder(Nft.class, "nft");
+//            nftSortPage.add(new OrderSpecifier(direction, orderByExpression.get(prop)));
+//        });
+//        return nftSortPage;
+//    }
+
 
 }

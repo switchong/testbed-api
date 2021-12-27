@@ -126,12 +126,8 @@ public class Nft  extends BaseEntity {
     private Integer propertyOrder;
 
     @Builder
-    public Nft(Long nft_member_id, String assetContractAddress, String tokenId, MarketType marketType, Long marketId,
-               String ownerUserName, String ownerProfileImageUrl, String ownerContractAddress, String creatorUserName,
-               String creatorProfileImageUrl, String creatorContractAddress, String name, String description, Long numSales,
-               String imageUrl, String imageOriginalUrl, String openseaLink, String externalLink, Long likeCount,
-               Long favoriteCount, Long viewCount, String collectionName, LocalDate lastSaleDate, String lastSaleContractAddress,
-               String lastSaleUserName, String lastSaleProfileImageUrl, NftAsset nftAsset, NftCollection nftCollection, List<NftProperty> nftProperties, Long borderImageId) {
+    public Nft(String assetContractAddress, String tokenId,
+               String ownerUserName, String s, int i, int i1) {
         this.nft_member_id = nft_member_id;
         this.assetContractAddress = assetContractAddress;
         this.tokenId = tokenId;
@@ -173,4 +169,6 @@ public class Nft  extends BaseEntity {
         nftProperty.addNft(this);
         this.nftProperties.add(nftProperty);
     }
+
+
 }

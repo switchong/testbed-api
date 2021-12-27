@@ -20,7 +20,10 @@ import com.nftgram.web.common.service.NftCommentService;
 import com.nftgram.web.common.service.NftFindService;
 import com.nftgram.web.member.dto.NftMemberAuthDto;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +38,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api")
+@Slf4j
 public class ApiRestController {
 
     private final ApiRestService apiRestService;
@@ -42,9 +46,11 @@ public class ApiRestController {
     private final NftCommentService commentService;
     private final MemberLoginManager memberLoginManager;
 
+
     @GetMapping("/main/page")
-    public MainPageDto getMainPage(Pageable pageable) throws ParseException {
-        List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable);
+    public MainPageDto getMainPage(Pageable pageable, String keyword , String sort ) throws ParseException {
+        List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable  , keyword , sort);
+
         MainPageDto mainPageDto = MainPageDto.builder()
                 .total(mainResponseAll.size())
                 .nftList(mainResponseAll)

@@ -1,12 +1,18 @@
 package com.nftgram.web.common.service;
 
 import com.nftgram.core.domain.nftgram.Nft;
+import com.nftgram.core.dto.SearchCondition;
 import com.nftgram.core.repository.NftAssetRepository;
 import com.nftgram.core.repository.NftCollectionRepository;
 import com.nftgram.core.repository.NftRepository;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional
+@Slf4j
 public class NftFindService {
     private CommonNftResponse commonNftResponse;
     private final NftRepository nftRepository;
@@ -32,12 +39,17 @@ public class NftFindService {
      * @throws ParseException
      */
     @Transactional(readOnly = true)
-    public List<CommonNftResponse> findAllList(Pageable pageable)  throws ParseException {
-        List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable);
+    public List<CommonNftResponse> findAllList(Pageable pageable , String keyword , String sort  )  throws ParseException {
+
+
+        List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable, keyword , sort );
+
+
 
         List<CommonNftResponse> response = new ArrayList<>();
 
         response = setCommonNftResponses(nftRepositoryAll);
+
 
         return response;
     }
@@ -117,4 +129,7 @@ public class NftFindService {
 
         return response;
     }
+
+
+
 }

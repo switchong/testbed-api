@@ -7,7 +7,9 @@ import com.nftgram.core.repository.NftRepository;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -22,8 +24,8 @@ public class MainService {
     private final NftAssetRepository nftAssetRepository;
     private final NftCollectionRepository nftCollectionRepository;
 
-    public List<CommonNftResponse> findAllList(Pageable pageable)  throws ParseException {
-        List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable);
+    public List<CommonNftResponse> findAllList(Pageable pageable , String keyword , String sort  )  throws ParseException {
+        List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable , keyword , sort );
 
         List<CommonNftResponse> response = new ArrayList<>();
 
@@ -81,6 +83,7 @@ public class MainService {
 
         return response;
     }
+
 
 
 

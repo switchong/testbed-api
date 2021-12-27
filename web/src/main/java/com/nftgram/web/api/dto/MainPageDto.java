@@ -11,9 +11,14 @@ public class MainPageDto {
     private int total;
     private List<CommonNftResponse> nftList;
 
+
+
+
+
     @Builder
     public MainPageDto(int total, List<CommonNftResponse> nftList) {
         this.total = total;
         this.nftList = nftList;
+
     }
 }

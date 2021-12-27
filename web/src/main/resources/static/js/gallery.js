@@ -718,3 +718,4 @@ var Gallery = (function() {
 	return { init : init };
 
 })();
+

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -73,7 +74,7 @@ public class AuthController {
     @PostMapping("/login")
     public String loginProcess(@Valid NftMemberLoginRequest request,
                                BindingResult result ,
-                               HttpServletResponse response ) throws GeneralSecurityException, UnsupportedEncodingException, UserPrincipalNotFoundException {
+                               HttpServletResponse response  ) throws GeneralSecurityException, UnsupportedEncodingException, UserPrincipalNotFoundException {
 
         NftMemberLoginResponse nftMemberLoginResponse = memberAuthService.loginProcess(request);
 
@@ -82,6 +83,7 @@ public class AuthController {
             result.addError(fieldError);
             return "auth/nft_login";
         }
+
 
         Cookie memberInfo = (Cookie) nftMemberLoginResponse.getData();
         response.addCookie(memberInfo);

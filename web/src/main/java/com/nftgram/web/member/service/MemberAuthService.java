@@ -1,6 +1,8 @@
 package com.nftgram.web.member.service;
 
 import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.domain.nftgram.NftMemberAuthToken;
+import com.nftgram.core.repository.NftMemberAuthTokenRepository;
 import com.nftgram.core.repository.NftMemberRepository;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.auth.MemberTokenManager;
@@ -21,12 +23,13 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
-public class MemberAuthService {
+public class MemberAuthService  {
 
     private final NftMemberRepository nftMemberRepository;
     private final PasswordEncoder passwordEncoder;
     private final MemberLoginManager memberLoginManager;
     private final MemberTokenManager memberTokenManager;
+    private final NftMemberAuthTokenRepository nftMemberAuthTokenRepository;
 
     @Transactional
     public NftMemberSignupResponse memberJoinProcess(NftMemberSignupRequest request) {
@@ -62,6 +65,7 @@ public class MemberAuthService {
     public NftMemberLoginResponse loginProcess(NftMemberLoginRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
         // 유저 아이디 검색
         NftMember findNftMember = nftMemberRepository.findByNftMemberUserId(request.getId());
+
         if (Objects.isNull(findNftMember)) {
             return NftMemberLoginResponse.builder()
                                         .flag(false)
@@ -78,7 +82,7 @@ public class MemberAuthService {
         }
 
         // 쿠키 정보 생성
-        boolean autoLoginFlag = false;
+        boolean autoLoginFlag = true;
         String makeToken = memberTokenManager.makeToken(findNftMember.getNftMemberId(), findNftMember.getNftMemberUserId());
         Cookie nftMemberSessionInfo = memberLoginManager.save(makeToken, autoLoginFlag);
         return NftMemberLoginResponse.builder()
