@@ -6,18 +6,25 @@
         }
 
 </style>
-<head th:replace="/fragment/header.html :: fragment-header" />
+<head th:replace="fragment/header.html :: fragment-header" />
 <body>
-    <nav th:replace="/fragment/nav.html :: fragment-nav"></nav>
+    <nav th:replace="fragment/nav.html :: fragment-nav"></nav>
     <div class="container" id="nftgram_wrap">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div  id="nftgram-wallet" class="wallet-wrap">
             <div class="wallet-content">
-                <button class="w-100 btn btn-dark btn-lg" type="submit" style="background-color: #323233; font-size: 0.9rem;">Wallet</button>
+                <h4 class="title">WALLET CONNECT</h4>
+                <div class="wallet-btn-group">
+                    <button class="btn-metamask" type="submit">MetaMask</button>
+                </div>
+                <div class="wallet-msg">
+                    You can see all the collections<br>
+                    through one account synchronization
+                </div>
+                <div id="output"></div>
             </div>
         </div>
+
     </div> <!-- /container -->
-    <script th:src="@{/js/web3.min.js}"></script>
-    <script th:src="@{/js/wallet.js}"></script>
     <script>
 
     </script>

@@ -57,34 +57,33 @@
                         </div>
                     </ul>
                 </div>
+                <div class="wallet-wrap">
+                    <div class="wallet-user-wrap">
+                        <span class="wallet-user-title">Total Balance</span>
+                        <br>
+                        <span class="balance-price">3.21</span>
+                    </div>
+                    <div class="wallet-list">
+
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
                 <div class="input-group">
-                            <form  method="get"  action="/"   style="width: 80%;">
-                                <div class="input-group">
-                                    <input type="search"  id="searchKeyword"  class="form-control me-2"  name="keyword" placeholder="Type query" th:value="${#httpServletRequest.getParameter('keyword')}"/>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-secondary me-2" onclick="moreView()">Search</button>
-                                    </div>
-                                </div>
-                            </form>
+                    <input type="search"  id="searchKeyword"  class="form-control me-2"  name="keyword" placeholder="Type query" th:value="${#httpServletRequest.getParameter('keyword')}"/>
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary me-2" id="btnSearch">Search</button>
+                    </div>
 
-
-
-
-                            <select  id="selSort" name="selSort" class="form-select-sm mr-2" aria-label="Default select example" style="height: 40px;width:100px;padding: 0px;">
-                                <option  value="0">Sort By</option>
-                                <option  value="1" >최신순</option>
-                                <option  value="2"> 조회순</option>
-                                <option  value="3">좋아요순</option>
-                            </select>
-
-
-
-
+                    <select id="selSort" name="selSort" class="form-select-sm mr-2 selSort" aria-label="Default select example" style="height: 40px;width:100px;padding: 0px;">
+                        <option  value="0">Sort By</option>
+                        <option  value="1" >최신순</option>
+                        <option  value="2"> 조회순</option>
+                        <option  value="3">좋아요순</option>
+                    </select>
                     <div class="d-flex me-2">
                         <div class="gallery-view-type wIs30" data-view="list">
                             <img class="whIs30" th:src="@{../img/icon/View_list_icon.png}" />

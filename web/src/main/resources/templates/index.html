@@ -1,75 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/fragment/header.html :: fragment-header" />
+<head th:replace="fragment/header.html :: fragment-header" />
 
 <body>
 <!-- Navigation-->
-<div th:replace="/fragment/nav.html :: fragment-nav"></div>
+<div th:replace="fragment/nav.html :: fragment-nav"></div>
 
 <!-- Section-->
 <section class="py-5" >
     <div class="container px-4 px-lg-5 mt-5" id="nftgram_wrap">
         <input type="hidden" name="page" value="1" />
         <div class="card-deck" id="nftgram-list">
-            <div class="card" th:each="nft: ${nftList}" id="nftList">
-                <!--/*@thymesVar id="nft" type="com.nftgram.core.domain.nftgram.Nft"*/-->
-                <!--/*@thymesVar id="nft" type="com.nftgram.web.main.dto.MainResponse"*/-->
-                <img class="card-img-top" th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-collectionid="${nft.nftCollectionId}" th:data-nid="${nft.nftId}" width="301px"  height="301px"/>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <img th:src="@{/img/icon/Profile_icon.png}" class="card-img-user" > <small class="text-muted" th:text="${nft.username}"></small>
-                    </h5>
-                    <p class="card-text" th:text="${nft.nftCollectionName}"></p>
-                    <p class="card-text" th:text="${nft.nftId}"></p>
-<!--                    <div>조회순<p class="card-text" th:text="${nft.viewCount}"></p></div>-->
-<!--                    <div>좋아요순<p class="card-text" th:text="${nft.likeCount}"></p></div>-->
 
-                    <p class="card-text"><small class="text-muted" th:text="${nft.localDate}"></small></p>
-                </div>
-            </div>
-
-            <!--<div class="col mb-5">
-                <div class="card h-100">
-                    <p>
-                        <a class="btn btn-lg btn-secondary" href="/gallery">
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        </a>
-                    </p>
-                    <div class="card bg-transparent">
-                        <div class="text-left mt-3">
-                            <a class="btn btn-outline-dark " href="#">Left</a>
-                            <a class="btn btn-outline-dark " href="#">Right1</a>
-                            <a class="btn btn-outline-dark " href="#">Right2</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col mb-5">
-                <div class="card h-100">
-                    &lt;!&ndash; Product image&ndash;&gt;
-                    <a class="btn btn-lg btn-secondary" href="/gallery">
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    </a>
-                    &lt;!&ndash; Product actions&ndash;&gt;
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col">
-                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col">
-                                <p class="card-title">EH</p>
-                            </div>
-                            <div class="col">
-                                <p class="card-text">LI</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </div>
 </section>
-<div th:replace="/fragment/footer.html :: fragment-footer" />
+<div th:replace="fragment/footer.html :: fragment-footer" />
 </body>
 </html>

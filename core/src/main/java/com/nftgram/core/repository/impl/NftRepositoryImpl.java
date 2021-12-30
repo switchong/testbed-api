@@ -9,7 +9,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -102,9 +101,14 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
     @Override
     public List<Nft> findByNftCollectionId(Long nftCollectionId) {
-        List<Nft> result = queryFactory.selectFrom(nft)
-                .where(nftCollection.nftCollectionId.eq(nftCollectionId))
-                .orderBy(nft.nftId.desc())
+        List<Nft> result = queryFactory.select(nft)
+                .from(nft)
+                .join(nft.nftAsset, nftAsset)
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        nft.nftCollection.nftCollectionId.eq(nftCollectionId)
+                )
+                .orderBy(nft.tokenId.castToNum(Long.class).asc())
                 .fetch();
         return result;
     }
@@ -190,7 +194,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         if (StringUtils.isEmpty(keyword)) {
             return null;
         }
-        return nft.collectionName.like(keyword).or(nft.name.like(keyword)).or(nft.creatorUserName.like(keyword));
+        return nft.collectionName.contains(keyword).or(nft.name.contains(keyword)).or(nft.creatorUserName.contains(keyword));
     }
     public OrderSpecifier<Long> SortNftPage(String sort) {
 

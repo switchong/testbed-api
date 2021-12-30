@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberWalletResponses {
-    private String loginFlag;
 
     private Long wId;
 
@@ -22,8 +21,7 @@ public class MemberWalletResponses {
     private LocalDateTime createdDate;
 
     @Builder
-    public MemberWalletResponses(String loginFlag, Long wId, String wContractAddress, WalletType wType, LocalDateTime createdDate) {
-        this.loginFlag = loginFlag;
+    public MemberWalletResponses(Long wId, String wContractAddress, WalletType wType, LocalDateTime createdDate) {
         this.wId = wId;
         this.wContractAddress = wContractAddress;
         this.wType = wType;

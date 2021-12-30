@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 
-<head th:replace="/fragment/header.html :: fragment-header" />
+<head th:replace="fragment/header.html :: fragment-header" />
 
 
 <link th:href="@{/css/gallery/gallery.css}" rel="stylesheet" />
@@ -10,7 +10,7 @@
 <script th:src="@{/js/scripts.js}"></script>
 
 <body>
-<nav th:replace="/fragment/nav.html :: fragment-nav"></nav>
+<nav th:replace="fragment/nav.html :: fragment-nav"></nav>
 
 <div class="container2" id="nftgram_wrap">
     <div id="gr-gallery" class="gr-gallery">
@@ -69,6 +69,6 @@
 
     });
 </script>
-<div th:replace="/fragment/footer.html :: fragment-footer" />
+<div th:replace="fragment/footer.html :: fragment-footer" />
 </body>
 </html>

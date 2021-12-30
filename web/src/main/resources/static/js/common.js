@@ -10,23 +10,23 @@ $(document).ready(function(){
     // main nft image click
     $('#nftgram-list .card-img-top').on('click',function(){
         let collectionId = $(this).data('collectionid');
-        location.href="/gallery/"+collectionId;
+        location.href="/gallery_swiper/"+collectionId;
     });
     // scroll auto load
     if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        moreView("nftgram-list" );
+        moreView();
 
     };
     // scroll auto load
     $(window).scroll(function(){
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
-            moreView("nftgram-list" );
+            moreView();
         }
     });
 
     $('select[name="selSort"]').change(function () {
         let sort = $(this).val();
-        moreView("nftgram-list", "html");
+        moreView("html");
     })
     // view-type click event
     $('.gallery-view-type').on('click',function(){
@@ -38,13 +38,19 @@ $(document).ready(function(){
 
         }
     });
-    // mywallet-btn
-    $('.nav-link.mywallet').on('click',function(){
-        // wallet check
-        let wResult = walletCheck();
-        //location.href="/member/mywallet";
-        // lod
+
+    $('#btnSearch').on('click',function(){
+        let searchVal = $('#searchKeyword').val();
+        if(searchVal == '' || searchVal == null) {
+            alert("Search the Value");
+            return false;
+        }
+        moreView("html");
     });
+
+    if($('#nftgram_wrap #nftgram-list').length > 0) {
+        moreView();
+    }
 });
 
 /*
@@ -55,9 +61,9 @@ $(document).ready(function(){
 */
 const size = 20;
 
-    function moreView(obj, type) {
+    function moreView(type) {
 
-        let total = $('#nftgram-list .card').length;
+        let total = (type=="html")?0:$('#nftgram-list .card').length;
         let nextPage = parseInt(total / size);
         let keyword = $('#searchKeyword').val();
         let sort = $('#selSort').val();
@@ -65,7 +71,6 @@ const size = 20;
 
 
         if (sort != null) {
-
             url += "&sort=" + sort;
         }
 
@@ -79,10 +84,9 @@ const size = 20;
                 let html = toList(data.nftList);
 
                 if(type == "html") {
-                    $("#" + obj).html(html);
+                    $("#nftgram-list").html(html);
                 }else {
-
-                $("#" + obj).append(html);
+                    $("#nftgram-list").append(html);
                 }
 
                 if (data.total < size) {
@@ -99,7 +103,7 @@ const size = 20;
         $('input[name="page"]').val(nextPage);
         $('#nftgram-list .card-img-top').on('click', function () {
             let collectionId = $(this).data('collectionid');
-            location.href = "/gallery/" + collectionId;
+            location.href = "/gallery_swiper/" + collectionId;
         })
     }
 
@@ -117,14 +121,20 @@ function SortList(){
 function toList(list) {
     let html = '';
     $.each(list, function(key, nft){
+        let pattern = "https://.*mp4";
+        let date = timeToElapsed(nft.localDate);
+        let imageUrlHtml = '<img class="card-img-top" src="'+nft.nftImageUrl+'" alt="'+nft.name+'" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'" width="301px"  height="301px"/>';
+        if(nft.nftImageUrl.match('/.mp4/i')) {
+            imageUrlHtml = '<video class="card-img-top" controlslist="nodownload" loop="" playsinline="" preload="metadata" style="border-radius: 0px;"><source src="'+nft.nftImageUrl+'" type="video/mp4"></video>';
+        }
         html += '<div class="card" >\n' +
-            '                <img class="card-img-top" src="'+nft.nftImageUrl+'" alt="'+nft.name+'" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'" width="301px"  height="301px"/>\n' +
+            '                '+imageUrlHtml+'\n' +
             '                <div class="card-body">\n' +
             '                    <h5 class="card-title">\n' +
             '                        <img src="/img/icon/Profile_icon.png" class="card-img-user" > <small class="text-muted">'+nft.username+'</small>\n' +
             '                    </h5>\n' +
             '                    <p class="card-text" >'+nft.nftCollectionName+'"</p>\n' +
-            '                    <p class="card-text"><small class="text-muted" >'+nft.localDate+'</small></p>\n' +
+            '                    <p class="card-text"><small class="text-muted" >'+date+'</small></p>\n' +
             '                </div>\n' +
             '            </div>';
     });
@@ -132,15 +142,6 @@ function toList(list) {
     return html;
 }
 /* main auto-loading */
-
-
-function walletCheck() {
-    let method = "POST";
-    let url = "/api/member/wallet/list";
-    let param = {};
-    let nftResult = commonAjaxUrl(method, url, param);
-    return nftResult;
-}
 
 function getNftOne(nftId) {
     $('input[name="nft_id"]').val(nftId);
@@ -182,9 +183,11 @@ function updateLike(likeFlag, nftId) {
     let likeCount = parseInt($('#likeCount').text());
     if(nftId > 0) {
         result = commonAjaxUrl(method, url, param);
-        likeCount++;
+        likeCount = result.likeTotalCount;
+
+        $('#likeCount').text(likeCount);
+        $('figure#nft_'+nftId).find('.likeCount').text(likeCount);
     }
-    $('#likeCount').text(likeCount);
     return result;
 }
 
@@ -236,6 +239,20 @@ function commonAjaxUrl (method, url, param) {
     }
 
     return ajaxResult;
+}
+function timeToElapsed(datetaime){
+    let localdate = parseInt(new Date(datetaime).getTime() / 1000)
+    let parallax = parseInt((new Date()).getTime() / 1000) - localdate
+
+    if(parallax > 86400){
+        return parseInt(parallax / 86400) + " Day ago"
+    }else if(parallax > 3600){
+        return parseInt(parallax / 3600) + " Hour ago"
+    }else if(parallax > 60){
+        return parseInt(parallax / 60) + " Minute ago"
+    }else {
+        return parseInt(parallax ) + " Second ago"
+    }
 }
 
 $.nl2br = function(tmpText){

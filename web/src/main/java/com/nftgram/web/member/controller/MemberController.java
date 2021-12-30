@@ -30,7 +30,7 @@ public class MemberController {
         if(authDto.getLoginYN().equals("Y")) {
             return  "member/mypage";
         } else {
-            return  "auth/nft_login";
+            return "redirect:/auth/login";
         }
     }
 
@@ -41,7 +41,7 @@ public class MemberController {
         if(authDto.getLoginYN().equals("Y")) {
             return  "member/mywallet";
         } else {
-            return  "auth/nft_login";
+            return "redirect:/auth/login";
         }
     }
 }

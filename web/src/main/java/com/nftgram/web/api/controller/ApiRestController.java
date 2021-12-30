@@ -1,6 +1,7 @@
 package com.nftgram.web.api.controller;
 
 import com.nftgram.web.api.dto.MainPageDto;
+import com.nftgram.web.api.dto.MemberWalletDto;
 import com.nftgram.web.api.dto.request.GetNftOneRequest;
 import com.nftgram.web.api.dto.request.MemberNftRequest;
 import com.nftgram.web.api.dto.request.UpdateLikeCountRequest;
@@ -22,10 +23,7 @@ import com.nftgram.web.member.dto.NftMemberAuthDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -110,8 +108,9 @@ public class ApiRestController {
     }
 
     @PostMapping(value = "/member/wallet/list", produces = "application/json")
-    public List<MemberWalletResponses> memberWalletResponse() throws GeneralSecurityException, UnsupportedEncodingException {
+    public MemberWalletDto memberWalletResponse() throws GeneralSecurityException, UnsupportedEncodingException {
         String loginFlag = "N";
+        String walletFlag = "N";
         Long memberId = Long.valueOf(0);
         List<MemberWalletResponses> memberWalletResponses = new ArrayList<>();
 
@@ -121,22 +120,44 @@ public class ApiRestController {
             memberId = authDto.getNftMemberId();
 
             memberWalletResponses = apiRestService.memberWalletResponses(memberId, loginFlag);
-        } else {
-            MemberWalletResponses response = MemberWalletResponses.builder().loginFlag(loginFlag).build();
-            memberWalletResponses.add(response);
+            if(memberWalletResponses.size() > 0) {
+                walletFlag = "Y";
+            }
         }
 
-        return memberWalletResponses;
+        MemberWalletDto memberWalletDto = MemberWalletDto.builder()
+                .loginFlag(loginFlag)
+                .walletFlag(walletFlag)
+                .memberWalletResponsesList(memberWalletResponses)
+                .build();
+
+        return memberWalletDto;
     }
 
-    @PostMapping(value = "/member/wallet/save")
-    public Long memberWalletSave(String walletContractAddress) throws GeneralSecurityException, UnsupportedEncodingException {
+    @PostMapping(value = "/member/wallet/save", produces = "application/json")
+    public Long memberWalletSave(@RequestParam("address") String walletContractAddress) throws GeneralSecurityException, UnsupportedEncodingException {
         Long isResult = Long.valueOf(0);
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
             isResult = apiRestService.memberWalletSave(walletContractAddress, memberId);
+        } else {
+            isResult = Long.valueOf(2); //Error
+        }
+
+        return isResult;
+
+    }
+
+    @PostMapping(value = "/member/wallet/delete", produces = "application/json")
+    public Long memberWalletDeleteStatus(@RequestParam("wid") Long walletId) throws GeneralSecurityException, UnsupportedEncodingException {
+        Long isResult = Long.valueOf(0);
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+            isResult = apiRestService.memberWalletDeleteStatus(walletId, memberId);
         } else {
             isResult = Long.valueOf(2); //Error
         }

@@ -86,7 +86,7 @@ public class MemberAuthService  {
         String makeToken = memberTokenManager.makeToken(findNftMember.getNftMemberId(), findNftMember.getNftMemberUserId());
         Cookie nftMemberSessionInfo = memberLoginManager.save(makeToken, autoLoginFlag);
         return NftMemberLoginResponse.builder()
-                                .flag(autoLoginFlag)
+                                .flag(true)
                                 .data(nftMemberSessionInfo)
                                 .build();
     }

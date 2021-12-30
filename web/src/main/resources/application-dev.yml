@@ -1,1 +1,82 @@
 spring:
+  profiles: dev
+
+  datasource :
+    hikari:
+      #            driver-class-name: org.h2.Driver
+      #            jdbc-url: jdbc:h2:~/test;AUTO_SERVER=true
+      #            jdbc-url: jdbc:h2:tcp://localhost/~/testdb;AUTO_SERVER=true
+      #            username: sa
+      #            password:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: nftbatch
+      password: "!vhdkdnj1234"
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/nftgram?serverTimezone=Asia/Seoul
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 100
+    hibernate:
+      #      ddl-auto: none
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    #    database-platform: org.hibernate.dialect.H2Dialect
+    #    database-platform: H2
+    open-in-view: false
+    generate-ddl: false
+
+  #    h2:
+  #      console:
+  #        enabled: true
+  #        path: /h2-console
+
+  thymeleaf:
+    prefix: classpath:templates/
+    check-template-location: false
+    suffix: .html
+    cache: false
+
+logging:
+  level:
+    com:
+      nftgram: debug
+    org:
+      springframework:
+        #        security: debug
+        boot:
+          autoconfigure: debug
+      hibernate:
+        SQL: debug
+        type: trace
+#  profiles: local
+
+nftgram:
+  cookie:
+    key: nftgram
+    domainName: dev.nftgram.ai
+  #    domainName: edac-14-52-144-35.ngrok.io
+  aes256:
+    secretKey: 3021ACABD914C42D80C4E9D2D1BBA293
+
+
+
+
+#web:
+#  resources:
+#    add-mappings: false
+
+opensea:
+  api_url: https://api.opensea.io/api/v1
+  opensea_contract_address: "0x495f947276749ce646f68ac8c248420045cb7b5e"
+  stpl_contract_address: "0x4da1c8fa0c73f65e3854c1b42d85acbb336dda1e"
+  wallet_master_id: "25543b82b9fe96223bd903b7037aab9d"
+  assets_uri: "/assets"
+  bundles_uri: "/bundles"
+  single_asset_uri: "/asset/"
+  single_contract_uri: "/asset_contract/"
+  events_uri: "/events"
+  collections_uri: "/collections"

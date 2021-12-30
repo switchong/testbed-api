@@ -29,17 +29,8 @@ public class MainController {
             sort = Long.valueOf(0);
         }
 
-
         List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable , keyword ,sort );
-
-
-
-        model.addAttribute("nftList",mainResponseAll);
-
-
+//        model.addAttribute("nftList",mainResponseAll);
         return "index";
     }
-
-
-
 }

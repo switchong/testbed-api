@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 
-<head th:replace="/fragment/header.html :: fragment-header" />
+<head th:replace="fragment/header.html :: fragment-header" />
 
 
 <link th:href="@{/css/gallery/gallery.css}" rel="stylesheet" />
@@ -10,7 +10,7 @@
 <script th:src="@{/js/scripts.js}"></script>
 
 <body>
-<nav th:replace="/fragment/nav.html :: fragment-nav"></nav>
+<nav th:replace="fragment/nav.html :: fragment-nav"></nav>
 
 <div class="container2" id="nftgram_wrap">
     <div id="gr-gallery" class="gr-gallery">
@@ -27,27 +27,26 @@
             </div>
         </div>-->
         <div class="gr-main" id="nftLayout">
-            <figure class="figure" th:each="nft: ${nftInfo}" th:data-nftid="${nft.nftId}" th:id="@{'nft_'+${nft.nftId}}" >
+            <figure class="figure" th:each="nft: ${nftList}" th:data-nftid="${nft.nftId}" th:id="@{'nft_'+${nft.nftId}}" >
                 <!--/*@thymesVar id="nft" type="com.nftgram.core.domain.nftgram.Nft"*/-->
                 <!--/*@thymesVar id="nft" type="com.nftgram.web.gallery.dto.response.GalleryResponse"*/-->
                 <div class="mt-4" >
-                    <img class="card-img-top" th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" data-layer-btn="nft-layer-pop"/>
+                    <img class="card-img-top" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" data-layer-btn="nft-layer-pop"/>
                 </div>
 
                 <div class="mt-4">
-                    <h4><span style="color:yellow; border:1px solid #d1d1d1;" th:text="${nft.name}"></span></h4>
+                    <h4><span style="color:#fff;" th:text="${nft.name}"></span></h4>
                 </div>
 
                 <div class="row">
-                    <div class="col-3">
-                        <h4 style="color:yellow; border:1px solid #d1d1d1;" th:text="${nft.username}"></h4>
+                    <div class="col-5 tl" style="background: url('../img/icon/Profile_icon.png') left no-repeat;background-size: contain;">
+                        <h4 style="margin-left:20%;color:#fff;overflow:hidden;white-space:nowrap;" th:text="${nft.username}"></h4>
                     </div>
-                    <div class="col-3">
-                        <h4 class="card-title" style="color:yellow; border:1px solid #d1d1d1;">EH</h4>
-
+                    <div class="col-2 tl">
+                        <h4 class="card-title pl30 viewCount" style="background: url('../img/icon/Price_icon.png') left no-repeat;background-size: contain;color:#fff;" th:text="${nft.viewCount}">0</h4>
                     </div>
-                    <div class="col-3">
-                        <h4 class="card-text" style="color:yellow; border:1px solid #d1d1d1;" th:text="${nft.likeCount}">LI</h4>
+                    <div class="col-2 tl">
+                        <h4 class="card-text pl30 likeCount" style="background: url('../img/icon/Like_icon.png') left no-repeat;background-size: contain;color:#fff;" th:text="${nft.likeCount}">0</h4>
                     </div>
                 </div>
 
@@ -70,6 +69,6 @@
 
     });
 </script>
-<div th:replace="/fragment/footer.html :: fragment-footer" />
+<div th:replace="fragment/footer.html :: fragment-footer" />
 </body>
 </html>

@@ -5,7 +5,7 @@
 }
 #navigation-top #navigation-country .nav-country{width: 1.863rem;height: 1.863rem;margin: 0.013rem 0 0.013rem;}
 #navigation-top #navigation-country .nav-country .nav-country-img{ cursor: pointer;width:1.5rem;height:1rem;}
-.gallery-view-type img{
+.gallery-view-type img, #gallery-swiper .card_wrap img{
     cursor: pointer;
 }
 #nftgram-list .card {
@@ -23,3 +23,23 @@ img.card-img-top {
     width: 1.575rem;
     height: 1.575rem;
 }
+
+#nftgram-wallet {position: relative;top:10rem;font-weight: 600;}
+#nftgram-wallet .wallet-content {margin: 0 auto;height:10.563rem;text-align: center;}
+#nftgram-wallet .wallet-content .title {}
+#nftgram-wallet .wallet-content .wallet-btn-group{margin:auto;width:100%;height: 3.6rem;}
+#nftgram-wallet .wallet-content .wallet-btn-group .btn-metamask{width:18rem;height: 90%;padding-left:3rem;border: 1px solid #707070;border-radius: 0.2rem;color: #b1b1b1;font-size: 1.25rem;font-weight:600;background: url("/img/icon/metamask_icon.png") center left no-repeat;background-size: 2.1rem;background-position-x: 3.2rem;}
+#nftgram-wallet .wallet-content .wallet-msg{font-size: 1.25rem;color: #b1b1b1;}
+
+#navigation-top .wallet-wrap {display: none;position: absolute;top: 4rem;right: 3rem;z-index: 999;border: 1px solid black;background-color: white;}
+#navigation-top .wallet-wrap.on {display: block;}
+#navigation-top .wallet-wrap:hover {display: block;}
+#navigation-top .wallet-wrap .wallet-user-wrap{border-bottom: 1px solid #b1b1b1;background: url("/img/icon/Profile_icon.png") left center no-repeat;background-size: 1.875rem 1.875rem;background-position-x: 0.5rem;padding-left: 3rem;}
+#navigation-top .wallet-wrap .wallet-user-wrap .wallet-user-title{font-size: 0.438rem;}
+#navigation-top .wallet-wrap .wallet-user-wrap .balance-price{font-size:0.625rem;font-weight: bold;}
+#navigation-top .wallet-wrap .wallet-user-wrap .balance-price:after{content:' ETH'}
+#navigation-top .wallet-wrap .wallet-list{}
+#navigation-top .wallet-wrap .wallet-list .wallet-row{padding: 0.5rem;font-size: 0.5rem;}
+#navigation-top .wallet-wrap .wallet-list .wallet-row span{padding-right: 0.5rem;}
+#navigation-top .wallet-wrap .wallet-list .wallet-row span img{cursor: pointer;}
+#navigation-top .wallet-wrap .wallet-list .wallet-row .address.active{font-weight: bold;}

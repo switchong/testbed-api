@@ -223,14 +223,15 @@ public class ApiRestService {
 
         if(nftMemberWallets != null) {
             nftMemberWallets.forEach(wallets -> {
-                MemberWalletResponses memberWalletResponse = MemberWalletResponses.builder()
-                        .loginFlag(loginFlag)
-                        .wId(wallets.getNftMemberWalletId())
-                        .wContractAddress(wallets.getWalletContractAddress())
-                        .wType(wallets.getWalletType())
-                        .createdDate(wallets.getCreateDate())
-                        .build();
-                responses.add(memberWalletResponse);
+                if(wallets.getActiveStatus().equals(ACTIVE)) {
+                    MemberWalletResponses memberWalletResponse = MemberWalletResponses.builder()
+                            .wId(wallets.getNftMemberWalletId())
+                            .wContractAddress(wallets.getWalletContractAddress())
+                            .wType(wallets.getWalletType())
+                            .createdDate(wallets.getCreateDate())
+                            .build();
+                    responses.add(memberWalletResponse);
+                }
             });
         }
 
@@ -240,16 +241,54 @@ public class ApiRestService {
     @Transactional(rollbackFor = Exception.class)
     public Long memberWalletSave(String walletContractAddress, Long memberId) {
         Long isResult = Long.valueOf(1);
+        // 지갑주소 중복 체크
 
         NftMember nftMember = nftMemberRepository.findByNftMemberId(memberId);
+        NftMemberWallet chkNftMemberWallet = nftMemberWalletRepository.walletByContractAddress(walletContractAddress);
 
-        // NftMemberWallet Save
-        NftMemberWallet nftMemberWallet = NftMemberWallet.builder()
-                .nftMember(nftMember)
-                .walletContractAddress(walletContractAddress)
-                .build();
+        // contractAddress 중복체크
+        if(chkNftMemberWallet != null) {
+            if(chkNftMemberWallet.getActiveStatus() == ACTIVE){
+                if(chkNftMemberWallet.getNftMember().getNftMemberId().equals(memberId)) {
+                    isResult = Long.valueOf(3);
+                } else {
+                    isResult = Long.valueOf(4);
+                }
+            } else {
+                if(chkNftMemberWallet.getNftMember().getNftMemberId().equals(memberId)) {
+                    isResult = Long.valueOf(5);
+                    nftMemberWalletRepository.updateWalletStatus(chkNftMemberWallet.getNftMemberWalletId(),memberId, ACTIVE);
+                } else {
+                    isResult = Long.valueOf(6);
+                }
+            }
+        }
 
-        nftMemberWalletRepository.saveAndFlush(nftMemberWallet);
+        if(isResult.equals(1)) {
+            // NftMemberWallet Save
+            NftMemberWallet nftMemberWallet = NftMemberWallet.builder()
+                    .nftMember(nftMember)
+                    .walletContractAddress(walletContractAddress)
+                    .build();
+
+            nftMemberWalletRepository.save(nftMemberWallet);
+        }
+
+        return isResult;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Long memberWalletDeleteStatus(Long walletId, Long memberId) {
+        Long result = nftMemberWalletRepository.deleteWalletStatus(walletId, memberId);
+
+        return result;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Long memberWalletByNftMatching() {
+        Long isResult = Long.valueOf(1);
+
+
 
         return isResult;
 
