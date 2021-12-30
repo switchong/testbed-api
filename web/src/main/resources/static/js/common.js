@@ -23,6 +23,11 @@ $(document).ready(function(){
             moreView("nftgram-list" );
         }
     });
+
+    $('select[name="selSort"]').change(function () {
+        let sort = $(this).val();
+        moreView("nftgram-list", "html");
+    })
     // view-type click event
     $('.gallery-view-type').on('click',function(){
         let view_type = $(this).data('view');
@@ -42,47 +47,68 @@ $(document).ready(function(){
     });
 });
 
-/* main auto-loading
+/*
+*  main auto-loading
 *  main search
+*  obj nftgram-list
+*
 */
 const size = 20;
-function moreView(obj) {
 
-    let total = $('#nftgram-list .card').length;
-    let nextPage = parseInt(total/size);
-    let keyword = $('#searchKeyword').val();
-    let sort = $('#howAsc').val();
-    let url = "/api/main/page?page=" + nextPage + "&size=" + size+ "&keyword=" + keyword;
-    if(sort != null) {
-        url += "&sort=" + sort;
-    }
+    function moreView(obj, type) {
+
+        let total = $('#nftgram-list .card').length;
+        let nextPage = parseInt(total / size);
+        let keyword = $('#searchKeyword').val();
+        let sort = $('#selSort').val();
+        let url = "/api/main/page?page=" + nextPage + "&size=" + size + "&keyword=" + keyword;
+
+
+        if (sort != null) {
+
+            url += "&sort=" + sort;
+        }
 
         $.ajax({
             url: url,
             type: "GET",
             dataType: "json",
+            data: {total: this.value},
             async: false,
             success: function (data) {
                 let html = toList(data.nftList);
-                //total += data.total;
+
+                if(type == "html") {
+                    $("#" + obj).html(html);
+                }else {
 
                 $("#" + obj).append(html);
+                }
 
                 if (data.total < size) {
                     $(window).unbind();
                 }
 
+
             },
-            error : function (data){
-                alert("error!!!!!!");
+            error: function (data) {
+                alert("error");
             }
         });
 
-    $('input[name="page"]').val(nextPage);
-    $('#nftgram-list .card-img-top').on('click',function(){
-        let collectionId = $(this).data('collectionid');
-        location.href="/gallery/"+collectionId;
-    })
+        $('input[name="page"]').val(nextPage);
+        $('#nftgram-list .card-img-top').on('click', function () {
+            let collectionId = $(this).data('collectionid');
+            location.href = "/gallery/" + collectionId;
+        })
+    }
+
+$("#btnCreatDtOrder, btnPointOrder").click(function(){
+    var dataNm = $(this).data("datanm"); //data() 의 이름은 소문자로 작성
+    listSort($(this), dataNm);
+});
+
+function SortList(){
 
 }
 

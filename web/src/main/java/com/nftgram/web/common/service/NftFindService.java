@@ -34,7 +34,8 @@ public class NftFindService {
      * @throws ParseException
      */
     @Transactional(readOnly = true)
-    public List<CommonNftResponse> findAllList(Pageable pageable , String keyword , String sort  )  throws ParseException {
+    public List<CommonNftResponse> findAllList(Pageable pageable , String keyword , Long sort  )  throws ParseException {
+
 
 
         List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable, keyword , sort );
@@ -43,11 +44,16 @@ public class NftFindService {
 
         List<CommonNftResponse> response = new ArrayList<>();
 
+
         response = setCommonNftResponses(nftRepositoryAll);
+
 
 
         return response;
     }
+
+
+
 
     /**
      * NFT 갤러리 collection_id 조회하여 검색
@@ -124,7 +130,5 @@ public class NftFindService {
 
         return response;
     }
-
-
 
 }

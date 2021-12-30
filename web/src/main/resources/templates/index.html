@@ -11,7 +11,7 @@
     <div class="container px-4 px-lg-5 mt-5" id="nftgram_wrap">
         <input type="hidden" name="page" value="1" />
         <div class="card-deck" id="nftgram-list">
-            <div class="card" th:each="nft: ${nftList}">
+            <div class="card" th:each="nft: ${nftList}" id="nftList">
                 <!--/*@thymesVar id="nft" type="com.nftgram.core.domain.nftgram.Nft"*/-->
                 <!--/*@thymesVar id="nft" type="com.nftgram.web.main.dto.MainResponse"*/-->
                 <img class="card-img-top" th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-collectionid="${nft.nftCollectionId}" th:data-nid="${nft.nftId}" width="301px"  height="301px"/>
@@ -21,8 +21,8 @@
                     </h5>
                     <p class="card-text" th:text="${nft.nftCollectionName}"></p>
                     <p class="card-text" th:text="${nft.nftId}"></p>
-                    <p class="card-text" th:text="${nft.likeCount}"></p>
-                    <p class="card-text" th:text="${nft.viewCount}"></p>
+<!--                    <div>조회순<p class="card-text" th:text="${nft.viewCount}"></p></div>-->
+<!--                    <div>좋아요순<p class="card-text" th:text="${nft.likeCount}"></p></div>-->
 
                     <p class="card-text"><small class="text-muted" th:text="${nft.localDate}"></small></p>
                 </div>

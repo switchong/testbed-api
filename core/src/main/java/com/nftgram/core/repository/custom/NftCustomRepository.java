@@ -13,10 +13,10 @@ public interface NftCustomRepository {
 
     Page<Nft> findAllPage(Pageable pageable);
 
-    //List<Nft> findAllNft(Pageable pageable , String keyword);
+
+    List<Nft> findAllNft(Pageable pageable, String keyword , Long sort  );
 
 
-    List<Nft> findAllNft(Pageable pageable, String keyword , String sort  );
 
     List<Nft> findAllNftGallery(Pageable pageable);
 

@@ -1,17 +1,14 @@
 package com.nftgram.web.common.dto.response;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Slf4j
-public class CommonNftResponse {
+@Setter
+public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
 
     private Boolean findFlag;
 
@@ -64,15 +61,10 @@ public class CommonNftResponse {
     }
 
 
-//    @Override
-//    public int compareTo(CommonNftResponse o ){
-//
-//        if (this.nftId == o.nftId){
-//            return 0;
-//        }else  if (this.nftId  < o.nftId){
-//            return  -1;
-//        }else {
-//            return 1;
-//        }
-//    }
+    @Override
+    public int compareTo(CommonNftResponse o) {
+        return 0;
+    }
+
+
 }

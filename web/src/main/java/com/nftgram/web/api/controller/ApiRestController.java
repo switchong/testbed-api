@@ -22,8 +22,6 @@ import com.nftgram.web.member.dto.NftMemberAuthDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,12 +46,14 @@ public class ApiRestController {
 
 
     @GetMapping("/main/page")
-    public MainPageDto getMainPage(Pageable pageable, String keyword , String sort ) throws ParseException {
+    public MainPageDto getMainPage(Pageable pageable, String keyword , Long sort ) throws ParseException {
         List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable  , keyword , sort);
+
 
         MainPageDto mainPageDto = MainPageDto.builder()
                 .total(mainResponseAll.size())
                 .nftList(mainResponseAll)
+
                 .build();
 
         return mainPageDto;
