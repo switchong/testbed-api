@@ -7,61 +7,61 @@
 <body>
 <nav th:replace="fragment/nav.html :: fragment-nav"></nav>
 <script>
-$(document).ready(function () {
-  // 갤러리 스와이프
-  if ($('.gallery-wrap').length > 0) {
-    let count = $('.gallery-wrap .swiper-container').find('li').length;
-    let gallerySl = new Swiper('.gallery-wrap .swiper-container', {
-      init: true,
-      loop:true,
-      loopFillGroupWithBlank : true,
-      allowTouchMove: true,
-      cssWidthAndHeight:true,
-      centeredSlides:true,
-      breakpoints: {
-        1280: {
-          slidesPerView: 5,
-          spaceBetween: 20,
-          slidesPerGroup:3
-        },
-        1080 :{
-          slidesPerView: 5,
-          spaceBetween: 20,
-          slidesPerGroup:3
-        },
-        768 :{
-          slidesPerView: 5,
-          spaceBetween: 20,
-          slidesPerGroup:1
-        },
-        640:{
-          slidesPerView: 5,
-          spaceBetween:0,
-          slidesPerGroup:1
-        },
-        380 : {
-          slidesPerView: 5,
-          spaceBetween:0,
-          slidesPerGroup:1
-        }
+  $(document).ready(function () {
+    // 갤러리 스와이프
+    if ($('.gallery-wrap').length > 0) {
+      let count = $('.gallery-wrap .swiper-container').find('li').length;
+      let gallerySl = new Swiper('.gallery-wrap .swiper-container', {
+        init: true,
+        loop:true,
+        loopFillGroupWithBlank : true,
+        allowTouchMove: true,
+        cssWidthAndHeight:true,
+        centeredSlides:true,
+        breakpoints: {
+          1280: {
+            slidesPerView: 5,
+            spaceBetween: 20,
+            slidesPerGroup:3
+          },
+          1080 :{
+            slidesPerView: 5,
+            spaceBetween: 20,
+            slidesPerGroup:3
+          },
+          768 :{
+            slidesPerView: 5,
+            spaceBetween: 20,
+            slidesPerGroup:1
+          },
+          640:{
+            slidesPerView: 5,
+            spaceBetween:0,
+            slidesPerGroup:1
+          },
+          380 : {
+            slidesPerView: 5,
+            spaceBetween:0,
+            slidesPerGroup:1
+          }
 
-      },
-      navigation:{
+        },
+        navigation:{
 
-        prevEl: '.swiper-navigation .prev',
-        nextEl: '.swiper-navigation .next',
-      },
-    });
+          prevEl: '.swiper-navigation .prev',
+          nextEl: '.swiper-navigation .next',
+        },
+      });
 
-    $('#gallery-swiper .card_wrap img').on('click',function(){
-      var nftId = $(this).data('nftid');
-      var PopId = "nft-layer-pop";
-      layerPopId(PopId);
+      $('#gallery-swiper .card_wrap img').on('click',function(){
+        var nftId = $(this).data('nftid');
+        var PopId = "nft-layer-pop";
+        layerPopId(PopId);
 
-      layerPopGallery(nftId);
-    });
-  }
-});
+        layerPopGallery(nftId);
+      });
+    }
+  });
 
 </script>
 <div class="container" id="nftgram_wrap">
