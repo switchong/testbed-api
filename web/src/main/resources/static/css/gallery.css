@@ -130,9 +130,13 @@ ul {list-style:none;}
 
 .gallery-wrap .gallery_sl_wrap.centered {
     margin: 0 auto;
-    width: calc(350.642px * 3 + 40px)
+    width: calc(350.642px * 3 + 40px);
+    border:5px solid red;
 }
 
+.swiper-slide{
+
+}
 .gallery-wrap .gallery_sl_wrap.centered .swiper-container .swiper-slide {
     opacity: 1;
     filter: none;
@@ -141,7 +145,7 @@ ul {list-style:none;}
 
 .gallery-wrap .gallery_sl_wrap.alone {
     margin: 0 auto;
-    width: calc(350.642px * 3 + 40px)
+    /*width: calc(350.642px * 3 + 40px)*/
 }
 
 .gallery-wrap .gallery_sl_wrap.alone .swiper-container .swiper-slide {

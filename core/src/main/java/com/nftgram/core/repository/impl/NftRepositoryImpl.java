@@ -28,6 +28,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
     private final JPAQueryFactory queryFactory;
 
+
     public NftRepositoryImpl(JPAQueryFactory queryFactory) {
         this.queryFactory = queryFactory;
     }
@@ -164,6 +165,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return viewTotal;
     }
 
+
     @Override
     public Long countNftLikeCount(Long nftId) {
         Long likeTotal = queryFactory.select(nft.likeCount)
@@ -189,7 +191,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .set(nft.likeCount, nft.likeCount.subtract(1))
                 .execute();
     }
-
     public BooleanExpression eqKeyword(String keyword) {
         if (StringUtils.isEmpty(keyword)) {
             return null;
