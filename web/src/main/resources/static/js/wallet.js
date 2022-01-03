@@ -51,6 +51,7 @@ if(typeof window.ethereum !== 'undefined') {
                             isUse = true;
                         }
                     });
+                    console.log(isUse);
                     if(isUse == false) {
                         // 지갑주소 저장
                         walletSave(address);
@@ -196,6 +197,7 @@ function walletSave(address) {
     let param = {"address":address};
     if(address != null) {
         result = commonAjaxUrl(method, url, param);
+        console.log(result);
         if(result == 1 || result == 5) {
             alert("지갑 연동이 완료되었습니다.");
         } else if(result == 2) {

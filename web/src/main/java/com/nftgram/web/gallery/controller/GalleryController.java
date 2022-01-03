@@ -47,6 +47,17 @@ public class GalleryController {
         return "gallery/gallery";
     }
 
+    @GetMapping("/gallery_swiper/{collection}")
+    public String gallerySwiper(Model model , @PathVariable("collection") Long collectionId) {
+
+        List<CommonNftResponse> nftList = nftFindService.findByNftCollectionId(collectionId);
+
+        model.addAttribute("nftList",nftList);
+        model.addAttribute("nav_active","explorer");
+
+        return "gallery/gallery_swiper";
+    }
+
     @GetMapping("/gallery/myfavorite")
     public String myfavorite(Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
@@ -84,14 +95,4 @@ public class GalleryController {
         }
     }
 
-
-    @GetMapping("/gallery_swiper/{collection}")
-    public String gallerySwiper(Model model , @PathVariable("collection") Long collectionId) {
-
-        List<CommonNftResponse> NftInfo = nftFindService.findByNftCollectionId(collectionId);
-
-        model.addAttribute("nftInfo",NftInfo);
-
-        return "gallery/gallery_swiper";
-    }
 }

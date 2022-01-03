@@ -264,7 +264,7 @@ public class ApiRestService {
             }
         }
 
-        if(isResult.equals(1)) {
+        if(isResult.equals(Long.valueOf(1))) {
             // NftMemberWallet Save
             NftMemberWallet nftMemberWallet = NftMemberWallet.builder()
                     .nftMember(nftMember)

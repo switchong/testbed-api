@@ -128,6 +128,7 @@ public class ApiRestController {
         MemberWalletDto memberWalletDto = MemberWalletDto.builder()
                 .loginFlag(loginFlag)
                 .walletFlag(walletFlag)
+                .memberId(memberId)
                 .memberWalletResponsesList(memberWalletResponses)
                 .build();
 

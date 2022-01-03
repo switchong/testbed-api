@@ -5,6 +5,9 @@
 }
 #navigation-top #navigation-country .nav-country{width: 1.863rem;height: 1.863rem;margin: 0.013rem 0 0.013rem;}
 #navigation-top #navigation-country .nav-country .nav-country-img{ cursor: pointer;width:1.5rem;height:1rem;}
+.gallery-view-type {
+    margin : auto;
+}
 .gallery-view-type img, #gallery-swiper .card_wrap img{
     cursor: pointer;
 }

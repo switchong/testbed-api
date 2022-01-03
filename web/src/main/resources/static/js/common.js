@@ -12,17 +12,22 @@ $(document).ready(function(){
         let collectionId = $(this).data('collectionid');
         location.href="/gallery/"+collectionId;
     });
-    // scroll auto load
-    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+
+    if($('#nftgram_wrap #nftgram-list').length > 0) {
         moreView();
 
-    };
-    // scroll auto load
-    $(window).scroll(function(){
+        // scroll auto load
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
             moreView();
-        }
-    });
+
+        };
+        // scroll auto load
+        $(window).scroll(function(){
+            if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                moreView();
+            }
+        });
+    }
 
     $('select[name="selSort"]').change(function () {
         let sort = $(this).val();
@@ -48,9 +53,6 @@ $(document).ready(function(){
         moreView("html");
     });
 
-    if($('#nftgram_wrap #nftgram-list').length > 0) {
-        moreView();
-    }
 });
 
 /*
@@ -129,7 +131,6 @@ function toList(list) {
             imageUrlHtml = '<video class="card-img-top" controlslist="nodownload" loop="" playsinline="" preload="metadata" style="border-radius: 0px;"><source src="'+nft.nftImageUrl+'" type="video/mp4"></video>';
         }
         html += '<div class="card" >\n' +
-            '                '+imageUrlHtml+'\n' +
             '                <div class="card-body">\n' +
             '                    <h5 class="card-title">\n' +
             '                        '+imageUrlHtml+' <small class="text-muted">'+nft.username+'</small>\n' +

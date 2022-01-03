@@ -15,12 +15,15 @@ public class MemberWalletDto {
 
     private String walletFlag;
 
+    private Long memberId;
+
     private List<MemberWalletResponses> memberWalletResponsesList;
 
     @Builder
-    public MemberWalletDto(String loginFlag, String walletFlag, List<MemberWalletResponses> memberWalletResponsesList) {
+    public MemberWalletDto(String loginFlag, String walletFlag, Long memberId, List<MemberWalletResponses> memberWalletResponsesList) {
         this.loginFlag = loginFlag;
         this.walletFlag = walletFlag;
+        this.memberId = memberId;
         this.memberWalletResponsesList = memberWalletResponsesList;
     }
 }
