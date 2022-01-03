@@ -40,9 +40,9 @@ public class GalleryService {
 
         List<CommonNftResponse> response = new ArrayList<>();
 
-        nftFindService.setCommonNftResponses(GalleryList);
+        commonNftResponses = nftFindService.setCommonNftResponses(GalleryList);
 
-        return this.commonNftResponses;
+        return commonNftResponses;
     }
 
     public List<CommonNftResponse> findAllNftGalleryMember(Pageable pageable, Long memberId) {

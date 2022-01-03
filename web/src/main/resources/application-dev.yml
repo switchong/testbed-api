@@ -57,7 +57,7 @@ logging:
 nftgram:
   cookie:
     key: nftgram
-    domainName: dev.nftgram.ai
+    domainName: nftgram.ai
   #    domainName: edac-14-52-144-35.ngrok.io
   aes256:
     secretKey: 3021ACABD914C42D80C4E9D2D1BBA293

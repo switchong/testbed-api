@@ -10,7 +10,7 @@ $(document).ready(function(){
     // main nft image click
     $('#nftgram-list .card-img-top').on('click',function(){
         let collectionId = $(this).data('collectionid');
-        location.href="/gallery_swiper/"+collectionId;
+        location.href="/gallery/"+collectionId;
     });
     // scroll auto load
     if($(window).scrollTop() + $(window).height() == $(document).height()) {
@@ -103,7 +103,7 @@ const size = 20;
         $('input[name="page"]').val(nextPage);
         $('#nftgram-list .card-img-top').on('click', function () {
             let collectionId = $(this).data('collectionid');
-            location.href = "/gallery_swiper/" + collectionId;
+            location.href = "/gallery/" + collectionId;
         })
     }
 
@@ -122,16 +122,17 @@ function toList(list) {
     let html = '';
     $.each(list, function(key, nft){
         let pattern = "https://.*mp4";
+
         let date = timeToElapsed(nft.localDate);
         let imageUrlHtml = '<img class="card-img-top" src="'+nft.nftImageUrl+'" alt="'+nft.name+'" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'" width="301px"  height="301px"/>';
-        if(nft.nftImageUrl.match('/.mp4/i')) {
+        if(nft.nftImageUrl.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
             imageUrlHtml = '<video class="card-img-top" controlslist="nodownload" loop="" playsinline="" preload="metadata" style="border-radius: 0px;"><source src="'+nft.nftImageUrl+'" type="video/mp4"></video>';
         }
         html += '<div class="card" >\n' +
             '                '+imageUrlHtml+'\n' +
             '                <div class="card-body">\n' +
             '                    <h5 class="card-title">\n' +
-            '                        <img src="/img/icon/Profile_icon.png" class="card-img-user" > <small class="text-muted">'+nft.username+'</small>\n' +
+            '                        '+imageUrlHtml+' <small class="text-muted">'+nft.username+'</small>\n' +
             '                    </h5>\n' +
             '                    <p class="card-text" >'+nft.nftCollectionName+'"</p>\n' +
             '                    <p class="card-text"><small class="text-muted" >'+date+'</small></p>\n' +

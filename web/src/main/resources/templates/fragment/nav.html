@@ -38,10 +38,12 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"></ul>
                 <div class="d-flex">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a aria-current="page" class="nav-link explorer active" href="/">EXPLORER</a></li>
-                        <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite">MY FAVORITIES</a></li>
-                        <li class="nav-item"><a class="nav-link mycollection" href="/gallery/mycollection">My COLLECTION</a></li>
-                        <li class="nav-item"><a class="nav-link mypage" href="/member/mypage"><img class="whIs30" th:src="@{../img/icon/Profile_icon.png}" /></a></li>
+                        <!--/*@thymesVar id="nav_active" type="com.nftgram.web.gallery.controller.GalleryController"*/-->
+                        <!--/*@thymesVar id="nav_active" type="com.nftgram.web.main.controller.MainController"*/-->
+                        <a aria-current="page" class="nav-link explorer" href="/" th:classappend="${nav_active}== 'explorer' ? 'active' : ''">EXPLORER</a></li>
+                        <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">MY FAVORITIES</a></li>
+                        <li class="nav-item"><a class="nav-link mycollection" href="/gallery/mycollection" th:classappend="${nav_active}== 'mycollection' ? 'active' : ''">My COLLECTION</a></li>
+                        <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs30" th:src="@{../img/icon/Profile_icon.png}" /></a></li>
                         <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" th:src="@{../img/icon/Wallet_icon.png}" /></a></li>
 
 

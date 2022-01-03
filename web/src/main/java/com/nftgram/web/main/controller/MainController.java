@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
@@ -28,6 +29,8 @@ public class MainController {
         if (sort == null){
             sort = Long.valueOf(0);
         }
+
+        model.addAttribute("nav_active","explorer");
 
         List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable , keyword ,sort );
 //        model.addAttribute("nftList",mainResponseAll);

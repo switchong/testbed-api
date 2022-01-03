@@ -4,105 +4,71 @@
 
 <head th:replace="fragment/header.html :: fragment-header" />
 
+
+<link rel="stylesheet" th:href="@{/css/gallery/gallery.css}" />
+<link rel="stylesheet" th:href="@{/css/gallery/default.css}" />
+<script th:src="@{/js/scripts.js}"></script>
+
 <body>
 <nav th:replace="fragment/nav.html :: fragment-nav"></nav>
-<script>
-  $(document).ready(function () {
-    // 갤러리 스와이프
-    if ($('.gallery-wrap').length > 0) {
-      let count = $('.gallery-wrap .swiper-container').find('li').length;
-      let gallerySl = new Swiper('.gallery-wrap .swiper-container', {
-        init: true,
-        loop:true,
-        loopFillGroupWithBlank : true,
-        allowTouchMove: true,
-        cssWidthAndHeight:true,
-        centeredSlides:true,
-        breakpoints: {
-          1280: {
-            slidesPerView: 5,
-            spaceBetween: 20,
-            slidesPerGroup:3
-          },
-          1080 :{
-            slidesPerView: 5,
-            spaceBetween: 20,
-            slidesPerGroup:3
-          },
-          768 :{
-            slidesPerView: 5,
-            spaceBetween: 20,
-            slidesPerGroup:1
-          },
-          640:{
-            slidesPerView: 5,
-            spaceBetween:0,
-            slidesPerGroup:1
-          },
-          380 : {
-            slidesPerView: 5,
-            spaceBetween:0,
-            slidesPerGroup:1
-          }
 
-        },
-        navigation:{
-
-          prevEl: '.swiper-navigation .prev',
-          nextEl: '.swiper-navigation .next',
-        },
-      });
-
-      $('#gallery-swiper .card_wrap img').on('click',function(){
-        var nftId = $(this).data('nftid');
-        var PopId = "nft-layer-pop";
-        layerPopId(PopId);
-
-        layerPopGallery(nftId);
-      });
-    }
-  });
-
-</script>
-<div class="container" id="nftgram_wrap">
-  <div class="gallery-wrap" id="gallery-swiper">
-    <div class="w2000">
-      <div class="gallery_sl_wrap">
-        <div class="swiper-container" id="nftLayout">
-          <ul class="swiper-wrapper">
-            <li class="swiper-slide" th:each="nft: ${nftList}" th:data-nftid="${nft.nftId}" >
-              <div class="card_wrap">
-                <img th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" th:class="@{'gimage'+${nft.nftId}}" data-layer-btn="nft-layer-pop">
-                <div class="nft-title-area">
-                  <div class="nft-title">
-                    <h4 class="nft-title-info" th:text="${nft.name}">NFT TITLE #1232</h4>
-                  </div>
-                  <div class="nft-title-user">
-                    <div class="nft-title-user-image"><img th:src="@{/img/icon/Profile_icon.png}" class="whIs30"/></div>
-                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>
-                    <div class="nft-title-etc">
-                      <div class="etc-view">
-                        <img th:src="@{../img/icon/Price_icon.png}" class="hIs24 wIs20"/><span class="viewCount" th:text="${nft.viewCount}">0</span>
-                      </div>
-                      <div class="etc-like">
-                        <img th:src="@{../img/icon/Like_icon.png}" class="hIs24 wIs20"/><span class="likeCount" th:text="${nft.likeCount}">0</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <div class="swiper-navigation">
-            <button type="button" class="arrows prev">PREV</button>
-            <button type="button" class="arrows next">NEXT</button>
-          </div>
-          <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+<div class="container2" id="nftgram_wrap">
+  <div class="gr-gallery" id="gr-gallery">
+    <!--<div class="gallery_nav">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            RECENTLY LISTED
+        </button><br/>
+        <a href="http://tympanus.net/Development/3DBookShowcase/">section1</a><br/>
+        <div class="row">
+            <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img1</a></div>
+            <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img2</a></div>
+            <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img3</a></div>
+            <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img4</a></div>
         </div>
-      </div>
+    </div>-->
+    <div class="gr-main" id="nftLayout">
+      <figure class="figure" th:data-nftid="${nft.nftId}" th:each="nft: ${nftInfo}" th:id="@{'nft_'+${nft.nftId}}" >
+        <!--/*@thymesVar id="nft" type="com.nftgram.core.domain.nftgram.Nft"*/-->
+        <!--/*@thymesVar id="nft" type="com.nftgram.web.gallery.dto.response.GalleryResponse"*/-->
+        <div class="mt-4" >
+          <img class="card-img-top" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" th:src="${nft.nftImageUrl}"/>
+        </div>
+
+        <div class="mt-4">
+          <h4><span style="color:#fff;" th:text="${nft.name}"></span></h4>
+        </div>
+
+        <div class="row">
+          <div class="col-5 tl" style="background: url('../img/icon/Profile_icon.png') left no-repeat;background-size: contain;">
+            <h4 style="margin-left:20%;color:#fff;overflow:hidden;white-space:nowrap;" th:text="${nft.username}"></h4>
+          </div>
+          <div class="col-2 tl">
+            <h4 class="card-title pl30 viewCount" style="background: url('../img/icon/Price_icon.png') left no-repeat;background-size: contain;color:#fff;" th:text="${nft.viewCount}">0</h4>
+          </div>
+          <div class="col-2 tl">
+            <h4 class="card-text pl30 likeCount" style="background: url('../img/icon/Like_icon.png') left no-repeat;background-size: contain;color:#fff;" th:text="${nft.likeCount}">0</h4>
+          </div>
+        </div>
+
+      </figure>
     </div>
   </div>
 </div><!-- /container -->
+<script th:src="@{/js/gallery.js}"></script>
+<script>
+  let figureCount = parseInt($('#nftLayout figure').length % 3);
+  let layoutArr = new Array();
+  for(var i=0;i<figureCount;i++) {
+    layoutArr.push(3);
+  }
+  $(function() {
+
+    Gallery.init( {
+      layout : layoutArr
+    } );
+
+  });
+</script>
 <div th:replace="fragment/footer.html :: fragment-footer" />
 </body>
 </html>

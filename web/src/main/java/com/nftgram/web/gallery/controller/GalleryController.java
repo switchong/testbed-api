@@ -31,26 +31,18 @@ public class GalleryController {
         List<CommonNftResponse> nftList = galleryService.findAllNftGallery(pageable);
 
         model.addAttribute("nftList",nftList);
+        model.addAttribute("nav_active","explorer");
 
         return "gallery/gallery";
-    }
-
-    @GetMapping("/gallery_swiper/{collection}")
-    public String gallerySwiper(Model model , @PathVariable("collection") Long collectionId) {
-
-        List<CommonNftResponse> nftList = nftFindService.findByNftCollectionId(collectionId);
-
-        model.addAttribute("nftList",nftList);
-
-        return "gallery/gallery_swiper";
     }
 
     @GetMapping("/gallery/{collection}")
     public String galleryDetail(Model model , @PathVariable("collection") Long collectionId) {
 
-        List<CommonNftResponse> NftInfo = nftFindService.findByNftCollectionId(collectionId);
+        List<CommonNftResponse> nftList = nftFindService.findByNftCollectionId(collectionId);
 
-        model.addAttribute("nftInfo",NftInfo);
+        model.addAttribute("nftList",nftList);
+        model.addAttribute("nav_active","explorer");
 
         return "gallery/gallery";
     }
@@ -65,6 +57,7 @@ public class GalleryController {
             List<CommonNftResponse> nftList = galleryService.findAllNftGalleryMemberLike(pageable, memberId);
 
             model.addAttribute("nftList",nftList);
+            model.addAttribute("nav_active","myfavorite");
 
             return "gallery/myfavorite";
         } else {
@@ -83,10 +76,22 @@ public class GalleryController {
             List<CommonNftResponse> nftList = galleryService.findAllNftGalleryMember(pageable, memberId);
 
             model.addAttribute("nftList",nftList);
+            model.addAttribute("nav_active","mycollection");
 
             return "gallery/mycollection";
         } else {
             return "redirect:/auth/login";
         }
+    }
+
+
+    @GetMapping("/gallery_swiper/{collection}")
+    public String gallerySwiper(Model model , @PathVariable("collection") Long collectionId) {
+
+        List<CommonNftResponse> NftInfo = nftFindService.findByNftCollectionId(collectionId);
+
+        model.addAttribute("nftInfo",NftInfo);
+
+        return "gallery/gallery_swiper";
     }
 }
