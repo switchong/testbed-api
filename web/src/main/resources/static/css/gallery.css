@@ -30,8 +30,8 @@ ul {list-style:none;}
 }
 
 .gallery-wrap .card_wrap > img {
-    width: auto;
-    height: 400px;
+    width: 100%;
+    height: 100%;
 }
 
 .gallery-wrap .card_wrap:hover {
@@ -133,7 +133,7 @@ ul {list-style:none;}
 .gallery-wrap .gallery_sl_wrap.centered {
     margin: 0 auto;
     width: calc(350.642px * 3 + 40px);
-    border:5px solid red;
+    
 }
 
 .swiper-slide{
@@ -195,15 +195,15 @@ ul {list-style:none;}
 
 
 #gallery-swiper .nft-title-area{position: relative;width:100%;height: 6.5rem;padding: 0.5rem;color: #b1b1b1;background-color: #343434;}
-#gallery-swiper .nft-title-area .nft-title{margin-bottom: 1rem}
+#gallery-swiper .nft-title-area .nft-title{margin:0.5rem}
 #gallery-swiper .nft-title-area .nft-title .nft-title-info{text-align: center;}
 #gallery-swiper .nft-title-area .nft-title-user{height:60%}
 #gallery-swiper .nft-title-area .nft-title-user .nft-title-user-image{float:left;margin-right: 0.625rem;}
-#gallery-swiper .nft-title-area .nft-title-user .nft-title-user-info{float:left;overflow:hidden;font-weight: bold;line-height: 1;}
+#gallery-swiper .nft-title-area .nft-title-user .nft-title-user-info{float:left;overflow:hidden;font-weight: bold;line-height: 2;}
 #gallery-swiper .nft-title-area .nft-title-user .nft-title-user-info .time{font-size:0.313rem;font-weight: 300;}
 #gallery-swiper .nft-title-area .nft-title-user .nft-title-etc{float:right;margin-top:0.3rem;font-weight: bold;}
 #gallery-swiper .nft-title-area .nft-title-user .nft-title-etc .etc-view, .etc-like {float: left;}
-#gallery-swiper .nft-title-area .nft-title-user .nft-title-etc .etc-view .viewCount{margin:0 3rem 0 0.5rem;}
-#gallery-swiper .nft-title-area .nft-title-user .nft-title-etc .etc-like .likeCount{margin:0 0 0 0.5rem;}
+#gallery-swiper .nft-title-area .nft-title-user .nft-title-etc .etc-view .viewCount{margin:0 2rem 0 0.5rem;}
+#gallery-swiper .nft-title-area .nft-title-user .nft-title-etc .etc-like .likeCount{margin:0 1rem 0 0.5rem;}
 
 /*# sourceMappingURL=main.min.css.map */

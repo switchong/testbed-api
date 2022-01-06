@@ -12,22 +12,17 @@ $(document).ready(function(){
         let collectionId = $(this).data('collectionid');
         location.href="/gallery/"+collectionId;
     });
-
-    if($('#nftgram_wrap #nftgram-list').length > 0) {
+    // scroll auto load
+    if($(window).scrollTop() + $(window).height() == $(document).height()) {
         moreView();
 
-        // scroll auto load
+    };
+    // scroll auto load
+    $(window).scroll(function(){
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
             moreView();
-
-        };
-        // scroll auto load
-        $(window).scroll(function(){
-            if($(window).scrollTop() + $(window).height() == $(document).height()) {
-                moreView();
-            }
-        });
-    }
+        }
+    });
 
     $('select[name="selSort"]').change(function () {
         let sort = $(this).val();
@@ -53,6 +48,9 @@ $(document).ready(function(){
         moreView("html");
     });
 
+    if($('#nftgram_wrap #nftgram-list').length > 0) {
+        moreView();
+    }
 });
 
 /*
@@ -63,51 +61,61 @@ $(document).ready(function(){
 */
 const size = 20;
 
-    function moreView(type) {
+function moreView(type , nft) {
 
-        let total = (type=="html")?0:$('#nftgram-list .card').length;
-        let nextPage = parseInt(total / size);
-        let keyword = $('#searchKeyword').val();
-        let sort = $('#selSort').val();
-        let url = "/api/main/page?page=" + nextPage + "&size=" + size + "&keyword=" + keyword;
+    let total = (type=="html")?0:$('#nftgram-list .card').length;
+    let nextPage = parseInt(total / size);
+    let keyword = $('#searchKeyword').val();
+    let sort = $('#selSort').val();
+    let url = "/api/main/page?page=" + nextPage + "&size=" + size + "&keyword=" + keyword;
+    let  insTag = "" +
+        '<div class=\"search-box\">' +
+        '<div class=\"position-box\">' +
+        ''+keyword+'' +
+        "<span onclick=\"this.parentElement.style.display='none'\" id=\"close\" class=\"close\">X</span>" +
+        '</div>'
+        "</div>"
 
-
-        if (sort != null) {
-            url += "&sort=" + sort;
-        }
-
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
-            data: {total: this.value},
-            async: false,
-            success: function (data) {
-                let html = toList(data.nftList);
-
-                if(type == "html") {
-                    $("#nftgram-list").html(html);
-                }else {
-                    $("#nftgram-list").append(html);
-                }
-
-                if (data.total < size) {
-                    $(window).unbind();
-                }
-
-
-            },
-            error: function (data) {
-                alert("error");
-            }
-        });
-
-        $('input[name="page"]').val(nextPage);
-        $('#nftgram-list .card-img-top').on('click', function () {
-            let collectionId = $(this).data('collectionid');
-            location.href = "/gallery/" + collectionId;
-        })
+    if (keyword ){
+        $("#nftgram-tag").html(insTag);
     }
+
+    if (sort != null) {
+        url += "&sort=" + sort;
+    }
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "json",
+        data: {total: this.value},
+        async: false,
+        success: function (data) {
+            let html = toList(data.nftList);
+
+            if(type == "html") {
+                $("#nftgram-list").html(html);
+            }else {
+                $("#nftgram-list").append(html);
+            }
+
+            if (data.total < size) {
+                $(window).unbind();
+            }
+
+
+        },
+        error: function (data) {
+            alert("error");
+        }
+    });
+
+    $('input[name="page"]').val(nextPage);
+    $('#nftgram-list .card-img-top').on('click', function () {
+        let collectionId = $(this).data('collectionid');
+        location.href = "/gallery/" + collectionId;
+    })
+}
 
 $("#btnCreatDtOrder, btnPointOrder").click(function(){
     var dataNm = $(this).data("datanm"); //data() 의 이름은 소문자로 작성
@@ -124,21 +132,33 @@ function toList(list) {
     let html = '';
     $.each(list, function(key, nft){
         let pattern = "https://.*mp4";
-
         let date = timeToElapsed(nft.localDate);
         let imageUrlHtml = '<img class="card-img-top" src="'+nft.nftImageUrl+'" alt="'+nft.name+'" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'" width="301px"  height="301px"/>';
         if(nft.nftImageUrl.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
             imageUrlHtml = '<video class="card-img-top" controlslist="nodownload" loop="" playsinline="" preload="metadata" style="border-radius: 0px;"><source src="'+nft.nftImageUrl+'" type="video/mp4"></video>';
+            document.write(imageUrlHtml);
         }
+
+
+
+
+
         html += '<div class="card" >\n' +
+            '                '+imageUrlHtml+'\n' +
             '                <div class="card-body">\n' +
-            '                    <h5 class="card-title">\n' +
-            '                        '+imageUrlHtml+' <small class="text-muted">'+nft.username+'</small>\n' +
-            '                    </h5>\n' +
-            '                    <p class="card-text" >'+nft.nftCollectionName+'"</p>\n' +
-            '                    <p class="card-text"><small class="text-muted" >'+date+'</small></p>\n' +
+            '                     <div class="row">' +
+            '                        <div class="col-6" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">\n' +
+            '                            <img src="/img/icon/Profile_icon.png" class="card-img-user" > <span class="text-muted">'+nft.username+'</span>\n' +
+            '                        </div>\n'+'' +
+            '                        <div class="col-6">\n' +
+            '                            <img src="/img/icon/Price_icon.png" class="card-img-icon"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
+            '                            <img src="/img/icon/Like_icon.png" class="card-img-icon"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
+            '                         </div>\n'+'' +
+            '                      </div>\n' +
+            '                    <p class="card-text-data"><small class="text-muted" >'+date+'</small></p>\n' +
             '                </div>\n' +
             '            </div>';
+
     });
 
     return html;

@@ -1,6 +1,9 @@
-@media  (min-width: 1200px) {
+@media  (min-width: 769px) {
     .container {
-        max-width: 1440px;
+        max-width: 100%;
+    }
+    .nftgram-tag{
+        max-width: 100%;
     }
 }
 #navigation-top #navigation-country .nav-country{width: 1.863rem;height: 1.863rem;margin: 0.013rem 0 0.013rem;}
@@ -14,19 +17,59 @@
 #nftgram-list .card {
     flex: 0 0 17%;
     margin-bottom: 15px;
+    border:1px solid rgb(229, 232, 235);
+    border-radius:10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 img.card-img-top {
     cursor: pointer;
-    height: 18rem;
+    height: 300px;
+    width: 100%;
 }
 #nftgram-list .card-body {
     border-top: 1px solid rgba(0,0,0,.125);
+    padding: 0px;
+
 }
+#nftgram-list .card-body .row{
+    padding: 15px 10px 10px 20px;
+}
+
 #nftgram-list .card-body img.card-img-user {
     width: 1.575rem;
     height: 1.575rem;
+
+}
+#nftgram-list .card-body img.card-img-icon {
+    width: 1rem;
+    height: 1rem;
+    margin-left: 20px;
+}
+#nftgram-list .card-body .row data-text{
+    border:5px solid lawngreen;
+}
+#nftgram-list .card-body .card-text-data {
+    /*border: 4px solid firebrick;*/
+    background: linear-gradient(rgba(229, 232, 235, 0.392) 0%, rgb(255, 255, 255) 20%);
+    text-align: end;
+    padding-right: 15px;
+    margin-bottom: 6px;
 }
 
+#nftgram-tag .search-box .position-box {
+    border-radius: 15px;
+    width: 13.562rem;
+    height: 2.25rem;
+    background: #000000;
+    color: #ffffff;
+    padding: 6px 0.813rem 0.188rem 1rem;
+
+}
+#nftgram-tag .search-box .close{
+    color: white;
+}
 #nftgram-wallet {position: relative;top:10rem;font-weight: 600;}
 #nftgram-wallet .wallet-content {margin: 0 auto;height:10.563rem;text-align: center;}
 #nftgram-wallet .wallet-content .title {}
