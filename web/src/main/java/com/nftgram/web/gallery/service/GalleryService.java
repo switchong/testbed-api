@@ -6,6 +6,7 @@ import com.nftgram.core.repository.NftAssetRepository;
 import com.nftgram.core.repository.NftCollectionRepository;
 import com.nftgram.core.repository.NftMemberRepository;
 import com.nftgram.core.repository.NftRepository;
+import com.nftgram.web.common.dto.GalleryMemberDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.service.NftFindService;
 import lombok.RequiredArgsConstructor;
@@ -45,19 +46,33 @@ public class GalleryService {
         return commonNftResponses;
     }
 
-    public List<CommonNftResponse> findAllNftGalleryMember(Pageable pageable, Long memberId) {
-        NftMember nftMember = nftMemberRepository.findByNftMemberId(memberId);
-
-        List<Nft> galleryList = nftCollectionRepository.findAllNftGallery(pageable, memberId);
-
-        return nftFindService.setCommonNftResponses(galleryList);
-    }
-
-    public List<CommonNftResponse> findAllNftGalleryMemberLike(Pageable pageable, Long memberId) {
+    public GalleryMemberDto findAllNftGalleryMemberLike(Pageable pageable, Long memberId) {
         NftMember nftMember = nftMemberRepository.findByNftMemberId(memberId);
 
         List<Nft> galleryLikeList = nftCollectionRepository.findAllNftGalleryLike(pageable, memberId);
 
-        return nftFindService.setCommonNftResponses(galleryLikeList);
+        List<CommonNftResponse> nftResponse = nftFindService.setCommonNftResponses(galleryLikeList);
+
+        GalleryMemberDto galleryMemberDto = GalleryMemberDto.builder()
+                .nftMember(nftMember)
+                .nftResponseList(nftResponse)
+                .build();
+
+        return galleryMemberDto;
+    }
+
+    public GalleryMemberDto findAllNftGalleryMember(Pageable pageable, Long memberId) {
+        NftMember nftMember = nftMemberRepository.findByNftMemberId(memberId);
+
+        List<Nft> galleryList = nftCollectionRepository.findAllNftGallery(pageable, memberId);
+
+        List<CommonNftResponse> nftResponse = nftFindService.setCommonNftResponses(galleryList);
+
+        GalleryMemberDto galleryMemberDto = GalleryMemberDto.builder()
+                .nftMember(nftMember)
+                .nftResponseList(nftResponse)
+                .build();
+
+        return galleryMemberDto;
     }
 }

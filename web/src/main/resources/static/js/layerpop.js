@@ -143,8 +143,17 @@ function layerPopGallery(nftId) {
     } else {
         imgSrc = $('.gimage'+nftId).attr('src');
     }
-    console.log(nftId+" > "+imgSrc);
-    $('#nft-home .nft-image').css({"background":"url('"+imgSrc+"') no-repeat center"});
+    let videoHtml = '';
+    if(imgSrc.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
+        videoHtml += '<video controls controlsList="nodownload">';
+        videoHtml += '<source src="'+imgSrc+'">';
+        videoHtml += '</video>';
+        $('#nft-home .nft-image').css({"background":""});
+        $('#nft-home .nft-image').html(videoHtml);
+    } else {
+        $('#nft-home .nft-image video').remove();
+        $('#nft-home .nft-image').css({"background":"url('"+imgSrc+"') no-repeat center","background-size":"contain"});
+    }
 
     // 팝업 마켓 버튼 .on 처리
     $('#nft-btn-market').removeClass('on');

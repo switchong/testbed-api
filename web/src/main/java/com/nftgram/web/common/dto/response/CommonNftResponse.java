@@ -1,7 +1,6 @@
 package com.nftgram.web.common.dto.response;
 
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
@@ -38,12 +37,14 @@ public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
 
     private String tokenId;
 
+    private String tagType;
+
     private LocalDateTime localDate;
 
 
     @Builder
     public CommonNftResponse(Long nftId, String name, String username, Long likeCount, Long favoriteCount, Long viewCount, String marketLink, String userImageUrl, String nftImageUrl,
-                             String nftCollectionName, Long nftCollectionId, String assetContractAddress, String tokenId, LocalDateTime localDate) {
+                             String nftCollectionName, Long nftCollectionId, String assetContractAddress, String tokenId, String tagType, LocalDateTime localDate) {
         this.nftId = nftId;
         this.name = name;
         this.username = username;
@@ -57,6 +58,7 @@ public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
         this.nftCollectionId = nftCollectionId;
         this.assetContractAddress = assetContractAddress;
         this.tokenId = tokenId;
+        this.tagType = tagType;
         this.localDate = localDate;
     }
 

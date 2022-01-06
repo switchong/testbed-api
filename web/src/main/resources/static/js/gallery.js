@@ -376,7 +376,7 @@ var Gallery = (function() {
 		nftImageClick : function( $wallElem ) {
 			var $wallElem = $wallElem || this.$mainWall;
 
-			$wallElem.find('img').on('click',function(){
+			$wallElem.find('.card-img-top').on('click',function(){
 				var nftId = $(this).data('nftid');
 				var PopId = "nft-layer-pop";
 				layerPopId(PopId);
@@ -624,8 +624,8 @@ var Gallery = (function() {
 				else {
 					this.$mainWall.stop().animate( { left : translationVal }, Gallery.settings.speed, $.proxy( afterAnim, this ) );
 				}
-				console.log("jump item: " + $item.find('img'));
-				var nftId = $item.find('img').data('nftid');
+				console.log("jump item: " + $item.find('.card-img-top'));
+				var nftId = $item.find('.card-img-top').data('nftid');
 				console.log("jump : " + nftId);
 
 

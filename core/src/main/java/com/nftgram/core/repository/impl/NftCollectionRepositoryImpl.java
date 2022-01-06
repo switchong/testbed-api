@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.nftgram.core.domain.nftgram.QNft.nft;
 import static com.nftgram.core.domain.nftgram.QNftAsset.nftAsset;
+import static com.nftgram.core.domain.nftgram.QNftCollection.nftCollection;
 import static com.nftgram.core.domain.nftgram.QNftLike.nftLike;
 
 @Repository
@@ -28,6 +29,15 @@ public class NftCollectionRepositoryImpl implements NftCollectionCustomRepositor
     @Override
     public List<NftCollection> findAll() {
         return null;
+    }
+
+    @Override
+    public NftCollection findNftCollection(Long collectionId) {
+        NftCollection result = queryFactory.selectFrom(nftCollection)
+                .where(nftCollection.nftCollectionId.eq(collectionId))
+                .fetchOne();
+
+        return result;
     }
 
     @Override

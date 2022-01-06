@@ -1,9 +1,11 @@
 package com.nftgram.web.common.service;
 
 import com.nftgram.core.domain.nftgram.Nft;
+import com.nftgram.core.domain.nftgram.NftCollection;
 import com.nftgram.core.repository.NftAssetRepository;
 import com.nftgram.core.repository.NftCollectionRepository;
 import com.nftgram.core.repository.NftRepository;
+import com.nftgram.web.common.dto.GalleryDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,25 +37,12 @@ public class NftFindService {
      */
     @Transactional(readOnly = true)
     public List<CommonNftResponse> findAllList(Pageable pageable , String keyword , Long sort  )  throws ParseException {
-
-
-
         List<Nft> nftRepositoryAll = nftRepository.findAllNft(pageable, keyword , sort );
 
-
-
-        List<CommonNftResponse> response = new ArrayList<>();
-
-
-        response = setCommonNftResponses(nftRepositoryAll);
-
-
+        List<CommonNftResponse> response = setCommonNftResponses(nftRepositoryAll);
 
         return response;
     }
-
-
-
 
     /**
      * NFT 갤러리 collection_id 조회하여 검색
@@ -61,10 +50,18 @@ public class NftFindService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<CommonNftResponse> findByNftCollectionId(Long collectionId) {
-        List<Nft> GalleryList = nftRepository.findByNftCollectionId(collectionId);
+    public GalleryDto findByNftCollectionId(Long collectionId) {
+        NftCollection collection = nftCollectionRepository.findNftCollection(collectionId);
+        List<Nft> galleryList = nftRepository.findByNftCollectionId(collectionId);
 
-        return setCommonNftResponses(GalleryList);
+        List<CommonNftResponse> nftResponse = setCommonNftResponses(galleryList);
+
+        GalleryDto galleryDto = GalleryDto.builder()
+                .collection(collection)
+                .galleryList(nftResponse)
+                .build();
+
+        return galleryDto;
     }
 
     /**
@@ -78,6 +75,7 @@ public class NftFindService {
         nftList.forEach(nftInfo -> {
             String userName = null;
             String userImage = null;
+            String tagType = "image";
             Long likeCount = Long.valueOf(0);
             Long favoriteCount = Long.valueOf(0);
             Long viewCount = Long.valueOf(0);
@@ -109,6 +107,12 @@ public class NftFindService {
             if(nftInfo.getViewCount().toString() != "") {
                 viewCount = nftInfo.getViewCount();
             }
+            String regExp = ".mp4";
+            boolean imageUrl = nftInfo.getImageUrl().contains(regExp);
+
+            if(imageUrl) {
+                tagType = "video";
+            }
             commonNftResponse = CommonNftResponse.builder()
                     .nftId(nftInfo.getNftId())
                     .name(nftInfo.getName())
@@ -123,6 +127,7 @@ public class NftFindService {
                     .nftCollectionId(nftInfo.getNftCollection().getNftCollectionId())
                     .assetContractAddress(nftInfo.getAssetContractAddress())
                     .tokenId(nftInfo.getTokenId())
+                    .tagType(tagType)
                     .localDate(nftInfo.getCreateDate())
                     .build();
             response.add(commonNftResponse);

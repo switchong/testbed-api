@@ -10,6 +10,8 @@ public interface NftCollectionCustomRepository {
 
     List<NftCollection> findAll();
 
+    NftCollection findNftCollection(Long collectionId);
+
     List<Nft> findAllNftGallery(Pageable pageable, Long memberId);
 
     List<Nft> findAllNftGalleryLike(Pageable pageable, Long memberId);

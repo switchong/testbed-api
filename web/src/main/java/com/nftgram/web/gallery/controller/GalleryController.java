@@ -2,6 +2,8 @@ package com.nftgram.web.gallery.controller;
 
 
 import com.nftgram.web.common.auth.MemberLoginManager;
+import com.nftgram.web.common.dto.GalleryDto;
+import com.nftgram.web.common.dto.GalleryMemberDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.service.NftFindService;
 import com.nftgram.web.gallery.service.GalleryService;
@@ -39,9 +41,10 @@ public class GalleryController {
     @GetMapping("/gallery/{collection}")
     public String galleryDetail(Model model , @PathVariable("collection") Long collectionId) {
 
-        List<CommonNftResponse> nftList = nftFindService.findByNftCollectionId(collectionId);
+        GalleryDto galleryDto = nftFindService.findByNftCollectionId(collectionId);
 
-        model.addAttribute("nftList",nftList);
+        model.addAttribute("collection",galleryDto.getCollection());
+        model.addAttribute("nftList",galleryDto.getGalleryList());
         model.addAttribute("nav_active","explorer");
 
         return "gallery/gallery";
@@ -50,9 +53,10 @@ public class GalleryController {
     @GetMapping("/gallery_swiper/{collection}")
     public String gallerySwiper(Model model , @PathVariable("collection") Long collectionId) {
 
-        List<CommonNftResponse> nftList = nftFindService.findByNftCollectionId(collectionId);
+        GalleryDto galleryDto = nftFindService.findByNftCollectionId(collectionId);
 
-        model.addAttribute("nftList",nftList);
+        model.addAttribute("collection",galleryDto.getCollection());
+        model.addAttribute("nftList",galleryDto.getGalleryList());
         model.addAttribute("nav_active","explorer");
 
         return "gallery/gallery_swiper";
@@ -65,9 +69,10 @@ public class GalleryController {
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
 
-            List<CommonNftResponse> nftList = galleryService.findAllNftGalleryMemberLike(pageable, memberId);
+            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMemberLike(pageable, memberId);
 
-            model.addAttribute("nftList",nftList);
+            model.addAttribute("member",galleryMemberDto.getNftMember());
+            model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
             model.addAttribute("nav_active","myfavorite");
 
             return "gallery/myfavorite";
@@ -84,9 +89,10 @@ public class GalleryController {
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
 
-            List<CommonNftResponse> nftList = galleryService.findAllNftGalleryMember(pageable, memberId);
+            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMember(pageable, memberId);
 
-            model.addAttribute("nftList",nftList);
+            model.addAttribute("member",galleryMemberDto.getNftMember());
+            model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
             model.addAttribute("nav_active","mycollection");
 
             return "gallery/mycollection";
