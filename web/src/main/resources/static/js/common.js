@@ -136,12 +136,7 @@ function toList(list) {
         let imageUrlHtml = '<img class="card-img-top" src="'+nft.nftImageUrl+'" alt="'+nft.name+'" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'" width="301px"  height="301px"/>';
         if(nft.nftImageUrl.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
             imageUrlHtml = '<video class="card-img-top" controlslist="nodownload" loop="" playsinline="" preload="metadata" style="border-radius: 0px;"><source src="'+nft.nftImageUrl+'" type="video/mp4"></video>';
-            document.write(imageUrlHtml);
         }
-
-
-
-
 
         html += '<div class="card" >\n' +
             '                '+imageUrlHtml+'\n' +
@@ -151,8 +146,8 @@ function toList(list) {
             '                            <img src="/img/icon/Profile_icon.png" class="card-img-user" > <span class="text-muted">'+nft.username+'</span>\n' +
             '                        </div>\n'+'' +
             '                        <div class="col-6">\n' +
-            '                            <img src="/img/icon/Price_icon.png" class="card-img-icon"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
-            '                            <img src="/img/icon/Like_icon.png" class="card-img-icon"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
+            '                            <img src="/img/icon/Price_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
+            '                            <img src="/img/icon/Like_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
             '                         </div>\n'+'' +
             '                      </div>\n' +
             '                    <p class="card-text-data"><small class="text-muted" >'+date+'</small></p>\n' +

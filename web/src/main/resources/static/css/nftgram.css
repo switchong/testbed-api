@@ -42,11 +42,6 @@ img.card-img-top {
     height: 1.575rem;
 
 }
-#nftgram-list .card-body img.card-img-icon {
-    width: 1rem;
-    height: 1rem;
-    margin-left: 20px;
-}
 #nftgram-list .card-body .row data-text{
     border:5px solid lawngreen;
 }
