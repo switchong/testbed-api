@@ -22,7 +22,7 @@ $(document).ready(function(){
             if(btnName == "info") {
                 $('.info-attribute-text').removeClass("on");
                 $('.info-attribute-text').hide();
-                $('.info-attribute').eq(0).trigger('click');
+                $('.info-attribute').eq().trigger('click');//.eq(0)
             } else if(btnName == "comment") {
                 getCommentList(nftId);
             }
@@ -76,7 +76,7 @@ $(document).ready(function(){
             result = commonAjaxUrl(method, url, param);
             if(result == 1) {
                 getCommentList(nftId);
-                alert("Success");
+                //alert("Success");
                 $('textarea[name="comment"]').val('');
                 return false;
             } else if(result == 2) {
@@ -180,17 +180,50 @@ function layerPopByNft(data) {
     let nft_title_area = popup.find('.nft-title-area');
     let nft_gallery_figure = $('figure#nft_'+data.nftId);
 
+
     // div nft-info
     let description, collection_desc;
     description = (data.description)?$.nl2br(data.description):'';
     collection_desc = (data.collections.description)?$.nl2br(data.collections.description):'';
     description = (description=='')?collection_desc:collection_desc;
-    nft_info_form.find('.attr-description-row td.attr-description-row-text').html(description);
-    nft_info_form.find('.attr-detail-row td.attr-detail-row-text').html(description);
-    nft_info_form.find('.attr-about-row td.attr-about-row-text').html(description);
-    nft_info_form.find('.attr-about .attr-about-span').html(data.collectionName);
+
+
+    //nft_info_form.find('.attr-detail-row td.attr-detail-row-text' ).html(data.assetContractAddress);
+    nft_info_form.find('.attr-about-row td.attr-about-row-text').html(data.collectionName);
+
+
+
+    console.log(data);
+
+    if(data.description !== null) {
+        nft_info_form.find('.attr-description-row td.attr-description-row-text').html(data.description);
+    } else {
+        nft_info_form.find('.attr-description').parents('tr').css('display','none');
+    }
+
+
 
     let prop_html = '';
+    let detail_html = '';
+    if(data.asset) {
+        nft_info_form.find('.attr-detail').parents('tr').css('display','table-row');
+        $.each(data.asset, function(k, v){
+            //data.asset.splice(1 , 3)
+            detail_html += '<div class="detail-info">\n' +
+                //'            <p class="prop-info-nft detail-type">'+k+'</p>\n' +
+                '            <p class="prop-info-nft detail-type">'+v+'</p>\n' +
+                '        </div>';
+
+            //console.log(k);
+            console.log(v);
+        });
+
+        nft_info_form.find('.attr-detail-row td.attr-detail-row-text').html(detail_html);
+
+    } else {
+        nft_info_form.find('.attr-detail').parents('tr').css('display','none');
+
+    }
     if(data.propList.length > 0) {
         nft_info_form.find('.attr-properties').parents('tr').css('display','table-row');
         $.each(data.propList, function(k, v){
@@ -199,10 +232,13 @@ function layerPopByNft(data) {
                 '            <p class="prop-info-nft prop-value">'+v.traitValue+'</p>\n' +
                 '            <p class="prop-info-nft prop-per">'+v.orderCount+'</p>\n' +
                 '        </div>';
+
         });
-        nft_info_form.find('.attr-properties-row td.attr-properties-row-text').html(prop_html);
+      nft_info_form.find('.attr-properties-row td.attr-properties-row-text').html(prop_html);
+
     } else {
         nft_info_form.find('.attr-properties').parents('tr').css('display','none');
+
     }
 
     // div nft-title-area

@@ -8,8 +8,8 @@
 * Licensed under the MIT license.
 */
 var $event = $.event,
-$special,
-resizeTimeout;
+	$special,
+	resizeTimeout;
 
 $special = $event.special.debouncedresize = {
 	setup: function() {
@@ -376,7 +376,7 @@ var Gallery = (function() {
 		nftImageClick : function( $wallElem ) {
 			var $wallElem = $wallElem || this.$mainWall;
 
-			$wallElem.find('.image-container').on('click',function(){
+			$wallElem.find('.card-img-top').on('click',function(){
 				var nftId = $(this).data('nftid');
 				var PopId = "nft-layer-pop";
 				layerPopId(PopId);
@@ -462,7 +462,7 @@ var Gallery = (function() {
 						'translate3d(' + mainWallFinalTranslationVal + 'px,0px,0px) rotate3d(0,1,0,' + mainWallFinalAngle + 'deg)' :
 						'translate(' + mainWallFinalTranslationVal + 'px)';
 
-					auxWallFinalTranslationVal = dir === 'next' ? 0 : 0,
+				auxWallFinalTranslationVal = dir === 'next' ? 0 : 0,
 					auxWallFinalAngle = 0,
 					auxWallFinalTransform = support.transforms3d ?
 						'translate3d(' + auxWallFinalTranslationVal + 'px,0px,0px) rotate3d(0,1,0,' + auxWallFinalAngle + 'deg)' :

@@ -15,7 +15,7 @@ if (window.ethereum) {
 function handleEthereum() {
     const { ethereum } = window;
     if (ethereum && ethereum.isMetaMask) {
-        console.log('Ethereum successfully detected!');
+        //console.log('Ethereum successfully detected!');
         // Access the decentralized web!
     } else {
         console.log('Please install MetaMask!');
