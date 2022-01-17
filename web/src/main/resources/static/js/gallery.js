@@ -376,7 +376,7 @@ var Gallery = (function() {
 		nftImageClick : function( $wallElem ) {
 			var $wallElem = $wallElem || this.$mainWall;
 
-			$wallElem.find('.card-img-top').on('click',function(){
+			$wallElem.find('.image-container').on('click',function(){
 				var nftId = $(this).data('nftid');
 				var PopId = "nft-layer-pop";
 				layerPopId(PopId);

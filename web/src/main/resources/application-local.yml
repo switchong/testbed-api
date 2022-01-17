@@ -9,9 +9,9 @@ spring:
       #            username: sa
       #            password:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: nftbatch
-      password: "!vhdkdnj1234"
-      jdbc-url: jdbc:mysql://13.209.158.179:3306/nftgram?serverTimezone=Asia/Seoul
+      username: root
+      password: ""
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/nftgram?serverTimezone=Asia/Seoul
 
   jpa:
     properties:
