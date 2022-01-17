@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /home/ubuntu/app/deploy/nftgram-web
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: nftgramprod
+    group: nftgramprod
+
+hooks:
+  ApplicationStart:
+    - location: deploy.sh
+      timeout: 60
+      runas: nftgramprod

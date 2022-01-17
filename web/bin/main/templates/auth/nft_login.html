@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+        .container {
+            max-width: 560px;
+        }
+
+</style>
+<head th:replace="fragment/header.html :: fragment-header" />
+<body>
+    <nav th:replace="fragment/nav.html :: fragment-nav"></nav>
+    <div class="container" id="nftgram_wrap">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+        <form action="login" th:action="@{/auth/login}" method="post" th:object="${nftMemberLoginRequest}">
+
+                <div style="margin-top:100px;">
+                    <h5 style="text-align:center">SIGN IN</h5>
+                    <input style="font-size: 0.9rem;" type="text" name="id" class="form-control"  placeholder="ID" required=""  th:field="*{id}"  />
+                </div>
+                <div style="margin-top:5px;">
+                    <input style="font-size: 0.9rem;" type="password" name="password" class="form-control" placeholder="PASSWORD" required=""  th:field="*{password}" />
+                </div>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></small>
+            <small class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+            <div class="row mt-4">
+                <div class="mb-2">
+<!--                    <div class="form-group form-check">-->
+<!--                        <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me" checked>-->
+<!--                        <label class="form-check-label" for="rememberMe" aria-describedby="rememberMeHelp">로그인 유지</label>-->
+<!--                    </div>-->
+                    <button class="w-100 btn btn-dark btn-lg" type="submit" style="background-color: #323233; font-size: 0.9rem;">SIGN IN</button>
+                </div>
+
+                <div class="col">
+                    <p style="text-align:center;"><a class="" onclick="location.href='items.html'" style="font-size: 0.9rem;"
+                                                      th:onclick="|location.href='@{signup}'|"
+                                                      type="button">SIGN UP</a></p>
+                </div>
+            </div>
+
+        </form>
+        </div>
+    </div> <!-- /container -->
+</body>
+</html>

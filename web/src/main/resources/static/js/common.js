@@ -74,7 +74,7 @@ function moreView(type , nft) {
         ''+keyword+'' +
         "<span onclick=\"this.parentElement.style.display='none'\" id=\"close\" class=\"close\">X</span>" +
         '</div>'
-    "</div>"
+        "</div>"
 
     if (keyword ){
         $("#nftgram-tag").html(insTag);
@@ -142,12 +142,12 @@ function toList(list) {
             '                '+imageUrlHtml+'\n' +
             '                <div class="card-body">\n' +
             '                     <div class="row">' +
-            '                        <div class="col-6" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">\n' +
+            '                        <div class="row-data-left" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">\n' +
             '                            <img src="/img/icon/Profile_icon.png" class="card-img-user" > <span class="text-muted">'+nft.username+'</span>\n' +
             '                        </div>\n'+'' +
-            '                        <div class="col-6">\n' +
-            '                            <img src="/img/icon/Like_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
-            '                            <img src="/img/icon/Price_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
+            '                        <div class="row-data-right">\n' +
+            '                            <img src="/img/icon/Price_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
+            '                            <img src="/img/icon/Like_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
             '                         </div>\n'+'' +
             '                      </div>\n' +
             '                    <p class="card-text-data"><small class="text-muted" >'+date+'</small></p>\n' +

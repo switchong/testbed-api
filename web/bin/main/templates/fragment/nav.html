@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div id="navigation-top" th:fragment="fragment-nav" th:with="memberInfo=${@memberLoginManager.getInfo()}">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+        <div class="container px-4 px-lg-5 ">
+            <div class="d-flex"></div>
+            <div class="d-flex"></div>
+            <div class="d-flex me-2" id="navigation-country">
+                <div class="nav-country">
+                    <img class="nav-country-img" data-country="en" th:src="@{../img/icon/En_icon.png}"/>
+                </div>
+                <div class="nav-country">
+                    <img class="nav-country-img" data-country="kr" th:src="@{../img/icon/Kr_icon.png}"/>
+                </div>
+                <div class="nav-country">
+                    <img class="nav-country-img" data-country="jp" th:src="@{../img/icon/Jp_icon.png}"/>
+                </div>
+                <div class="nav-country">
+                    <img class="nav-country-img" data-country="cn" th:src="@{../img/icon/Cn_icon.png}"/>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand nav-logo" href="/">
+                <div class="whIs30">
+                    <img class="whIs30" th:src="@{../img/icon/NFTgram_logo.png}" />
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"></ul>
+                <div class="d-flex">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <!--/*@thymesVar id="nav_active" type="com.nftgram.web.gallery.controller.GalleryController"*/-->
+                        <!--/*@thymesVar id="nav_active" type="com.nftgram.web.main.controller.MainController"*/-->
+                        <a aria-current="page" class="nav-link explorer" href="/" th:classappend="${nav_active}== 'explorer' ? 'active' : ''">EXPLORER</a></li>
+                        <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">MY FAVORITIES</a></li>
+                        <li class="nav-item"><a class="nav-link mycollection" href="/gallery/mycollection" th:classappend="${nav_active}== 'mycollection' ? 'active' : ''">My COLLECTION</a></li>
+                        <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs30" th:src="@{../img/icon/Profile_icon.png}" /></a></li>
+                        <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" th:src="@{../img/icon/Wallet_icon.png}" /></a></li>
+
+
+                        <li th:if="${memberInfo.loginYN == 'N'}" class="nav-item">
+                            <a class="btn btn-outline-dark " th:onclick="|location.href='@{/auth/login}'|">Sign In</a>
+                        </li>
+                        <li th:if="${memberInfo.loginYN == 'Y'}" class="nav-item">
+                            <a class="btn btn-outline-dark" th:onclick="|location.href='@{/auth/logout}'|">Logout </a>
+                        </li>
+
+                        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                            Invalid username and password
+                        </div>
+                    </ul>
+                </div>
+                <div class="wallet-wrap">
+                    <div class="wallet-user-wrap">
+                        <span class="wallet-user-title">Total Balance</span>
+                        <br>
+                        <span class="balance-price">3.21</span>
+                    </div>
+                    <div class="wallet-list">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <div class="input-group">
+                <input class="form-control me-2"  id="searchKeyword"  name="keyword"  placeholder="Type query" th:value="${#httpServletRequest.getParameter('keyword')}" type="search"/>
+                <div class="input-group-append">
+                    <button class="btn btn-secondary me-2" id="btnSearch">Search</button>
+                </div>
+                <select aria-label="Default select example" class="form-select-sm mr-2 selSort" id="selSort" name="selSort" style="height: 40px;width:100px;padding: 0px;">
+                    <option  value="0">Sort By</option>
+                    <option  value="1" >최신순</option>
+                    <option  value="2"> 조회순</option>
+                    <option  value="3">좋아요순</option>
+                </select>
+                <div class="d-flex me-2">
+                    <div class="gallery-view-type wIs30" data-view="list">
+                        <img class="whIs30" th:src="@{../img/icon/View_list_icon.png}" />
+                    </div>
+
+                </div>
+                <div class="d-flex me-2">
+                    <div class="gallery-view-type wIs30" data-view="gallery">
+                        <img class="whIs30" th:src="@{../img/icon/View_gallery_icon.png}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+</html>

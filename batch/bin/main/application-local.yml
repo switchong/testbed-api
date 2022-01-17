@@ -1,0 +1,14 @@
+spring:
+  profiles: local
+
+
+logging:
+  level:
+    com:
+      nftgram: debug
+    org:
+      springframework:
+        boot:
+          autoconfigure: INFO
+      hibernate:
+        SQL: debug

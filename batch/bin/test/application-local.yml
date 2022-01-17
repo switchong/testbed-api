@@ -1,0 +1,31 @@
+spring:
+  profiles: local
+
+opensea:
+  api_url: https://api.opensea.io/api/v1
+  opensea_contract_address: "0x495f947276749ce646f68ac8c248420045cb7b5e"
+  stpl_contract_address: "0x4da1c8fa0c73f65e3854c1b42d85acbb336dda1e"
+  wallet_master_id: "25543b82b9fe96223bd903b7037aab9d"
+  assets_uri: "/assets"
+  bundles_uri: "/bundles"
+  single_asset_uri: "/asset/"
+  single_contract_uri: "/asset_contract/"
+  events_uri: "/events"
+  collections_uri: "/collections"
+
+logging:
+  level:
+    com:
+      stabybiz: debug
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+      springframework:
+        boot:
+          autoconfigure: OFF
+        hibernate:
+          SQL: debug
+        batch: debug
+        test: error
