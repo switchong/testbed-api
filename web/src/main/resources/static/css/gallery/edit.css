@@ -1,0 +1,114 @@
+.wrap-edit-frame {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    width: 12rem;
+    height: 15rem;
+    background-color: rgba(0,0,0,0.75);
+    z-index: 9999;
+    border-radius: 5px;
+    box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.57);
+    padding: 0.656rem;
+    box-sizing: border-box;
+    color: #f5f0f0;
+}
+
+.bakcground-frame {
+    display: none;
+    position: absolute;
+    bottom : 100%;
+    right: 0;
+    width: 12rem;
+    height: 15rem;
+    background-color: rgba(0,0,0,0.75);
+    z-index: 9999;
+    border-radius: 5px;
+    box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.57);
+    padding: 0.656rem;
+    box-sizing: border-box;
+    color: #f5f0f0;
+}
+
+.edit-frame-title {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.656rem;
+}
+
+.edit-box-container {
+    width: 100%;
+    height: 70%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 4%;
+    grid-row-gap: 4%;
+}
+
+.edit-box-container .edit-box {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+ .edit-submit-button {
+    position: absolute;
+    right : 0.656rem;
+    bottom: 0.656rem;
+    width: 2.688rem;
+    height: 1.25rem;
+    border-radius: 3px;
+    background-color: #fff;
+    color : black;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"] + Label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked + Label + div > div {
+    display: block;
+}
+
+/*edit-collection css*/
+.wrap-edit-frame-collection {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 110%;
+    width: 12rem;
+    background-color: rgba(0,0,0,0.75);
+    z-index: 9999;
+    border-radius: 5px;
+    box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.57);
+    padding: 0.656rem;
+    box-sizing: border-box;
+    color: #f5f0f0;
+}
+
+.wrap-edit-frame-collection .edit-box-container-collection {
+    width: 100%;
+}
+
+.wrap-edit-frame-collection .edit-box-container-collection input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 0.9rem;
+}
+
+#discordInput {
+    margin-bottom: 2rem;
+}
+
+.wrap-edit-frame-collection .edit-box-container-collection p {
+    margin-bottom: 0;
+}

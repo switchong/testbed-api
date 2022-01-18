@@ -10,6 +10,19 @@ window.addEventListener('DOMContentLoaded',() => {
         }
     });
 
+    window.addEventListener('resize',()=>{
+        slides.forEach((item)=>{
+            item.style.transform = 'scale(1)';
+        });
+        slideContainer.style.transform = 'translateX(0px)';
+        currentNum = 0;
+        slides.forEach((item, index)=>{
+            if(index !== currentNum) {
+                item.style.transform = 'scale(0.9)';
+            }
+        });
+    })
+
     prevBtn.addEventListener('click',()=>{
 
          if(currentNum > 0) {

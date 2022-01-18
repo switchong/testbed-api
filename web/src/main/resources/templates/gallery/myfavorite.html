@@ -4,72 +4,280 @@
 
 <head th:replace="fragment/header.html :: fragment-header" />
 
-
-<link rel="stylesheet" th:href="@{/css/gallery/gallery.css}" />
-<link rel="stylesheet" th:href="@{/css/gallery/default.css}" />
-<script th:src="@{/js/scripts.js}"></script>
+<link th:href="@{/css/gallery/galleryPublish.css}" rel="stylesheet" />
+<script th:src="@{/js/slide.js}"></script>
 
 <body>
 <nav th:replace="fragment/nav.html :: fragment-nav"></nav>
 
 <div class="container2" id="nftgram_wrap">
-    <div class="gr-gallery" id="gr-gallery">
-        <!--<div class="gallery_nav">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                RECENTLY LISTED
-            </button><br/>
-            <a href="http://tympanus.net/Development/3DBookShowcase/">section1</a><br/>
-            <div class="row">
-                <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img1</a></div>
-                <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img2</a></div>
-                <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img3</a></div>
-                <div class="col-3"><a href="http://tympanus.net/Development/3DBookShowcase/">img4</a></div>
+    <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
+    <div class="gallery-container">
+        <div class="gallery-top">
+            <div class="user-space">
+                <div class="user-space-left">
+                    <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile" />
+                    USER NAME
+                </div>
+                <span class="user-close-btn">X</span>
             </div>
-        </div>-->
-        <div class="gr-main" id="nftLayout">
-            <figure class="figure" th:data-nftid="${nft.nftId}" th:each="nft: ${nftList}" th:id="@{'nft_'+${nft.nftId}}" >
-                <!--/*@thymesVar id="nft" type="com.nftgram.core.domain.nftgram.Nft"*/-->
-                <!--/*@thymesVar id="nft" type="com.nftgram.web.gallery.dto.response.GalleryResponse"*/-->
-                <div class="mt-4" th:classappend="${nft.tagType} == 'image' ? 'image' : 'video'">
-                    <img th:if="${nft.tagType == 'image'}" class="card-img-top" th:classappend="@{'gimage'+${nft.nftId}}" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" th:src="${nft.nftImageUrl}"/>
-                    <video controls controlsList="nodownload" th:if="${nft.tagType == 'video'}" class="card-img-top" th:classappend="@{'gimage'+${nft.nftId}}" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" th:src="${nft.nftImageUrl}"/>
-                </div>
-
-                <div class="mt-4">
-                    <h4><span style="color:#fff;" th:text="${nft.name}"></span></h4>
-                </div>
-
-                <div class="row">
-                    <div class="col-5 tl" style="background: url('../img/icon/Profile_icon.png') left no-repeat;background-size: contain;">
-                        <h4 style="margin-left:20%;color:#fff;overflow:hidden;white-space:nowrap;" th:text="${nft.username}"></h4>
+        </div>
+        <div class="gallery-content">
+            <div class="sns-container">
+                <img th:src="@{/img/icon/Share_navi_icon.png}" />
+                <img th:src="@{/img/icon/Instagram_navi_icon.png}" />
+                <img th:src="@{/img/icon/Twitter_navi_icon.png}" />
+                <img th:src="@{/img/icon/Discord_navi_icon.png}" />
+            </div>
+            <img th:src="@{/img/icon/prev50.png}" id="prevBtn"/>
+            <div class="gallery-slide-container">
+                <div class="gallery-slide-list-container">
+                    <div class="gallery-slide-list">
+                        <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
+                        <div class="gallery-slide-list-item">
+                            <div class="gallery-slide-list-item-picture">
+                                <div class="gallery-slide-list-item-down"></div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="user-info-name">
+                                                    <span>USER NAME</span>
+                                                    <span>1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="user-info-name">
+                                                    <span>USER NAME</span>
+                                                    <span>1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="user-info-name">
+                                                    <span>USER NAME</span>
+                                                    <span>1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-2 tl">
-                        <h4 class="card-title pl30 viewCount" style="background: url('../img/icon/Price_icon.png') left no-repeat;background-size: contain;color:#fff;" th:text="${nft.viewCount}">0</h4>
+                    <div class="gallery-slide-list">
+                        <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
+                        <div class="gallery-slide-list-item">
+                            <div class="gallery-slide-list-item-picture">
+                                <div class="gallery-slide-list-item-down"></div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="user-info-name">
+                                                    <span>USER NAME</span>
+                                                    <span>1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="user-info-name">
+                                                    <span>USER NAME</span>
+                                                    <span>1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="user-info-name">
+                                                    <span>USER NAME</span>
+                                                    <span>1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-2 tl">
-                        <h4 class="card-text pl30 likeCount" style="background: url('../img/icon/Like_icon.png') left no-repeat;background-size: contain;color:#fff;" th:text="${nft.likeCount}">0</h4>
+                    <div class="gallery-slide-list">
+                        <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
+                        <div class="gallery-slide-list-item">
+                            <div class="gallery-slide-list-item-picture">
+                                <div class="gallery-slide-list-item-down"></div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="user-info-name">
+                                                    <span>USER NAME</span>
+                                                    <span>1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="user-info-name">
+                                                    <span>USER NAME</span>
+                                                    <span>1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="user-info-name">
+                                                    <span>USER NAME</span>
+                                                    <span>1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-            </figure>
+            </div>
+            <img th:src="@{/img/icon/next50.png}" id="nextBtn" />
         </div>
     </div>
 </div><!-- /container -->
-<script th:src="@{/js/gallery.js}"></script>
-<script>
-    let figureCount = parseInt($('#nftLayout figure').length % 3);
-    let layoutArr = new Array();
-    for(var i=0;i<figureCount;i++) {
-        layoutArr.push(3);
-    }
-    $(function() {
-
-        Gallery.init( {
-            layout : layoutArr
-        } );
-
-    });
-</script>
 <div th:replace="fragment/footer.html :: fragment-footer" />
 </body>
 </html>
