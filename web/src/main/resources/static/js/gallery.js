@@ -1,58 +1,7 @@
-/*
-* debouncedresize: special jQuery event that happens once after a window resize
-*
-* latest version and complete README available on Github:
-* https://github.com/louisremi/jquery-smartresize/blob/master/jquery.debouncedresize.js
-*
-* Copyright 2011 @louis_remi
-* Licensed under the MIT license.
-*/
-var $event = $.event,
-$special,
-resizeTimeout;
 
-$special = $event.special.debouncedresize = {
-	setup: function() {
-		$( this ).on( "resize", $special.handler );
-	},
-	teardown: function() {
-		$( this ).off( "resize", $special.handler );
-	},
-	handler: function( event, execAsap ) {
-		// Save the context
-		var context = this,
-			args = arguments,
-			dispatch = function() {
-				// set correct event type
-				event.type = "debouncedresize";
-				$event.dispatch.apply( context, args );
-			};
 
-		if ( resizeTimeout ) {
-			clearTimeout( resizeTimeout );
-		}
 
-		execAsap ?
-			dispatch() :
-			resizeTimeout = setTimeout( dispatch, $special.threshold );
-	},
-	threshold: 250
-};
 
-// ======================= imagesLoaded Plugin ===============================
-// https://github.com/desandro/imagesloaded
-
-// $('#my-container').imagesLoaded(myFunction)
-// execute a callback when all images have loaded.
-// needed because .load() doesn't work on cached images
-
-// callback function gets image collection as argument
-//  this is the container
-
-// original: MIT license. Paul Irish. 2010.
-// contributors: Oren Solomianik, David DeSandro, Yiannis Chatzikonstantinou
-
-// blank image data-uri bypasses webkit log warning (thx doug jones)
 var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
 
 $.fn.imagesLoaded = function( callback ) {
@@ -320,14 +269,13 @@ var Gallery = (function() {
 
 		},
 		// displays the items of a wall on a container $wallElem
-		renderWall : function( $wallElem ) {
+		renderWall : function( ) {
 
 			var $wallElem = $wallElem || this.$mainWall,
 				wallH = $wallElem.height(),
 				wallmargins = 150,
 				wall = this.walls[ this.currentWall ],
 				totalLeft = 0, lastItemW = 0,
-				//2021 - 10 -21 갤러리 간격 조절부분
 				wallMarginLeft = 0, sumWidths = 100;
 
 			for( var i = 0; i < wall.itemsCount; ++i ) {
@@ -367,27 +315,24 @@ var Gallery = (function() {
 			};
 
 			// update wall element's width
-			var wallWidth = wallMarginLeft === 0 ? winsize.width : Math.ceil( wallMarginLeft + ( wall.itemsCount - 1 ) * Gallery.settings.margin + sumWidths + winsize.width / 2 - lastItemW / 2 );
+			//var wallWidth = wallMarginLeft === 0 ? winsize.width : Math.ceil( wallMarginLeft + ( wall.itemsCount - 1 ) * Gallery.settings.margin + sumWidths + winsize.width / 2 - lastItemW / 2 );
 			$wallElem.css( 'width', wallWidth ).find( 'div.gr-floor' ).css( 'width', wallWidth );
-			console.log('renderWall'+$wallElem);
+
 
 			this.nftImageClick($wallElem);
 		},
 		nftImageClick : function( $wallElem ) {
 			var $wallElem = $wallElem || this.$mainWall;
 
-			$wallElem.find('.card-img-top').on('click',function(){
+			$wallElem.find('.image-container').on('click',function(){
 				var nftId = $(this).data('nftid');
 				var PopId = "nft-layer-pop";
 				layerPopId(PopId);
 
 				var figureDom = $('#nft_'+nftId).clone();
-				// layer-popup
-				// $('#'+PopId).find('#nft-home').html("");	// 초기화
 
 				layerPopGallery(nftId);
 
-				// $('#'+PopId).find('#nft-home').append(figureDom);
 
 			});
 		},
@@ -401,7 +346,6 @@ var Gallery = (function() {
 			// $('#nft-layer-pop').find('#nft-home').append(figureDom);
 		},
 		changeWall : function( dir ) {
-			console.log("changeWall : "+dir);
 			// set origins
 			// change current wall's width to windows width and reorganize items accordingly:
 			this.$mainWall.css( {
@@ -462,7 +406,7 @@ var Gallery = (function() {
 						'translate3d(' + mainWallFinalTranslationVal + 'px,0px,0px) rotate3d(0,1,0,' + mainWallFinalAngle + 'deg)' :
 						'translate(' + mainWallFinalTranslationVal + 'px)';
 
-					auxWallFinalTranslationVal = dir === 'next' ? 0 : 0,
+				auxWallFinalTranslationVal = dir === 'next' ? 0 : 0,
 					auxWallFinalAngle = 0,
 					auxWallFinalTransform = support.transforms3d ?
 						'translate3d(' + auxWallFinalTranslationVal + 'px,0px,0px) rotate3d(0,1,0,' + auxWallFinalAngle + 'deg)' :

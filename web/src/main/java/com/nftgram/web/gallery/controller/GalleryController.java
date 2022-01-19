@@ -9,6 +9,7 @@ import com.nftgram.web.common.service.NftFindService;
 import com.nftgram.web.gallery.service.GalleryService;
 import com.nftgram.web.member.dto.NftMemberAuthDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class GalleryController {
 
     private final NftFindService nftFindService;
@@ -45,6 +47,8 @@ public class GalleryController {
 
         model.addAttribute("collection",galleryDto.getCollection());
         model.addAttribute("nftList",galleryDto.getGalleryList());
+        log.info("dddddddddddd");
+        log.info(String.valueOf(galleryDto.getGalleryList()));
         model.addAttribute("nav_active","explorer");
 
         return "gallery/gallery";

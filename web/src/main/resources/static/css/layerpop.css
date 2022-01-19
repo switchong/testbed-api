@@ -47,10 +47,10 @@ width: 120px;  height: 100px;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info .prop-info-nft.prop-value{font-size: 0.8rem;font-weight: bold;}
 
 
-.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-detail-row-text .detail-info{float:left;margin:2%;padding:0.3rem 1rem;background-color: #fff;color: #000;text-align: center;
-    width: 120px;  height: 120px;white-space: revert;overflow: hidden;}
-.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-detail-row-text .detail-info .detail-info-nft{margin-bottom: auto;font-size: 0.5rem;}
-.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-detail-row-text .detail-info .detail-info-nft.detail-value{font-size: 0.8rem;font-weight: bold;}
+/*.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-detail-row-text .detail-info{float:left;margin:2%;padding:0.3rem 1rem;background-color: #fff;color: #000;text-align: center;*/
+/*    width: 120px;  height: 120px;white-space: revert;overflow: hidden;}*/
+/*.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-detail-row-text .detail-info .detail-info-nft{margin-bottom: auto;font-size: 0.5rem;}*/
+/*.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-detail-row-text .detail-info .detail-info-nft.detail-value{font-size: 0.8rem;font-weight: bold;}*/
 
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-comment{background-color: #1a73e8;padding: 1.312rem 0;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-comment .comment_btn{position: absolute;top: 5.313rem;right: 10.938rem;}
