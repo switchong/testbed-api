@@ -72,6 +72,7 @@ public class GalleryController {
             GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMemberLike(pageable, memberId);
 
             model.addAttribute("member",galleryMemberDto.getNftMember());
+            model.addAttribute("sliderList",galleryMemberDto.getNftSliderList());
             model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
             model.addAttribute("nav_active","myfavorite");
 
