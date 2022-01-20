@@ -8,14 +8,18 @@ import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.service.NftFindService;
 import com.nftgram.web.gallery.service.GalleryService;
 import com.nftgram.web.member.dto.NftMemberAuthDto;
+import com.nftgram.web.member.dto.request.NftMemberSignupRequest;
+import com.nftgram.web.member.dto.response.NftMemberSignupResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.List;
@@ -47,9 +51,9 @@ public class GalleryController {
 
         model.addAttribute("collection",galleryDto.getCollection());
         model.addAttribute("nftList",galleryDto.getGalleryList());
-        log.info("dddddddddddd");
-        log.info(String.valueOf(galleryDto.getGalleryList()));
         model.addAttribute("nav_active","explorer");
+
+
 
         return "gallery/gallery";
     }
@@ -90,7 +94,6 @@ public class GalleryController {
     public String mycollection(Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
-
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
 
@@ -99,11 +102,19 @@ public class GalleryController {
             model.addAttribute("member",galleryMemberDto.getNftMember());
             model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
             model.addAttribute("nav_active","mycollection");
-
             return "gallery/mycollection";
         } else {
             return "redirect:/auth/login";
         }
     }
+
+
+    @PostMapping("/gallery/mycollection")
+    public String mycollectionSave(@ModelAttribute Model model){
+
+
+        return  "redirect/";
+    }
+
 
 }
