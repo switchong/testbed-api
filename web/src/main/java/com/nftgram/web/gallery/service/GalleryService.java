@@ -50,21 +50,22 @@ public class GalleryService {
 
         List<Nft> galleryLikeList = nftCollectionRepository.findAllNftGalleryLike(pageable, memberId);
 
-        List<CommonNftSlider> sliderResponse = new ArrayList<>();
+        List<List<CommonNftResponse>> sliderResponse = new ArrayList<>();
 
         List<CommonNftResponse> nftResponse = nftFindService.setCommonNftResponses(galleryLikeList);
 
-        Long sliderCount = Long.valueOf((long) Math.floor(nftResponse.size()/3));
+        Long sliderCount = Long.valueOf((long) Math.ceil(nftResponse.size()/(3 * 1.0)));
 
         for(int i = 0;i<sliderCount;i++) {
+            System.out.println(sliderCount);
             int idx = i%3;  // 1차 배열 index 값
             int k = i * 3;  // fromIndex 시작 index값
-            List<CommonNftResponse> nftResult = nftResponse.subList(k,(k+3));   // fromIndex , toIndex(미만)
-            CommonNftSlider slider = CommonNftSlider.builder()
-                    .nftResponseList(nftResult)
-                    .build();
+            List<CommonNftResponse> nftResult = nftResponse.subList(k,(lastNum(k+3, nftResponse.size())));   // fromIndex , toIndex(미만)
+//            List<CommonNftSlider> slider = CommonNftSlider.builder()
+//                    .nftResponseList(nftResult)
+//                    .build();
 
-            sliderResponse.add(slider);
+            sliderResponse.add(nftResult);
         }
 
         GalleryMemberDto galleryMemberDto = GalleryMemberDto.builder()
@@ -92,5 +93,12 @@ public class GalleryService {
                 .build();
 
         return galleryMemberDto;
+    }
+
+    public int lastNum(int num, int size) {
+        if(size < num) {
+            return size;
+        }
+        return num;
     }
 }

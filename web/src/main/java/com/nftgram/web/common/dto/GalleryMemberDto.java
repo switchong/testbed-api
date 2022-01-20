@@ -16,12 +16,12 @@ import java.util.List;
 public class GalleryMemberDto {
     private Long sliderCount;
     private NftMember nftMember;
-    private List<CommonNftSlider> nftSliderList = new ArrayList<>();
+    private List<List<CommonNftResponse>> nftSliderList = new ArrayList<>();
     private List<CommonNftResponse> nftResponseList = new ArrayList<>();
 
 
     @Builder
-    public GalleryMemberDto(Long sliderCount, NftMember nftMember, List<CommonNftResponse> nftResponseList, List<CommonNftSlider> nftSliderList) {
+    public GalleryMemberDto(Long sliderCount, NftMember nftMember, List<CommonNftResponse> nftResponseList, List<List<CommonNftResponse>> nftSliderList) {
         this.sliderCount = sliderCount;
         this.nftMember = nftMember;
         this.nftSliderList = nftSliderList;

@@ -22,6 +22,17 @@
     margin-right : 0 !important;
 }
 
+.navbar-nav-mobile {
+    display: none;
+    align-items: center;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.navbar-nav-mobile .nav-link {
+    padding: 0.4rem 0;
+}
+
 #navigation-top #navigation-country .nav-country{width: 1.863rem;height: 1.863rem;margin: 0.013rem 0 0.013rem;}
 #navigation-top #navigation-country .nav-country .nav-country-img{ cursor: pointer;width:1.5rem;height:1rem;}
 
@@ -160,7 +171,7 @@ img.card-img-top {
 #nftgram-wallet .wallet-content .wallet-btn-group .btn-metamask{width:18rem;height: 90%;padding-left:3rem;border: 1px solid #707070;border-radius: 0.2rem;color: #b1b1b1;font-size: 1.25rem;font-weight:600;background: url("/img/icon/metamask_icon.png") center left no-repeat;background-size: 2.1rem;background-position-x: 3.2rem;}
 #nftgram-wallet .wallet-content .wallet-msg{font-size: 1.25rem;color: #b1b1b1;}
 
-#navigation-top .wallet-wrap {display: none;position: absolute;top: 4rem;right: 3rem;z-index: 999;border: 1px solid black;background-color: white;}
+#navigation-top .wallet-wrap {display: none;position: absolute;top: 3.5rem;right: 0rem;z-index: 999;border: 1px solid black;background-color: white; width: 35%}
 #navigation-top .wallet-wrap.on {display: block;}
 #navigation-top .wallet-wrap:hover {display: block;}
 #navigation-top .wallet-wrap .wallet-user-wrap{border-bottom: 1px solid #b1b1b1;background: url("/img/icon/Profile_icon.png") left center no-repeat;background-size: 1.875rem 1.875rem;background-position-x: 0.5rem;padding-left: 3rem;}
@@ -168,10 +179,46 @@ img.card-img-top {
 #navigation-top .wallet-wrap .wallet-user-wrap .balance-price{font-size:0.625rem;font-weight: bold;}
 #navigation-top .wallet-wrap .wallet-user-wrap .balance-price:after{content:' ETH'}
 #navigation-top .wallet-wrap .wallet-list{}
-#navigation-top .wallet-wrap .wallet-list .wallet-row{padding: 0.5rem;font-size: 0.5rem;}
+#navigation-top .wallet-wrap .wallet-list .wallet-row{
+    padding: 0.5rem;
+    font-size: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.mywallet.on {
+    border-bottom : solid 1px rgb(26,83,232);
+}
 #navigation-top .wallet-wrap .wallet-list .wallet-row span{padding-right: 0.5rem;}
+#navigation-top .wallet-wrap .wallet-list .wallet-row span.address {
+    width: 85%;
+    overflow : hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 #navigation-top .wallet-wrap .wallet-list .wallet-row span img{cursor: pointer;}
 #navigation-top .wallet-wrap .wallet-list .wallet-row .address.active{font-weight: bold;}
+#navigation-top .navbar .second-nav-flex {
+    flex-wrap: nowrap;
+}
+
+#navigation-top .navbar .second-nav-flex .d-flex {
+    justify-content: flex-end;
+}
+
+#navigation-top .navbar .second-nav-flex .navbar-nav {
+    flex-direction: row;
+    margin: 0 !important;
+    justify-content: flex-end;
+}
+
+.navbar-expand-lg .navbar-collapse {
+    justify-content: flex-end;
+}
+
+.d-flex {
+    height: 2.375rem;
+}
 
 @media screen and (max-width: 1600px) {
     #nftgram-list {
@@ -196,12 +243,45 @@ img.card-img-top {
         grid-template-columns: repeat(1, 1fr);
     }
 
+    #navigation-top .wallet-wrap {width: 50%}
+
+    .navbar-nav-mobile {
+        display: flex;
+    }
+
+    .navbar-nav-mobile > li:not(:last-child) {
+        margin-right: 0.5rem;
+    }
+
     .container {
-        padding : 0 1.5rem;
+        padding : 0 1rem;
     }
 
     #navigation-top .navbar .container {
-        padding : 0 1.5rem;
+        padding : 0 1rem;
+        justify-content: flex-end;
+    }
+
+    #navigation-top .navbar .second-nav-flex {
+        flex-wrap: nowrap;
+    }
+
+    #navigation-top .navbar .second-nav-flex .d-flex {
+        justify-content: flex-end;
+    }
+
+    #navigation-top .navbar .second-nav-flex .navbar-nav {
+        flex-direction: row;
+        margin: 0 !important;
+        justify-content: flex-end;
+    }
+
+    #navbarSupportedContent .d-flex ul li:not(:first-child) {
+        margin-left: 0.7rem;
+    }
+
+    #navigation-top .navbar .second-nav-flex .navbar-nav > li:nth-child(4), #navigation-top .navbar .second-nav-flex .navbar-nav > li:nth-child(5), #navigation-top .navbar .second-nav-flex .navbar-nav > li:nth-child(6) {
+        display: none;
     }
 
     #navigation-top .navbar .input-group {
@@ -217,5 +297,9 @@ img.card-img-top {
 
     .input-group > .input-group-right {
         justify-content: flex-end;
+    }
+
+    .input-group > .input-group-right > div:last-child {
+        margin-left: 0.5rem;
     }
 }

@@ -76,17 +76,24 @@ if(typeof window.ethereum !== 'undefined') {
 $(document).ready(function(){
 
     // navigation mywallet-btn
-    $('.nav-link.mywallet').on('click',function(){
+    $('.nav-link.mywallet').on('click',function(event){
         // wallet check
-        walletCheck("nav");
+        walletCheck("nav", event);
         // lod
     });
 
-    $('.wallet-wrap').hover(function(){
-        $(this).addClass('on');
-    }, function(){
-        $(this).removeClass('on');
-    });
+    // $('.wallet-wrap').hover(function(){
+    //     $(this).addClass('on');
+    // }, function(){
+    //     $(this).removeClass('on');
+    // });
+
+    window.addEventListener('resize', ()=>{
+        if($('.wallet-wrap').hasClass('on')) {
+            $('.wallet-wrap').removeClass('on');
+            $('.mywallet').removeClass('on');
+        }
+    })
 
     // Metamask Connect Button
     $('.btn-metamask').on('click',function(){
@@ -127,9 +134,12 @@ function addressClipboard(wid) {
     valOfText.css('display','none');
 }
 
-function walletCheck(place) {
-    if(place == "nav" && $('.wallet-wrap').hasClass('on')) {
-        $('.wallet-wrap').removeClass('on');
+function walletCheck(place, event) {
+    console.log(event.target.parentNode.parentNode.parentNode.parentNode.nextSibling.nextSibling);
+    const walletInfo = $(event.target.parentNode.parentNode.parentNode.parentNode.nextSibling.nextSibling);
+    if(place == "nav" && walletInfo.hasClass('on')) {
+        walletInfo.removeClass('on');
+        $('.mywallet').removeClass('on');
         return false;
     }
 
@@ -157,10 +167,12 @@ function walletCheck(place) {
             walletRow(wResult.memberWalletResponsesList);
         }
         if(place == "nav") {
-            if($('.wallet-wrap').hasClass('on')) {
-                $('.wallet-wrap').removeClass('on');
+            if(walletInfo.hasClass('on')) {
+                walletInfo.removeClass('on');
+                $('.mywallet').removeClass('on');
             } else {
-                $('.wallet-wrap').addClass('on');
+                walletInfo.addClass('on');
+                $('.mywallet').addClass('on');
             }
             return true;
         } else if(place == "metamask") {

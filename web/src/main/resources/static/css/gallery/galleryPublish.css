@@ -3,7 +3,6 @@
     height: 90vh;
     min-height: 660px;
     min-width: 1330px;
-    background-color: red;
     position: relative;
 }
 
@@ -206,6 +205,7 @@
     width: 70%;
     display : flex;
     align-items: center;
+    position : relative;
 }
 
 .picture-explain .picture-explain-bottom .user-info > img {
@@ -217,14 +217,18 @@
 
 .picture-explain .picture-explain-bottom .user-info .user-info-name {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
+    width: 70%;
 }
 
 .picture-explain .picture-explain-bottom .user-info .user-info-name > span:first-child {
     font-size: 0.8rem;
     margin-bottom: 0rem;
-    width: fit-content;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .picture-explain .picture-explain-bottom .user-info .user-info-name > span:last-child {

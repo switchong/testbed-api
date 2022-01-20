@@ -32,24 +32,24 @@
             <img th:src="@{/img/icon/prev50.png}" id="prevBtn"/>
             <div class="gallery-slide-container">
                 <div class="gallery-slide-list-container">
-                    <div class="gallery-slide-list" th:each="slider, count :${sliderList}">
+                    <div class="gallery-slide-list" th:each="slider :${sliderList}">
                         <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
-                                <div class="gallery-slide-list-item-down" th:text=""></div>
-                                <div class="image-container">
+                                <div class="gallery-slide-list-item-down" ></div>
+                                <div class="image-container" th:each="slide :${slider}">
                                     <div class="image-container-content">
                                         <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                        <img th:src="${slide.nftImageUrl}" class="inner-picture"/>
                                     </div>
                                     <div class="picture-explain">
                                         <!--/*@thymesVar id="name" type="com.nftgram.web.common.dto.response.CommonNftResponse"*/-->
-                                        <p class="picture-title" th:text="${slider}">NFT TITLE #0000</p>
+                                        <p class="picture-title" th:text="${slide.name}">NFT TITLE #0000</p>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
                                                 <img th:src="@{/img/icon/Profile_icon.png}" />
                                                 <div class="user-info-name">
-                                                    <span th:text="|${count.index}|">USER NAME</span>
+                                                    <span th:text="${slide.username}">USER NAME</span>
                                                     <span>1 MINUTE AGO</span>
                                                 </div>
                                             </div>
@@ -57,7 +57,7 @@
                                                 <img th:src="@{/img/icon/Price_icon.png}" />
                                                 <span>23</span>
                                                 <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
+                                                <span th:text="${slide.likeCount}">450</span>
                                             </div>
                                         </div>
                                     </div>

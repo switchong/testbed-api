@@ -5,36 +5,40 @@
 <div id="navigation-top" th:fragment="fragment-nav" th:with="memberInfo=${@memberLoginManager.getInfo()}">
     <nav class="navbar navbar-expand-lg navbar-light bg-light ">
         <div class="container">
-            <div class="d-flex"></div>
-            <div class="d-flex"></div>
-            <div class="d-flex me-2" id="navigation-country">
-                <div class="nav-country">
-                    <img class="nav-country-img" data-country="en" th:src="@{../img/icon/En_icon.png}"/>
+            <div class="d-flex">
+                <ul class="navbar-nav-mobile">
+                    <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs30" th:src="@{../img/icon/Profile_icon.png}" /></a></li>
+                    <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" th:src="@{../img/icon/Wallet_icon.png}" /></a></li>
+                    <li th:if="${memberInfo.loginYN == 'N'}" class="nav-item">
+                        <a class="btn btn-outline-dark" th:onclick="|location.href='@{/auth/login}'|">Sign In</a>
+                    </li>
+                    <li th:if="${memberInfo.loginYN == 'Y'}" class="nav-item">
+                        <a class="btn btn-outline-dark" th:onclick="|location.href='@{/auth/logout}'|">Logout </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="wallet-wrap">
+                <div class="wallet-user-wrap">
+                    <span class="wallet-user-title">Total Balance</span>
+                    <br>
+                    <span class="balance-price">3.21</span>
                 </div>
-                <div class="nav-country">
-                    <img class="nav-country-img" data-country="kr" th:src="@{../img/icon/Kr_icon.png}"/>
+                <div class="wallet-list">
+
                 </div>
-                <div class="nav-country">
-                    <img class="nav-country-img" data-country="jp" th:src="@{../img/icon/Jp_icon.png}"/>
-                </div>
-                <div class="nav-country">
-                    <img class="nav-country-img" data-country="cn" th:src="@{../img/icon/Cn_icon.png}"/>
-                </div>
+            </div>
+            <div class="d-flex">
             </div>
         </div>
     </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-        <div class="container">
+        <div class="container second-nav-flex">
             <a class="navbar-brand nav-logo" href="/">
                 <div class="whIs30">
                     <img class="whIs30" th:src="@{../img/icon/NFTgram_logo.png}" />
                 </div>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"></ul>
                 <div class="d-flex">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
