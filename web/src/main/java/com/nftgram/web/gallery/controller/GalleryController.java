@@ -52,7 +52,7 @@ public class GalleryController {
         model.addAttribute("collection",galleryDto.getCollection());
         model.addAttribute("nftList",galleryDto.getGalleryList());
         model.addAttribute("nav_active","explorer");
-
+        model.addAttribute("slideList", galleryDto.getSlideList());
 
 
         return "gallery/gallery";
@@ -102,6 +102,7 @@ public class GalleryController {
             model.addAttribute("member",galleryMemberDto.getNftMember());
             model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
             model.addAttribute("nav_active","mycollection");
+            model.addAttribute("slideList", galleryMemberDto.getNftSliderList());
             return "gallery/mycollection";
         } else {
             return "redirect:/auth/login";

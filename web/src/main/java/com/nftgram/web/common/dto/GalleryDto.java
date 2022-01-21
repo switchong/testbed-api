@@ -15,10 +15,12 @@ import java.util.List;
 public class GalleryDto {
     private NftCollection collection;
     private List<CommonNftResponse> galleryList = new ArrayList<>();
+    private List<List<CommonNftResponse>> slideList = new ArrayList<>();
 
     @Builder
-    public GalleryDto(NftCollection collection, List<CommonNftResponse> galleryList) {
+    public GalleryDto(NftCollection collection, List<CommonNftResponse> galleryList, List<List<CommonNftResponse>> slideList) {
         this.collection = collection;
         this.galleryList = galleryList;
+        this.slideList = slideList;
     }
 }

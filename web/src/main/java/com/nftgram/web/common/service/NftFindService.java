@@ -54,11 +54,28 @@ public class NftFindService {
         NftCollection collection = nftCollectionRepository.findNftCollection(collectionId);
         List<Nft> galleryList = nftRepository.findByNftCollectionId(collectionId);
 
+        List<List<CommonNftResponse>> nomMemberSliderResponse = new ArrayList<>();
+
         List<CommonNftResponse> nftResponse = setCommonNftResponses(galleryList);
+
+        Long slideCnt = Long.valueOf((long) Math.ceil(nftResponse.size()/(3 * 1.0)));
+
+        for(int i = 0;i<slideCnt;i++) {
+            System.out.println(slideCnt);
+            int idx = i%3;  // 1차 배열 index 값
+            int k = i * 3;  // fromIndex 시작 index값
+            List<CommonNftResponse> nftResult = nftResponse.subList(k,(lastNum(k+3, nftResponse.size())));   // fromIndex , toIndex(미만)
+//            List<CommonNftSlider> slider = CommonNftSlider.builder()
+//                    .nftResponseList(nftResult)
+//                    .build();
+
+            nomMemberSliderResponse.add(nftResult);
+        }
 
         GalleryDto galleryDto = GalleryDto.builder()
                 .collection(collection)
                 .galleryList(nftResponse)
+                .slideList(nomMemberSliderResponse)
                 .build();
 
         return galleryDto;
@@ -134,6 +151,13 @@ public class NftFindService {
         });
 
         return response;
+    }
+
+    public int lastNum(int num, int size) {
+        if(size < num) {
+            return size;
+        }
+        return num;
     }
 
 }

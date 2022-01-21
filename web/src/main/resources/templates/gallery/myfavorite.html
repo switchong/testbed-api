@@ -30,7 +30,7 @@
                 <img th:src="@{/img/icon/Discord_navi_icon.png}" />
             </div>
             <img th:src="@{/img/icon/prev50.png}" id="prevBtn"/>
-            <div class="gallery-slide-container">
+            <div class="gallery-slide-container" id="gallery-slide-container">
                 <div class="gallery-slide-list-container">
                     <div class="gallery-slide-list" th:each="slider :${sliderList}">
                         <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
@@ -38,19 +38,30 @@
                             <div class="gallery-slide-list-item-picture">
                                 <div class="gallery-slide-list-item-down" ></div>
                                 <div class="image-container" th:each="slide :${slider}">
-                                    <div class="image-container-content">
+                                    <div class="image-container-content" th:data-nftid="${slide.nftId}">
                                         <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="${slide.nftImageUrl}" class="inner-picture"/>
+                                        <!--                                        <img th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-nftid="${nft.nftId}"class="inner-picture"/>-->
+                                        <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
+                                        <!--                                        <video controls controlsList="nodownload"  th:if="${slider.tagType == 'video'}" class="inner-picture"-->
+                                        <!--                                               style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;width: 100%;height: 295px;"-->
+                                        <!--                                               th:classappend="'gimage'+${slider.nftId}" data-layer-btn="nft-layer-pop"  th:alt="${slider.name}" th:data-nftid="${slider.nftId}" th:src="${slider.nftImageUrl}"-->
+                                        <!--                                        />-->zw
                                     </div>
                                     <div class="picture-explain">
                                         <!--/*@thymesVar id="name" type="com.nftgram.web.common.dto.response.CommonNftResponse"*/-->
-                                        <p class="picture-title" th:text="${slide.name}">NFT TITLE #0000</p>
+                                        <div class="picture-title-container">
+                                            <p class="picture-title" th:text="${slide.name}">NFT TITLE #0000</p>
+                                        </div>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
                                                 <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span th:text="${slide.username}">USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
+                                                <div class="nft-title-user">
+                                                    <div class="user-info-name">
+                                                        <span th:text="${slide.username}">USER NAME</span>
+                                                        <span class="time">1 MINUTE AGO</span>
+                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
+                                                        <!--                                                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="picture-price">

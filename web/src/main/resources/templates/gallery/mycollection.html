@@ -33,12 +33,12 @@
                 <img th:src="@{/img/icon/Discord_navi_icon.png}" />
             </div>
             <img th:src="@{/img/icon/prev50.png}" id="prevBtn"/>
-            <div class="gallery-slide-container">
+            <div class="gallery-slide-container" id="gallery-slide-container">
                 <div class="gallery-slide-list-container myCollection-slide-container">
-                    <div class="gallery-slide-list">
+                    <div class="gallery-slide-list" th:each="slider, count : ${slideList}">
                         <div class="myCollection-background-edit">
-                            <input type="checkbox" id="editcheck10"/>
-                            <label for="editcheck10">
+                            <input type="checkbox" th:id="'editcheck' + ${count}"/>
+                            <label th:for="'editcheck' + ${count}">
                                 <p>WALLPAPER NFT</p>
                                 <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon10">
                             </label>
@@ -48,322 +48,43 @@
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
                                 <div class="gallery-slide-list-item-down"></div>
-                                <div class="image-container">
+                                <div class="image-container" th:each="slide, num : ${slider}">
                                     <div class="myCollection-image-top">
-                                        <input type="checkbox" id="editcheck1"/>
-                                        <label for="editcheck1">
+                                        <input type="checkbox" th:id="'editcheck'+ ${num + (count * 3)}"/>
+                                        <label th:for="'editcheck'+ ${num + (count * 3)}">
                                             <p>FRAME NFT</p>
                                             <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon1">
                                         </label>
                                         <div th:replace="fragment/editFrame.html :: frame-edit" />
                                     </div>
-                                    <div class="image-container-content">
+                                    <div class="image-container-content" th:data-nftid="${slide.nftId}">
                                         <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
+                                        <!--                                        <img th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-nftid="${nft.nftId}"class="inner-picture"/>-->
+                                        <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
+                                        <!--                                        <video controls controlsList="nodownload"  th:if="${slider.tagType == 'video'}" class="inner-picture"-->
+                                        <!--                                               style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;width: 100%;height: 295px;"-->
+                                        <!--                                               th:classappend="'gimage'+${slider.nftId}" data-layer-btn="nft-layer-pop"  th:alt="${slider.name}" th:data-nftid="${slider.nftId}" th:src="${slider.nftImageUrl}"-->
+                                        <!--                                        />-->
                                     </div>
                                     <div class="picture-explain">
-                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <p class="picture-title" th:text="${slide.name}">NFT TITLE #0000</p>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
                                                 <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span>USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
+                                                <div class="nft-title-user">
+                                                    <div class="user-info-name">
+                                                        <span th:text="${slide.username}">USER NAME</span>
+                                                        <span class="time">1 MINUTE AGO</span>
+                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
+                                                        <!--                                                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="picture-price">
                                                 <img th:src="@{/img/icon/Price_icon.png}" />
                                                 <span>23</span>
                                                 <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="image-container">
-                                    <div class="myCollection-image-top">
-                                        <input type="checkbox" id="editcheck2"/>
-                                        <label for="editcheck2">
-                                            <p>FRAME NFT</p>
-                                            <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon2">
-                                        </label>
-                                        <div th:replace="fragment/editFrame.html :: frame-edit" />
-                                    </div>
-                                    <div class="image-container-content">
-                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
-                                    </div>
-                                    <div class="picture-explain">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span>USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
-                                                <span>23</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="image-container">
-                                    <div class="myCollection-image-top">
-                                        <input type="checkbox" id="editcheck3"/>
-                                        <label for="editcheck3">
-                                            <p>FRAME NFT</p>
-                                            <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon3">
-                                        </label>
-                                        <div th:replace="fragment/editFrame.html :: frame-edit" />
-                                    </div>
-                                    <div class="image-container-content">
-                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
-                                    </div>
-                                    <div class="picture-explain">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span>USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
-                                                <span>23</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gallery-slide-list">
-                        <div class="myCollection-background-edit">
-                            <input type="checkbox" id="editcheck11"/>
-                            <label for="editcheck11">
-                                <p>WALLPAPER NFT</p>
-                                <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon11">
-                            </label>
-                            <div th:replace="fragment/editBackground.html :: frame-edit" />
-                        </div>
-                        <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
-                        <div class="gallery-slide-list-item">
-                            <div class="gallery-slide-list-item-picture">
-                                <div class="gallery-slide-list-item-down"></div>
-                                <div class="image-container">
-                                    <div class="myCollection-image-top">
-                                        <input type="checkbox" id="editcheck4"/>
-                                        <label for="editcheck4">
-                                            <p>FRAME NFT</p>
-                                            <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon4">
-                                        </label>
-                                        <div th:replace="fragment/editFrame.html :: frame-edit" />
-                                    </div>
-                                    <div class="image-container-content">
-                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
-                                    </div>
-                                    <div class="picture-explain">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span>USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
-                                                <span>23</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="image-container">
-                                    <div class="myCollection-image-top">
-                                        <input type="checkbox" id="editcheck5"/>
-                                        <label for="editcheck5">
-                                            <p>FRAME NFT</p>
-                                            <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon5">
-                                        </label>
-                                        <div th:replace="fragment/editFrame.html :: frame-edit" />
-                                    </div>
-                                    <div class="image-container-content">
-                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
-                                    </div>
-                                    <div class="picture-explain">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span>USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
-                                                <span>23</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="image-container">
-                                    <div class="myCollection-image-top">
-                                        <input type="checkbox" id="editcheck6"/>
-                                        <label for="editcheck6">
-                                            <p>FRAME NFT</p>
-                                            <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon6">
-                                        </label>
-                                        <div th:replace="fragment/editFrame.html :: frame-edit" />
-                                    </div>
-                                    <div class="image-container-content">
-                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
-                                    </div>
-                                    <div class="picture-explain">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span>USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
-                                                <span>23</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gallery-slide-list">
-                        <div class="myCollection-background-edit">
-                            <input type="checkbox" id="editcheck12"/>
-                            <label for="editcheck12">
-                                <p>WALLPAPER NFT</p>
-                                <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon12">
-                            </label>
-                            <div th:replace="fragment/editBackground.html :: frame-edit" />
-                        </div>
-                        <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
-                        <div class="gallery-slide-list-item">
-                            <div class="gallery-slide-list-item-picture">
-                                <div class="gallery-slide-list-item-down"></div>
-                                <div class="image-container">
-                                    <div class="myCollection-image-top">
-                                        <input type="checkbox" id="editcheck7"/>
-                                        <label for="editcheck7">
-                                            <p>FRAME NFT</p>
-                                            <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon7">
-                                        </label>
-                                        <div th:replace="fragment/editFrame.html :: frame-edit" />
-                                    </div>
-                                    <div class="image-container-content">
-                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
-                                    </div>
-                                    <div class="picture-explain">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span>USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
-                                                <span>23</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="image-container">
-                                    <div class="myCollection-image-top">
-                                        <input type="checkbox" id="editcheck8"/>
-                                        <label for="editcheck8">
-                                            <p>FRAME NFT</p>
-                                            <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon8">
-                                        </label>
-                                        <div th:replace="fragment/editFrame.html :: frame-edit" />
-                                    </div>
-                                    <div class="image-container-content">
-                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
-                                    </div>
-                                    <div class="picture-explain">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span>USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
-                                                <span>23</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="image-container">
-                                    <div class="myCollection-image-top">
-                                        <input type="checkbox" id="editcheck9"/>
-                                        <label for="editcheck9">
-                                            <p>FRAME NFT</p>
-                                            <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon9">
-                                        </label>
-                                        <div th:replace="fragment/editFrame.html :: frame-edit" />
-                                    </div>
-                                    <div class="image-container-content">
-                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <img th:src="@{/img/gallery/1.jpg}" class="inner-picture"/>
-                                    </div>
-                                    <div class="picture-explain">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
-                                                <div class="user-info-name">
-                                                    <span>USER NAME</span>
-                                                    <span>1 MINUTE AGO</span>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
-                                                <span>23</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
-                                                <span>450</span>
+                                                <span th:text="${slide.likeCount}">450</span>
                                             </div>
                                         </div>
                                     </div>

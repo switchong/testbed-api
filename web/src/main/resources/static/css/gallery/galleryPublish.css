@@ -187,10 +187,13 @@
 }
 
 .picture-explain .picture-title {
-    width: 100%;
+    width: 12rem;
     text-align: center;
     padding-top: 0.2rem;
     margin-bottom: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .picture-explain .picture-explain-bottom {
@@ -215,11 +218,16 @@
     margin-right: 3%;
 }
 
+.nft-title-user {
+    position: relative;
+    width: 10rem;
+}
+
 .picture-explain .picture-explain-bottom .user-info .user-info-name {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    width: 70%;
+    width: 100%;
 }
 
 .picture-explain .picture-explain-bottom .user-info .user-info-name > span:first-child {
@@ -358,4 +366,10 @@ img[id*="image-edit-icon"] {
     left: 50%;
     transform: translate(-50%,-50%);
     border-radius: 5px;
+}
+
+@media screen and (max-width: 1600px) {
+    .nft-title-user {
+        width: 6rem;
+    }
 }
