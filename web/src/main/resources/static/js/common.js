@@ -68,15 +68,16 @@ function moreView(type , nft) {
     let keyword = $('#searchKeyword').val();
     let sort = $('#selSort').val();
     let url = "/api/main/page?page=" + nextPage + "&size=" + size + "&keyword=" + keyword;
-    let  insTag = "" +
+    let insTag = "" +
         '<div class=\"search-box\">' +
         '<div class=\"position-box\">' +
         ''+keyword+'' +
-        "<span onclick=\"this.parentElement.style.display='none'\" id=\"close\" class=\"close\">X</span>" +
+        "<span onclick=\"searchFormClose()\" id=\"close\" class=\"close\">X</span>" +
         '</div>'
         "</div>"
 
     if (keyword ){
+        let keyword = $('#searchKeyword').val();
         $("#nftgram-tag").html(insTag);
     }
 
@@ -117,17 +118,6 @@ function moreView(type , nft) {
     })
 }
 
-$("#btnCreatDtOrder, btnPointOrder").click(function(){
-    var dataNm = $(this).data("datanm"); //data() 의 이름은 소문자로 작성
-    listSort($(this), dataNm);
-});
-
-function SortList(){
-
-}
-
-
-
 function toList(list) {
     let html = '';
     $.each(list, function(key, nft){
@@ -159,6 +149,12 @@ function toList(list) {
     return html;
 }
 /* main auto-loading */
+
+function searchFormClose() {
+    $('#searchKeyword').val('');
+    $("#nftgram-tag").html('');
+    moreView("html");
+}
 
 function getNftOne(nftId) {
     $('input[name="nft_id"]').val(nftId);

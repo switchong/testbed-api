@@ -8,18 +8,16 @@ import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.service.NftFindService;
 import com.nftgram.web.gallery.service.GalleryService;
 import com.nftgram.web.member.dto.NftMemberAuthDto;
-import com.nftgram.web.member.dto.request.NftMemberSignupRequest;
-import com.nftgram.web.member.dto.response.NftMemberSignupResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
@@ -38,11 +36,13 @@ public class GalleryController {
     @GetMapping("/gallery")
     public String gallery(Model model, Pageable pageable, String keyword , Long sort) throws ParseException {
         List<CommonNftResponse> nftList = galleryService.findAllNftGallery(pageable);
-        List<List<CommonNftResponse>> slideList = galleryService.findAllNFTList(pageable, keyword, sort);
 
-        model.addAttribute("nftList",nftList);
+        GalleryDto galleryDto = galleryService.findAllNFTList(pageable, keyword, sort);
+
         model.addAttribute("nav_active","explorer");
-        model.addAttribute("slideList", slideList);
+        model.addAttribute("collection", galleryDto.getCollection());
+        model.addAttribute("nftList", galleryDto.getGalleryList());
+        model.addAttribute("slideList", galleryDto.getSlideList());
 
         return "gallery/gallery";
     }
@@ -52,9 +52,9 @@ public class GalleryController {
 
         GalleryDto galleryDto = nftFindService.findByNftCollectionId(collectionId);
 
+        model.addAttribute("nav_active","explorer");
         model.addAttribute("collection",galleryDto.getCollection());
         model.addAttribute("nftList",galleryDto.getGalleryList());
-        model.addAttribute("nav_active","explorer");
         model.addAttribute("slideList", galleryDto.getSlideList());
 
 
@@ -66,9 +66,9 @@ public class GalleryController {
 
         GalleryDto galleryDto = nftFindService.findByNftCollectionId(collectionId);
 
+        model.addAttribute("nav_active","explorer");
         model.addAttribute("collection",galleryDto.getCollection());
         model.addAttribute("nftList",galleryDto.getGalleryList());
-        model.addAttribute("nav_active","explorer");
 
         return "gallery/gallery_swiper";
     }
@@ -82,10 +82,10 @@ public class GalleryController {
 
             GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMemberLike(pageable, memberId);
 
+            model.addAttribute("nav_active","myfavorite");
             model.addAttribute("member",galleryMemberDto.getNftMember());
             model.addAttribute("sliderList",galleryMemberDto.getNftSliderList());
             model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
-            model.addAttribute("nav_active","myfavorite");
 
             return "gallery/myfavorite";
         } else {
@@ -102,11 +102,16 @@ public class GalleryController {
 
             GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMember(pageable, memberId);
 
-            model.addAttribute("member",galleryMemberDto.getNftMember());
-            model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
-            model.addAttribute("nav_active","mycollection");
-            model.addAttribute("slideList", galleryMemberDto.getNftSliderList());
-            return "gallery/mycollection";
+            if(galleryMemberDto.getSliderCount() > 0) {
+                model.addAttribute("nav_active","mycollection");
+                model.addAttribute("member",galleryMemberDto.getNftMember());
+                model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
+                model.addAttribute("slideList", galleryMemberDto.getNftSliderList());
+                return "gallery/mycollection";
+            } else {
+                return "redirect:/";
+            }
+
         } else {
             return "redirect:/auth/login";
         }

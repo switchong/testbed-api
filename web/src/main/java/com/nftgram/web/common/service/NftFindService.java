@@ -74,7 +74,6 @@ public class NftFindService {
 
         GalleryDto galleryDto = GalleryDto.builder()
                 .collection(collection)
-                .galleryList(nftResponse)
                 .slideList(nomMemberSliderResponse)
                 .build();
 

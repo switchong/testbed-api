@@ -40,12 +40,8 @@
                                 <div class="image-container" th:each="slide :${slider}">
                                     <div class="image-container-content" th:data-nftid="${slide.nftId}">
                                         <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <!--                                        <img th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-nftid="${nft.nftId}"class="inner-picture"/>-->
-                                        <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
-                                        <!--                                        <video controls controlsList="nodownload"  th:if="${slider.tagType == 'video'}" class="inner-picture"-->
-                                        <!--                                               style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;width: 100%;height: 295px;"-->
-                                        <!--                                               th:classappend="'gimage'+${slider.nftId}" data-layer-btn="nft-layer-pop"  th:alt="${slider.name}" th:data-nftid="${slider.nftId}" th:src="${slider.nftImageUrl}"-->
-                                        <!--                                        />-->zw
+                                        <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" th:if="${slide.tagType == 'image'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
+                                        <video class="inner-picture" th:classappend="'gimage'+${slide.nftId}" controls controlsList="nodownload"  th:if="${slide.tagType == 'video'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
                                     </div>
                                     <div class="picture-explain">
                                         <!--/*@thymesVar id="name" type="com.nftgram.web.common.dto.response.CommonNftResponse"*/-->

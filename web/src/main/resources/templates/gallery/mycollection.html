@@ -37,8 +37,8 @@
                 <div class="gallery-slide-list-container myCollection-slide-container">
                     <div class="gallery-slide-list" th:each="slider, count : ${slideList}">
                         <div class="myCollection-background-edit">
-                            <input type="checkbox" th:id="'editcheck' + ${count}"/>
-                            <label th:for="'editcheck' + ${count}">
+                            <input type="checkbox" th:id="${'editcheck' + count.index}"/>
+                            <label th:for="${'editcheck' + count.index}">
                                 <p>WALLPAPER NFT</p>
                                 <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon10">
                             </label>
@@ -50,8 +50,8 @@
                                 <div class="gallery-slide-list-item-down"></div>
                                 <div class="image-container" th:each="slide, num : ${slider}">
                                     <div class="myCollection-image-top">
-                                        <input type="checkbox" th:id="'editcheck'+ ${num + (count * 3)}"/>
-                                        <label th:for="'editcheck'+ ${num + (count * 3)}">
+                                        <input type="checkbox" th:id="${'editcheck' + num.index + (count.index * 3)}"/>
+                                        <label th:for="${'editcheck' + num.index + (count.index * 3)}">
                                             <p>FRAME NFT</p>
                                             <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon1">
                                         </label>
@@ -59,12 +59,8 @@
                                     </div>
                                     <div class="image-container-content" th:data-nftid="${slide.nftId}">
                                         <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-                                        <!--                                        <img th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-nftid="${nft.nftId}"class="inner-picture"/>-->
-                                        <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
-                                        <!--                                        <video controls controlsList="nodownload"  th:if="${slider.tagType == 'video'}" class="inner-picture"-->
-                                        <!--                                               style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;width: 100%;height: 295px;"-->
-                                        <!--                                               th:classappend="'gimage'+${slider.nftId}" data-layer-btn="nft-layer-pop"  th:alt="${slider.name}" th:data-nftid="${slider.nftId}" th:src="${slider.nftImageUrl}"-->
-                                        <!--                                        />-->
+                                        <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" th:if="${slide.tagType == 'image'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
+                                        <video class="inner-picture" th:classappend="'gimage'+${slide.nftId}" controls controlsList="nodownload"  th:if="${slide.tagType == 'video'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
                                     </div>
                                     <div class="picture-explain">
                                         <p class="picture-title" th:text="${slide.name}">NFT TITLE #0000</p>

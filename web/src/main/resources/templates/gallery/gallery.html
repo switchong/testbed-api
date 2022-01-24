@@ -13,53 +13,47 @@
 <div class="container2" id="nftgram_wrap">
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
-        <div class="gallery-top">
+        <div class="gallery-top" th:if="${collection.nftCollectionId > 0}">
             <div class="user-space">
                 <div class="user-space-left">
                     <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile" />
-                    USER NAME
+                    <span th:text="${collection.collectionName}">USER NAME</span>
                 </div>
-                <span onclick="this.parentElement.style.display='none'" class="user-close-btn">X</span>
+                <span class="user-close-btn">X</span>
             </div>
         </div>
         <div class="gallery-content">
-            <div class="sns-container">
+            <div class="sns-container" th:if="${collection.nftCollectionId > 0}">
                 <img th:src="@{/img/icon/Share_navi_icon.png}" />
-                <img th:src="@{/img/icon/Instagram_navi_icon.png}" />
-                <img th:src="@{/img/icon/Twitter_navi_icon.png}" />
-                <img th:src="@{/img/icon/Discord_navi_icon.png}" />
+                <img th:src="@{/img/icon/Instagram_navi_icon.png}" th:data-link="${collection.collectionInstagramUsername}"/>
+                <img th:src="@{/img/icon/Twitter_navi_icon.png}" th:data-link="${collection.collectionTwitterUsername}" />
+                <img th:src="@{/img/icon/Discord_navi_icon.png}" th:data-link="${collection.collectionDiscordUrl}" />
             </div>
             <img th:src="@{/img/icon/prev50.png}" id="prevBtn"/>
             <div class="gallery-slide-container" id="gallery-slide-container">
                 <div class="gallery-slide-list-container"  >
-                    <div class="gallery-slide-list" th:each="slide :${slideList}"   >
+                    <div class="gallery-slide-list" th:each="slider :${slideList}"   >
                         <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
                         <div class="gallery-slide-list-item" >
                             <div class="gallery-slide-list-item-picture"  >
                                 <div class="gallery-slide-list-item-down"></div>
-                                <div class="image-container" th:each="slider :${slide}">
-                                    <div class="image-container-content" th:data-nftid="${slider.nftId}">
+                                <div class="image-container" th:each="slide :${slider}">
+                                    <div class="image-container-content" th:data-nftid="${slide.nftId}">
                                         <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
-<!--                                        <img th:src="${nft.nftImageUrl}" th:alt="${nft.name}" th:data-nftid="${nft.nftId}"class="inner-picture"/>-->
-                                        <img class="inner-picture" th:classappend="'gimage'+${slider.nftId}" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${slider.name}" th:data-nftid="${slider.nftId}" th:src="${slider.nftImageUrl}"/>
-<!--                                        <video controls controlsList="nodownload"  th:if="${slider.tagType == 'video'}" class="inner-picture"-->
-<!--                                               style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;width: 100%;height: 295px;"-->
-<!--                                               th:classappend="'gimage'+${slider.nftId}" data-layer-btn="nft-layer-pop"  th:alt="${slider.name}" th:data-nftid="${slider.nftId}" th:src="${slider.nftImageUrl}"-->
-<!--                                        />-->
+                                        <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" th:if="${slide.tagType == 'image'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
+                                        <video class="inner-picture" th:classappend="'gimage'+${slide.nftId}" controls controlsList="nodownload"  th:if="${slide.tagType == 'video'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
                                     </div>
                                     <div class="picture-explain" >
                                         <div class="picture-title-container">
-                                            <p class="picture-title" th:text="${slider.name}">NFT TITLE #0000</p>
+                                            <p class="picture-title" th:text="${slide.name}">NFT TITLE #0000</p>
                                         </div>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info" >
                                                 <img th:src="@{/img/icon/Profile_icon.png}" />
                                                 <div class="nft-title-user">
                                                 <div class="user-info-name">
-                                                    <span th:text="${slider.username}">USER NAME</span>
+                                                    <span th:text="${slide.username}">USER NAME</span>
                                                     <span class="time">1 MINUTE AGO</span>
-<!--                                                    <span>1 MINUTE AGO</span>-->
-<!--                                                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
                                                 </div>
                                                 </div>
                                             </div>
@@ -68,8 +62,8 @@
 <!--                                                <span>23</span>-->
 <!--                                                <img th:src="@{/img/icon/Like_icon.png}" />-->
 <!--                                                <span>450</span>-->
-                                                <img class="hIs24 wIs20" th:src="@{../img/icon/Price_icon.png}"/><span class="viewCount" th:text="${slider.viewCount}">0</span>
-                                                <img class="hIs24 wIs20" th:src="@{../img/icon/Like_icon.png}"/><span class="likeCount" th:text="${slider.likeCount}">0</span>
+                                                <img class="hIs24 wIs20" th:src="@{../img/icon/Price_icon.png}"/><span class="viewCount" th:text="${slide.viewCount}">0</span>
+                                                <img class="hIs24 wIs20" th:src="@{../img/icon/Like_icon.png}"/><span class="likeCount" th:text="${slide.likeCount}">0</span>
                                             </div>
                                         </div>
                                     </div>

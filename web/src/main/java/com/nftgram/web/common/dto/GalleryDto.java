@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GalleryDto {
     private NftCollection collection;
-    private List<CommonNftResponse> galleryList = new ArrayList<>();
     private List<List<CommonNftResponse>> slideList = new ArrayList<>();
+    private List<CommonNftResponse> galleryList = new ArrayList<>();
 
     @Builder
     public GalleryDto(NftCollection collection, List<CommonNftResponse> galleryList, List<List<CommonNftResponse>> slideList) {
