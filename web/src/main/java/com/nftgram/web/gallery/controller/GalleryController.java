@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -35,11 +36,13 @@ public class GalleryController {
 
 
     @GetMapping("/gallery")
-    public String gallery(Model model, Pageable pageable){
+    public String gallery(Model model, Pageable pageable, String keyword , Long sort) throws ParseException {
         List<CommonNftResponse> nftList = galleryService.findAllNftGallery(pageable);
+        List<List<CommonNftResponse>> slideList = galleryService.findAllNFTList(pageable, keyword, sort);
 
         model.addAttribute("nftList",nftList);
         model.addAttribute("nav_active","explorer");
+        model.addAttribute("slideList", slideList);
 
         return "gallery/gallery";
     }

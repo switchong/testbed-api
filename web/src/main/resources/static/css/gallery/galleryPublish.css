@@ -58,6 +58,10 @@
     margin-left: 0.75rem;
 }
 
+.user-close-btn {
+    cursor: pointer;
+}
+
 .gallery-top .user-space {
     width : 13rem;
     height: 2.25rem;

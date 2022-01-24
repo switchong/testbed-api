@@ -146,8 +146,8 @@ function toList(list) {
             '                            <img src="/img/icon/Profile_icon.png" class="card-img-user" > <span class="text-muted">'+nft.username+'</span>\n' +
             '                        </div>\n'+'' +
             '                        <div class="row-data-right">\n' +
-            '                            <img src="/img/icon/Price_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
-            '                            <img src="/img/icon/Like_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
+            '                            <img src="/img/icon/Price_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
+            '                            <img src="/img/icon/Like_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
             '                         </div>\n'+'' +
             '                      </div>\n' +
             '                    <p class="card-text-data"><small class="text-muted" >'+date+'</small></p>\n' +

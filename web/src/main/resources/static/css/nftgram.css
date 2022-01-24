@@ -303,3 +303,7 @@ img.card-img-top {
         margin-left: 0.5rem;
     }
 }
+
+.card:hover {
+    box-shadow: 0 0 15px 0 #000;
+}

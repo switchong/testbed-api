@@ -1,13 +1,51 @@
 $(document).ready(function(){
-
+    let currentIndex;
     //web
-    $('#gallery-slide-container .image-container-content img').on('click',function(){
-        var nftId = $(this).data('nftid');
-        var PopId = "nft-layer-pop";
-        layerPopId(PopId);
+    document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture').forEach((item, index)=>{
+        item.addEventListener('click',(e)=>{
+            var nftId = e.target.getAttribute('data-nftid');
+            var PopId = "nft-layer-pop";
+            layerPopId(PopId);
+            currentIndex = index;
+            console.log(index);
+            layerPopGallery(nftId);
+        })
+    })
 
-        layerPopGallery(nftId);
-    });
+    document.querySelector('.next').addEventListener('click',()=>{
+        if(currentIndex < document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture').length - 1) {
+            // console.log(document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid'));
+            var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid');
+            var PopId = "nft-layer-pop";
+            layerPopId(PopId);
+            layerPopGallery(nftId);
+        }
+        if(currentIndex % 3 === 0) {
+            goNext();
+        }
+    })
+
+    document.querySelector('.prev').addEventListener('click',()=>{
+        if(currentIndex > 0) {
+            // console.log(document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid'));
+            var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[--currentIndex].getAttribute('data-nftid');
+            var PopId = "nft-layer-pop";
+            layerPopId(PopId);
+            layerPopGallery(nftId);
+        }
+        if(currentIndex % 3 === 2) {
+            goPrev();
+        }
+    })
+
+    // $('#gallery-slide-container .image-container-content img').on('click',function(){
+    //     console.log($(this));
+    //     nftId = $(this).data('nftid');
+    //     PopId = "nft-layer-pop";
+    //     layerPopId(PopId);
+    //
+    //     layerPopGallery(nftId);
+    // });
 
     // layout popup button
     $('#nft-layer-pop .nft-btn').find('.nft-btn-form').on('click', function(){
@@ -182,6 +220,7 @@ function layerPopGallery(nftId) {
 function layerPopClose(){
     $('.wrap_layer_popup').fadeOut();
     $('.layer_popup_bg').fadeOut();
+    // location.reload();
 }
 
 function layerPopByNft(data) {
