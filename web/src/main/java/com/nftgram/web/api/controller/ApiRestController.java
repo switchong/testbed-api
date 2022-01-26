@@ -12,7 +12,6 @@ import com.nftgram.web.api.dto.response.MemberWalletResponses;
 import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.api.service.ApiRestService;
 import com.nftgram.web.common.auth.MemberLoginManager;
-import com.nftgram.web.common.dto.GalleryDto;
 import com.nftgram.web.common.dto.NftCommentDto;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.request.NftCommentRequest;
@@ -45,27 +44,40 @@ public class ApiRestController {
     private final MemberLoginManager memberLoginManager;
     private final GalleryService galleryService;
 
-
     @GetMapping("/main/page")
-    public MainPageDto getMainPage(Pageable pageable, String keyword , Long sort ) throws ParseException {
+    public MainPageDto getMainPage(Pageable pageable, String keyword , Long sort) throws ParseException {
         List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable  , keyword , sort);
-
 
         MainPageDto mainPageDto = MainPageDto.builder()
                 .total(mainResponseAll.size())
                 .nftList(mainResponseAll)
-
                 .build();
 
         return mainPageDto;
     }
 
-    @GetMapping("MoreExplore")
-    @ResponseBody
-    public List<List<CommonNftResponse>> getMoreExplore(Pageable pageable, String keyword, Long sort) throws ParseException {
-        GalleryDto galleryDto = galleryService.findAllNFTList(pageable, keyword, sort);
-        List<List<CommonNftResponse>> result = galleryDto.getSlideList();
-        return result;
+    @GetMapping("/main/page/gallery")
+    public MainPageDto getMoreExplore(Pageable pageable, String keyword, Long sort) throws ParseException {
+        List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable  , keyword , sort);
+
+        List<List<CommonNftResponse>> sliderResponse = new ArrayList<>();
+
+        Long sliderCount = Long.valueOf((long) Math.ceil(mainResponseAll.size()/(3 * 1.0)));
+
+        for(int i = 0;i<sliderCount;i++) {
+            int idx = i%3;  // 1차 배열 index 값
+            int k = i * 3;  // fromIndex 시작 index값
+            List<CommonNftResponse> nftResult = mainResponseAll.subList(k,(galleryService.lastNum(k+3, mainResponseAll.size())));   // fromIndex , toIndex(미만)
+
+            sliderResponse.add(nftResult);
+        }
+
+        MainPageDto mainPageDto = MainPageDto.builder()
+                .total(mainResponseAll.size())
+                .slideList(sliderResponse)
+                .build();
+
+        return mainPageDto;
     }
 
     @PostMapping("/nft")

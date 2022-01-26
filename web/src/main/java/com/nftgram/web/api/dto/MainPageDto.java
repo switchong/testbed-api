@@ -1,10 +1,12 @@
 package com.nftgram.web.api.dto;
 
 import com.nftgram.web.common.dto.response.CommonNftResponse;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,14 +14,13 @@ import java.util.List;
 public class MainPageDto {
     private int total;
     private List<CommonNftResponse> nftList;
-
-
-
+    private List<List<CommonNftResponse>> slideList = new ArrayList<>();
 
     @Builder
-    public MainPageDto(int total, List<CommonNftResponse> nftList ) {
+    public MainPageDto(int total, List<CommonNftResponse> nftList, List<List<CommonNftResponse>> slideList ) {
         this.total = total;
         this.nftList = nftList;
+        this.slideList = slideList;
 
     }
 }

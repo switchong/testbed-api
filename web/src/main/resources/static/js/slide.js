@@ -6,9 +6,15 @@ let slides;
 let currentPage = 0;
 let nowLocation;
 
-const MoreSlide = (keyword) => {
+const MoreSlide = (uri) => {
 
-    const url = `/api/${keyword}?page=${++currentPage}&size=18`;
+    let keyword = $('#searchKeyword').val();
+    let sort = $('#selSort').val();
+    let size = 18;
+    let url = `/api/${uri}?page=${++currentPage}&size=` + size + `&keyword=` + keyword;
+    if (sort != null) {
+        url += "&sort=" + sort;
+    }
     $.ajax({
         url: url,
         type: "GET",
@@ -20,7 +26,7 @@ const MoreSlide = (keyword) => {
                 alert('lastData');
             }
             else {
-                const newList = data.map((item)=> {
+                const newList = data.slideList.map((item)=> {
                     let innerNewList = ''
                     item.forEach((inner)=>{
                         innerNewList = innerNewList + `
@@ -94,7 +100,7 @@ const goNext = () => {
     }
     else {
         if(nowLocation === undefined) {
-            MoreSlide('MoreExplore');
+            MoreSlide('main/page/gallery');
         }
 
     }
