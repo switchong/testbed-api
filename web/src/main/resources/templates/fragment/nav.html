@@ -46,7 +46,6 @@
                         <!--/*@thymesVar id="nav_active" type="com.nftgram.web.main.controller.MainController"*/-->
                         <li class="nav-item"><a aria-current="page" class="nav-link explorer" href="/" th:classappend="${nav_active}== 'explorer' ? 'active' : ''">EXPLORER</a></li>
                         <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">MY FAVORITIES</a></li>
-                        <li class="nav-item"><a class="nav-link mycollection" href="/gallery/mycollection" th:classappend="${nav_active}== 'mycollection' ? 'active' : ''">My COLLECTION</a></li>
                         <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs30" th:src="@{../img/icon/Profile_icon.png}" /></a></li>
                         <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" th:src="@{../img/icon/Wallet_icon.png}" /></a></li>
 
@@ -93,7 +92,7 @@
                         <option  value="2"> 조회순</option>
                         <option  value="3">좋아요순</option>
                     </select>
-                    <div class="d-flex me-2">
+                    <div class="d-flex me-2" id="list-view-btn">
                         <div class="gallery-view-type wIs30" data-view="list">
                             <img class="whIs30" th:src="@{../img/icon/View_list_icon.png}" />
                         </div>

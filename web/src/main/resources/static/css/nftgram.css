@@ -68,7 +68,12 @@
 
 .input-group #searchKeyword {
     height: 100%;
-    padding : 0.75rem 0.75rem
+    padding : 0.75rem 0.75rem;
+    font-size: 1.2rem;
+}
+
+select[name="selSort"] {
+    font-size: 1rem;
 }
 
 .gallery-view-type {
@@ -149,7 +154,7 @@ img.card-img-top {
     background: linear-gradient(rgba(229, 232, 235, 0.392) 0%, rgb(255, 255, 255) 20%);
     text-align: end;
     padding-right: 15px;
-    margin-bottom: 6px;
+    margin-bottom: 0;
 }
 
 #nftgram-tag .search-box .position-box {
@@ -280,7 +285,7 @@ img.card-img-top {
         margin-left: 0.7rem;
     }
 
-    #navigation-top .navbar .second-nav-flex .navbar-nav > li:nth-child(4), #navigation-top .navbar .second-nav-flex .navbar-nav > li:nth-child(5), #navigation-top .navbar .second-nav-flex .navbar-nav > li:nth-child(6) {
+    #navigation-top .navbar .second-nav-flex .navbar-nav > li:nth-child(3), #navigation-top .navbar .second-nav-flex .navbar-nav > li:nth-child(4), #navigation-top .navbar .second-nav-flex .navbar-nav > li:nth-child(5) {
         display: none;
     }
 
@@ -302,8 +307,16 @@ img.card-img-top {
     .input-group > .input-group-right > div:last-child {
         margin-left: 0.5rem;
     }
+
+    #list-view-btn {
+        margin-right: 0 !important;
+    }
 }
 
 .card:hover {
     box-shadow: 0 0 15px 0 #000;
+}
+
+body {
+    font-size: 1.2rem;
 }

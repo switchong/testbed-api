@@ -1,42 +1,62 @@
-$(document).ready(function(){
-    let currentIndex;
-    //web
+let currentIndex;
+
+function nftImageClick (e, index) {
+    var nftId = e.target.getAttribute('data-nftid');
+    var PopId = "nft-layer-pop";
+    layerPopId(PopId);
+    currentIndex = index;
+    console.log(index);
+    layerPopGallery(nftId);
+}
+
+function popupNextClick () {
+    if(currentIndex < document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture').length - 1) {
+        // console.log(document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid'));
+        var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid');
+        var PopId = "nft-layer-pop";
+        layerPopId(PopId);
+        layerPopGallery(nftId);
+    }
+    if(currentIndex % 3 === 0) {
+        goNext();
+    }
+}
+
+function popupPrevClick () {
+    if(currentIndex > 0) {
+        // console.log(document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid'));
+        var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[--currentIndex].getAttribute('data-nftid');
+        var PopId = "nft-layer-pop";
+        layerPopId(PopId);
+        layerPopGallery(nftId);
+    }
+    if(currentIndex % 3 === 2) {
+        goPrev();
+    }
+}
+
+function deleteEventPopUp () {
     document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture').forEach((item, index)=>{
-        item.addEventListener('click',(e)=>{
-            var nftId = e.target.getAttribute('data-nftid');
-            var PopId = "nft-layer-pop";
-            layerPopId(PopId);
-            currentIndex = index;
-            console.log(index);
-            layerPopGallery(nftId);
-        })
-    })
+        item.removeEventListener('click',(e)=>{ nftImageClick(e,index)});
+    });
 
-    document.querySelector('.next').addEventListener('click',()=>{
-        if(currentIndex < document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture').length - 1) {
-            // console.log(document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid'));
-            var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid');
-            var PopId = "nft-layer-pop";
-            layerPopId(PopId);
-            layerPopGallery(nftId);
-        }
-        if(currentIndex % 3 === 0) {
-            goNext();
-        }
-    })
+    document.querySelector('.next').removeEventListener('click',popupNextClick);
+    document.querySelector('.prev').removeEventListener('click',popupPrevClick);
+}
 
-    document.querySelector('.prev').addEventListener('click',()=>{
-        if(currentIndex > 0) {
-            // console.log(document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid'));
-            var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[--currentIndex].getAttribute('data-nftid');
-            var PopId = "nft-layer-pop";
-            layerPopId(PopId);
-            layerPopGallery(nftId);
-        }
-        if(currentIndex % 3 === 2) {
-            goPrev();
-        }
+function giveClickEvent() {
+    document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture').forEach((item, index)=>{
+        item.addEventListener('click', (e)=>{nftImageClick(e,index)});
     })
+    document.querySelector('.next').addEventListener('click',popupNextClick)
+    document.querySelector('.prev').addEventListener('click',popupPrevClick);
+}
+
+$(document).ready(function(){
+
+    giveClickEvent();
+    //web
+
 
     // $('#gallery-slide-container .image-container-content img').on('click',function(){
     //     console.log($(this));

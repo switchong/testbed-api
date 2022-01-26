@@ -3,6 +3,80 @@ let prevBtn;
 let nextBtn;
 let slideContainer;
 let slides;
+let currentPage = 0;
+let nowLocation;
+
+const MoreSlide = (keyword) => {
+
+    const url = `/api/${keyword}?page=${++currentPage}&size=18`;
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "json",
+        data: {total: this.value},
+        async: false,
+        success : function (data) {
+            if(data.length === 0) {
+                alert('lastData');
+            }
+            else {
+                const newList = data.map((item)=> {
+                    let innerNewList = ''
+                    item.forEach((inner)=>{
+                        innerNewList = innerNewList + `
+                            <div class="image-container">
+                                <div class="image-container-content" data-nftid="${inner.nftId}">
+                                    <img src="/img/gallery/frame.jpg" class="outer-frame" />
+                                    <img class="inner-picture gimage${inner.nftId}" data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}" />
+                                </div>
+                                <div class="picture-explain">
+                                    <div class="picture-title-container">
+                                        <p class="picture-title">${inner.name}</p>
+                                    </div>
+                                    <div class="picture-explain-bottom">
+                                        <div class="user-info">
+                                            <img src="/img/icon/Profile_icon.png" />
+                                            <div class="nft-title-user">
+                                                <div class="user-info-name">
+                                                    <span>${inner.username}</span>
+                                                    <span class="time">1 MINUTE AGO</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="picture-price">
+                                            <img src="../img/icon/Price_icon.png" class="hIs24 wIs20" />
+                                            <span class="viewCount">${inner.viewCount}</span>
+                                            <img src="../img/icon/Like_icon.png" class="hIs24 wIs20" />
+                                            <span class="likeCount">${inner.likeCount}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    return `
+                        <div class="gallery-slide-list">
+                            <img src="/img/gallery/backframe.jpg" alt="background" />
+                            <div class="gallery-slide-list-item">
+                                <div class="gallery-slide-list-item-picture">
+                                    <div class="gallery-slide-list-item-down"></div>
+                                    ${innerNewList}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                deleteEventPopUp();
+                $(".gallery-slide-list-container").append(newList);
+                Refresh();
+                giveClickEvent();
+            }
+        },
+        error : function () {
+            console.log('error!');
+        }
+    })
+}
 
 const goNext = () => {
     if(slides.length !== currentNum + 1) {
@@ -17,6 +91,12 @@ const goNext = () => {
                 item.style.transform = 'scale(0.9)';
             }
         });
+    }
+    else {
+        if(nowLocation === undefined) {
+            MoreSlide('MoreExplore');
+        }
+
     }
 }
 
@@ -58,6 +138,8 @@ const Refresh = () => {
 }
 
 const goSlide = () => {
+    console.log(window.location.href.split('/')[4]);
+    nowLocation = window.location.href.split('/')[4];
     prevBtn = document.querySelector('#prevBtn');
     nextBtn = document.querySelector('#nextBtn');
     slideContainer = document.querySelector('.gallery-slide-list-container');

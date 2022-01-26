@@ -12,6 +12,7 @@ import com.nftgram.web.api.dto.response.MemberWalletResponses;
 import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.api.service.ApiRestService;
 import com.nftgram.web.common.auth.MemberLoginManager;
+import com.nftgram.web.common.dto.GalleryDto;
 import com.nftgram.web.common.dto.NftCommentDto;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.request.NftCommentRequest;
@@ -19,6 +20,7 @@ import com.nftgram.web.common.dto.request.NftCommentSaveRequest;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.service.NftCommentService;
 import com.nftgram.web.common.service.NftFindService;
+import com.nftgram.web.gallery.service.GalleryService;
 import com.nftgram.web.member.dto.NftMemberAuthDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +43,7 @@ public class ApiRestController {
     private final NftFindService nftFindService;
     private final NftCommentService commentService;
     private final MemberLoginManager memberLoginManager;
+    private final GalleryService galleryService;
 
 
     @GetMapping("/main/page")
@@ -55,6 +58,14 @@ public class ApiRestController {
                 .build();
 
         return mainPageDto;
+    }
+
+    @GetMapping("MoreExplore")
+    @ResponseBody
+    public List<List<CommonNftResponse>> getMoreExplore(Pageable pageable, String keyword, Long sort) throws ParseException {
+        GalleryDto galleryDto = galleryService.findAllNFTList(pageable, keyword, sort);
+        List<List<CommonNftResponse>> result = galleryDto.getSlideList();
+        return result;
     }
 
     @PostMapping("/nft")

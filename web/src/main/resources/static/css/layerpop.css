@@ -94,7 +94,7 @@ width: 120px;  height: 100px;}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user{width:70%;height:60%}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-user-image{float:left;margin-right: 0.625rem;}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-user-info{float:left;width:50%;overflow:hidden;font-weight: bold;line-height: 1;}
-.wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-user-info .time{font-size:0.313rem;font-weight: 300;}
+.wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-user-info .time{font-size:0.5rem;font-weight: 300;}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-etc{float:right;width:35%;margin-top:0.3rem;font-weight: bold;}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-etc .etc-eth, .etc-like {float: left;}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-etc .etc-eth .ethPrice{margin:0 3rem 0 0.5rem;}

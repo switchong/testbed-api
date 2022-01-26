@@ -63,7 +63,7 @@
 }
 
 .gallery-top .user-space {
-    width : 13rem;
+    width: fit-content;
     height: 2.25rem;
     border-radius: 1.25rem;
     background-color: #343434;
@@ -79,6 +79,10 @@
 .gallery-top .user-space .user-space-left {
     display: flex;
     align-items: center;
+}
+
+.gallery-top .user-space .user-space-left > span {
+    margin-right: 0.875rem;
 }
 
 .gallery-top .user-space .user-space-left > img {
@@ -235,7 +239,7 @@
 }
 
 .picture-explain .picture-explain-bottom .user-info .user-info-name > span:first-child {
-    font-size: 0.8rem;
+    font-size: 1.1rem;
     margin-bottom: 0rem;
     width: 100%;
     white-space: nowrap;
@@ -244,7 +248,7 @@
 }
 
 .picture-explain .picture-explain-bottom .user-info .user-info-name > span:last-child {
-    font-size: 0.5rem;
+    font-size: 0.8rem;
     margin-bottom: 0;
 }
 
@@ -263,7 +267,7 @@
 }
 
 .picture-explain .picture-explain-bottom .picture-price > span {
-    font-size: 0.8rem;
+    font-size: 1rem;
     margin-right: 8%;
 }
 

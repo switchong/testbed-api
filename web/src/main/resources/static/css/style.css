@@ -1,5 +1,8 @@
 @charset "UTF-8";
-@import url(../../css/fonts/8-bit-pusab.ttf?family=8-bitpusab);
+/*@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Teko&display=swap');*/
+/*@import url('https://fonts.googleapis.com/css2?family=Teko&display=swap');*/
+/*@import url('https://fonts.googleapis.com/css2?family=Potta+One&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 /*!
 * Start Bootstrap - Shop Homepage v5.0.3 (https://startbootstrap.com/template/shop-homepage)
 * Copyright 2013-2021 Start Bootstrap
@@ -12,9 +15,22 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 @font-face {
-  src: url('../../css/fonts/8-bit-pusab.ttf') format('truetype');
-  font-family: '8-bitpusab';
+  src: url('./fonts/8-bit-pusab-Regular.ttf') format('truetype');
+  font-family: 'pusab';
 }
+
+/** {*/
+/*  font-family: 'Potta One', cursive;*/
+/*}*/
+
+* {
+  font-family: 'Staatliches', cursive;
+}
+
+html {
+  font-size: 16px;
+}
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -3645,7 +3661,7 @@ textarea.form-control-lg {
   color: #0d6efd;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-  font-size: 12px;
+  font-size: 1.2rem;
 }
 @media (prefers-reduced-motion: reduce) {
   .nav-link {

@@ -135,13 +135,18 @@ function addressClipboard(wid) {
 }
 
 function walletCheck(place, event) {
-    console.log(event.target.parentNode.parentNode.parentNode.parentNode.nextSibling.nextSibling);
-    const walletInfo = $(event.target.parentNode.parentNode.parentNode.parentNode.nextSibling.nextSibling);
-    if(place == "nav" && walletInfo.hasClass('on')) {
-        walletInfo.removeClass('on');
-        $('.mywallet').removeClass('on');
-        return false;
+    let walletInfo;
+
+    if(event) {
+        console.log(event.target.parentNode.parentNode.parentNode.parentNode.nextSibling.nextSibling);
+        walletInfo = $(event.target.parentNode.parentNode.parentNode.parentNode.nextSibling.nextSibling);
+        if(place == "nav" && walletInfo.hasClass('on')) {
+            walletInfo.removeClass('on');
+            $('.mywallet').removeClass('on');
+            return false;
+        }
     }
+
 
     let method = "POST";
     let url = "/api/member/wallet/list";
