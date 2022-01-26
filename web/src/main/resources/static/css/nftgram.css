@@ -132,6 +132,7 @@ img.card-img-top {
 #nftgram-list .card-body .row .row-data-right {
     display : flex;
     justify-content: flex-end;
+    align-items: center;
     padding : 0;
     margin : 0;
     max-width: 50%;
@@ -157,7 +158,7 @@ img.card-img-top {
     margin-bottom: 0;
 }
 
-#nftgram-tag .search-box .position-box {
+.search-box .position-box {
     border-radius: 15px;
     width: 13.562rem;
     height: 2.25rem;
@@ -166,9 +167,17 @@ img.card-img-top {
     padding: 6px 0.813rem 0.188rem 1rem;
 
 }
-#nftgram-tag .search-box .close{
+.search-box .close{
     color: white;
 }
+
+.gallery-container .search-box {
+    width: fit-content;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+}
+
 #nftgram-wallet {position: relative;top:10rem;font-weight: 600;}
 #nftgram-wallet .wallet-content {margin: 0 auto;height:10.563rem;text-align: center;}
 #nftgram-wallet .wallet-content .title {}
@@ -180,13 +189,13 @@ img.card-img-top {
 #navigation-top .wallet-wrap.on {display: block;}
 #navigation-top .wallet-wrap:hover {display: block;}
 #navigation-top .wallet-wrap .wallet-user-wrap{border-bottom: 1px solid #b1b1b1;background: url("/img/icon/Profile_icon.png") left center no-repeat;background-size: 1.875rem 1.875rem;background-position-x: 0.5rem;padding-left: 3rem;}
-#navigation-top .wallet-wrap .wallet-user-wrap .wallet-user-title{font-size: 0.438rem;}
-#navigation-top .wallet-wrap .wallet-user-wrap .balance-price{font-size:0.625rem;font-weight: bold;}
+#navigation-top .wallet-wrap .wallet-user-wrap .wallet-user-title{font-size: 1.1rem;}
+#navigation-top .wallet-wrap .wallet-user-wrap .balance-price{font-size:1rem;font-weight: bold;}
 #navigation-top .wallet-wrap .wallet-user-wrap .balance-price:after{content:' ETH'}
 #navigation-top .wallet-wrap .wallet-list{}
 #navigation-top .wallet-wrap .wallet-list .wallet-row{
     padding: 0.5rem;
-    font-size: 0.5rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -248,7 +257,7 @@ img.card-img-top {
         grid-template-columns: repeat(1, 1fr);
     }
 
-    #navigation-top .wallet-wrap {width: 50%}
+    #navigation-top .wallet-wrap {width: 60%}
 
     .navbar-nav-mobile {
         display: flex;

@@ -17,7 +17,7 @@
             <div class="user-space">
                 <div class="user-space-left">
                     <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile" />
-                    <span th:text="${member.username}">USER NAME</span>
+                    <span th:text="${member.username} ?: 'USER NAME'">USER NAME</span>
                 </div>
                 <span onclick="this.parentElement.style.display='none'" class="user-close-btn">X</span>
             </div>

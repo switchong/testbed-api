@@ -58,7 +58,7 @@ public class GalleryController {
         model.addAttribute("slideList", galleryDto.getSlideList());
 
 
-        return "gallery/gallery";
+        return "gallery/galleryCollection";
     }
 
     @GetMapping("/gallery_swiper/{collection}")

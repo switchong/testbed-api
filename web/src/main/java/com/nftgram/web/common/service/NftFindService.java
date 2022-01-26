@@ -59,6 +59,9 @@ public class NftFindService {
         List<CommonNftResponse> nftResponse = setCommonNftResponses(galleryList);
 
         Long slideCnt = Long.valueOf((long) Math.ceil(nftResponse.size()/(3 * 1.0)));
+        if(slideCnt > 6) {
+            slideCnt = 6L;
+        }
 
         for(int i = 0;i<slideCnt;i++) {
             System.out.println(slideCnt);

@@ -5,14 +5,37 @@ let slideContainer;
 let slides;
 let currentPage = 0;
 let nowLocation;
+let prevSort="0";
+let prevKeyword = '';
 
-const MoreSlide = (uri) => {
+const MoreSlide = (uri, type) => {
 
     let keyword = $('#searchKeyword').val();
+    let insTag = "" +
+        '<div class=\"search-box\">' +
+        '<div class=\"position-box\">' +
+        ''+keyword+'' +
+        "<span onclick=\"searchFormClose()\" id=\"close\" class=\"close\">X</span>" +
+        '</div>'
+    "</div>";
     let sort = $('#selSort').val();
+    if (type === 'html') {
+        if(prevSort !== sort || prevSort === "0" || prevKeyword !== keyword) {
+            goFirst();
+            $('.gallery-slide-list-container').empty();
+            prevSort = sort;
+            prevKeyword = keyword;
+        }
+    }
+    if(keyword) {
+        if($('.search-box')) {
+            $('.search-box').remove();
+        }
+        $(".gallery-container").prepend(insTag);
+    }
     let size = 18;
-    let url = `/api/${uri}?page=${++currentPage}&size=` + size + `&keyword=` + keyword;
-    if (sort != null) {
+    let url = `/api/${uri}?page=${currentPage++}&size=` + size + `&keyword=` + keyword;
+    if(sort !== "0") {
         url += "&sort=" + sort;
     }
     $.ajax({
@@ -22,14 +45,32 @@ const MoreSlide = (uri) => {
         data: {total: this.value},
         async: false,
         success : function (data) {
-            if(data.length === 0) {
+            if(data.total === 0) {
                 alert('lastData');
             }
             else {
-                const newList = data.slideList.map((item)=> {
-                    let innerNewList = ''
-                    item.forEach((inner)=>{
-                        innerNewList = innerNewList + `
+                deleteEventPopUp();
+                $(".gallery-slide-list-container").append(makeGalleryList(data));
+                if(currentPage !== 1) {
+                    Refresh();
+                }
+                if(type === 'html') {
+                    goSlide();
+                }
+                giveClickEvent();
+            }
+        },
+        error : function () {
+            console.log('error!');
+        }
+    })
+}
+
+const makeGalleryList = (data) => {
+    const newList = data.slideList.map((item)=> {
+        let innerNewList = ''
+        item.forEach((inner)=>{
+            innerNewList = innerNewList + `
                             <div class="image-container">
                                 <div class="image-container-content" data-nftid="${inner.nftId}">
                                     <img src="/img/gallery/frame.jpg" class="outer-frame" />
@@ -59,8 +100,8 @@ const MoreSlide = (uri) => {
                                 </div>
                             </div>
                         `;
-                    });
-                    return `
+        });
+        return `
                         <div class="gallery-slide-list">
                             <img src="/img/gallery/backframe.jpg" alt="background" />
                             <div class="gallery-slide-list-item">
@@ -71,17 +112,9 @@ const MoreSlide = (uri) => {
                             </div>
                         </div>
                     `;
-                });
-                deleteEventPopUp();
-                $(".gallery-slide-list-container").append(newList);
-                Refresh();
-                giveClickEvent();
-            }
-        },
-        error : function () {
-            console.log('error!');
-        }
-    })
+    });
+
+    return newList;
 }
 
 const goNext = () => {
@@ -146,6 +179,9 @@ const Refresh = () => {
 const goSlide = () => {
     console.log(window.location.href.split('/')[4]);
     nowLocation = window.location.href.split('/')[4];
+    if(nowLocation === undefined && currentPage === 0) {
+        MoreSlide('main/page/gallery');
+    }
     prevBtn = document.querySelector('#prevBtn');
     nextBtn = document.querySelector('#nextBtn');
     slideContainer = document.querySelector('.gallery-slide-list-container');

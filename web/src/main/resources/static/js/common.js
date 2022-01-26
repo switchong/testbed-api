@@ -26,6 +26,10 @@ $(document).ready(function(){
 
     $('select[name="selSort"]').change(function () {
         let sort = $(this).val();
+        currentPage = 0;
+        if(window.location.href.split('/')[3] === 'gallery' && window.location.href.split('/')[4] === undefined) {
+            MoreSlide( 'main/page/gallery','html');
+        }
         moreView("html");
     })
     // view-type click event
@@ -44,6 +48,10 @@ $(document).ready(function(){
         if(searchVal == '' || searchVal == null) {
             alert("Search the Value");
             return false;
+        }
+        currentPage = 0;
+        if(window.location.href.split('/')[3] === 'gallery' && window.location.href.split('/')[4] === undefined) {
+            MoreSlide('main/page/gallery','html');
         }
         moreView("html");
     });
@@ -153,6 +161,11 @@ function toList(list) {
 function searchFormClose() {
     $('#searchKeyword').val('');
     $("#nftgram-tag").html('');
+    if(window.location.href.split('/')[3] === 'gallery' && window.location.href.split('/')[4] === undefined) {
+        $('.search-box').remove();
+        currentPage = 0;
+        MoreSlide('main/page/gallery','html');
+    }
     moreView("html");
 }
 

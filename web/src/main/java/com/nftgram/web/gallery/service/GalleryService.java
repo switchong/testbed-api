@@ -54,6 +54,9 @@ public class GalleryService {
         List<CommonNftResponse> nftResponse = nftFindService.findAllList(pageable, keyword, sort);
 
         Long sliderCount = Long.valueOf((long) Math.ceil(nftResponse.size()/(3 * 1.0)));
+        if(sliderCount > 6) {
+            sliderCount = 6L;
+        }
 
         for(int i = 0;i<sliderCount;i++) {
             int idx = i%3;  // 1차 배열 index 값
