@@ -54,30 +54,15 @@ public class NftFindService {
         NftCollection collection = nftCollectionRepository.findNftCollection(collectionId);
         List<Nft> galleryList = nftRepository.findByNftCollectionId(collectionId);
 
-        List<List<CommonNftResponse>> nomMemberSliderResponse = new ArrayList<>();
-
         List<CommonNftResponse> nftResponse = setCommonNftResponses(galleryList);
 
-        Long slideCnt = Long.valueOf((long) Math.ceil(nftResponse.size()/(3 * 1.0)));
-        if(slideCnt > 6) {
-            slideCnt = 6L;
-        }
+        Long sliderCount = Long.valueOf((long) Math.ceil(nftResponse.size()/(3 * 1.0)));
 
-        for(int i = 0;i<slideCnt;i++) {
-            System.out.println(slideCnt);
-            int idx = i%3;  // 1차 배열 index 값
-            int k = i * 3;  // fromIndex 시작 index값
-            List<CommonNftResponse> nftResult = nftResponse.subList(k,(lastNum(k+3, nftResponse.size())));   // fromIndex , toIndex(미만)
-//            List<CommonNftSlider> slider = CommonNftSlider.builder()
-//                    .nftResponseList(nftResult)
-//                    .build();
-
-            nomMemberSliderResponse.add(nftResult);
-        }
+        List<List<CommonNftResponse>> sliderResponse = nftResponseList(sliderCount, nftResponse);
 
         GalleryDto galleryDto = GalleryDto.builder()
                 .collection(collection)
-                .slideList(nomMemberSliderResponse)
+                .slideList(sliderResponse)
                 .build();
 
         return galleryDto;
@@ -153,6 +138,22 @@ public class NftFindService {
         });
 
         return response;
+    }
+
+
+    public List<List<CommonNftResponse>> nftResponseList(Long sliderCount, List<CommonNftResponse> nftResponse) {
+
+        List<List<CommonNftResponse>> sliderResponse = new ArrayList<>();
+
+        for(int i = 0;i<sliderCount;i++) {
+            int idx = i%3;  // 1차 배열 index 값
+            int k = i * 3;  // fromIndex 시작 index값
+            List<CommonNftResponse> nftResult = nftResponse.subList(k,(lastNum(k+3, nftResponse.size())));   // fromIndex , toIndex(미만)
+
+            sliderResponse.add(nftResult);
+        }
+
+        return sliderResponse;
     }
 
     public int lastNum(int num, int size) {
