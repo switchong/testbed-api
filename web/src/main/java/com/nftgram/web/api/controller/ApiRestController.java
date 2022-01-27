@@ -1,5 +1,6 @@
 package com.nftgram.web.api.controller;
 
+import com.nftgram.core.domain.nftgram.NftMember;
 import com.nftgram.web.api.dto.MainPageDto;
 import com.nftgram.web.api.dto.MemberWalletDto;
 import com.nftgram.web.api.dto.request.GetNftOneRequest;
@@ -122,6 +123,18 @@ public class ApiRestController {
         }
 
         return updateLikeCountResponse;
+    }
+
+    @PostMapping(value = "/member/{memberId}")
+    public NftMember GetMemberInfo(@PathVariable("memberId") Long memberId) throws GeneralSecurityException, UnsupportedEncodingException {
+        NftMember nftMember = NftMember.builder().build();
+
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y") && authDto.getNftMemberId().equals(memberId)) {
+            nftMember = apiRestService.memberInfo(memberId);
+        }
+
+        return nftMember;
     }
 
     @PostMapping(value = "/member/nft", produces = "application/json")

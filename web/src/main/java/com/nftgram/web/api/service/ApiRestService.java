@@ -216,6 +216,14 @@ public class ApiRestService {
     }
 
     @Transactional(readOnly = true)
+    public NftMember memberInfo(Long memberId) {
+
+        NftMember nftMemberResponse = nftMemberRepository.findByNftMemberId(memberId);
+
+        return nftMemberResponse;
+    }
+
+    @Transactional(readOnly = true)
     public List<MemberWalletResponses> memberWalletResponses(Long memberId, String loginFlag) {
         List<NftMemberWallet> nftMemberWallets = nftMemberWalletRepository.walletByMemberId(memberId);
 
