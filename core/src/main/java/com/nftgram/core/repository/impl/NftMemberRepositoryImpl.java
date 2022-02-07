@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import static com.nftgram.core.domain.nftgram.QNftMember.nftMember;
+import static com.nftgram.core.domain.nftgram.QNftMemberWallet.nftMemberWallet;
 
 @Repository
 @Slf4j
@@ -52,9 +53,24 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
         return result;
     }
 
+    @Override
+    public NftMember findNftUsername(String username) {
+        NftMember result = queryFactory.selectFrom(nftMember)
+                .where(nftMember.username.eq(username))
+                .fetchOne();
 
+        return result;
+    }
 
+    @Override
+    public NftMember findNftMemberWalletAddress(String address) {
+        NftMember result = queryFactory.selectFrom(nftMember)
+                .from(nftMemberWallet)
+                .join(nftMemberWallet.nftMember, nftMember)
+                .where(nftMemberWallet.walletContractAddress.eq(address))
+                .fetchOne();
 
-
+        return result;
+    }
 
 }

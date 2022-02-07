@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="fragment/header.html :: fragment-header" />
+
+<link th:href="@{/css/gallery/galleryPublish.css}" rel="stylesheet" />
+<script th:src="@{/js/slide.js}"></script>
+
+<body>
+<nav th:replace="fragment/nav.html :: fragment-nav"></nav>
+
+<div class="container2" id="nftgram_wrap">
+    <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
+    <div class="gallery-container">
+        <div class="gallery-top">
+            <div class="user-space">
+                <div class="user-space-left">
+                    <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile" />
+                    <span th:text="${member.username} ?: 'USER NAME'">USER NAME</span>
+                </div>
+            </div>
+        </div>
+        <div class="gallery-content">
+            <div class="sns-container" th:if="${member}">
+                <a class="sns-link-img" th:data-link="${member.username}" onclick="clip(); return false;"><img th:src="@{/img/icon/Share_navi_icon.png}" /></a>
+                <a class="sns-link-img" th:href="${member.instagram}" th:target="_blank"><img th:src="@{/img/icon/Instagram_navi_icon.png}"  /></a>
+                <a class="sns-link-img" th:href="${member.twitter}" th:target="_blank"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>
+                <a class="sns-link-img" th:href="${member.discord}" th:target="_blank"><img th:src="@{/img/icon/Discord_navi_icon.png}"/></a>
+            </div>
+            <img th:src="@{/img/icon/prev50.png}" id="prevBtn"/>
+            <div class="gallery-slide-container" id="gallery-slide-container">
+                <div class="gallery-slide-list-container">
+                    <div class="gallery-slide-list" th:each="slider :${sliderList}">
+                        <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
+                        <div class="gallery-slide-list-item">
+                            <div class="gallery-slide-list-item-picture">
+                                <div class="gallery-slide-list-item-down" ></div>
+                                <div class="image-container" th:each="slide :${slider}">
+                                    <div class="image-container-content" th:data-nftid="${slide.nftId}">
+                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" th:if="${slide.tagType == 'image'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
+                                        <video class="inner-picture" th:classappend="'gimage'+${slide.nftId}" controls controlsList="nodownload"  th:if="${slide.tagType == 'video'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
+                                    </div>
+                                    <div class="picture-explain">
+                                        <!--/*@thymesVar id="name" type="com.nftgram.web.common.dto.response.CommonNftResponse"*/-->
+                                        <div class="picture-title-container">
+                                            <p class="picture-title" th:text="${slide.name}">NFT TITLE #0000</p>
+                                        </div>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="nft-title-user">
+                                                    <div class="user-info-name">
+                                                        <span th:text="${slide.username}">USER NAME</span>
+                                                        <span class="time">1 MINUTE AGO</span>
+                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
+                                                        <!--                                                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span th:text="${slide.viewCount}">23</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span th:text="${slide.likeCount}">450</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img th:src="@{/img/icon/next50.png}" id="nextBtn" />
+        </div>
+    </div>
+</div><!-- /container -->
+<div th:replace="fragment/footer.html :: fragment-footer" />
+</body>
+</html>

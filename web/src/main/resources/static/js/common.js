@@ -71,6 +71,7 @@ const size = 20;
 
 function moreView(type , nft) {
 
+    let htmlBool = false;
     let total = (type=="html")?0:$('#nftgram-list .card').length;
     let nextPage = parseInt(total / size);
     let keyword = $('#searchKeyword').val();
@@ -83,11 +84,6 @@ function moreView(type , nft) {
         "<span onclick=\"searchFormClose()\" id=\"close\" class=\"close\">X</span>" +
         '</div>'
         "</div>"
-
-    if (keyword ){
-        let keyword = $('#searchKeyword').val();
-        $("#nftgram-tag").html(insTag);
-    }
 
     if (sort != null) {
         url += "&sort=" + sort;
@@ -102,14 +98,23 @@ function moreView(type , nft) {
         success: function (data) {
             let html = toList(data.nftList);
 
-            if(type == "html") {
-                $("#nftgram-list").html(html);
-            }else {
-                $("#nftgram-list").append(html);
-            }
+            if(keyword && data.total <= 0) {
+                alert("Search No Data!!");
+                return;
+            } else {
+                if(type == "html") {
+                    $("#nftgram-list").html(html);
+                }else {
+                    $("#nftgram-list").append(html);
+                }
 
-            if (data.total < size) {
-                $(window).unbind();
+                if (data.total < size) {
+                    $(window).unbind();
+                }
+
+                if (keyword ){
+                    $("#nftgram-tag").html(insTag);
+                }
             }
 
 

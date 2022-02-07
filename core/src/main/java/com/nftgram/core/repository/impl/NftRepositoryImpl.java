@@ -146,6 +146,22 @@ public class NftRepositoryImpl implements NftCustomRepository {
     }
 
     @Override
+    public List<Nft> findByNftMemberList(Pageable pageable, Long nftMemberId) {
+        List<Nft> nftResult = queryFactory.select(nft)
+                .from(nft)
+                .join(nft.nftAsset, nftAsset)
+                .where(nftAsset.contractType.eq(ContractType.NFT))
+                .where(nft.imageUrl.ne(""))
+                .where(nft.nft_member_id.eq(nftMemberId))
+                .orderBy(nft.nftId.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return nftResult;
+    }
+
+    @Override
     public Long updateNftViewCount(Long nftId) {
         Long result = queryFactory.update(nft)
                 .where(nft.nftId.eq(nftId))
