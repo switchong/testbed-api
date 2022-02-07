@@ -102,15 +102,15 @@ public class GalleryController {
 
             GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMember(pageable, memberId);
 
-//            if(galleryMemberDto.getSliderCount() > 0) {
+            if(galleryMemberDto.getSliderCount() > 0) {
                 model.addAttribute("nav_active","mycollection");
                 model.addAttribute("member",galleryMemberDto.getNftMember());
                 model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
                 model.addAttribute("slideList", galleryMemberDto.getNftSliderList());
                 return "gallery/mycollection";
-//            } else {
-//                return "redirect:/";
-//            }
+            } else {
+                return "redirect:/";
+            }
 
         } else {
             return "redirect:/auth/login";

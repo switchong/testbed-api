@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="fragment/header.html :: fragment-header" />
+
+<meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link th:href="@{/css/gallery/galleryPublish.css}" rel="stylesheet" />
+<link th:href="@{/css/gallery/edit.css}" rel="stylesheet" />
+<script th:src="@{/js/slide.js}"></script>
+
+<body>
+<nav th:replace="fragment/nav.html :: fragment-nav"></nav>
+
+<div class="container2" id="nftgram_wrap">
+    <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
+    <div class="gallery-container">
+        <div class="close-edit">
+            <img th:src="@{/img/icon/ic-edit-close.png}" id="closeEditBtn" th:onclick="|location.href='@{/gallery/mycollection}'|"/>
+        </div>
+        <div class="gallery-content">
+            <img th:src="@{/img/icon/prev50.png}" id="prevBtn"/>
+            <div class="gallery-slide-container" id="gallery-slide-container">
+                <div class="gallery-slide-list-container myCollection-slide-container">
+                    <div class="gallery-slide-list">
+<!--                        <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />-->
+                        <div class="gallery-slide-list-item">
+                            <div class="gallery-slide-list-item-picture">
+                                <div class="gallery-slide-list-item-down"></div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img class="outer-frame"/>
+                                        <img class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain" style="opacity: 0">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="nft-title-user">
+                                                    <div class="user-info-name">
+                                                        <span></span>
+                                                        <span class="time"></span>
+                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
+                                                        <!--                                                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>00</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img class="outer-frame"/>
+                                        <img class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain" style="opacity: 0">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="nft-title-user">
+                                                    <div class="user-info-name">
+                                                        <span></span>
+                                                        <span class="time"></span>
+                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
+                                                        <!--                                                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>00</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img class="outer-frame"/>
+                                        <img class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain" style="opacity: 0">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <div class="nft-title-user">
+                                                    <div class="user-info-name">
+                                                        <span></span>
+                                                        <span class="time"></span>
+                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
+                                                        <!--                                                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <span>00</span>
+                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <span>00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img th:src="@{/img/icon/next50.png}" id="nextBtn" />
+        </div>
+        <div class="gallery-edit-container">
+            <input type="radio" name="galleryEditSelect" id="galleryEditSelect1" checked="checked"/>
+            <label for="galleryEditSelect1">
+                <div class="gallery-edit-select select1">
+                    NFT
+                </div>
+            </label>
+            <div class="gallery-edit-slide">
+                <div class="gallery-edit-slide-container">
+                    <div class="gallery-edit-slide-item">
+                        nft
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-edit-save">
+                    save
+                </div>
+            </div>
+            <input type="radio" name="galleryEditSelect" id="galleryEditSelect2"/>
+            <label for="galleryEditSelect2">
+                <div class="gallery-edit-select select2">
+                    FRAME
+                </div>
+            </label>
+            <div class="gallery-edit-slide">
+                <div class="gallery-edit-slide-container">
+                    <div class="gallery-edit-slide-item">
+                        frame
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-edit-save">
+                    save
+                </div>
+            </div>
+            <input type="radio" name="galleryEditSelect" id="galleryEditSelect3"/>
+            <label for="galleryEditSelect3">
+                <div class="gallery-edit-select select3">
+                    BACKGROUND
+                </div>
+            </label>
+            <div class="gallery-edit-slide">
+                <div class="gallery-edit-slide-container">
+                    <div class="gallery-edit-slide-item">
+                        background
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                    <div class="gallery-edit-slide-item">
+                        <div class="gallery-edit-select-number">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-edit-save">
+                    save
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /container -->
+</body>
+</html>

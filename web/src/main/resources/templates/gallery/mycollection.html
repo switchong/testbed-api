@@ -4,6 +4,8 @@
 
 <head th:replace="fragment/header.html :: fragment-header" />
 
+<meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <link th:href="@{/css/gallery/galleryPublish.css}" rel="stylesheet" />
 <link th:href="@{/css/gallery/edit.css}" rel="stylesheet" />
 <script th:src="@{/js/slide.js}"></script>
@@ -14,24 +16,31 @@
 <div class="container2" id="nftgram_wrap">
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
+        <div class="sns-container">
+            <img th:src="@{/img/icon/Share_navi_icon.png}" />
+            <img th:src="@{/img/icon/Instagram_navi_icon.png}" />
+            <img th:src="@{/img/icon/Twitter_navi_icon.png}" />
+            <img th:src="@{/img/icon/Discord_navi_icon.png}" />
+        </div>
         <div class="gallery-top-myCollection">
             <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile_myCollection" />
             <div class="myCollection-user-top">
-                <input type="checkbox" id="collection-edit" />
-                <label for="collection-edit">
-                    <p>MY COLLECTIONS</p>
-                    <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="editIcon" />
+                <input type="checkbox" id="collection-edit1" />
+                <label for="collection-edit1">
+                    <p>EDIT PROFILE</p>
+                    <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="editIcon1" />
                 </label>
                 <div th:replace="fragment/editFrameCollection.html :: frame-edit-collection" />
             </div>
+            <div class="myCollection-user-top">
+                <input type="checkbox" id="collection-edit2" />
+                <label for="collection-edit2" th:onclick="|location.href='@{/gallery/edit}'|">
+                    <p>EDIT GALLERY</p>
+                    <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="editIcon2" />
+                </label>
+            </div>
         </div>
         <div class="gallery-content">
-            <div class="sns-container">
-                <img th:src="@{/img/icon/Share_navi_icon.png}" />
-                <img th:src="@{/img/icon/Instagram_navi_icon.png}" />
-                <img th:src="@{/img/icon/Twitter_navi_icon.png}" />
-                <img th:src="@{/img/icon/Discord_navi_icon.png}" />
-            </div>
             <img th:src="@{/img/icon/prev50.png}" id="prevBtn"/>
             <div class="gallery-slide-container" id="gallery-slide-container">
                 <div class="gallery-slide-list-container myCollection-slide-container">

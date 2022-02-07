@@ -8,6 +8,106 @@ let nowLocation;
 let prevSort="0";
 let prevKeyword = '';
 
+const MoreEdit = () => {
+    const parentNode = $('.gallery-slide-list-container');
+    const editContent = `
+        <div class="gallery-slide-list">
+<!--                        <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />-->
+                        <div class="gallery-slide-list-item">
+                            <div class="gallery-slide-list-item-picture">
+                                <div class="gallery-slide-list-item-down"></div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img class="outer-frame"/>
+                                        <img class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain" style="opacity: 0">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img src="/img/icon/Profile_icon.png" />
+                                                <div class="nft-title-user">
+                                                    <div class="user-info-name">
+                                                        <span></span>
+                                                        <span class="time"></span>
+                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
+                                                        <!--                                                    <div class="nft-title-user-info" th:text="">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img src="/img/icon/Price_icon.png" />
+                                                <span>00</span>
+                                                <img src="/img/icon/Like_icon.png" />
+                                                <span>00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img class="outer-frame"/>
+                                        <img class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain" style="opacity: 0">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img src="/img/icon/Profile_icon.png" />
+                                                <div class="nft-title-user">
+                                                    <div class="user-info-name">
+                                                        <span></span>
+                                                        <span class="time"></span>
+                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
+                                                        <!--                                                    <div class="nft-title-user-info" th:text="">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img src="/img/icon/Price_icon.png" />
+                                                <span>00</span>
+                                                <img src="/img/icon/Like_icon.png" />
+                                                <span>00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="image-container">
+                                    <div class="image-container-content">
+                                        <img class="outer-frame"/>
+                                        <img class="inner-picture"/>
+                                    </div>
+                                    <div class="picture-explain" style="opacity: 0">
+                                        <p class="picture-title">NFT TITLE #0000</p>
+                                        <div class="picture-explain-bottom">
+                                            <div class="user-info">
+                                                <img src="/img/icon/Profile_icon.png" />
+                                                <div class="nft-title-user">
+                                                    <div class="user-info-name">
+                                                        <span></span>
+                                                        <span class="time"></span>
+                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
+                                                        <!--                                                    <div class="nft-title-user-info" th:text="">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="picture-price">
+                                                <img src="/img/icon/Price_icon.png" />
+                                                <span>00</span>
+                                                <img src="/img/icon/Like_icon.png" />
+                                                <span>00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    `;
+    parentNode.prepend(editContent);
+    Refresh();
+}
+
 const MoreSlide = (uri, type) => {
 
     let keyword = $('#searchKeyword').val();
@@ -124,7 +224,12 @@ const goNext = () => {
             item.style.transform = 'scale(1)';
         });
         console.log(currentNum, slides.length);
-        slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+        if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
+            slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+        }
+        else {
+            slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+        }
         slides.forEach((item, index)=>{
             if(index !== currentNum) {
                 item.style.transform = 'scale(0.9)';
@@ -135,7 +240,9 @@ const goNext = () => {
         if(nowLocation === undefined) {
             MoreSlide('main/page/gallery');
         }
-
+        if(nowLocation === 'edit') {
+            MoreEdit();
+        }
     }
 }
 
@@ -146,7 +253,12 @@ const goPrev = () => {
             item.style.transform = 'scale(1)';
         });
         console.log(currentNum, slides.length);
-        slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+        if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
+            slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+        }
+        else {
+            slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+        }
         slides.forEach((item, index)=>{
             if(index !== currentNum) {
                 item.style.transform = 'scale(0.9)';
@@ -179,6 +291,8 @@ const Refresh = () => {
 const goSlide = () => {
     console.log(window.location.href.split('/')[4]);
     nowLocation = window.location.href.split('/')[4];
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
     if(nowLocation === undefined && currentPage === 0) {
         MoreSlide('main/page/gallery');
     }

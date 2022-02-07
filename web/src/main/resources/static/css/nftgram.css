@@ -12,6 +12,9 @@
 
 #navigation-top .navbar {
     padding : 0.5rem 0;
+    background-color : #090909 !important;
+    border : 2px solid #090909;
+    color : #fff;
 }
 
 #navigation-top .navbar .container {
@@ -50,6 +53,11 @@
 #navbarSupportedContent .d-flex ul a.nav-link {
     padding-left: 0;
     padding-right: 0;
+    color : #fff;
+}
+
+a.btn.btn-outline-dark {
+    border : 2px solid #fff;
 }
 
 #navigation-top .navbar .input-group {
@@ -169,6 +177,7 @@ img.card-img-top {
 }
 .search-box .close{
     color: white;
+    cursor: pointer;
 }
 
 .gallery-container .search-box {

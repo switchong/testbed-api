@@ -1,12 +1,14 @@
 let currentIndex;
 
 function nftImageClick (e, index) {
-    var nftId = e.target.getAttribute('data-nftid');
-    var PopId = "nft-layer-pop";
-    layerPopId(PopId);
-    currentIndex = index;
-    console.log(index);
-    layerPopGallery(nftId);
+    if(window.location.href.split('/')[4] !== 'edit') {
+        var nftId = e.target.getAttribute('data-nftid');
+        var PopId = "nft-layer-pop";
+        layerPopId(PopId);
+        currentIndex = index;
+        console.log(index);
+        layerPopGallery(nftId);
+    }
 }
 
 function popupNextClick () {
