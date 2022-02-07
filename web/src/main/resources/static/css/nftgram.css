@@ -195,7 +195,7 @@ img.card-img-top {
 #nftgram-wallet .wallet-content .wallet-msg{font-size: 1.25rem;color: #b1b1b1;}
 
 #navigation-top .wallet-wrap {display: none;position: absolute;top: 3.5rem;right: 0rem;z-index: 999;border: 1px solid black;background-color: white; width: 35%}
-#navigation-top .wallet-wrap.on {display: block;}
+#navigation-top .wallet-wrap.on {display: block; color: black;}
 #navigation-top .wallet-wrap:hover {display: block;}
 #navigation-top .wallet-wrap .wallet-user-wrap{border-bottom: 1px solid #b1b1b1;background: url("/img/icon/Profile_icon.png") left center no-repeat;background-size: 1.875rem 1.875rem;background-position-x: 0.5rem;padding-left: 3rem;}
 #navigation-top .wallet-wrap .wallet-user-wrap .wallet-user-title{font-size: 1.1rem;}

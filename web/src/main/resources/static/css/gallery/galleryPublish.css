@@ -553,16 +553,22 @@ img[id*="image-edit-icon"] {
     background-color: #fff;
     flex : none;
     position: relative;
+    cursor: pointer;
 }
 
 .gallery-edit-container .gallery-edit-slide-container .gallery-edit-slide-item .gallery-edit-select-number {
     position: absolute;
     top : 4%;
     left: 4%;
-    width: 28%;
-    height: 22%;
+    width: 26%;
+    height: 20%;
     border-radius: 50%;
-    border : 1px solid #090909;
+    border : 2px solid #090909;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: yellow;
+    color: black;
 }
 
 .gallery-edit-save {
@@ -610,4 +616,25 @@ img[id*="image-edit-icon"] {
     display: block;
     z-index: 10;
     opacity: 1;
+}
+
+.gallery-edit-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    cursor: pointer;
+}
+
+.gallery-edit-img-hover {
+    position: absolute;
+    top : 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    display: none;
+}
+
+.gallery-edit-slide-item:hover > .gallery-edit-img-hover {
+    display: block;
 }

@@ -305,6 +305,9 @@ const goSlide = () => {
         if(index !== currentNum) {
             item.style.transform = 'scale(0.9)';
         }
+        else {
+            console.log("바보");
+        }
     });
 
     console.log(currentNum, slides.length);

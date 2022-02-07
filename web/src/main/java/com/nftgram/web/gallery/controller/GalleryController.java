@@ -109,7 +109,7 @@ public class GalleryController {
                 model.addAttribute("slideList", galleryMemberDto.getNftSliderList());
                 return "gallery/mycollection";
             } else {
-                return "redirect:/";
+                return "gallery/mycollection";
             }
 
         } else {
@@ -117,6 +117,12 @@ public class GalleryController {
         }
     }
 
+    @GetMapping("/gallery/edit")
+    public String editgallery(Model model) {
+
+        model.addAttribute("nav_active", "mycolllection");
+        return "gallery/galleryEdit";
+    }
 
     @PostMapping("/gallery/mycollection")
     public String mycollectionSave(@ModelAttribute Model model){
