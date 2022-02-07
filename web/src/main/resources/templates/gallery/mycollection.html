@@ -16,11 +16,13 @@
 <div class="container2" id="nftgram_wrap">
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
-        <div class="sns-container">
-            <img th:src="@{/img/icon/Share_navi_icon.png}" />
-            <img th:src="@{/img/icon/Instagram_navi_icon.png}" />
-            <img th:src="@{/img/icon/Twitter_navi_icon.png}" />
-            <img th:src="@{/img/icon/Discord_navi_icon.png}" />
+        <div class="sns-container" th:if="${member}">
+                <a class="sns-link-img" th:data-link="${member.username}" onclick="clip(); return false;"><img th:src="@{/img/icon/Share_navi_icon.png}" /></a>
+                <a  class="sns-link-img" th:href="${member.instagram}" th:target="_blank"><img th:src="@{/img/icon/Instagram_navi_icon.png}"  /></a>
+                <a  class="sns-link-img" th:href="${member.twitter}" th:target="_blank"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>
+                <a  class="sns-link-img" th:href="${member.discord}" th:target="_blank"><img th:src="@{/img/icon/Discord_navi_icon.png}"/></a>
+                <!--<a  onclick="window.open(url_combine_fb, '', 'scrollbars=no, width=600, height=600'); return false;"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>-->
+                <!--<a  onclick="window.open(url_combine_tw, '', 'scrollbars=no, width=600, height=600'); return false;"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>-->
         </div>
         <div class="gallery-top-myCollection">
             <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile_myCollection" />

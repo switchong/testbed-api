@@ -216,9 +216,11 @@ public class ApiRestService {
     }
 
     @Transactional(readOnly = true)
-    public NftMember memberInfo(Long memberId) {
+    public NftMember memberInfo(Long memberId ) {
 
         NftMember nftMemberResponse = nftMemberRepository.findByNftMemberId(memberId);
+        //Long nftMemberSnsUrlUpdate = nftMemberRepository.updateNftMember(memberId );
+
 
         return nftMemberResponse;
     }
@@ -295,9 +297,6 @@ public class ApiRestService {
     @Transactional(rollbackFor = Exception.class)
     public Long memberWalletByNftMatching() {
         Long isResult = Long.valueOf(1);
-
-
-
         return isResult;
 
     }

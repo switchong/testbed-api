@@ -1,7 +1,6 @@
 package com.nftgram.web.member.service;
 
 import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.domain.nftgram.NftMemberAuthToken;
 import com.nftgram.core.repository.NftMemberAuthTokenRepository;
 import com.nftgram.core.repository.NftMemberRepository;
 import com.nftgram.web.common.auth.MemberLoginManager;
@@ -31,7 +30,7 @@ public class MemberAuthService  {
     private final MemberTokenManager memberTokenManager;
     private final NftMemberAuthTokenRepository nftMemberAuthTokenRepository;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public NftMemberSignupResponse memberJoinProcess(NftMemberSignupRequest request) {
         NftMember findNftMember = nftMemberRepository.findByNftMemberUserId(request.getId());
         // 회원 유저 아이디 존재 여부 체크
@@ -61,7 +60,7 @@ public class MemberAuthService  {
         return NftMemberSignupResponse.builder().flag(true).build();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(rollbackFor = Exception.class)
     public NftMemberLoginResponse loginProcess(NftMemberLoginRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
         // 유저 아이디 검색
         NftMember findNftMember = nftMemberRepository.findByNftMemberUserId(request.getId());
@@ -98,5 +97,29 @@ public class MemberAuthService  {
     private FieldError customErrorLoginMessage(String field , String message){
         return new FieldError("NftMemberLoginRequest" , field , message);
     }
+
+
+//    @Transactional(rollbackFor = Exception.class)
+//    public Long memberSnsUrlSave(Long memberId , NftMemberUpdateDto mycollectionDto){
+//        Long isResult = Long.valueOf(1);
+//
+//
+//        Long nftMember = nftMemberRepository.updateNftMember(mycollectionDto , memberId);
+//
+//
+//        //if (isResult.equals(Long.valueOf(1))) {
+//            NftMember nftMember1 = NftMember.builder()
+//                    .username(mycollectionDto.getUsername())
+//                    .instagram(mycollectionDto.getInstagram())
+//                    .discord(mycollectionDto.getDiscord())
+//                    .facebook(mycollectionDto.getFacebook())
+//                    .twitter(mycollectionDto.getTwitter())
+//                    .build();
+//        //}
+//        nftMemberRepository.save(nftMember1);
+//        //return isResult;
+//        return nftMember;
+//    }
+
 
 }

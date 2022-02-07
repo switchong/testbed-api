@@ -3,15 +3,13 @@ package com.nftgram.web.common.dto;
 import com.nftgram.core.domain.nftgram.NftMember;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.dto.response.CommonNftSlider;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GalleryMemberDto {
     private Long sliderCount;

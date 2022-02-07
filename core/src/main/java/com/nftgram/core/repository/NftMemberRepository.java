@@ -6,6 +6,7 @@ import com.nftgram.core.repository.custom.NftMemberCustomRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 public interface NftMemberRepository extends JpaRepository<NftMember , Long>, NftMemberCustomRepository {
 
+
 //   NftMember findByNftMemberUserId(String nftMemberUserId);
 
 

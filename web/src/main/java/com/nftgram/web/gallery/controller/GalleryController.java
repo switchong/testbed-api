@@ -1,6 +1,7 @@
 package com.nftgram.web.gallery.controller;
 
 
+import com.nftgram.core.dto.request.NftMemberRequestDto;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.dto.GalleryDto;
 import com.nftgram.web.common.dto.GalleryMemberDto;
@@ -102,7 +103,7 @@ public class GalleryController {
 
             GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMember(pageable, memberId);
 
-            if(galleryMemberDto.getSliderCount() > 0) {
+            if(galleryMemberDto.getSliderCount() >= 0) {
                 model.addAttribute("nav_active","mycollection");
                 model.addAttribute("member",galleryMemberDto.getNftMember());
                 model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
@@ -117,6 +118,7 @@ public class GalleryController {
         }
     }
 
+
     @GetMapping("/gallery/edit")
     public String editgallery(Model model) {
 
@@ -124,11 +126,20 @@ public class GalleryController {
         return "gallery/galleryEdit";
     }
 
-    @PostMapping("/gallery/mycollection")
-    public String mycollectionSave(@ModelAttribute Model model){
+    @PostMapping(value = "/gallery/mycollection/save")
+    public String nftMemberUpdate(NftMemberRequestDto update ) throws GeneralSecurityException , UnsupportedEncodingException{
+        Long isResult = Long.valueOf(0);
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
 
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+            isResult = galleryService.nftMemberUpdate(update, memberId);
+        } else {
+            isResult = Long.valueOf(2); //Error
+        }
+        return "redirect:/gallery/mycollection";
 
-        return  "redirect/";
     }
 
 

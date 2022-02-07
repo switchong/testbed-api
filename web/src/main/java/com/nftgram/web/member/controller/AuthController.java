@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -34,6 +33,7 @@ public class AuthController {
     private final MemberAuthService memberAuthService;
 
     private final MemberLoginManager memberLoginManager;
+
 
     @GetMapping("/login")
     public String login(Model model, HttpServletResponse response ) throws GeneralSecurityException, UnsupportedEncodingException {
@@ -137,4 +137,7 @@ public class AuthController {
 
         return "redirect:/";
     }
+
+
+
 }

@@ -223,4 +223,7 @@ function layerPopByNft(data) {
     }
     $('#nft-btn-market').data('link',data.marketLink);
 
+
+    // $('#nft-layer-pop .nft-btn').eq(0).css("background-color" , "red");
+
 }

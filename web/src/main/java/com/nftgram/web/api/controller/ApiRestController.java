@@ -135,7 +135,10 @@ public class ApiRestController {
         }
 
         return nftMember;
+
     }
+
+
 
     @PostMapping(value = "/member/nft", produces = "application/json")
     public MemberNftResponse GetMemberNftInfo(MemberNftRequest memberNftRequest) {

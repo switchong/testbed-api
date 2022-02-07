@@ -288,3 +288,35 @@ $.nl2br = function(tmpText){
 $.br2nl = function(tmpText){
     return tmpText.replace(/<br>/g, "\r");
 };
+
+//SNS 공유 URL
+const url_default_ks = "https://story.kakao.com/share?url=";
+const url_default_fb = "https://www.facebook.com/sharer/sharer.php?u=";
+const url_default_tw_txt = "https://twitter.com/intent/tweet?text=";
+const url_default_tw_url = "&url="; var url_default_band = "http://band.us/plugin/share?body=";
+const url_route_band = "&route="; var url_default_naver = "http://share.naver.com/web/shareView.nhn?url=";
+const title_default_naver = "&title=";
+const url_this_page = location.href;
+const title_this_page = document.title;
+const url_combine_ks = url_default_ks + url_this_page;
+const url_combine_fb = url_default_fb + url_this_page;
+const url_combine_tw = url_default_tw_txt + document.title + url_default_tw_url + url_this_page;
+const url_combine_band = url_default_band + encodeURI(url_this_page)+ '%0A' + encodeURI(title_this_page)+'%0A' + '&route=tistory.com';
+const url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page);
+
+
+//sns url copy
+function clip(){
+    let url = '';
+    const textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    url = window.document.location.href;
+    textarea.value = url;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("Link copied!!!!")
+
+}
+
+

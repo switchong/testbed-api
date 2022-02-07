@@ -142,6 +142,11 @@
     cursor: pointer;
 }
 
+.gallery-container .sns-container .sns-link-img > img {
+    width: 100%;
+    object-fit: fill;
+    cursor: pointer;
+}
 .gallery-content .gallery-slide-container {
     width: 84.7%;
     height: 100%;

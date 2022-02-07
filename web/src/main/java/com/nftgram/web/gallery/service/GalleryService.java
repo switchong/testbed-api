@@ -3,6 +3,7 @@ package com.nftgram.web.gallery.service;
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.domain.nftgram.NftCollection;
 import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.dto.request.NftMemberRequestDto;
 import com.nftgram.core.repository.NftAssetRepository;
 import com.nftgram.core.repository.NftCollectionRepository;
 import com.nftgram.core.repository.NftMemberRepository;
@@ -12,15 +13,19 @@ import com.nftgram.web.common.dto.GalleryMemberDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.service.NftFindService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManagerFactory;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class GalleryService {
     private final NftFindService nftFindService;
 
@@ -29,9 +34,11 @@ public class GalleryService {
     private final NftAssetRepository nftAssetRepository;
     private final NftCollectionRepository nftCollectionRepository;
 
+
     private CommonNftResponse commonNftResponse;
 
     private List<CommonNftResponse> commonNftResponses = new ArrayList<>();
+    private EntityManagerFactory entityManagerFactory;
 
     public List<Nft> findByCollectionName(String collection) {
         List<Nft> nftInfo = nftRepository.findByNftCollectionName(collection);
@@ -113,5 +120,18 @@ public class GalleryService {
             return size;
         }
         return num;
+    }
+
+
+
+    @Transactional
+    public Long nftMemberUpdate(NftMemberRequestDto update , Long nftMemberId  ){
+        Long isResult = Long.valueOf(1);
+
+        NftMember nftMember1 = nftMemberRepository.findByNftMemberId(nftMemberId);
+
+        Long nftMember = nftMemberRepository.updateNftMember(update , nftMemberId);
+
+        return isResult;
     }
 }

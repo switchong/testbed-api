@@ -33,7 +33,6 @@ public class MainController {
         model.addAttribute("nav_active","explorer");
 
         List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable , keyword ,sort );
-//        model.addAttribute("nftList",mainResponseAll);
         return "index";
     }
 }

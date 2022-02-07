@@ -15,6 +15,8 @@ public class NftMemberAuthDto {
 
     private String nftMemberUserId;
 
+
+
     @Builder
     public NftMemberAuthDto(String loginYN, Long nftMemberId, String nftMemberUserId) {
         this.loginYN = loginYN;

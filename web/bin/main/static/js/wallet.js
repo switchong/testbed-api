@@ -199,7 +199,7 @@ function walletSave(address) {
         result = commonAjaxUrl(method, url, param);
         console.log(result);
         if(result == 1 || result == 5) {
-            alert("지갑 연동이 완료되었습니다.");
+            alert("지갑 연동이 완료되었습니다.!!!");
         } else if(result == 2) {
             alert("Login to Use");
         } else if(result == 3) {

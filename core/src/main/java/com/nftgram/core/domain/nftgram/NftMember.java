@@ -4,10 +4,10 @@ package com.nftgram.core.domain.nftgram;
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.dto.NftMemberDto;
 import com.nftgram.core.domain.member.MemberStatus;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.nftgram.core.dto.request.NftMemberRequestDto;
+import lombok.*;
+import org.apache.commons.lang3.ObjectUtils;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @Table(name = "nft_member")
+@DynamicUpdate
 public class NftMember  extends BaseEntity {
 
     @Id
@@ -75,6 +76,22 @@ public class NftMember  extends BaseEntity {
     public NftMember(NftMemberDto request) {
         nftMemberUserId  = request.getNftMemberUserId();
         password = request.getPassword();
+    }
+
+
+
+    public void update(NftMemberRequestDto requestDto) {
+        this.username = requestDto.getUsername();
+        this.discord = requestDto.getDiscord();
+        this.facebook = requestDto.getFacebook();
+        this.instagram = requestDto.getInstagram();
+        this.twitter = requestDto.getTwitter();
+    }
+
+
+    public void  updateInfo(NftMemberRequestDto requestDto){
+        if (ObjectUtils.isEmpty(requestDto.getUsername()))
+            throw  new IllegalArgumentException("요청 파라미터가 null입니다");
     }
 
 }

@@ -1,30 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="frame-edit-collection" class="editFrame-collection">
-    <div class="wrap-edit-frame-collection">
-        <div class="edit-box-container-collection">
-            <div class="edit-box-collection">
-                <p>USER NAME</p>
-                <input type="text" id="useNameInput" />
-            </div>
-            <div class="edit-box-collection">
-                <p>INSTAGRAM</p>
-                <input type="text" id="instaInput" />
-            </div>
-            <div class="edit-box-collection">
-                <p>TWITTER</p>
-                <input type="text" id="twitterInput" />
-            </div>
-            <div class="edit-box-collection">
-                <p>FACEBOOK</p>
-                <input type="text" id="facebookInput" />
-            </div>
-            <div class="edit-box-collection">
-                <p>DISCORD</p>
-                <input type="text" id="discordInput" />
-            </div>
+<div th:fragment="frame-edit-collection" class="editFrame-collection" >
+    <div class="wrap-edit-frame-collection" >
+        <div class="edit-box-container-collection"  >
+            <form th:action="@{/gallery/mycollection/save}"  th:object="${member}" method="post"> <!--th:action="@{'/gallery/mycollection/save/' + ${member.nftMemberId}}" -->
+                <div class="edit-box-collection" >
+                    <p>USER NAME</p>
+                    <input type="text" id="username" name="username"  th:field="*{username}"  /> <!-- th:value="${member.username}"-->
+                </div>
+                <div class="edit-box-collection">
+                    <p>INSTAGRAM</p>
+                    <input type="url" id="instagram" name="instagram" th:field="*{instagram}"  /> <!--th:value="${member.instagram}" -->
+                </div>
+                <div class="edit-box-collection">
+                    <p>TWITTER</p>
+                    <input type="url" id="twitter" name="twitter" th:field="*{twitter}"   /> <!--th:value="${member.twitter}"-->
+                </div>
+                <div class="edit-box-collection">
+                    <p>FACEBOOK</p>
+                    <input type="url" id="facebook" name="facebook" th:field="*{facebook}"   /> <!-- th:value="${member.facebook}"-->
+                </div>
+                <div class="edit-box-collection">
+                    <p>DISCORD</p>
+                    <input type="url" id="discord" name="discord" th:field="*{discord}" /> <!--  th:value="${member.discord}" -->
+                </div><br />
+                <button class="edit-submit-button" type="submit">ok</button>
+<!--                <input type ="button" value="수정" class="btn btn-secondary" id="btnUpdate">-->
+            </form>
         </div>
-        <div class="edit-submit-button">OK</div>
+
     </div>
 </div>
 </html>
