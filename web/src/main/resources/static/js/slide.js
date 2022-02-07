@@ -104,8 +104,10 @@ const MoreEdit = () => {
                         </div>
                     </div>
     `;
-    parentNode.prepend(editContent);
+    parentNode.append(editContent);
     Refresh();
+    maxLength = 3 * (slides.length);
+    nftOk = false;
 }
 
 const MoreSlide = (uri, type) => {
@@ -241,7 +243,12 @@ const goNext = () => {
             MoreSlide('main/page/gallery');
         }
         if(nowLocation === 'edit') {
-            MoreEdit();
+            if(nftOk) {
+                MoreEdit();
+            }
+            else {
+                alert(`${maxLength}개를 모두 채우셔야 합니다!`);
+            }
         }
     }
 }
