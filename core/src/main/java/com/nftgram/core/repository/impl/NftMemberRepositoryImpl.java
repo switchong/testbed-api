@@ -1,5 +1,6 @@
 package com.nftgram.core.repository.impl;
 
+import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.NftMember;
 import com.nftgram.core.dto.request.NftMemberRequestDto;
 import com.nftgram.core.repository.custom.NftMemberCustomRepository;
@@ -67,7 +68,8 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
         NftMember result = queryFactory.selectFrom(nftMember)
                 .from(nftMemberWallet)
                 .join(nftMemberWallet.nftMember, nftMember)
-                .where(nftMemberWallet.walletContractAddress.eq(address))
+                .where(nftMemberWallet.walletContractAddress.eq(address),
+                        nftMemberWallet.activeStatus.eq(ActiveStatus.ACTIVE))
                 .fetchOne();
 
         return result;
