@@ -40,7 +40,7 @@ public class UserController {
         GalleryMemberDto galleryMemberDto = userService.findNftUsername(pageable, memberId, url_member_id);
 
         model.addAttribute("nav_active","");
-        if(galleryMemberDto.getSliderCount() > 0) {
+        if(galleryMemberDto.getSliderCount() >= 0) {
             model.addAttribute("member",galleryMemberDto.getNftMember());
             model.addAttribute("sliderList",galleryMemberDto.getNftSliderList());
             model.addAttribute("nftList",galleryMemberDto.getNftResponseList());

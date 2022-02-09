@@ -13,7 +13,7 @@ button{*overflow:visible;margin:0rem;padding:0;border:0 none;background:transpar
 /* 레이어팝업 detail popup */
 .wrap_layer_popup#nft-layer-pop{ width:45%;height : 60%; max-width: 640px; background-color : transparent}
 .pop_close{position:absolute; top: 4%; right: 4%; text-align:right; height : 9%}
- .pop_close img {
+.pop_close img {
     width: 2.5rem;
     height: 2.5rem;
 }
@@ -49,7 +49,7 @@ div#nft-info::-webkit-scrollbar {
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td {padding:2% 3%;font-size: 1.1rem;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text.attr-properties-row td { display: grid; grid-template-columns: repeat(2, 1fr); grid-column-gap: 2%; grid-row-gap: 2%; margin-bottom: 6%;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info{padding:0.3rem 1rem;background-color: #fff;color: #000;text-align: center;
-width: 100%;  height: 100px;}
+    width: 100%;  height: 100px;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info .prop-info-nft{margin-bottom: auto;font-size: 0.5rem;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info .prop-info-nft.prop-value{font-size: 0.8rem;font-weight: bold;}
 

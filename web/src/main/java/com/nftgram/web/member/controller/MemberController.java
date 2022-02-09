@@ -28,6 +28,7 @@ public class MemberController {
         model.addAttribute("nftMemberLoginRequest", new NftMemberLoginRequest());
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         if(authDto.getLoginYN().equals("Y")) {
+
             return  "member/mypage";
         } else {
             return "redirect:/auth/login";

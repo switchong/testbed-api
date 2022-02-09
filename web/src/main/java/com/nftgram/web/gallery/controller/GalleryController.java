@@ -14,10 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -48,7 +45,7 @@ public class GalleryController {
         return "gallery/gallery";
     }
 
-    @GetMapping("/gallery/{collection}")
+    @GetMapping("gallery/{collection}")
     public String galleryDetail(Model model , @PathVariable("collection") Long collectionId) {
 
         GalleryDto galleryDto = nftFindService.findByNftCollectionId(collectionId);
@@ -62,29 +59,30 @@ public class GalleryController {
         return "gallery/galleryCollection";
     }
 
-    @GetMapping("/gallery_swiper/{collection}")
-    public String gallerySwiper(Model model , @PathVariable("collection") Long collectionId) {
+//    @GetMapping("/gallery_swiper/{collection}")
+//    public String gallerySwiper(Model model , @PathVariable("collection") Long collectionId) {
+//
+//        GalleryDto galleryDto = nftFindService.findByNftCollectionId(collectionId);
+//
+//        model.addAttribute("nav_active","explorer");
+//        model.addAttribute("collection",galleryDto.getCollection());
+//        model.addAttribute("nftList",galleryDto.getGalleryList());
+//
+//        return "gallery/gallery_swiper";
+//    }
 
-        GalleryDto galleryDto = nftFindService.findByNftCollectionId(collectionId);
-
-        model.addAttribute("nav_active","explorer");
-        model.addAttribute("collection",galleryDto.getCollection());
-        model.addAttribute("nftList",galleryDto.getGalleryList());
-
-        return "gallery/gallery_swiper";
-    }
-
-    @GetMapping("/gallery/myfavorite")
-    public String myfavorite(Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException {
+    @GetMapping("gallery/myfavorite/{nftMemberUserId}")
+    public String myfavorite(@PathVariable("nftMemberUserId") String nftMemberUserId , Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
 
-            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMemberLike(pageable, memberId);
+            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMemberLike(pageable, memberId , nftMemberUserId);
 
             model.addAttribute("nav_active","myfavorite");
             model.addAttribute("member",galleryMemberDto.getNftMember());
+            model.addAttribute("nftMemberUserId",galleryMemberDto.getNftMember().getNftMemberUserId());
             model.addAttribute("sliderList",galleryMemberDto.getNftSliderList());
             model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
 
@@ -94,14 +92,15 @@ public class GalleryController {
         }
     }
 
-    @GetMapping("/gallery/mycollection")
-    public String mycollection(Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException {
+    @GetMapping("gallery/mycollection/{nftMemberUserId}")
+    public String mycollection(@PathVariable("nftMemberUserId") String nftMemberUserId ,  Model model, Pageable pageable  ) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
 
-            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMember(pageable, memberId);
+
+            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMember(pageable, memberId , nftMemberUserId);
 
             if(galleryMemberDto.getSliderCount() >= 0) {
                 model.addAttribute("nav_active","mycollection");
@@ -118,15 +117,7 @@ public class GalleryController {
         }
     }
 
-
-    @GetMapping("/gallery/edit")
-    public String editgallery(Model model) {
-
-        model.addAttribute("nav_active", "mycolllection");
-        return "gallery/galleryEdit";
-    }
-
-    @PostMapping(value = "/gallery/mycollection/save")
+    @PostMapping(value = "gallery/mycollection/save")
     public String nftMemberUpdate(NftMemberRequestDto update ) throws GeneralSecurityException , UnsupportedEncodingException{
         Long isResult = Long.valueOf(0);
         Long memberId = Long.valueOf(0);
@@ -142,5 +133,10 @@ public class GalleryController {
 
     }
 
+    @GetMapping("gallery/edit")
+    public String editgallery(Model model) {
 
+        model.addAttribute("nav_active", "mycolllection");
+        return "gallery/galleryEdit";
+    }
 }

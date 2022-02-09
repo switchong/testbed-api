@@ -187,7 +187,7 @@ function layerPopId(layerId, boxPosition){
     // 팝업창 띄우기
     if(!$('div.layer_popup_bg').length){
         $('<div class="layer_popup_bg"><div class="pop_close">\n' +
-            '        <a href="javascript:void(0);" onclick="layerPopClose();" ><img src="../img/icon/ic-popup-close.png" alt="팝업 닫기 버튼"></a>\n' +
+            '        <a href="javascript:void(0);" onclick="layerPopClose();" ><img src="/img/icon/ic-popup-close.png" alt="팝업 닫기 버튼"></a>\n' +
             '    </div></div>').appendTo('#nftgram_wrap');
     }
     $('div.layer_popup_bg').fadeIn();
@@ -312,7 +312,7 @@ function layerPopByNft(data) {
                 '        </div>';
 
         });
-      nft_info_form.find('.attr-properties-row td.attr-properties-row-text').html(prop_html);
+        nft_info_form.find('.attr-properties-row td.attr-properties-row-text').html(prop_html);
 
     } else {
         nft_info_form.find('.attr-properties').parents('tr').css('display','none');

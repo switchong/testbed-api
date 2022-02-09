@@ -83,7 +83,7 @@ function moreView(type , nft) {
         ''+keyword+'' +
         "<span onclick=\"searchFormClose()\" id=\"close\" class=\"close\">X</span>" +
         '</div>'
-        "</div>"
+    "</div>"
 
     if (sort != null) {
         url += "&sort=" + sort;
