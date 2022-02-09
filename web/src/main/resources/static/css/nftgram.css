@@ -121,7 +121,6 @@ img.card-img-top {
 }
 #nftgram-list .card-body {
     width : 100%;
-    border-top: 1px solid rgba(0,0,0,.125);
     padding : 0;
 
 }
@@ -161,7 +160,6 @@ img.card-img-top {
 }
 #nftgram-list .card-body .card-text-data {
     /*border: 4px solid firebrick;*/
-    background: linear-gradient(rgba(229, 232, 235, 0.392) 0%, rgb(255, 255, 255) 20%);
     text-align: end;
     padding-right: 15px;
     margin-bottom: 0;
@@ -332,10 +330,6 @@ img.card-img-top {
     }
 }
 
-.card:hover {
-    box-shadow: 0 0 15px 0 #000;
-}
-
 body {
     font-size: 1.2rem;
 }.container {
@@ -464,6 +458,7 @@ select[name="selSort"] {
     width: 100%;
     margin-left : 0px !important;
     margin-right : 0px !important;
+    border : none;
 }
 img.card-img-top {
     cursor: pointer;
@@ -472,7 +467,6 @@ img.card-img-top {
 }
 #nftgram-list .card-body {
     width : 100%;
-    border-top: 1px solid rgba(0,0,0,.125);
     padding : 0;
 
 }
@@ -480,7 +474,7 @@ img.card-img-top {
     flex-wrap: nowrap;
     justify-content: space-between;
     margin: 0 !important;
-    padding: 13px 1rem 10px;
+    padding: 0.5rem 0.5rem 0.3rem;
 }
 
 #nftgram-list .card-body .row .row-data-left {
@@ -508,7 +502,8 @@ img.card-img-top {
 }
 
 #nftgram-list .card-body .row .row-data-right > span {
-    margin-left: 0.5rem;
+    margin-left: 0.3rem;
+    font-size: 0.95rem;
 }
 
 #nftgram-list .card-body img.card-img-user {
@@ -521,9 +516,8 @@ img.card-img-top {
 }
 #nftgram-list .card-body .card-text-data {
     /*border: 4px solid firebrick;*/
-    background: linear-gradient(rgba(229, 232, 235, 0.392) 0%, rgb(255, 255, 255) 20%);
     text-align: end;
-    padding-right: 15px;
+    padding-right: 0.5rem;
     margin-bottom: 0;
 }
 
@@ -558,7 +552,7 @@ img.card-img-top {
 #navigation-top .wallet-wrap {display: none;position: absolute;top: 3.5rem;right: 0rem;z-index: 999;border: 1px solid black;background-color: white; width: 35%}
 #navigation-top .wallet-wrap.on {display: block; color: black;}
 #navigation-top .wallet-wrap:hover {display: block;}
-#navigation-top .wallet-wrap .wallet-user-wrap{border-bottom: 1px solid #b1b1b1;background: url("/img/icon/Profile_icon.png") left center no-repeat;background-size: 1.875rem 1.875rem;background-position-x: 0.5rem;padding-left: 3rem;}
+#navigation-top .wallet-wrap .wallet-user-wrap{border-bottom: 1px solid #b1b1b1;background: url("/img/icon/ic-gallery-profile.svg") left center no-repeat;background-size: 1.875rem 1.875rem;background-position-x: 0.5rem;padding-left: 3rem;}
 #navigation-top .wallet-wrap .wallet-user-wrap .wallet-user-title{font-size: 1.1rem;}
 #navigation-top .wallet-wrap .wallet-user-wrap .balance-price{font-size:1rem;font-weight: bold;}
 #navigation-top .wallet-wrap .wallet-user-wrap .balance-price:after{content:' ETH'}
@@ -692,9 +686,16 @@ img.card-img-top {
     }
 }
 
-.card:hover {
-    box-shadow: 0 0 15px 0 #000;
-}
+/*.card:hover::before {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 301px;*/
+/*    background-color: rgba(0,0,0,0.1);*/
+/*    border-radius: 0.25rem;*/
+/*}*/
 
 body {
     font-size: 1.2rem;

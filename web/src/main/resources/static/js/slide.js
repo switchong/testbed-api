@@ -185,18 +185,18 @@ const makeGalleryList = (data) => {
                                     </div>
                                     <div class="picture-explain-bottom">
                                         <div class="user-info">
-                                            <img src="/img/icon/Profile_icon.png" />
+                                            <img src="/img/icon/ic-gallery-profile.svg" />
                                             <div class="nft-title-user">
                                                 <div class="user-info-name">
                                                     <span>${inner.username}</span>
-                                                    <span class="time">1 MINUTE AGO</span>
+                                                    <span class="time">1 minute ago</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="picture-price">
-                                            <img src="../img/icon/Price_icon.png" class="hIs24 wIs20" />
+                                            <img src="../img/icon/ic-gallery-eyes.svg" class="hIs24 wIs20" />
                                             <span class="viewCount">${inner.viewCount}</span>
-                                            <img src="../img/icon/Like_icon.png" class="hIs24 wIs20" />
+                                            <img src="../img/icon/ic-gallery-like.svg" class="hIs24 wIs20" />
                                             <span class="likeCount">${inner.likeCount}</span>
                                         </div>
                                     </div>

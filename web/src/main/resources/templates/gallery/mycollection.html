@@ -17,10 +17,10 @@
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
         <div class="sns-container" th:if="${member}">
-                <a class="sns-link-img" th:data-link="${member.username}" onclick="clip(); return false;"><img th:src="@{/img/icon/Share_navi_icon.png}" /></a>
-                <a  class="sns-link-img" th:href="${member.instagram}" th:target="_blank"><img th:src="@{/img/icon/Instagram_navi_icon.png}"  /></a>
-                <a  class="sns-link-img" th:href="${member.twitter}" th:target="_blank"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>
-                <a  class="sns-link-img" th:href="${member.discord}" th:target="_blank"><img th:src="@{/img/icon/Discord_navi_icon.png}"/></a>
+                <a class="sns-link-img" th:data-link="${member.username}" onclick="clip(); return false;"><img th:src="@{/img/icon/ic-sns-share.svg}" /></a>
+                <a  class="sns-link-img" th:href="${member.instagram}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-insta.svg}"  /></a>
+                <a  class="sns-link-img" th:href="${member.twitter}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-twiter.svg}"/></a>
+                <a  class="sns-link-img" th:href="${member.discord}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-discord.svg}"/></a>
                 <!--<a  onclick="window.open(url_combine_fb, '', 'scrollbars=no, width=600, height=600'); return false;"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>-->
                 <!--<a  onclick="window.open(url_combine_tw, '', 'scrollbars=no, width=600, height=600'); return false;"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>-->
         </div>
@@ -28,14 +28,14 @@
 <!--            <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile_myCollection" />-->
             <div class="user-space">
                 <div class="user-space-left">
-                    <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile" />
+                    <img th:src="@{/img/icon/ic-nav-profile.svg}" alt="profile" id="imgProfile" />
                     <span th:text="${member.username} ?: 'USER NAME'">USER NAME</span>
                 </div>
             </div>
             <div class="myCollection-user-top">
                 <input type="checkbox" id="collection-edit1" />
                 <label for="collection-edit1">
-                    <p>EDIT PROFILE</p>
+                    <p>Edit Profile</p>
                     <img th:src="@{/img/icon/ic-edit-btn.png}" alt="edit" id="editIcon1" />
                 </label>
                 <div th:replace="fragment/editFrameCollection.html :: frame-edit-collection" />
@@ -43,7 +43,7 @@
             <div class="myCollection-user-top">
                 <input type="checkbox" id="collection-edit2" />
                 <label for="collection-edit2" th:onclick="|location.href='@{/gallery/edit}'|">
-                    <p>EDIT GALLERY</p>
+                    <p>Edit Gallery</p>
                     <img th:src="@{/img/icon/ic-edit-btn.png}" alt="edit" id="editIcon2" />
                 </label>
             </div>
@@ -83,20 +83,20 @@
                                         <p class="picture-title" th:text="${slide.name}">NFT TITLE #0000</p>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-profile.svg}" />
                                                 <div class="nft-title-user">
                                                     <div class="user-info-name">
                                                         <span th:text="${slide.username}">USER NAME</span>
-                                                        <span class="time">1 MINUTE AGO</span>
+                                                        <span class="time">1 minute ago</span>
                                                         <!--                                                    <span>1 MINUTE AGO</span>-->
                                                         <!--                                                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-eyes.svg}" />
                                                 <span th:text="${slide.viewCount}">23</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-like.svg}" />
                                                 <span th:text="${slide.likeCount}">450</span>
                                             </div>
                                         </div>

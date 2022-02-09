@@ -283,10 +283,17 @@
 }
 
 .picture-explain .picture-explain-bottom .picture-price > img {
-    width: 1rem;
-    height: 1.5rem;
+    display: inline-block;
+    padding-bottom: 0.3rem;
+    width: 1.3rem;
+    height: 1.7rem;
     object-fit: fill;
     margin-right: 5%;
+}
+
+.picture-explain .picture-explain-bottom .picture-price > img:first-child {
+    width: 1.7rem;
+    padding-bottom: 0;
 }
 
 .picture-explain .picture-explain-bottom .picture-price > span {
@@ -587,7 +594,7 @@ img[id*="image-edit-icon"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: yellow;
+    background-color: #fff;
     color: black;
 }
 

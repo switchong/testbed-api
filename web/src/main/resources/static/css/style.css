@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');*/
 /*!
 * Start Bootstrap - Shop Homepage v5.0.3 (https://startbootstrap.com/template/shop-homepage)
 * Copyright 2013-2021 Start Bootstrap
@@ -12,11 +12,19 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
+@font-face {
+  font-family: 'basic-font';
+  src : url("fonts/basicfont.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
 * {
-  font-family: 'Staatliches', cursive;
+  font-family: 'basic-font', cursive;
 }
 
 html {
+  font-family: 'basic-font' !important;
   font-size: 16px;
 }
 

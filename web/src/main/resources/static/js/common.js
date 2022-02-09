@@ -240,7 +240,7 @@ function getCommentList(nftId) {
                 let row_chk = $('#comment-row-'+comm.commId).length;
                 if(row_chk == 0) {
                     row_html += '<div class="comment-list-row" id="comment-row-'+comm.commId+'">\n' +
-                        '                            <div class="user-image"><img src="/img/icon/Profile_icon.png" class="whIs30"/></div>\n' +
+                        '                            <div class="user-image"><img src="/img/icon/ic-gallery-profile.svg" class="whIs30"/></div>\n' +
                         '                            <div class="user-info">'+comm.user+'<br><span class="time">'+comm.createdDate+'</span></div>\n' +
                         '                            <div class="user-comment">'+$.nl2br(comm.comment)+'</div>\n' +
                         '                        </div>';
@@ -276,13 +276,13 @@ function timeToElapsed(datetaime){
     let parallax = parseInt((new Date()).getTime() / 1000) - localdate
 
     if(parallax > 86400){
-        return parseInt(parallax / 86400) + " Day ago"
+        return parseInt(parallax / 86400) + " day ago"
     }else if(parallax > 3600){
-        return parseInt(parallax / 3600) + " Hour ago"
+        return parseInt(parallax / 3600) + " hour ago"
     }else if(parallax > 60){
-        return parseInt(parallax / 60) + " Minute ago"
+        return parseInt(parallax / 60) + " minute ago"
     }else {
-        return parseInt(parallax ) + " Second ago"
+        return parseInt(parallax ) + " second ago"
     }
 }
 
