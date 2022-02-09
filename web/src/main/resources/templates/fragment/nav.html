@@ -7,7 +7,7 @@
         <div class="container">
             <div class="d-flex">
                 <ul class="navbar-nav-mobile">
-                    <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs30" th:src="@{/img/icon/ic-nav-mycollection.png}" /></a></li>
+                    <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs36" th:src="@{/img/icon/ic-nav-profile2.png}" /></a></li>
                     <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" th:src="@{/img/icon/ic-nav-wallet.png}" /></a></li>
                     <li th:if="${memberInfo.loginYN == 'N'}" class="nav-item">
                         <a class="btn btn-outline-dark" th:onclick="|location.href='@{/auth/login}'|">Sign In</a>
@@ -46,7 +46,7 @@
                         <!--/*@thymesVar id="nav_active" type="com.nftgram.web.main.controller.MainController"*/-->
                         <li class="nav-item"><a aria-current="page" class="nav-link explorer" href="/" th:classappend="${nav_active}== 'explorer' ? 'active' : ''">EXPLORER</a></li>
                         <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">MY FAVORITIES</a></li>
-                        <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs30" th:src="@{/img/icon/ic-nav-mycollection.png}" /></a></li>
+                        <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs36" th:src="@{/img/icon/ic-nav-mycollection.png}" /></a></li>
                         <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" th:src="@{/img/icon/ic-nav-wallet.png}" /></a></li>
 
 

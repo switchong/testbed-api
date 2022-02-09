@@ -25,7 +25,13 @@
                 <!--<a  onclick="window.open(url_combine_tw, '', 'scrollbars=no, width=600, height=600'); return false;"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>-->
         </div>
         <div class="gallery-top-myCollection">
-            <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile_myCollection" />
+<!--            <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile_myCollection" />-->
+            <div class="user-space">
+                <div class="user-space-left">
+                    <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile" />
+                    <span th:text="${member.username} ?: 'USER NAME'">USER NAME</span>
+                </div>
+            </div>
             <div class="myCollection-user-top">
                 <input type="checkbox" id="collection-edit1" />
                 <label for="collection-edit1">
@@ -43,7 +49,7 @@
             </div>
         </div>
         <div class="gallery-content">
-            <img th:src="@{/img/icon/prev50.png}" id="prevBtn"/>
+            <img th:src="@{/img/icon/ic-Left-icon.png}" id="prevBtn"/>
             <div class="gallery-slide-container" id="gallery-slide-container">
                 <div class="gallery-slide-list-container myCollection-slide-container">
                     <div class="gallery-slide-list" th:each="slider, count : ${slideList}">
@@ -101,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            <img th:src="@{/img/icon/next50.png}" id="nextBtn" />
+            <img th:src="@{/img/icon/ic-Right_icon.png}" id="nextBtn" />
         </div>
     </div>
 </div><!-- /container -->

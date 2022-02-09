@@ -12,14 +12,14 @@ const MoreEdit = () => {
     const parentNode = $('.gallery-slide-list-container');
     const editContent = `
         <div class="gallery-slide-list">
-<!--                        <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />-->
+                        <img src="../img/etc/no-image.png" class="back-frame" alt="background" />
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
                                 <div class="gallery-slide-list-item-down"></div>
                                 <div class="image-container">
                                     <div class="image-container-content">
-                                        <img class="outer-frame"/>
-                                        <img class="inner-picture"/>
+                                        <img class="outer-frame" src="../img/etc/no-image.png"/>
+                                        <img class="inner-picture" src="../img/etc/no-image.png" style="border : 1px solid lightgray;"/>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
                                         <p class="picture-title">NFT TITLE #0000</p>
@@ -46,8 +46,8 @@ const MoreEdit = () => {
                                 </div>
                                 <div class="image-container">
                                     <div class="image-container-content">
-                                        <img class="outer-frame"/>
-                                        <img class="inner-picture"/>
+                                        <img class="outer-frame" src="../img/etc/no-image.png"/>
+                                        <img class="inner-picture" src="../img/etc/no-image.png" style="border : 1px solid lightgray;"/>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
                                         <p class="picture-title">NFT TITLE #0000</p>
@@ -74,8 +74,8 @@ const MoreEdit = () => {
                                 </div>
                                 <div class="image-container">
                                     <div class="image-container-content">
-                                        <img class="outer-frame"/>
-                                        <img class="inner-picture"/>
+                                        <img class="outer-frame" src="../img/etc/no-image.png"/>
+                                        <img class="inner-picture" src="../img/etc/no-image.png" style="border : 1px solid lightgray;"/>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
                                         <p class="picture-title">NFT TITLE #0000</p>
@@ -106,7 +106,8 @@ const MoreEdit = () => {
     `;
     parentNode.append(editContent);
     Refresh();
-    maxLength = 3 * (slides.length);
+    nftMaxLength = 3 * (slides.length);
+    backgroundMaxLength += 1;
     nftOk = false;
 }
 
@@ -243,11 +244,16 @@ const goNext = () => {
             MoreSlide('main/page/gallery');
         }
         if(nowLocation === 'edit') {
-            if(nftOk) {
+            if(nftOk && nftTotalOK) {
                 MoreEdit();
             }
             else {
-                alert(`${maxLength}개를 모두 채우셔야 합니다!`);
+                if(!nftTotalOK) {
+                    alert('모든 nft를 넣으셔서 추가 틀을 만들 수 없습니다.');
+                }
+                else if(!nftOk) {
+                    alert(`${nftMaxLength}개를 모두 채우셔야 합니다!`);
+                }
             }
         }
     }

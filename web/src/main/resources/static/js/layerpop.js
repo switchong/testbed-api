@@ -186,7 +186,9 @@ function layerPopId(layerId, boxPosition){
 
     // 팝업창 띄우기
     if(!$('div.layer_popup_bg').length){
-        $('<div class="layer_popup_bg"></div>').appendTo('#nftgram_wrap');
+        $('<div class="layer_popup_bg"><div class="pop_close">\n' +
+            '        <a href="javascript:void(0);" onclick="layerPopClose();" ><img src="../img/icon/ic-popup-close.png" alt="팝업 닫기 버튼"></a>\n' +
+            '    </div></div>').appendTo('#nftgram_wrap');
     }
     $('div.layer_popup_bg').fadeIn();
     $('.wrap_layer_popup#'+layerId).fadeIn(function(){

@@ -58,6 +58,7 @@
 
 a.btn.btn-outline-dark {
     border : 2px solid #fff;
+    height: 100%;
 }
 
 #navigation-top .navbar .input-group {
@@ -397,6 +398,11 @@ body {
 
 a.btn.btn-outline-dark {
     border : 2px solid #fff;
+    height: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.275rem 0.75rem;
 }
 
 #navigation-top .navbar .input-group {
@@ -415,8 +421,13 @@ a.btn.btn-outline-dark {
 
 .input-group #searchKeyword {
     height: 100%;
-    padding : 0.75rem 0.75rem;
+    padding : 0rem 0.75rem;
     font-size: 1.2rem;
+}
+
+.input-group-append {
+    margin-left: 0;
+    height: 100%;
 }
 
 select[name="selSort"] {
@@ -425,6 +436,7 @@ select[name="selSort"] {
 
 .gallery-view-type {
     margin : auto;
+    width: fit-content;
 }
 .gallery-view-type img, #gallery-swiper .card_wrap img{
     cursor: pointer;
@@ -438,6 +450,7 @@ select[name="selSort"] {
     grid-row-gap: 2.5rem;
     margin-right : 0px !important;
     margin-left: 0px; !important;
+    line-height: normal;
 }
 
 #nftgram-list .card {
@@ -474,6 +487,15 @@ img.card-img-top {
     padding : 0;
     margin : 0;
     max-width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.left-nft-title {
+    width: 85%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #nftgram-list .card-body .row .row-data-right {
@@ -492,7 +514,7 @@ img.card-img-top {
 #nftgram-list .card-body img.card-img-user {
     width: 1.575rem;
     height: 1.575rem;
-
+    margin-right: 0.3rem;
 }
 #nftgram-list .card-body .row data-text{
     border:5px solid lawngreen;
@@ -612,7 +634,7 @@ img.card-img-top {
     }
 
     .navbar-nav-mobile > li:not(:last-child) {
-        margin-right: 0.5rem;
+        margin-right: 1rem;
     }
 
     .container {
@@ -676,4 +698,16 @@ img.card-img-top {
 
 body {
     font-size: 1.2rem;
+    line-height: normal;
+}
+
+.view-icon {
+    width: 1.3rem;
+    height: 1.2rem;
+    object-fit: fill;
+}
+
+.like-icon {
+    height: 1.1rem;
+    object-fit: fill;
 }

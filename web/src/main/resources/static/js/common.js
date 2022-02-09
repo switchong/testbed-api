@@ -146,11 +146,11 @@ function toList(list) {
             '                <div class="card-body">\n' +
             '                     <div class="row">' +
             '                        <div class="row-data-left" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">\n' +
-            '                            <img src="/img/icon/Profile_icon.png" class="card-img-user" > <span class="text-muted">'+nft.username+'</span>\n' +
+            '                            <img src="/img/icon/ic-gallery-profile.svg" class="card-img-user" > <span class="text-muted left-nft-title">'+nft.username+'</span>\n' +
             '                        </div>\n'+'' +
             '                        <div class="row-data-right">\n' +
-            '                            <img src="/img/icon/Price_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
-            '                            <img src="/img/icon/Like_icon.png" class="card-img-icon whIs19 ml20"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
+            '                            <img src="/img/icon/ic-gallery-eyes.svg" class="card-img-icon view-icon whIs19 ml20"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
+            '                            <img src="/img/icon/ic-gallery-like.svg" class="card-img-icon whIs19 ml20 like-icon"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
             '                         </div>\n'+'' +
             '                      </div>\n' +
             '                    <p class="card-text-data"><small class="text-muted" >'+date+'</small></p>\n' +
