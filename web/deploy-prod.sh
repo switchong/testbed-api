@@ -1,15 +1,15 @@
 #!/bin/bash
-BUILD_PATH=$(ls /home/ubuntu/app/deploy/nftgram-web/*.jar)
+BUILD_PATH=$(ls /home/ubuntu/app/build/nftgram-web/*.jar)
 JAR_NAME=$(basename $BUILD_PATH)
 echo "> build 파일명: $JAR_NAME"
 
 echo "> build 파일 복사"
-DEPLOY_PATH=/home/ubuntu/app/
+DEPLOY_PATH=/home/ubuntu/app/deploy/nftgram-web/
 cp $BUILD_PATH $DEPLOY_PATH
 
-echo "> StabyBizDashboard.jar 교체"
+echo "> nftgram-web-0.0.1.jar 교체"
 CP_JAR_PATH=$DEPLOY_PATH$JAR_NAME
-APPLICATION_JAR_NAME=NftgramWeb.jar
+APPLICATION_JAR_NAME=nftgram-web-0.0.1-SNAPSHOT.jar
 APPLICATION_JAR=$DEPLOY_PATH$APPLICATION_JAR_NAME
 
 ln -Tfs $CP_JAR_PATH $APPLICATION_JAR
