@@ -8,11 +8,11 @@ files:
 permissions:
   - object: /
     pattern: "**"
-    owner: nftgramprod
-    group: nftgramprod
+    owner: ubuntu
+    group: ubuntu
 
 hooks:
   ApplicationStart:
     - location: deploy.sh
       timeout: 60
-      runas: nftgramprod
+      runas: ubuntu
