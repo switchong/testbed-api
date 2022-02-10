@@ -20,7 +20,7 @@ button{*overflow:visible;margin:0rem;padding:0;border:0 none;background:transpar
 .pop_close a{display:inline-block; width: 100%; height: 100%}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container{position:relative;padding:0;width : 100%;height:70%;z-index: 995;}
 .wrap_layer_popup#nft-layer-pop .chg-list{position:fixed;top:50%;right:-20%;left:-20%; transform: translateY(-50%); height: fit-content; z-index:900; display: flex; align-items: center; justify-content: space-between;}
-.wrap_layer_popup#nft-layer-pop .chg-list .arrows{width:2.813rem; height:2.813rem; text-indent:-1000%;overflow:hidden; background-position: center; background-size: contain; background-repeat: no-repeat;}
+.wrap_layer_popup#nft-layer-pop .chg-list .arrows{width:1.5rem; text-indent:-1000%;overflow:hidden; background-position: center; background-size: contain; background-repeat: no-repeat;}
 .wrap_layer_popup#nft-layer-pop .chg-list .arrows.prev{ background-image:url("../img/icon/ic-popup-left.png");}
 .wrap_layer_popup#nft-layer-pop .chg-list .arrows.next{ background-image:url("../img/icon/ic-popup-right.png");}
 

@@ -179,9 +179,9 @@ function layerPopId(layerId, boxPosition){
     let positionLeft = -popWidth/2+'px';
     $('.wrap_layer_popup#'+layerId).css({
         'position' : boxPosition,
-        'top' : '50%',
-        'left' : '50%',
-        'transform' : 'translate(-50%, -50%)'
+        'top' : positionTop,
+        'left' : -positionLeft,
+        'transform' : 'translateX(-50%)'
     });
 
     // 팝업창 띄우기

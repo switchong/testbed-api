@@ -8,6 +8,19 @@ let nowLocation;
 let prevSort="0";
 let prevKeyword = '';
 
+const setBackHeight = () => {
+    let newHeight = $(window).height() - $('#navigation-top').height() + 8;
+    console.log($(window).width());
+    if($(window).width() <= 900) {
+        newHeight = newHeight + $('#navigation-top > nav:last-child').height() + 10;
+    }
+    $('#nftgram_wrap').css({
+        'height' : newHeight,
+    });
+
+    goSlide();
+}
+
 const MoreEdit = () => {
     const parentNode = $('.gallery-slide-list-container');
     const editContent = `
@@ -176,7 +189,7 @@ const makeGalleryList = (data) => {
             innerNewList = innerNewList + `
                             <div class="image-container">
                                 <div class="image-container-content" data-nftid="${inner.nftId}">
-                                    <img src="/img/gallery/frame.jpg" class="outer-frame" />
+                                    <img class="outer-frame" src="../img/etc/no-image.png"/>
                                     <img class="inner-picture gimage${inner.nftId}" data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}" />
                                 </div>
                                 <div class="picture-explain">
@@ -333,4 +346,4 @@ const goSlide = () => {
     nextBtn.addEventListener('click',goNext);
 }
 
-window.addEventListener('DOMContentLoaded',goSlide);
+window.addEventListener('DOMContentLoaded',setBackHeight);

@@ -21,10 +21,17 @@ window.addEventListener("DOMContentLoaded", ()=>{
     const totalFrame = document.querySelectorAll('.edit-frame').length;
     const totalBackground = document.querySelectorAll('.edit-background').length;
     const selectList = document.querySelectorAll('.gallery-edit-select');
+    const saveBtn = document.querySelectorAll('.gallery-edit-save');
 
     const nftImages = document.querySelectorAll(".gallery-edit-slide-item.edit-slice-item-nft");
     const frameImages = document.querySelectorAll(".gallery-edit-slide-item.edit-slice-item-frame");
     const backgroundImages = document.querySelectorAll('.gallery-edit-slide-item.edit-slice-item-background');
+
+    saveBtn.forEach((item, index) => {
+        item.addEventListener('click',() => {
+            isSave = false;
+        })
+    })
 
     selectList.forEach((item, index)=>{
         item.addEventListener('click', ()=>{

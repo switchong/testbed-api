@@ -417,6 +417,14 @@ a.btn.btn-outline-dark {
     height: 100%;
     padding : 0rem 0.75rem;
     font-size: 1.2rem;
+    background-image: url("../img/icon/ic-nav-search.svg");
+    background-position: 0.8rem center;
+    background-size: 1.5rem;
+    background-repeat: no-repeat;
+}
+
+.input-group #searchKeyword:focus {
+    background-image: none;
 }
 
 .input-group-append {
@@ -464,6 +472,8 @@ img.card-img-top {
     cursor: pointer;
     height: 300px;
     width: 100%;
+    border: solid 1px lightgray;
+    border-radius: 5px;
 }
 #nftgram-list .card-body {
     width : 100%;
