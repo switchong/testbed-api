@@ -30,7 +30,6 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
     }
 
 
-
     @Override
     public NftMember findByNftMemberId(Long nftMemberId) {
         NftMember nftMemberResult = queryFactory.selectFrom(nftMember)
@@ -41,7 +40,7 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
 
 
     @Override
-    public Long updateNftMember(NftMemberRequestDto updateDto, Long memberId ) {
+    public Long updateNftMember(NftMemberRequestDto updateDto, Long memberId) {
         Long result = queryFactory.update(nftMember)
                 .set(nftMember.username , updateDto.getUsername())
                 .set(   nftMember.instagram , updateDto.getInstagram())

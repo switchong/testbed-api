@@ -42,19 +42,11 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"></ul>
                 <div class="d-flex">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+                        <!--/*@thymesVar id="nav_active" type="com.nftgram.web.gallery.controller.GalleryController"*/-->
+                        <!--/*@thymesVar id="nav_active" type="com.nftgram.web.main.controller.MainController"*/-->
                         <li class="nav-item"><a aria-current="page" class="nav-link explorer" href="/" th:classappend="${nav_active}== 'explorer' ? 'active' : ''">Explorer</a></li>
-<!--                        <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorites</a></li>-->
-<!--                        <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs36" th:src="@{/img/icon/ic-nav-profile.svg}" /></a></li>-->
-                        <li class="nav-item" th:with="member=${nftMemberUserId}">
-                            <a class="nav-link myfavorite"
-                               th:href="@{'/gallery/myfavorite/' + ${nftMemberUserId}}" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorite</a>
-                        </li>
-                        <li class="nav-item"  >
-                            <a  class="nav-link mypage"
-                                th:href="@{'/gallery/mycollection/' + ${member?.nftMemberUserId}}">
-                                <img class="whIs30" th:src="@{/img/icon/ic-nav-profile.svg}" /></a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorites</a></li>
+                        <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs36" th:src="@{/img/icon/ic-nav-profile.svg}" /></a></li>
                         <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" th:src="@{/img/icon/ic-nav-wallet.png}" /></a></li>
 
 
@@ -88,14 +80,14 @@
         <div class="container">
             <div class="input-group">
                 <div class="input-group-left">
-                    <input class="form-control me-2"  id="searchKeyword"  name="keyword"  th:value="${#httpServletRequest.getParameter('keyword')}" type="search"/>
+                    <input class="form-control me-2"  id="searchKeyword"  name="keyword"  placeholder="Type query" th:value="${#httpServletRequest.getParameter('keyword')}" type="search"/>
                     <div class="input-group-append">
                         <button class="btn btn-secondary me-2" id="btnSearch">Search</button>
                     </div>
                 </div>
                 <div class="input-group-right">
                     <select aria-label="Default select example" class="form-select-sm mr-2 selSort" id="selSort" name="selSort" style="width:180px;padding: 0.5rem 0.5rem;">
-                        <option  value="0">Sort by</option>
+                        <option  value="0">Sort By</option>
                         <option  value="1" >최신순</option>
                         <option  value="2"> 조회순</option>
                         <option  value="3">좋아요순</option>

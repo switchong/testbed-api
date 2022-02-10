@@ -73,10 +73,8 @@ public class GalleryService {
         return galleryDto;
     }
 
-    public GalleryMemberDto findAllNftGalleryMemberLike(Pageable pageable, Long memberId , String nftMemberUserId) {
+    public GalleryMemberDto findAllNftGalleryMemberLike(Pageable pageable, Long memberId ) {
         NftMember nftMember = nftMemberRepository.findByNftMemberId(memberId);
-
-        NftMember nftMember1 = nftMemberRepository.findByNftMemberUserId(nftMemberUserId);
 
         List<Nft> galleryLikeList = nftCollectionRepository.findAllNftGalleryLike(pageable, memberId);
 
@@ -96,10 +94,9 @@ public class GalleryService {
         return galleryMemberDto;
     }
 
-    public GalleryMemberDto findAllNftGalleryMember(Pageable pageable, Long memberId , String nftMemberUserId) {
+    public GalleryMemberDto findAllNftGalleryMember(Pageable pageable, Long memberId ) {
         NftMember nftMember = nftMemberRepository.findByNftMemberId(memberId);
 
-        NftMember nftMember1 = nftMemberRepository.findByNftMemberUserId(nftMemberUserId);
         List<Nft> galleryList = nftCollectionRepository.findAllNftGallery(pageable, memberId);
 
         List<CommonNftResponse> nftResponse = nftFindService.setCommonNftResponses(galleryList);
@@ -128,9 +125,10 @@ public class GalleryService {
 
 
     @Transactional
-    public Long nftMemberUpdate(NftMemberRequestDto update , Long nftMemberId  ){
+    public Long nftMemberUpdate(NftMemberRequestDto update , Long nftMemberId){
         Long isResult = Long.valueOf(1);
 
+//        NftMember nftMemberUser = nftMemberRepository.findByNftMemberUserId(nftMemberUserId);
         NftMember nftMember1 = nftMemberRepository.findByNftMemberId(nftMemberId);
 
         Long nftMember = nftMemberRepository.updateNftMember(update , nftMemberId);

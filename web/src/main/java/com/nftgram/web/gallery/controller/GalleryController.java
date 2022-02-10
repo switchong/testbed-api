@@ -12,6 +12,7 @@ import com.nftgram.web.member.dto.NftMemberAuthDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -71,14 +72,14 @@ public class GalleryController {
 //        return "gallery/gallery_swiper";
 //    }
 
-    @GetMapping("gallery/myfavorite/{nftMemberUserId}")
-    public String myfavorite(@PathVariable("nftMemberUserId") String nftMemberUserId , Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException {
+    @GetMapping("gallery/myfavorite")
+    public String myfavorite( String nftMemberUserId , Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
 
-            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMemberLike(pageable, memberId , nftMemberUserId);
+            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMemberLike(pageable, memberId );
 
             model.addAttribute("nav_active","myfavorite");
             model.addAttribute("member",galleryMemberDto.getNftMember());
@@ -92,19 +93,20 @@ public class GalleryController {
         }
     }
 
-    @GetMapping("gallery/mycollection/{nftMemberUserId}")
-    public String mycollection(@PathVariable("nftMemberUserId") String nftMemberUserId ,  Model model, Pageable pageable  ) throws GeneralSecurityException, UnsupportedEncodingException {
+    @GetMapping("gallery/mycollection")
+    public String mycollection( Model model, Pageable pageable ) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
 
 
-            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMember(pageable, memberId , nftMemberUserId);
+            GalleryMemberDto galleryMemberDto = galleryService.findAllNftGalleryMember(pageable, memberId );
 
             if(galleryMemberDto.getSliderCount() >= 0) {
                 model.addAttribute("nav_active","mycollection");
                 model.addAttribute("member",galleryMemberDto.getNftMember());
+                model.addAttribute("nftMemberUserId",galleryMemberDto.getNftMember().getNftMemberUserId());
                 model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
                 model.addAttribute("slideList", galleryMemberDto.getNftSliderList());
                 return "gallery/mycollection";
