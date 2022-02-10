@@ -194,6 +194,11 @@ function layerPopId(layerId, boxPosition){
     $('.wrap_layer_popup#'+layerId).fadeIn(function(){
         $('.wrap_layer_popup#'+layerId).css('display','block');
     });
+
+    $('.layer_popup_bg').on('click', function(){
+        $('.wrap_layer_popup').fadeOut();
+        $(this).fadeOut();
+    });
 }
 
 function layerPopGallery(nftId) {
