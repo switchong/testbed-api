@@ -102,6 +102,9 @@ public class Nft  extends BaseEntity {
     private String lastSaleUserName;
 
     @Column
+    private Long frameNftId;
+
+    @Column
     private String lastSaleProfileImageUrl;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -118,9 +121,6 @@ public class Nft  extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "active_status" , nullable = false)
     private ActiveStatus activeStatus;
-
-    @Column(name = "border_image_id")
-    private Long borderImageId;
 
     @Transient
     private Integer propertyOrder;
@@ -157,7 +157,7 @@ public class Nft  extends BaseEntity {
         this.nftAsset = nftAsset;
         this.nftCollection = nftCollection;
         this.activeStatus = ActiveStatus.ACTIVE;
-        this.borderImageId = borderImageId;
+        this.frameNftId = frameNftId;
 
         for (NftProperty nftProperty : nftProperties) {
             addNftProperty(nftProperty);
