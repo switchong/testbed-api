@@ -116,7 +116,7 @@ public class ApiRestService {
                 .collectionName(nftResponse.getNft().getCollectionName())
                 .nftCollectionId(nftResponse.getNft().getNftCollection().getNftCollectionId())
                 .nftAssetId(nftResponse.getNft().getNftAsset().getNftAssetId())
-                .borderImageId(nftResponse.getNft().getBorderImageId())
+                .frameNftId(nftResponse.getNft().getFrameNftId())
                 .createdDate(nftResponse.getNft().getCreateDate())
                 .asset(nftResponse.getNftAsset())
                 .collections(nftResponse.getNftCollection())
