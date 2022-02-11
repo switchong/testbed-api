@@ -10,6 +10,39 @@
 <link th:href="@{/css/gallery/edit.css}" rel="stylesheet" />
 <script th:src="@{/js/slide.js}"></script>
 <script th:src="@{/js/galleryEdit.js}"></script>
+<style>
+    @media screen and (max-width: 900px) {
+        #navigation-top {
+            display: none;
+        }
+
+        #nftgram_wrap {
+            height: 100vh;
+        }
+
+        .gallery-content {
+            height: 41%;
+        }
+
+        .gallery-edit-container {
+            height: 31%;
+        }
+
+        .gallery-edit-container .gallery-edit-select {
+            font-size: 0.9rem;
+        }
+
+        .gallery-edit-container .gallery-edit-slide-container .gallery-edit-slide-item {
+            width: 13%;
+        }
+
+        .gallery-edit-container .gallery-edit-slide-container .gallery-edit-slide-item .gallery-edit-select-number {
+            font-size: 0.9rem;
+            width: 30%;
+            height: 25%;
+        }
+    }
+</style>
 
 <body>
 <nav th:replace="fragment/nav.html :: fragment-nav"></nav>
@@ -18,7 +51,7 @@
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
         <div class="close-edit">
-            <img th:src="@{/img/icon/ic-edit-close.png}" id="closeEditBtn" th:onclick="|location.href='@{/gallery/mycollection}'|"/>
+            <img th:src="@{/img/icon/ic-edit-close.png}" id="closeEditBtn"/>
         </div>
         <div class="gallery-content">
             <img th:src="@{/img/icon/ic-Left-icon.png}" id="prevBtn"/>
@@ -38,7 +71,7 @@
                                         <p class="picture-title">NFT TITLE #0000</p>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-profile.svg}" />
                                                 <div class="nft-title-user">
                                                     <div class="user-info-name">
                                                         <span></span>
@@ -49,9 +82,9 @@
                                                 </div>
                                             </div>
                                             <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-eyes.svg}" />
                                                 <span>00</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-like.svg}" />
                                                 <span>00</span>
                                             </div>
                                         </div>
@@ -66,7 +99,7 @@
                                         <p class="picture-title">NFT TITLE #0000</p>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-profile.svg}" />
                                                 <div class="nft-title-user">
                                                     <div class="user-info-name">
                                                         <span></span>
@@ -77,9 +110,9 @@
                                                 </div>
                                             </div>
                                             <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-eyes.svg}" />
                                                 <span>00</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-like.svg}" />
                                                 <span>00</span>
                                             </div>
                                         </div>
@@ -94,7 +127,7 @@
                                         <p class="picture-title">NFT TITLE #0000</p>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
-                                                <img th:src="@{/img/icon/Profile_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-profile.svg}" />
                                                 <div class="nft-title-user">
                                                     <div class="user-info-name">
                                                         <span></span>
@@ -105,9 +138,9 @@
                                                 </div>
                                             </div>
                                             <div class="picture-price">
-                                                <img th:src="@{/img/icon/Price_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-eyes.svg}" />
                                                 <span>00</span>
-                                                <img th:src="@{/img/icon/Like_icon.png}" />
+                                                <img th:src="@{/img/icon/ic-gallery-like.svg}" />
                                                 <span>00</span>
                                             </div>
                                         </div>

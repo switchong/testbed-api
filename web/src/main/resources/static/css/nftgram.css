@@ -417,14 +417,14 @@ a.btn.btn-outline-dark {
     height: 100%;
     padding : 0rem 0.75rem;
     font-size: 1.2rem;
+    background-image: none;
+}
+
+.input-group #searchKeyword:placeholder-shown {
     background-image: url("../img/icon/ic-nav-search.svg");
     background-position: 0.8rem center;
     background-size: 1.5rem;
     background-repeat: no-repeat;
-}
-
-.input-group #searchKeyword:focus {
-    background-image: none;
 }
 
 .input-group-append {

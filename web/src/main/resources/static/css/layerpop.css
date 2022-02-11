@@ -20,7 +20,7 @@ button{*overflow:visible;margin:0rem;padding:0;border:0 none;background:transpar
 .pop_close a{display:inline-block; width: 100%; height: 100%}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container{position:relative;padding:0;width : 100%;height:70%;z-index: 995;}
 .wrap_layer_popup#nft-layer-pop .chg-list{position:fixed;top:50%;right:-20%;left:-20%; transform: translateY(-50%); height: fit-content; z-index:900; display: flex; align-items: center; justify-content: space-between;}
-.wrap_layer_popup#nft-layer-pop .chg-list .arrows{width:1.5rem; text-indent:-1000%;overflow:hidden; background-position: center; background-size: contain; background-repeat: no-repeat;}
+.wrap_layer_popup#nft-layer-pop .chg-list .arrows{height:2.5rem; text-indent:-1000%;overflow:hidden; background-position: center; background-size: contain; background-repeat: no-repeat;}
 .wrap_layer_popup#nft-layer-pop .chg-list .arrows.prev{ background-image:url("../img/icon/ic-popup-left.png");}
 .wrap_layer_popup#nft-layer-pop .chg-list .arrows.next{ background-image:url("../img/icon/ic-popup-right.png");}
 
@@ -47,7 +47,7 @@ div#nft-info::-webkit-scrollbar {
 
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text{display:none;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td {padding:2% 3%;font-size: 1.1rem;}
-.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text.attr-properties-row td { display: grid; grid-template-columns: repeat(2, 1fr); grid-column-gap: 2%; grid-row-gap: 2%; margin-bottom: 6%;}
+.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text.attr-properties-row td { display: grid; grid-template-columns: repeat(2, 1fr); grid-column-gap: 2%; grid-row-gap: 2%; margin-bottom: 6%; overflow: scroll;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info{padding:0.3rem 1rem;background-color: #fff;color: #000;text-align: center;
     width: 100%;  height: 100px;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info .prop-info-nft{margin-bottom: auto;font-size: 0.5rem;}
@@ -93,11 +93,11 @@ div#nft-info::-webkit-scrollbar {
 .wrap_layer_popup#nft-layer-pop .nft-title-area{position: relative;width:100%;height: 30%;padding: 0.5rem;color: #fff;}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title{width:69%;height:38%;margin-bottom: 2.5%}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title .nft-title-info{text-align: center; margin-bottom : 0;}
-.wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user{width:70%;height:60%}
+.wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user{width:91%;height:60%}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-user-image{float:left;margin-right: 0.625rem;}
-.wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-user-info{float:left;width:50%;overflow:hidden;font-weight: bold;line-height: 1;}
+.wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-user-info{float:left;width:60%;overflow:hidden;font-weight: bold;line-height: 1;}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-user-info .time{font-size:0.8rem;font-weight: 300;}
-.wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-etc{float:right;width:35%;margin-top:0.3rem;font-weight: bold;}
+.wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-etc{float:right;margin-top:0.3rem;font-weight: bold;}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-etc .etc-eth, .etc-like {float: left; display: flex; align-items: center}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-etc .etc-eth .ethPrice{margin:0 1rem 0 0.5rem;}
 .wrap_layer_popup#nft-layer-pop .nft-title-area .nft-title-user .nft-title-etc .etc-like .likeCount{margin:0 0 0 0.5rem;}

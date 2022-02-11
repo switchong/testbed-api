@@ -411,6 +411,13 @@ img[id*="image-edit-icon"] {
     width: 1.5rem;
 }
 
+#closeEditBtn {
+    width: 2.801rem;
+    height: 2.801rem;
+    object-fit: fill;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1600px) {
     .nft-title-user {
         width: 6rem;
@@ -445,7 +452,8 @@ img[id*="image-edit-icon"] {
     }
 
     #prevBtn, #nextBtn {
-        width: 1rem;
+        width: 2rem;
+        padding: 0.5rem;
     }
 }
 
@@ -488,6 +496,11 @@ img[id*="image-edit-icon"] {
         }
     }
 
+    #closeEditBtn {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
     .gallery-top-myCollection {
         font-size: 0.8rem;
         display: flex;
@@ -504,13 +517,6 @@ img[id*="image-edit-icon"] {
     position: absolute;
     right : 3%;
     top : 3%;
-}
-
-#closeEditBtn {
-    width: 2.801rem;
-    height: 2.801rem;
-    object-fit: fill;
-    cursor: pointer;
 }
 
 .gallery-edit-container {
@@ -574,7 +580,7 @@ img[id*="image-edit-icon"] {
 }
 
 .gallery-edit-container .gallery-edit-slide-container .gallery-edit-slide-item {
-    width : 8%;
+    width : 10%;
     height: 100%;
     background-color: #fff;
     flex : none;
@@ -587,7 +593,7 @@ img[id*="image-edit-icon"] {
     top : 4%;
     left: 4%;
     width: 26%;
-    height: 20%;
+    height: 26%;
     border-radius: 50%;
     border : 2px solid #090909;
     display: flex;

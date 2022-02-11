@@ -28,22 +28,22 @@ window.addEventListener("DOMContentLoaded", ()=>{
     const backgroundImages = document.querySelectorAll('.gallery-edit-slide-item.edit-slice-item-background');
     const closeBtn = document.querySelector('#closeEditBtn');
 
-    window.addEventListener('beforeunload',(e)=>{
-        e.preventDefault();
-        if(isSave && (nftArray.length || frameArray.length || backgroundArray.length)) {
-            e.returnValue = '지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?';
-        }
-        return;
-    })
-
-    // closeBtn.addEventListener('click',()=>{
-    //     if(isSave) {
-    //         if(!window.confirm('지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?')){
-    //             return;
-    //         }
+    // window.addEventListener('beforeunload',(e)=>{
+    //     e.preventDefault();
+    //     if(isSave && (nftArray.length || frameArray.length || backgroundArray.length)) {
+    //         e.returnValue = '지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?';
     //     }
-    //     window.location.href = '/galley/mycollection/null';
+    //     return;
     // })
+
+    closeBtn.addEventListener('click',()=>{
+        if(isSave && (nftArray.length || frameArray.length || backgroundArray.length)) {
+            if(!window.confirm('지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?')){
+                return;
+            }
+        }
+        window.location.href = '/gallery/mycollection';
+    })
 
     saveBtn.forEach((item, index) => {
         item.addEventListener('click',() => {

@@ -12,7 +12,21 @@ const setBackHeight = () => {
     let newHeight = $(window).height() - $('#navigation-top').height() + 8;
     console.log($(window).width());
     if($(window).width() <= 900) {
-        newHeight = newHeight + $('#navigation-top > nav:last-child').height() + 10;
+        if($(window).width() < $(window).height()) {
+            newHeight = $(window).width() - $('#navigation-top').height() + $('#navigation-top > nav:last-child').height() + 15;
+            console.log(window.location.href.split('/')[4])
+            if(window.location.href.split('/')[4] === 'edit') {
+                newHeight = 100 + "vw";
+            }
+        }
+        else {
+            newHeight = $(window).height() - $('#navigation-top').height() + $('#navigation-top > nav:last-child').height() + 15;
+            if(window.location.href.split('/')[4] === 'edit') {
+                newHeight = 100 + "vh";
+            }
+        }
+        console.log(newHeight, $('#navigation-top > nav:last-child').width());
+        console.log($(window).width());
     }
     $('#nftgram_wrap').css({
         'height' : newHeight,

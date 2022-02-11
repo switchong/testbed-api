@@ -176,12 +176,21 @@ function layerPopId(layerId, boxPosition){
     }
     // left position of popup box
     let popWidth = $('.wrap_layer_popup#'+layerId).width();
-    let positionLeft = -popWidth/2+'px';
+    let positionLeft = $(window).width()/2+'px';
+    let translate = 'translateX(-50%)';
+    if($(window).width() <= 900) {
+        if($(window).width() < $(window).height()) {
+            translate = 'translate(-50%, -50%)';
+            positionTop = $(window).width() / 2 + 'px';
+            positionLeft = $(window).height() / 2 + 'px';
+        }
+
+    }
     $('.wrap_layer_popup#'+layerId).css({
         'position' : boxPosition,
         'top' : positionTop,
-        'left' : -positionLeft,
-        'transform' : 'translateX(-50%)'
+        'left' : positionLeft,
+        'transform' : translate
     });
 
     // 팝업창 띄우기
@@ -196,8 +205,10 @@ function layerPopId(layerId, boxPosition){
     });
 
     $('.layer_popup_bg').on('click', function(){
-        $('.wrap_layer_popup').fadeOut();
-        $(this).fadeOut();
+        if($(window).width > 900) {
+            $('.wrap_layer_popup').fadeOut();
+            $(this).fadeOut();
+        }
     });
 }
 
