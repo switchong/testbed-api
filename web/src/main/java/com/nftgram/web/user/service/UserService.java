@@ -27,7 +27,8 @@ public class UserService {
     private final NftAssetRepository nftAssetRepository;
     private final NftCollectionRepository nftCollectionRepository;
 
-    public GalleryMemberDto findNftUsername(Pageable pageable, Long memberId, Long url_member_id) {
+    public GalleryMemberDto findNftUserMemberId(Pageable pageable, Long memberId, Long url_member_id, String page) {
+
         NftMember urlNftMember = nftMemberRepository.findByNftMemberId(url_member_id);
 
         List<Nft> galleryLikeList = new ArrayList<>();
@@ -39,9 +40,44 @@ public class UserService {
         List<List<CommonNftResponse>> sliderResponse =  new ArrayList<>();
 
         if(urlNftMember != null) {
-            galleryLikeList = nftRepository.findByNftMemberList(pageable, urlNftMember.getNftMemberId());
+            if(page.equals("favorite")) {
+                galleryLikeList = nftRepository.findByNftLikeMember(pageable, urlNftMember.getNftMemberId());
+            } else {
+                galleryLikeList = nftRepository.findByNftMemberList(pageable, urlNftMember.getNftMemberId());
+            }
 
             nftResponse = nftFindService.setCommonNftResponses(galleryLikeList);
+
+            sliderCount = Long.valueOf((long) Math.ceil(nftResponse.size()/(3 * 1.0)));
+
+            sliderResponse = nftFindService.nftResponseList(sliderCount, nftResponse);
+        }
+
+
+        GalleryMemberDto galleryMemberDto = GalleryMemberDto.builder()
+                .sliderCount(sliderCount)
+                .nftMember(urlNftMember)
+                .nftSliderList(sliderResponse)
+                .nftResponseList(nftResponse)
+                .build();
+
+        return galleryMemberDto;
+    }
+
+    public GalleryMemberDto findNftUsername(Pageable pageable, String keyword, String username) {
+        NftMember urlNftMember = NftMember.builder().build();
+
+        List<Nft> galleryUserList = nftRepository.findNftUsername(pageable, keyword, username);
+
+        List<CommonNftResponse> nftResponse = new ArrayList<>();
+
+        Long sliderCount = Long.valueOf(0);
+
+        List<List<CommonNftResponse>> sliderResponse =  new ArrayList<>();
+
+        if(galleryUserList != null) {
+
+            nftResponse = nftFindService.setCommonNftResponses(galleryUserList);
 
             sliderCount = Long.valueOf((long) Math.ceil(nftResponse.size()/(3 * 1.0)));
 

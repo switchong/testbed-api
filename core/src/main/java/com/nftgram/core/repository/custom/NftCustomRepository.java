@@ -17,6 +17,7 @@ public interface NftCustomRepository {
     List<Nft> findAllNft(Pageable pageable, String keyword , Long sort  );
 
 
+    List<Nft> findNftUsername(Pageable pageable, String keyword, String username);
 
     List<Nft> findAllNftGallery(Pageable pageable);
 

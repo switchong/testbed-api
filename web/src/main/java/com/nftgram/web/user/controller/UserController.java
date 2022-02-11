@@ -31,17 +31,44 @@ public class UserController {
     private final MemberLoginManager memberLoginManager;
 
     @GetMapping("/{member_id}")
-    public String username(Model model, Pageable pageable, String keyword , Long sort, @PathVariable("member_id") Long url_member_id) throws GeneralSecurityException, UnsupportedEncodingException {
+    public String userMemberId(Model model, Pageable pageable, String keyword , Long sort, String page, @PathVariable("member_id") Long url_member_id) throws GeneralSecurityException, UnsupportedEncodingException {
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+
+        memberId = authDto.getNftMemberId();
+        if(page == null) {
+            page = "";
+        }
+
+        GalleryMemberDto galleryMemberDto = userService.findNftUserMemberId(pageable, memberId, url_member_id, page);
+
+        model.addAttribute("nav_active", "");
+        if(galleryMemberDto.getNftMember() != null) {
+            model.addAttribute("member", galleryMemberDto.getNftMember());
+            model.addAttribute("sliderList", galleryMemberDto.getNftSliderList());
+            model.addAttribute("nftList", galleryMemberDto.getNftResponseList());
+
+            return "user/index";
+        } else {
+            model.addAttribute("message","Not Found User!!");
+
+            return "error/not_found";
+        }
+
+    }
+
+    @GetMapping("/username/{username}")
+    public String userName(Model model, Pageable pageable, String keyword , @PathVariable("username") String username) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
 
         memberId = authDto.getNftMemberId();
 
-        GalleryMemberDto galleryMemberDto = userService.findNftUsername(pageable, memberId, url_member_id);
+        GalleryMemberDto galleryMemberDto = userService.findNftUsername(pageable, keyword, username);
 
         model.addAttribute("nav_active","");
-        if(galleryMemberDto.getSliderCount() >= 0) {
-            model.addAttribute("member",galleryMemberDto.getNftMember());
+        if(galleryMemberDto.getSliderCount() > 0) {
+            model.addAttribute("username",username);
             model.addAttribute("sliderList",galleryMemberDto.getNftSliderList());
             model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
 
@@ -69,7 +96,7 @@ public class UserController {
             model.addAttribute("sliderList",galleryMemberDto.getNftSliderList());
             model.addAttribute("nftList",galleryMemberDto.getNftResponseList());
 
-            return "user/address";
+            return "user/index";
         } else {
             model.addAttribute("message","Not Found Address!!");
 

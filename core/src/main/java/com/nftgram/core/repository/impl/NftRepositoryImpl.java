@@ -4,6 +4,7 @@ import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.domain.nftgram.value.ContractType;
 import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.repository.custom.NftCustomRepository;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -75,7 +76,26 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return result;
     }
 
+    @Override
+    public List<Nft> findNftUsername(Pageable pageable, String keyword, String username)  {
+        BooleanBuilder nameBuilder = new BooleanBuilder();
 
+        nameBuilder.or(nft.lastSaleUserName.eq(username).and(nft.lastSaleUserName.isNotNull()).and(nft.lastSaleUserName.ne("NullAddress")));
+        nameBuilder.or(nft.creatorUserName.eq(username).and(nft.creatorUserName.isNotNull()).and(nft.creatorUserName.ne("NullAddress")));
+        nameBuilder.or(nft.ownerUserName.eq(username).and(nft.ownerUserName.isNotNull()).and(nft.ownerUserName.ne("NullAddress")));
+
+        List<Nft> result = queryFactory.select(nft)
+                .from(nft)
+                .join(nft.nftAsset, nftAsset)
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        eqKeyword(keyword),
+                        nameBuilder)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        return result;
+    }
 
     @Override
     public List<Nft> findAllNftGallery(Pageable pageable) {
@@ -113,9 +133,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .fetch();
         return result;
     }
-
-
-
 
     @Override
     public NftOneJoinDto findByNftIdOne(Long nftId) {
@@ -207,12 +224,14 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .set(nft.likeCount, nft.likeCount.subtract(1))
                 .execute();
     }
+
     public BooleanExpression eqKeyword(String keyword) {
         if (StringUtils.isEmpty(keyword)) {
             return null;
         }
-        return nft.collectionName.contains(keyword).or(nft.name.contains(keyword)).or(nft.creatorUserName.contains(keyword));
+        return nft.collectionName.contains(keyword).or(nft.name.contains(keyword));
     }
+
     public OrderSpecifier<Long> SortNftPage(String sort) {
 
         OrderSpecifier<Long> sortResult = null;
@@ -222,10 +241,10 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 sortResult = nft.nftId.desc();
                 break;
             case "2":
-                sortResult = nft.likeCount.desc();
+                sortResult = nft.viewCount.desc();
                 break;
             case  "3" :
-                sortResult = nft.viewCount.desc();
+                sortResult = nft.likeCount.desc();
                 break;
             default:
                 sortResult = nft.nftId.asc();
@@ -233,6 +252,5 @@ public class NftRepositoryImpl implements NftCustomRepository {
         }
         return sortResult;
     }
-
 
 }
