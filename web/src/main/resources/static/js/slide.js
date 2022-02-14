@@ -222,9 +222,9 @@ const makeGalleryList = (data) => {
                                         </div>
                                         <div class="picture-price">
                                             <img src="../img/icon/ic-gallery-eyes.svg" class="hIs24 wIs20" />
-                                            <span class="viewCount">${inner.viewCount}</span>
+                                            <span class="viewCount count-text">${inner.viewCount}</span>
                                             <img src="../img/icon/ic-gallery-like.svg" class="hIs24 wIs20" />
-                                            <span class="likeCount">${inner.likeCount}</span>
+                                            <span class="likeCount count-text">${inner.likeCount}</span>
                                         </div>
                                     </div>
                                 </div>

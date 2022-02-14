@@ -59,7 +59,19 @@ $(document).ready(function(){
     if($('#nftgram_wrap #nftgram-list').length > 0) {
         moreView();
     }
+
+    DontLongNumber();
 });
+
+function DontLongNumber() {
+    const countText = document.querySelectorAll('.count-text');
+
+    countText.forEach((item, index) => {
+        if(Number(item.innerHTML) >= 1000) {
+            item.innerHTML = '999+';
+        }
+    })
+}
 
 /*
 *  main auto-loading
@@ -149,8 +161,8 @@ function toList(list) {
             '                            <img src="/img/icon/ic-gallery-profile.svg" class="card-img-user" > <span class="text-muted left-nft-title">'+nft.username+'</span>\n' +
             '                        </div>\n'+'' +
             '                        <div class="row-data-right">\n' +
-            '                            <img src="/img/icon/ic-gallery-eyes.svg" class="card-img-icon view-icon whIs19 ml20"> <span class="text-muted">'+nft.viewCount+'</span>\n' +
-            '                            <img src="/img/icon/ic-gallery-like.svg" class="card-img-icon whIs19 ml20 like-icon"> <span class="text-muted">'+nft.likeCount+'</span>\n' +
+            '                            <img src="/img/icon/ic-gallery-eyes.svg" class="card-img-icon view-icon whIs19 ml20"> <span class="text-muted count-text">'+nft.viewCount+'</span>\n' +
+            '                            <img src="/img/icon/ic-gallery-like.svg" class="card-img-icon whIs19 ml20 like-icon"> <span class="text-muted count-text">'+nft.likeCount+'</span>\n' +
             '                         </div>\n'+'' +
             '                      </div>\n' +
             '                    <p class="card-text-data"><small class="text-muted" >'+date+'</small></p>\n' +

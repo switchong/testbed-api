@@ -70,8 +70,10 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"] + Label {
+    width: 85%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     cursor: pointer;
 }
 

@@ -577,7 +577,10 @@ img.card-img-top {
     height: 2.25rem;
     background: #000000;
     color: #ffffff;
-    padding: 6px 0.813rem 0.188rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.188rem 0.813rem 0.188rem 1rem;
 
 }
 .search-box .close{
