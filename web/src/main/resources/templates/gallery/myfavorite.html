@@ -19,7 +19,6 @@
                     <img th:src="@{/img/icon/ic-nav-profile.svg}" alt="profile" id="imgProfile" />
                     <span th:text="${member.username} ?: 'USER NAME'">USER NAME</span>
                 </div>
-                <span onclick="this.parentElement.style.display='none'" class="user-close-btn">X</span>
             </div>
         </div>
         <div class="sns-container" th:if="${member}">

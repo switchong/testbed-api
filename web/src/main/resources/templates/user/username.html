@@ -32,7 +32,7 @@
                                 <div class="gallery-slide-list-item-down" ></div>
                                 <div class="image-container" th:each="slide :${slider}">
                                     <div class="image-container-content" th:data-nftid="${slide.nftId}">
-                                        <img th:src="@{/img/gallery/frame.jpg}" class="outer-frame"/>
+                                        <img th:src="@{/img/etc/no-image.png}" class="outer-frame"/>
                                         <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" th:if="${slide.tagType == 'image'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
                                         <video class="inner-picture" th:classappend="'gimage'+${slide.nftId}" controls controlsList="nodownload"  th:if="${slide.tagType == 'video'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
                                     </div>

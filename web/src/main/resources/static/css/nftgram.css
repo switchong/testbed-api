@@ -500,7 +500,7 @@ select[name="selSort"] {
     /*margin-bottom: 15px;*/
     /*border:1px solid rgb(229, 232, 235);*/
     /*border-radius:10px;*/
-    /*overflow: hidden;*/
+    overflow: hidden;
     /*text-overflow: ellipsis;*/
     /*white-space: nowrap;*/
     width: 100%;
@@ -515,10 +515,10 @@ img.card-img-top {
     border: solid 1px lightgray;
     border-radius: 5px;
 }
+
 #nftgram-list .card-body {
     width : 100%;
     padding : 0;
-
 }
 #nftgram-list .card-body .row{
     flex-wrap: nowrap;
