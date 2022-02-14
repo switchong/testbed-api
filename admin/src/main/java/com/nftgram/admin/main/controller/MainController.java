@@ -17,4 +17,19 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String Login(Model model) {
+        return "auth/login";
+    }
+
+    @GetMapping("/allNft")
+    public String AllNft(Model model) {
+        return "pages/allNft";
+    }
+
+    @GetMapping("/loadNft")
+    public String LoadNft(Model model) {
+        return "pages/loadNft";
+    }
+
 }
