@@ -77,12 +77,13 @@ public class NftFindService {
         List<CommonNftResponse> response = new ArrayList<>();
 
         nftList.forEach(nftInfo -> {
-            String userName = null;
+            String userName  = null;
             String userImage = null;
             String tagType = "image";
             Long likeCount = Long.valueOf(0);
             Long favoriteCount = Long.valueOf(0);
             Long viewCount = Long.valueOf(0);
+            String userUrl   = "/gallery/"+nftInfo.getNftCollection().getNftCollectionId();    // 기본 콜렉션|회원|비회원용 url
 
             if(nftInfo.getLastSaleProfileImageUrl() != null) {
                 userImage = nftInfo.getLastSaleProfileImageUrl();
@@ -101,6 +102,12 @@ public class NftFindService {
             if(userName == null) {
                 userName = "#null";
 //                userName = nftInfo.getCollectionName();
+            } else {
+                if(nftInfo.getNft_member_id() != null) {
+                    userUrl = "/user/" + nftInfo.getNft_member_id();
+                } else {
+                    userUrl = "/user/username" + userName;
+                }
             }
             if(nftInfo.getLikeCount().toString() != "") {
                 likeCount = nftInfo.getLikeCount();
@@ -132,6 +139,8 @@ public class NftFindService {
                     .assetContractAddress(nftInfo.getAssetContractAddress())
                     .tokenId(nftInfo.getTokenId())
                     .tagType(tagType)
+                    .frameNftId(nftInfo.getFrameNftId())
+                    .userUrl(userUrl)
                     .localDate(nftInfo.getCreateDate())
                     .build();
             response.add(commonNftResponse);

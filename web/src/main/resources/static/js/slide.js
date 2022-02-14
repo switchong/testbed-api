@@ -203,9 +203,13 @@ const makeGalleryList = (data) => {
             innerNewList = innerNewList + `
                             <div class="image-container">
                                 <div class="image-container-content" data-nftid="${inner.nftId}">
-                                    <img class="outer-frame" src="../img/etc/no-image.png"/>
-                                    <img class="inner-picture gimage${inner.nftId}" data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}" />
-                                </div>
+                                    <img class="outer-frame" src="../img/etc/no-image.png"/>`;
+            if(inner.tagType == "video") {
+                innerNewList += `<video class="inner-picture gimage${inner.nftId}" controls controlsList="nodownload"  data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}"/>`;
+            } else {
+                innerNewList += `<img class="inner-picture gimage${inner.nftId}" data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}" />`;
+            }
+            innerNewList += `</div>
                                 <div class="picture-explain">
                                     <div class="picture-title-container">
                                         <p class="picture-title">${inner.name}</p>

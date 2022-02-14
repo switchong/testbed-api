@@ -12,9 +12,9 @@ function nftImageClick (e, index) {
 }
 
 function popupNextClick () {
-    if(currentIndex < document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture').length - 1) {
+    if(currentIndex < document.querySelectorAll('#gallery-slide-container .image-container-content .inner-picture').length - 1) {
         // console.log(document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid'));
-        var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid');
+        var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content .inner-picture')[++currentIndex].getAttribute('data-nftid');
         var PopId = "nft-layer-pop";
         layerPopId(PopId);
         layerPopGallery(nftId);
@@ -27,7 +27,7 @@ function popupNextClick () {
 function popupPrevClick () {
     if(currentIndex > 0) {
         // console.log(document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[++currentIndex].getAttribute('data-nftid'));
-        var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture')[--currentIndex].getAttribute('data-nftid');
+        var nftId = document.querySelectorAll('#gallery-slide-container .image-container-content .inner-picture')[--currentIndex].getAttribute('data-nftid');
         var PopId = "nft-layer-pop";
         layerPopId(PopId);
         layerPopGallery(nftId);
@@ -38,7 +38,7 @@ function popupPrevClick () {
 }
 
 function deleteEventPopUp () {
-    document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture').forEach((item, index)=>{
+    document.querySelectorAll('#gallery-slide-container .image-container-content .inner-picture').forEach((item, index)=>{
         item.removeEventListener('click',(e)=>{ nftImageClick(e,index)});
     });
 
@@ -47,7 +47,7 @@ function deleteEventPopUp () {
 }
 
 function giveClickEvent() {
-    document.querySelectorAll('#gallery-slide-container .image-container-content img.inner-picture').forEach((item, index)=>{
+    document.querySelectorAll('#gallery-slide-container .image-container-content .inner-picture').forEach((item, index)=>{
         item.addEventListener('click', (e)=>{nftImageClick(e,index)});
     })
     document.querySelector('.next').addEventListener('click',popupNextClick)

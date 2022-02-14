@@ -17,9 +17,7 @@
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
         <div class="sns-container" th:if="${member}">
-            <a class="sns-link-img"
-               th:onclick="clip([[${member.nftMemberId}]])">
-                <img th:src="@{/img/icon/ic-sns-share.svg}" /></a>
+            <a class="sns-link-img" th:onclick="clip([[${member.nftMemberId}]])"><img th:src="@{/img/icon/ic-sns-share.svg}" /></a>
             <a  class="sns-link-img" th:href="${member.instagram}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-insta.svg}"  /></a>
             <a  class="sns-link-img" th:href="${member.twitter}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-twiter.svg}"/></a>
             <a  class="sns-link-img" th:href="${member.facebook}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-facebook.svg}"/></a>
@@ -54,27 +52,11 @@
             <div class="gallery-slide-container" id="gallery-slide-container">
                 <div class="gallery-slide-list-container myCollection-slide-container">
                     <div class="gallery-slide-list" th:each="slider, count : ${slideList}">
-                        <div class="myCollection-background-edit">
-                            <input type="checkbox" th:id="${'editcheck' + count.index}"/>
-                            <label th:for="${'editcheck' + count.index}">
-                                <p>WALLPAPER NFT</p>
-                                <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon10">
-                            </label>
-                            <div th:replace="fragment/editBackground.html :: frame-edit" />
-                        </div>
                         <img th:src="@{/img/gallery/backframe.jpg}" alt="background" />
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
                                 <div class="gallery-slide-list-item-down"></div>
                                 <div class="image-container" th:each="slide, num : ${slider}">
-                                    <div class="myCollection-image-top">
-                                        <input type="checkbox" th:id="${'editcheck' + num.index + (count.index * 3)}"/>
-                                        <label th:for="${'editcheck' + num.index + (count.index * 3)}">
-                                            <p>FRAME NFT</p>
-                                            <img th:src="@{/img/icon/Edit_icon.png}" alt="edit" id="image-edit-icon1">
-                                        </label>
-                                        <div th:replace="fragment/editFrame.html :: frame-edit" />
-                                    </div>
                                     <div class="image-container-content" th:data-nftid="${slide.nftId}">
                                         <img class="outer-frame" th:src="@{../img/etc/no-image.png}"/>
                                         <img class="inner-picture" th:classappend="'gimage'+${slide.nftId}" th:if="${slide.tagType == 'image'}" data-layer-btn="nft-layer-pop" th:alt="${slide.name}" th:data-nftid="${slide.nftId}" th:src="${slide.nftImageUrl}"/>
@@ -89,8 +71,6 @@
                                                     <div class="user-info-name">
                                                         <span th:text="${slide.username}">USER NAME</span>
                                                         <span class="time">1 minute ago</span>
-                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
-                                                        <!--                                                    <div class="nft-title-user-info" th:text="${nft.username}">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
                                                     </div>
                                                 </div>
                                             </div>

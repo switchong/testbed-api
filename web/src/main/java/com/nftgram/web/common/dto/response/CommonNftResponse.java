@@ -39,12 +39,17 @@ public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
 
     private String tagType;
 
+    private Long frameNftId;
+
+    private String userUrl;
+
     private LocalDateTime localDate;
 
 
     @Builder
     public CommonNftResponse(Long nftId, String name, String username, Long likeCount, Long favoriteCount, Long viewCount, String marketLink, String userImageUrl, String nftImageUrl,
-                             String nftCollectionName, Long nftCollectionId, String assetContractAddress, String tokenId, String tagType, LocalDateTime localDate) {
+                             String nftCollectionName, Long nftCollectionId, String assetContractAddress, String tokenId, String tagType,
+                             Long frameNftId, String userUrl, LocalDateTime localDate) {
         this.nftId = nftId;
         this.name = name;
         this.username = username;
@@ -59,6 +64,8 @@ public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
         this.assetContractAddress = assetContractAddress;
         this.tokenId = tokenId;
         this.tagType = tagType;
+        this.frameNftId = frameNftId;
+        this.userUrl = userUrl;
         this.localDate = localDate;
     }
 

@@ -1,3 +1,8 @@
+let currentPagePath = window.location.pathname;
+let url_this_page = location.href;
+let title_this_page = document.title;
+let url_user_page = window.location.origin;
+
 $(document).ready(function(){
     //nav country
     $('#navigation-country .nav-country').on('click',function(){
@@ -27,7 +32,7 @@ $(document).ready(function(){
     $('select[name="selSort"]').change(function () {
         let sort = $(this).val();
         currentPage = 0;
-        if(window.location.href.split('/')[3] === 'gallery' && window.location.href.split('/')[4] === undefined) {
+        if(currentPagePath.split('/')[1] === 'gallery' && currentPagePath.split('/')[2] === undefined) {
             MoreSlide( 'main/page/gallery','html');
         }
         moreView("html");
@@ -50,7 +55,7 @@ $(document).ready(function(){
             return false;
         }
         currentPage = 0;
-        if(window.location.href.split('/')[3] === 'gallery' && window.location.href.split('/')[4] === undefined) {
+        if(currentPagePath.split('/')[1] === 'gallery' && currentPagePath.split('/')[2] === undefined) {
             MoreSlide('main/page/gallery','html');
         }
         moreView("html");
@@ -82,7 +87,10 @@ function DontLongNumber() {
 const size = 20;
 
 function moreView(type , nft) {
-
+    if(currentPagePath !== "/") {
+        $(window).unbind();
+        return;
+    }
     let htmlBool = false;
     let total = (type=="html")?0:$('#nftgram-list .card').length;
     let nextPage = parseInt(total / size);
@@ -150,7 +158,7 @@ function toList(list) {
         let date = timeToElapsed(nft.localDate);
         let imageUrlHtml = '<img class="card-img-top" src="'+nft.nftImageUrl+'" alt="'+nft.name+'" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'" width="301px"  height="301px"/>';
         if(nft.nftImageUrl.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
-            imageUrlHtml = '<video class="card-img-top" controlslist="nodownload" loop="" playsinline="" preload="metadata" style="border-radius: 0px;"><source src="'+nft.nftImageUrl+'" type="video/mp4"></video>';
+            imageUrlHtml = '<video class="card-img-top" controlslist="nodownload" loop="" playsinline="" preload="metadata" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'"  style="border-radius: 0px;"><source src="'+nft.nftImageUrl+'" type="video/mp4"></video>';
         }
 
         html += '<div class="card" >\n' +
@@ -321,27 +329,26 @@ $.br2nl = function(tmpText){
 // const url_combine_band = url_default_band + encodeURI(url_this_page)+ '%0A' + encodeURI(title_this_page)+'%0A' + '&route=tistory.com';
 // const url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page);
 
-
-let url_this_page = location.href;
-let title_this_page = document.title;
-let url_user_page = "http:/local.nftgram.ai:8080";
-
-function favorites(){
-    let url = '';
-    const textarea = document.createElement("textarea");
-    document.body.appendChild(textarea);
-    url = window.document.location.href;
-    textarea.value = url;
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-    alert("Link copied!!!!")
-}
-
 //sns url copy // nftMemberId or nftMemberUserId
 function clip(memberId){
+    let path_arr = currentPagePath.split("/");
+    let cate1 = path_arr[1];
+    let cate2 = path_arr[2];
+
+    let reqUrl = currentPagePath;  // 기본 현재 페이지 링크
+    switch (cate1) {
+        case 'gallery' :
+            if(cate2 == "myfavorite") {
+                reqUrl = "/user/"+memberId+"?page=favorite";
+            } else if(cate2 == "mycollection") {
+                reqUrl = "/user/"+memberId;
+            } else {
+                reqUrl = "/gallery/"+cate2;
+            }
+            break;
+    }
     console.log(memberId);
-    const reqUrl = "/user/"+memberId
+
     const textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
     url = url_user_page+reqUrl;

@@ -228,6 +228,8 @@ function walletSave(address) {
         } else {
             alert("Error");
         }
+
+        return result;
     }
     return false;
 }

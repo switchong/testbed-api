@@ -515,6 +515,13 @@ img.card-img-top {
     border: solid 1px lightgray;
     border-radius: 5px;
 }
+video.card-img-top {
+    cursor: pointer;
+    height: 300px;
+    width: 100%;
+    border: solid 1px lightgray;
+    border-radius: 5px;
+}
 
 #nftgram-list .card-body {
     width : 100%;
