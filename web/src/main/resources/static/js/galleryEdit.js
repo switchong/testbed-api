@@ -17,6 +17,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
     let nftArray = [];
     let frameArray = [];
     let backgroundArray = [];
+    let choiceOne = true;
     const totalNft = document.querySelectorAll('.edit-nft').length;
     const totalFrame = document.querySelectorAll('.edit-frame').length;
     const totalBackground = document.querySelectorAll('.edit-background').length;
@@ -28,21 +29,29 @@ window.addEventListener("DOMContentLoaded", ()=>{
     const backgroundImages = document.querySelectorAll('.gallery-edit-slide-item.edit-slice-item-background');
     const closeBtn = document.querySelector('#closeEditBtn');
 
-    // window.addEventListener('beforeunload',(e)=>{
-    //     e.preventDefault();
-    //     if(isSave && (nftArray.length || frameArray.length || backgroundArray.length)) {
-    //         e.returnValue = '지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?';
-    //     }
-    //     return;
-    // })
+    window.addEventListener('beforeunload',(e)=>{
+        e.preventDefault();
+        if(choiceOne) {
+            if(isSave && (nftArray.length || frameArray.length || backgroundArray.length)) {
+                e.returnValue = '지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?';
+            }
+            return;
+        }
+        else {
+            choiceOne = true;
+        }
+    })
 
     closeBtn.addEventListener('click',()=>{
-        if(isSave && (nftArray.length || frameArray.length || backgroundArray.length)) {
-            if(!window.confirm('지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?')){
-                return;
+        if(choiceOne) {
+            if(isSave && (nftArray.length || frameArray.length || backgroundArray.length)) {
+                if(!window.confirm('지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?')){
+                    return;
+                }
             }
+            choiceOne = false;
+            window.location.href = '/gallery/mycollection';
         }
-        window.location.href = '/gallery/mycollection';
     })
 
     saveBtn.forEach((item, index) => {

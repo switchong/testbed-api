@@ -11,7 +11,7 @@ button{*overflow:visible;margin:0rem;padding:0;border:0 none;background:transpar
 .wrap_layer_popup .inner_popup_auto .auto_box{display:inline;position:relative}
 .wrap_layer_popup .inner_popup_auto .auto_box .bt_close{position:absolute;top:-2.813rem;right:0;width:2.125rem;height:2.125rem;background:url("../img/popup/close_34x34_white.png") no-repeat}
 /* 레이어팝업 detail popup */
-.wrap_layer_popup#nft-layer-pop{ width:45%;height : 60%; max-width: 640px; background-color : transparent}
+.wrap_layer_popup#nft-layer-pop{ width:45%;height : 60%; max-width: 640px; background-color : transparent; max-width: 700px; max-height: 600px;}
 .pop_close{position:absolute; top: 4%; right: 4%; text-align:right; height : 9%}
 .pop_close img {
     width: 2.5rem;

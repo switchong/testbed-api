@@ -4,6 +4,9 @@
     /*min-height: 660px;*/
     /*min-width: 1330px;*/
     position: relative;
+    max-width: 1950px;
+    max-height: 900px;
+    margin : 0 auto;
 }
 
 #imgWall {
