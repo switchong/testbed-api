@@ -128,7 +128,6 @@ public class GalleryService {
     public Long nftMemberUpdate(NftMemberRequestDto update , Long nftMemberId){
         Long isResult = Long.valueOf(1);
 
-//        NftMember nftMemberUser = nftMemberRepository.findByNftMemberUserId(nftMemberUserId);
         NftMember nftMember1 = nftMemberRepository.findByNftMemberId(nftMemberId);
 
         Long nftMember = nftMemberRepository.updateNftMember(update , nftMemberId);

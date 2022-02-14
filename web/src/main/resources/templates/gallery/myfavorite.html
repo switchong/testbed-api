@@ -23,11 +23,10 @@
             </div>
         </div>
         <div class="sns-container" th:if="${member}">
-            <a class="sns-link-img" th:data-link="${member.username}" onclick="clip(); return false;"><img th:src="@{/img/icon/ic-sns-share.svg}" /></a>
+            <a class="sns-link-img" th:data-link="${member.username}" onclick="favorites(); return false;"><img th:src="@{/img/icon/ic-sns-share.svg}" /></a>
             <a  class="sns-link-img" th:href="${member.instagram}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-insta.svg}"  /></a>
-            <a class="sns-link-img" onclick="window.open(url_combine_tw, '', 'scrollbars=no, width=600, height=600'); return false;"><img th:src="@{/img/icon/ic-sns-twiter.svg}"/></a>
-            <!--<a  class="sns-link-img" th:href="${member.twitter}" th:target="_blank"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>-->
-            <a  class="sns-link-img" th:href="${member.discord}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-facebook.svg}"/></a>
+            <a  class="sns-link-img" th:href="${member.twitter}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-twiter.svg}"/></a>
+            <a  class="sns-link-img" th:href="${member.facebook}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-facebook.svg}"/></a>
             <a  class="sns-link-img" th:href="${member.discord}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-discord.svg}"/></a>
             <!--<a  onclick="window.open(url_combine_tw, '', 'scrollbars=no, width=600, height=600'); return false;"><img th:src="@{/img/icon/Twitter_navi_icon.png}"/></a>-->
         </div>

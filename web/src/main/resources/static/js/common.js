@@ -99,7 +99,7 @@ function moreView(type , nft) {
             let html = toList(data.nftList);
 
             if(keyword && data.total <= 0) {
-                alert("Search No Data!!");
+                //alert("Search No Data!!");
                 return;
             } else {
                 if(type == "html") {
@@ -212,6 +212,7 @@ function updateLike(likeFlag, nftId) {
     let url = "/api/uplike";
     let param = {"nftId":nftId, "likeFlag":likeFlag};
     let likeCount = parseInt($('#likeCount').text());
+
     if(nftId > 0) {
         result = commonAjaxUrl(method, url, param);
         likeCount = result.likeTotalCount;
@@ -221,6 +222,7 @@ function updateLike(likeFlag, nftId) {
     }
     return result;
 }
+
 
 function getCommentList(nftId) {
     let commSize = 10;
@@ -295,23 +297,24 @@ $.br2nl = function(tmpText){
 };
 
 //SNS 공유 URL
-const url_default_ks = "https://story.kakao.com/share?url=";
-const url_default_fb = "https://www.facebook.com/sharer/sharer.php?u=";
-const url_default_tw_txt = "https://twitter.com/intent/tweet?text=";
-const url_default_tw_url = "&url="; var url_default_band = "http://band.us/plugin/share?body=";
-const url_route_band = "&route="; var url_default_naver = "http://share.naver.com/web/shareView.nhn?url=";
-const title_default_naver = "&title=";
-const url_this_page = location.href;
-const title_this_page = document.title;
-const url_combine_ks = url_default_ks + url_this_page;
-const url_combine_fb = url_default_fb + url_this_page;
-const url_combine_tw = url_default_tw_txt + document.title + url_default_tw_url + url_this_page;
-const url_combine_band = url_default_band + encodeURI(url_this_page)+ '%0A' + encodeURI(title_this_page)+'%0A' + '&route=tistory.com';
-const url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page);
+// const url_default_ks = "https://story.kakao.com/share?url=";
+// const url_default_fb = "https://www.facebook.com/sharer/sharer.php?u=";
+// const url_default_tw_txt = "https://twitter.com/intent/tweet?text=";
+// const url_default_tw_url = "&url="; var url_default_band = "http://band.us/plugin/share?body=";
+// const url_route_band = "&route="; var url_default_naver = "http://share.naver.com/web/shareView.nhn?url=";
+//const title_default_naver = "&title=";
+// const url_combine_ks = url_default_ks + url_this_page;
+// const url_combine_fb = url_default_fb + url_this_page;
+// const url_combine_tw = url_default_tw_txt + document.title + url_default_tw_url + url_this_page;
+// const url_combine_band = url_default_band + encodeURI(url_this_page)+ '%0A' + encodeURI(title_this_page)+'%0A' + '&route=tistory.com';
+// const url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page);
 
 
-//sns url copy
-function clip(){
+let url_this_page = location.href;
+let title_this_page = document.title;
+let url_user_page = "http:/local.nftgram.ai:8080";
+
+function favorites(){
     let url = '';
     const textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
@@ -321,7 +324,20 @@ function clip(){
     document.execCommand("copy");
     document.body.removeChild(textarea);
     alert("Link copied!!!!")
-
 }
 
+//sns url copy // nftMemberId or nftMemberUserId
+function clip(memberId){
+    console.log(memberId);
+    const reqUrl = "/user/"+memberId
+    const textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    url = url_user_page+reqUrl;
+    textarea.value = url;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("Link copied!!!!")
+
+}
 
