@@ -6,23 +6,40 @@
             <form th:action="@{/gallery/mycollection/save}"  th:object="${member}" method="post"> <!--th:action="@{'/gallery/mycollection/save/' + ${member.nftMemberId}}" -->
                 <div class="edit-box-collection" >
                     <p>USER NAME</p>
-                    <input type="text" id="username" name="username"  th:field="*{username}"  /> <!-- th:value="${member.username}"-->
+                    <input type="text" id="username" name="username"  th:field="*{username}"  />
+                     <!-- th:value="${member.username}"-->
                 </div>
                 <div class="edit-box-collection">
                     <p>INSTAGRAM</p>
-                    <input type="url" id="instagram" name="instagram" th:field="*{instagram}"  /> <!--th:value="${member.instagram}" -->
+                    <div class="edit-input-box">
+                        <label for="instagram">https://www.instagram.com/</label>
+                        <input type="text" id="instagram" name="instagram" th:field="*{instagram}"  />
+                    </div>
+                     <!--th:value="${member.instagram}" -->
                 </div>
                 <div class="edit-box-collection">
                     <p>TWITTER</p>
-                    <input type="url" id="twitter" name="twitter" th:field="*{twitter}"   /> <!--th:value="${member.twitter}"-->
+                    <div class="edit-input-box">
+                        <label for="twitter">https://www.twitter.com/</label>
+                        <input type="url" id="twitter" name="twitter" th:field="*{twitter}"   />
+                    </div>
+                    <!--th:value="${member.twitter}"-->
                 </div>
                 <div class="edit-box-collection">
                     <p>FACEBOOK</p>
-                    <input type="url" id="facebook" name="facebook" th:field="*{facebook}"   /> <!-- th:value="${member.facebook}"-->
+                    <div class="edit-input-box">
+                        <label for="facebook">https://www.facebook.com/</label>
+                        <input type="url" id="facebook" name="facebook" th:field="*{facebook}"   />
+                    </div>
+                    <!-- th:value="${member.facebook}"-->
                 </div>
                 <div class="edit-box-collection">
                     <p>DISCORD</p>
-                    <input type="url" id="discord" name="discord" th:field="*{discord}" /> <!--  th:value="${member.discord}" -->
+                    <div class="edit-input-box">
+                        <label for="discord">https://discord.gg/</label>
+                        <input type="url" id="discord" name="discord" th:field="*{discord}" />
+                    </div>
+                    <!--  th:value="${member.discord}" -->
                 </div><br />
                 <button class="edit-submit-button" type="submit">ok</button>
 <!--                <input type ="button" value="수정" class="btn btn-secondary" id="btnUpdate">-->

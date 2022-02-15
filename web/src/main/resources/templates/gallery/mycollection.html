@@ -32,19 +32,19 @@
                 </div>
             </div>
             <div class="myCollection-user-top">
+                <input type="checkbox" id="collection-edit2" />
+                <label for="collection-edit2" th:onclick="|location.href='@{/gallery/edit}'|">
+                    <p>Edit Gallery</p>
+                    <img th:src="@{/img/icon/ic-edit-btn.png}" alt="edit" id="editIcon2" />
+                </label>
+            </div>
+            <div class="myCollection-user-top">
                 <input type="checkbox" id="collection-edit1" />
                 <label for="collection-edit1">
                     <p>Edit Profile</p>
                     <img th:src="@{/img/icon/ic-edit-btn.png}" alt="edit" id="editIcon1" />
                 </label>
                 <div th:replace="fragment/editFrameCollection.html :: frame-edit-collection" />
-            </div>
-            <div class="myCollection-user-top">
-                <input type="checkbox" id="collection-edit2" />
-                <label for="collection-edit2" th:onclick="|location.href='@{/gallery/edit}'|">
-                    <p>Edit Gallery</p>
-                    <img th:src="@{/img/icon/ic-edit-btn.png}" alt="edit" id="editIcon2" />
-                </label>
             </div>
         </div>
         <div class="gallery-content">

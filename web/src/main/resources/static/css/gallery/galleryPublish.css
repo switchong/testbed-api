@@ -460,7 +460,7 @@ img[id*="image-edit-icon"] {
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 930px) {
     @media (orientation: portrait) {
         html {
             transform: rotate(-90deg);

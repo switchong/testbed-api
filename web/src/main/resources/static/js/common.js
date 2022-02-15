@@ -4,6 +4,7 @@ let title_this_page = document.title;
 let url_user_page = window.location.origin;
 
 $(document).ready(function(){
+
     //nav country
     $('#navigation-country .nav-country').on('click',function(){
         let country = $(this).data('country');
@@ -73,7 +74,7 @@ function DontLongNumber() {
 
     countText.forEach((item, index) => {
         if(Number(item.innerHTML) >= 1000) {
-            item.innerHTML = '999+';
+            item.innerHTML = `${Math.floor(Number(item.innerHTML)/1000)}k+`;
         }
     })
 }

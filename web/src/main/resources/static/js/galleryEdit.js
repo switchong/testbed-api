@@ -114,6 +114,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
                nowSlideItems[index].getElementsByClassName('back-frame')[0].setAttribute('src', item);
             });
         }
+        isSave = true;
     }
 
     function numberRerange(num, str) {
@@ -160,6 +161,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
             console.log(backgroundArray);
             changeImage('', 'background');
         }
+        isSave = true;
     }
 
     nftImages.forEach((item, index) => {
