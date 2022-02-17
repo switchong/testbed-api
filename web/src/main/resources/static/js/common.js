@@ -2,6 +2,7 @@ let currentPagePath = window.location.pathname;
 let url_this_page = location.href;
 let title_this_page = document.title;
 let url_user_page = window.location.origin;
+let sort1 = 0;
 
 $(document).ready(function(){
 
@@ -38,6 +39,17 @@ $(document).ready(function(){
         }
         moreView("html");
     })
+
+    $('.dropdown-item').on('click',function (){
+        $('#dropdownMenuButton1').text($(this).text());
+        sort1 = $(this).attr("value");
+        currentPage = 0;
+        $('#dropdownsearch').prop('checked',false);
+        if(currentPagePath.split('/')[1] === 'gallery' && currentPagePath.split('/')[2] === undefined) {
+            MoreSlide( 'main/page/gallery','html', sort1);
+        }
+        moreView("html", sort1);
+    })
     // view-type click event
     $('.gallery-view-type').on('click',function(){
         let view_type = $(this).data('view');
@@ -57,9 +69,9 @@ $(document).ready(function(){
         }
         currentPage = 0;
         if(currentPagePath.split('/')[1] === 'gallery' && currentPagePath.split('/')[2] === undefined) {
-            MoreSlide('main/page/gallery','html');
+            MoreSlide('main/page/gallery','html', sort1);
         }
-        moreView("html");
+        moreView("html", sort1);
     });
 
     if($('#nftgram_wrap #nftgram-list').length > 0) {
@@ -87,7 +99,7 @@ function DontLongNumber() {
 */
 const size = 20;
 
-function moreView(type , nft) {
+function moreView(type , sort1) {
     if(currentPagePath !== "/") {
         $(window).unbind();
         return;
@@ -96,7 +108,7 @@ function moreView(type , nft) {
     let total = (type=="html")?0:$('#nftgram-list .card').length;
     let nextPage = parseInt(total / size);
     let keyword = $('#searchKeyword').val();
-    let sort = $('#selSort').val();
+    let sort = sort1;
     let url = "/api/main/page?page=" + nextPage + "&size=" + size + "&keyword=" + keyword;
     let insTag = "" +
         '<div class=\"search-box\">' +
@@ -190,9 +202,9 @@ function searchFormClose() {
     if(window.location.href.split('/')[3] === 'gallery' && window.location.href.split('/')[4] === undefined) {
         $('.search-box').remove();
         currentPage = 0;
-        MoreSlide('main/page/gallery','html');
+        MoreSlide('main/page/gallery','html', sort1);
     }
-    moreView("html");
+    moreView("html", sort1);
 }
 
 function getNftOne(nftId) {

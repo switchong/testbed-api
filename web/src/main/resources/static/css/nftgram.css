@@ -349,7 +349,7 @@ body {
     background-color : #090909 !important;
     border : 2px solid #090909;
     color : #fff;
-    max-width: 1700px;
+    max-width: 1750px;
     margin : 0 auto;
 }
 
@@ -440,6 +440,7 @@ input[type="checkbox"] {
 
 select[name="selSort"] {
     font-size: 1rem;
+    border-radius: 0.3rem;
 }
 
 .dropdown {
@@ -511,9 +512,16 @@ select[name="selSort"] {
 
 #nftgram-list .card:hover {
     box-shadow: rgb(4 17 29 / 25%) 0px 0px 8px 0px;
-    transition: all 0.1s ease 0s;
+    transition: all 0.2s ease 0s;
 }
 
+#nftgram-list .card:hover > .card-img-top  {
+    border: none;
+    transition: all 0.2s ease 0s;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
 
 img.card-img-top {
     cursor: pointer;
@@ -606,7 +614,7 @@ video.card-img-top {
 .gallery-container .search-box {
     width: fit-content;
     position: absolute;
-    top: 5%;
+    top: 4%;
     left: 5%;
 }
 
@@ -782,7 +790,7 @@ body {
 }
 
 .main-gallery-container {
-    max-width: 1700px;
+    max-width: 1750px;
     margin: 0 auto;
 }
 

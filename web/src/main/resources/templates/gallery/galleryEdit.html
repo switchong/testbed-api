@@ -200,7 +200,6 @@
             <div class="gallery-edit-slide">
                 <div class="gallery-edit-slide-container">
                     <div class="gallery-edit-slide-item edit-slice-item-background" th:each="nftbg : ${nftList}">
-                    <div class="gallery-edit-slide-item edit-slice-item-background">
                         <img class="gallery-edit-img edit-background" th:classappend="'nft_'+${nftbg.nftId}" th:if="${nftbg.tagType == 'image'}" data-layer-btn="nft-layer-pop" th:alt="${nftbg.name}" th:data-nftid="${nftbg.nftId}" th:src="${nftbg.nftImageUrl}"/>
                         <div class="gallery-edit-img-hover"></div>
                         <div class="gallery-edit-select-number number-background"></div>
