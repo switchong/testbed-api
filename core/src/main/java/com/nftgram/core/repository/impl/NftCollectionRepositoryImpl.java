@@ -45,9 +45,10 @@ public class NftCollectionRepositoryImpl implements NftCollectionCustomRepositor
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT)
-                        ,nft.imageUrl.ne("")
-                        ,nft.nft_member_id.eq(memberId)
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.ne(""),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        nft.nft_member_id.eq(memberId)
                 )
                 .orderBy(nft.nftId.desc())
                 .offset(pageable.getOffset())

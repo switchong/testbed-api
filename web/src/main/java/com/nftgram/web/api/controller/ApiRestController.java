@@ -1,6 +1,7 @@
 package com.nftgram.web.api.controller;
 
 import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.dto.request.NftGalleryRequest;
 import com.nftgram.web.api.dto.MainPageDto;
 import com.nftgram.web.api.dto.MemberWalletDto;
 import com.nftgram.web.api.dto.request.GetNftOneRequest;
@@ -14,6 +15,7 @@ import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.api.service.ApiRestService;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.dto.NftCommentDto;
+import com.nftgram.web.common.dto.NftGalleryCommonDto;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.request.NftCommentRequest;
 import com.nftgram.web.common.dto.request.NftCommentSaveRequest;
@@ -81,6 +83,25 @@ public class ApiRestController {
         return mainPageDto;
     }
 
+    @GetMapping("/gallery/page")
+    public NftGalleryCommonDto getGalleryExplore(Pageable pageable, NftGalleryRequest nftGalleryRequest) throws ParseException, GeneralSecurityException, UnsupportedEncodingException {
+        List<CommonNftResponse> mainResponseAll = new ArrayList<>();
+        // Login Manager Check
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        Long memberId = Long.valueOf(0);
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+        }
+        if(nftGalleryRequest.getMemberId() != null) {
+            memberId = nftGalleryRequest.getMemberId();
+        }
+        nftGalleryRequest.setMemberId(memberId);
+
+        NftGalleryCommonDto nftGalleryCommonDto = nftFindService.nftGalleryCommonData(pageable, nftGalleryRequest);
+
+        return nftGalleryCommonDto;
+    }
+
     @PostMapping("/nft")
     public GetNftOneResponse getNftOneResponse(GetNftOneRequest getNftOneRequest) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
@@ -88,7 +109,7 @@ public class ApiRestController {
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
         }
-        GetNftOneResponse getNftOneResponse = apiRestService.getNftOneResponse(getNftOneRequest.getNftId(), memberId);
+        GetNftOneResponse getNftOneResponse = nftFindService.getNftOneResponse(getNftOneRequest.getNftId(), memberId);
 
         return getNftOneResponse;
     }

@@ -128,10 +128,13 @@ $(document).ready(function(){
 
 function addressClipboard(wid) {
     const valOfText = $('#wallet_'+wid).children('input[type="text"]');
-    valOfText.css('display','block');
-    valOfText.select();
-    document.execCommand('copy');
-    valOfText.css('display','none');
+    const textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    textarea.value = valOfText.val();
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert('Contract Address Copied!!');
 }
 
 function walletCheck(place, event) {

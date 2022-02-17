@@ -1,10 +1,14 @@
 package com.nftgram.core.repository.impl;
 
+import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.domain.nftgram.value.ContractType;
+import com.nftgram.core.dto.NftCommonDto;
 import com.nftgram.core.dto.NftOneJoinDto;
+import com.nftgram.core.dto.request.NftGalleryRequest;
 import com.nftgram.core.repository.custom.NftCustomRepository;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -15,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.nftgram.core.domain.nftgram.QNft.nft;
@@ -68,6 +73,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .join(nft.nftAsset, nftAsset)
                 .where(nftAsset.contractType.eq(ContractType.NFT),
                        nft.imageUrl.isNotEmpty(),
+                       nft.activeStatus.eq(ActiveStatus.ACTIVE),
                        eqKeyword(keyword))
                 .orderBy(SortNftPage(String.valueOf(sort)))
                 .offset(pageable.getOffset())
@@ -89,6 +95,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .join(nft.nftAsset, nftAsset)
                 .where(nftAsset.contractType.eq(ContractType.NFT),
                         nft.imageUrl.isNotEmpty(),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         eqKeyword(keyword),
                         nameBuilder)
                 .offset(pageable.getOffset())
@@ -102,8 +109,9 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT)
-                        ,nft.imageUrl.isNotEmpty())
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE))
                 .orderBy(nft.nftId.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -121,15 +129,18 @@ public class NftRepositoryImpl implements NftCustomRepository {
     }
 
     @Override
-    public List<Nft> findByNftCollectionId(Long nftCollectionId) {
+    public List<Nft> findByNftCollectionId(Pageable pageable, Long nftCollectionId) {
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
                 .where(nftAsset.contractType.eq(ContractType.NFT),
                         nft.imageUrl.isNotEmpty(),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nftCollection.nftCollectionId.eq(nftCollectionId)
                 )
                 .orderBy(nft.tokenId.castToNum(Long.class).asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
         return result;
     }
@@ -151,9 +162,10 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .from(nftLike)
                 .join(nftLike.nft, nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT))
-                .where(nft.imageUrl.ne(""))
-                .where(nftLike.nftMember.nftMemberId.eq(nftMemberId))
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        nftLike.nftMember.nftMemberId.eq(nftMemberId))
                 .orderBy(nft.nftId.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -167,9 +179,10 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> nftResult = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT))
-                .where(nft.imageUrl.ne(""))
-                .where(nft.nft_member_id.eq(nftMemberId))
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        nft.nft_member_id.eq(nftMemberId))
                 .orderBy(nft.nftId.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -252,5 +265,83 @@ public class NftRepositoryImpl implements NftCustomRepository {
         }
         return sortResult;
     }
+
+    @Override
+    public NftCommonDto findAllNftCommon(Pageable pageable, NftGalleryRequest nftGalleryRequest) {
+        QueryResults<Nft> results = queryFactory.select(nft)
+                .from(nft)
+                .join(nft.nftAsset, nftAsset)
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        pageTypeWhere(nftGalleryRequest))
+                .orderBy(nft.nftId.asc())
+                .fetchResults();
+
+        long totals = pageable.getPageSize();
+        List<Nft> result = new ArrayList<>();
+
+        if(nftGalleryRequest.getPageType() == "test" || nftGalleryRequest.getPageType() == "edit") {
+            totals = 100;//results.getTotal();
+        }
+        result = queryFactory.select(nft)
+                .from(nft)
+                .join(nft.nftAsset, nftAsset)
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        pageTypeWhere(nftGalleryRequest))
+                .orderBy(nft.nftId.asc())
+                .offset(pageable.getOffset())
+                .limit(totals)
+                .fetch();
+
+        NftCommonDto nftCommonDto = NftCommonDto.builder()
+                .totals(totals)
+                .offset(results.getOffset())
+                .limit(results.getLimit())
+                .nftList(result)
+                .nftLists(results.getResults())
+                .build();
+
+        return nftCommonDto;
+    }
+
+    public BooleanBuilder pageTypeWhere(NftGalleryRequest nftGalleryRequest) {
+        BooleanBuilder builder = new BooleanBuilder();
+
+
+        switch (nftGalleryRequest.getPageType()) {
+            case "all":
+                builder.and(nft.activeStatus.eq(ActiveStatus.ACTIVE));
+                break;
+            case "gallery" :
+                break;
+            case "user" :
+                break;
+            case "userlike" :
+                builder.and(nftLike.nftMember.nftMemberId.eq(nftGalleryRequest.getMemberId()).and(nftLike.activeStatus.eq(ActiveStatus.ACTIVE)));
+                break;
+            case "username" :
+                builder.or(nft.lastSaleUserName.eq(nftGalleryRequest.getUsername()).and(nft.lastSaleUserName.isNotNull()).and(nft.lastSaleUserName.ne("NullAddress")));
+                builder.or(nft.creatorUserName.eq(nftGalleryRequest.getUsername()).and(nft.creatorUserName.isNotNull()).and(nft.creatorUserName.ne("NullAddress")));
+                builder.or(nft.ownerUserName.eq(nftGalleryRequest.getUsername()).and(nft.ownerUserName.isNotNull()).and(nft.ownerUserName.ne("NullAddress")));
+                break;
+            case "address" :
+                break;
+            case "mycollection" :
+                break;
+            case "myfavorite" :
+                break;
+            case "test" :
+            case "edit" :
+                builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
+                break;
+            default:
+                builder.and(nft.activeStatus.eq(ActiveStatus.ACTIVE));
+                break;
+        }
+
+        return builder;
+    }
+
 
 }

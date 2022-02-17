@@ -364,4 +364,26 @@ const goSlide = () => {
     nextBtn.addEventListener('click',goNext);
 }
 
+const goEditList = () => {
+    let pageType = "edit";
+    let url = "/api/gallery/page?pageType="+pageType;
+    let data = "";
+    let html = "";
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "json",
+        data: {data},
+        async: false,
+        success : function (data) {
+            console.log(data);
+        },
+
+        error : function () {
+            console.log('error!');
+        }
+    })
+}
+
 window.addEventListener('DOMContentLoaded',setBackHeight);

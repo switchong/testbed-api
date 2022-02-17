@@ -2,11 +2,17 @@ package com.nftgram.web.common.service;
 
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.domain.nftgram.NftCollection;
-import com.nftgram.core.repository.NftAssetRepository;
-import com.nftgram.core.repository.NftCollectionRepository;
-import com.nftgram.core.repository.NftRepository;
+import com.nftgram.core.domain.nftgram.NftLike;
+import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.dto.NftCommonDto;
+import com.nftgram.core.dto.NftOneJoinDto;
+import com.nftgram.core.dto.request.NftGalleryRequest;
+import com.nftgram.core.repository.*;
+import com.nftgram.web.api.dto.response.GetNftOneResponse;
 import com.nftgram.web.common.dto.GalleryDto;
+import com.nftgram.web.common.dto.NftGalleryCommonDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
+import com.nftgram.web.common.dto.response.NftPropertyResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +23,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.nftgram.core.domain.common.value.ActiveStatus.ACTIVE;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -24,8 +32,11 @@ import java.util.List;
 public class NftFindService {
     private CommonNftResponse commonNftResponse;
     private final NftRepository nftRepository;
+    private final NftMemberRepository nftMemberRepository;
     private final NftAssetRepository nftAssetRepository;
     private final NftCollectionRepository nftCollectionRepository;
+    private final NftLikeRepository nftLikeRepository;
+    private final NftPropertyRepository nftPropertyRepository;
 
     private List<CommonNftResponse> commonNftResponses = new ArrayList<>();
 
@@ -50,9 +61,9 @@ public class NftFindService {
      * @return
      */
     @Transactional(readOnly = true)
-    public GalleryDto findByNftCollectionId(Long collectionId) {
+    public GalleryDto findByNftCollectionId(Pageable pageable, Long collectionId) {
         NftCollection collection = nftCollectionRepository.findNftCollection(collectionId);
-        List<Nft> galleryList = nftRepository.findByNftCollectionId(collectionId);
+        List<Nft> galleryList = nftRepository.findByNftCollectionId(pageable, collectionId);
 
         List<CommonNftResponse> nftResponse = setCommonNftResponses(galleryList);
 
@@ -69,7 +80,92 @@ public class NftFindService {
     }
 
     /**
-     * NFT repository 데이터 공통 파싱
+     *
+     * @param pageable
+     * @param nftGalleryRequest ( pageType , cid , memberId , username , address , userno )
+     * @return
+     * @throws ParseException
+     */
+    @Transactional(readOnly = true)
+    public NftGalleryCommonDto nftGalleryCommonData(Pageable pageable , NftGalleryRequest nftGalleryRequest) throws ParseException {
+        long totals = 0;
+        boolean sortFlag = false;
+        NftCommonDto commonDto = NftCommonDto.builder().build();
+        NftMember memberInfo = NftMember.builder().build();
+        NftCollection collection = NftCollection.builder().build();
+        List<Nft> nftList = new ArrayList<>();
+        Long collectionId = (nftGalleryRequest.getCid() != null) ? nftGalleryRequest.getCid() : Long.valueOf(0);
+
+        switch (nftGalleryRequest.getPageType()) {
+            case "gallery" :
+                collection = nftCollectionRepository.findNftCollection(collectionId);
+                nftList = nftRepository.findByNftCollectionId(pageable, collectionId);
+                break;
+            case "user" :
+                if(nftGalleryRequest.getUserno() > 0) {
+                    memberInfo = nftMemberRepository.findByNftMemberId(nftGalleryRequest.getUserno());
+                }
+
+                nftList = nftRepository.findByNftMemberList(pageable, nftGalleryRequest.getUserno());
+                break;
+            case "userlike" :
+                nftList = nftRepository.findByNftLikeMember(pageable, nftGalleryRequest.getUserno());
+                break;
+            case "username" :
+                nftList = nftRepository.findNftUsername(pageable, nftGalleryRequest.getKeyword(), nftGalleryRequest.getUsername());
+                break;
+            case "address" :
+                NftMember urlNftMember = nftMemberRepository.findNftMemberWalletAddress(nftGalleryRequest.getAddress());
+
+                nftList = nftRepository.findByNftMemberList(pageable, urlNftMember.getNftMemberId());
+                break;
+            case "mycollection" :
+                if(nftGalleryRequest.getMemberId() > 0) {
+                    memberInfo = nftMemberRepository.findByNftMemberId(nftGalleryRequest.getMemberId());
+                }
+
+                nftList = nftCollectionRepository.findAllNftGallery(pageable, nftGalleryRequest.getMemberId());
+                break;
+            case "myfavorite" :
+                if(nftGalleryRequest.getMemberId() > 0) {
+                    memberInfo = nftMemberRepository.findByNftMemberId(nftGalleryRequest.getMemberId());
+                }
+
+                nftList = nftCollectionRepository.findAllNftGalleryLike(pageable, nftGalleryRequest.getMemberId());
+                break;
+            case "edit" :
+            case "test" :
+                sortFlag = true;
+                commonDto = nftRepository.findAllNftCommon(pageable, nftGalleryRequest);
+                nftList = commonDto.getNftList();
+                break;
+            case "all":
+            default:
+                nftList = nftRepository.findAllNft(pageable, nftGalleryRequest.getKeyword() , nftGalleryRequest.getSort() );
+                break;
+        }
+
+        List<CommonNftResponse> nftResponseList = setCommonNftResponses(nftList);
+        Long sliderCount = Long.valueOf((long) Math.ceil(nftResponseList.size()/(3 * 1.0)));
+
+        List<List<CommonNftResponse>> sliderResponseList = nftResponseList(sliderCount, nftResponseList);
+
+        NftGalleryCommonDto nftGalleryCommonResponse = NftGalleryCommonDto.builder()
+                .sortFlag(sortFlag)
+                .total(nftResponseList.size())
+                .commonDto(commonDto)
+                .sliderCount(sliderCount)
+                .member(memberInfo)
+                .collection(collection)
+                .nftResponseList(nftResponseList)
+                .nftSliderList(sliderResponseList)
+                .build();
+
+        return nftGalleryCommonResponse;
+    }
+
+    /**
+     * NFT repository 데이터 공통 파싱 ( nftFindService.getNftOneResponse() 같이 변경)
      * @param nftList
      * @return
      */
@@ -77,72 +173,8 @@ public class NftFindService {
         List<CommonNftResponse> response = new ArrayList<>();
 
         nftList.forEach(nftInfo -> {
-            String userName  = null;
-            String userImage = null;
-            String tagType = "image";
-            Long likeCount = Long.valueOf(0);
-            Long favoriteCount = Long.valueOf(0);
-            Long viewCount = Long.valueOf(0);
-            String userUrl   = "/gallery/"+nftInfo.getNftCollection().getNftCollectionId();    // 기본 콜렉션|회원|비회원용 url
+            CommonNftResponse commonNftResponse = getCommonNftResponse(nftInfo);
 
-            if(nftInfo.getLastSaleProfileImageUrl() != null) {
-                userImage = nftInfo.getLastSaleProfileImageUrl();
-            } else if(nftInfo.getOwnerProfileImageUrl() != null) {
-                userImage = nftInfo.getOwnerProfileImageUrl();
-            } else if(nftInfo.getCreatorProfileImageUrl() != null) {
-                userImage = nftInfo.getCreatorProfileImageUrl();
-            }
-            if(nftInfo.getLastSaleUserName() != null && !nftInfo.getLastSaleUserName().equals("NullAddress")) {
-                userName = nftInfo.getLastSaleUserName();
-            } else if(nftInfo.getOwnerUserName() != null && !nftInfo.getOwnerUserName().equals("NullAddress")) {
-                userName = nftInfo.getOwnerUserName();
-            } else if(nftInfo.getCreatorUserName() != null && !nftInfo.getCreatorUserName().equals("NullAddress")) {
-                userName = nftInfo.getCreatorUserName();
-            }
-            if(userName == null) {
-                userName = "#null";
-//                userName = nftInfo.getCollectionName();
-            } else {
-                if(nftInfo.getNft_member_id() != null) {
-                    userUrl = "/user/" + nftInfo.getNft_member_id();
-                } else {
-                    userUrl = "/user/username" + userName;
-                }
-            }
-            if(nftInfo.getLikeCount().toString() != "") {
-                likeCount = nftInfo.getLikeCount();
-            }
-            if(nftInfo.getFavoriteCount().toString() != "") {
-                favoriteCount = nftInfo.getFavoriteCount();
-            }
-            if(nftInfo.getViewCount().toString() != "") {
-                viewCount = nftInfo.getViewCount();
-            }
-            String regExp = ".mp4";
-            boolean imageUrl = nftInfo.getImageUrl().contains(regExp);
-
-            if(imageUrl) {
-                tagType = "video";
-            }
-            commonNftResponse = CommonNftResponse.builder()
-                    .nftId(nftInfo.getNftId())
-                    .name(nftInfo.getName())
-                    .username(userName)
-                    .likeCount(likeCount)
-                    .favoriteCount(favoriteCount)
-                    .viewCount(viewCount)
-                    .marketLink(nftInfo.getOpenseaLink())
-                    .userImageUrl(userImage)
-                    .nftImageUrl(nftInfo.getImageUrl())
-                    .nftCollectionName(nftInfo.getCollectionName())
-                    .nftCollectionId(nftInfo.getNftCollection().getNftCollectionId())
-                    .assetContractAddress(nftInfo.getAssetContractAddress())
-                    .tokenId(nftInfo.getTokenId())
-                    .tagType(tagType)
-                    .frameNftId(nftInfo.getFrameNftId())
-                    .userUrl(userUrl)
-                    .localDate(nftInfo.getCreateDate())
-                    .build();
             response.add(commonNftResponse);
         });
 
@@ -163,6 +195,155 @@ public class NftFindService {
         }
 
         return sliderResponse;
+    }
+
+    /**
+     * NFT 정보 ( NftFindService.setCommonNftResponses() 같이 변경)
+     * @param nftId
+     * @param nftMemberId
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public GetNftOneResponse getNftOneResponse(Long nftId, Long nftMemberId) {
+        // MEMBER NFT LIKE CHECK
+        String likeFlag = "N";
+        if(nftMemberId > 0) {
+            NftLike nftLikeRepositories = nftLikeRepository.findByLikeMemberIdOne(nftId, nftMemberId);
+            if(nftLikeRepositories != null) {
+                if(nftLikeRepositories.getActiveStatus() == ACTIVE){
+                    likeFlag = "Y";
+                }
+            }
+        }
+        // Property List
+        List<NftPropertyResponse> propertyResponse = new ArrayList<>();
+        nftPropertyRepository.findByPropertiesNftId(nftId).forEach(prop -> {
+            NftPropertyResponse propResult = NftPropertyResponse.builder()
+                    .propId(prop.getPropId())
+                    .nftId(prop.getNft().getNftId())
+                    .traitType(prop.getTraitType())
+                    .traitValue(prop.getTraitValue())
+                    .orderCount(prop.getOrderCount())
+                    .build();
+            propertyResponse.add(propResult);
+        });
+
+        // NFT INFO
+        NftOneJoinDto nftResponse = nftRepository.findByNftIdOne(nftId);
+
+        CommonNftResponse commonNftResponse = getCommonNftResponse(nftResponse.getNft());
+
+        GetNftOneResponse response = GetNftOneResponse.builder()
+                .likeFlag(likeFlag)
+                .nftId(commonNftResponse.getNftId())
+                .name(commonNftResponse.getName())
+                .description(commonNftResponse.getDescription())
+                .assetContractAddress(commonNftResponse.getAssetContractAddress())
+                .tokenId(commonNftResponse.getTokenId())
+                .marketType(commonNftResponse.getMarketType())
+                .marketId(commonNftResponse.getMarketId())
+                .likeCount(commonNftResponse.getLikeCount())
+                .favoriteCount(commonNftResponse.getFavoriteCount())
+                .viewCount(commonNftResponse.getViewCount())
+                .marketLink(commonNftResponse.getMarketLink())
+                .username(commonNftResponse.getUsername())
+                .userImageUrl(commonNftResponse.getUserImageUrl())
+                .nftImageUrl(commonNftResponse.getNftImageUrl())
+                .collectionName(commonNftResponse.getCollectionName())
+                .nftCollectionId(commonNftResponse.getNftCollectionId())
+                .nftAssetId(commonNftResponse.getNftAssetId())
+                .frameNftId(commonNftResponse.getFrameNftId())
+                .userUrl(commonNftResponse.getUserUrl())
+                .tagType(commonNftResponse.getTagType())
+                .createdDate(commonNftResponse.getCreatedDate())
+                .asset(nftResponse.getNftAsset())
+                .collections(nftResponse.getNftCollection())
+                .propList(propertyResponse)
+                .build();
+
+        return response;
+    }
+
+    /**
+     * Nft 정보 Response Builder 함수
+     * @param nftInfo
+     * @return
+     */
+    public CommonNftResponse getCommonNftResponse(Nft nftInfo) {
+        String userName  = null;
+        String userImage = null;
+        Long likeCount = Long.valueOf(0);
+        Long favoriteCount = Long.valueOf(0);
+        Long viewCount = Long.valueOf(0);
+        String tagType = "image";
+        String userUrl   = "/gallery/"+nftInfo.getNftCollection().getNftCollectionId();    // 기본 콜렉션|회원|비회원용 url
+
+        if(nftInfo.getLastSaleProfileImageUrl() != null) {
+            userImage = nftInfo.getLastSaleProfileImageUrl();
+        } else if(nftInfo.getOwnerProfileImageUrl() != null) {
+            userImage = nftInfo.getOwnerProfileImageUrl();
+        } else if(nftInfo.getCreatorProfileImageUrl() != null) {
+            userImage = nftInfo.getCreatorProfileImageUrl();
+        }
+        if(nftInfo.getLastSaleUserName() != null && !nftInfo.getLastSaleUserName().equals("NullAddress")) {
+            userName = nftInfo.getLastSaleUserName();
+        } else if(nftInfo.getOwnerUserName() != null && !nftInfo.getOwnerUserName().equals("NullAddress")) {
+            userName = nftInfo.getOwnerUserName();
+        } else if(nftInfo.getCreatorUserName() != null && !nftInfo.getCreatorUserName().equals("NullAddress")) {
+            userName = nftInfo.getCreatorUserName();
+        }
+
+        if(nftInfo.getLikeCount().toString() != "") {
+            likeCount = nftInfo.getLikeCount();
+        }
+        if(nftInfo.getFavoriteCount().toString() != "") {
+            favoriteCount = nftInfo.getFavoriteCount();
+        }
+        if(nftInfo.getViewCount().toString() != "") {
+            viewCount = nftInfo.getViewCount();
+        }
+        if(userName == null) {
+            userName = "#null";
+        } else {
+            if(nftInfo.getNft_member_id() != null) {
+                userUrl = "/user/" + nftInfo.getNft_member_id();
+            } else {
+                userUrl = "/user/username" + userName;
+            }
+        }
+        String regExp = ".mp4";
+        boolean imageUrl = nftInfo.getImageUrl().contains(regExp);
+
+        if(imageUrl) {
+            tagType = "video";
+        }
+        CommonNftResponse commonNftResponse = CommonNftResponse.builder()
+                .nftId(nftInfo.getNftId())
+                .name(nftInfo.getName())
+                .username(userName)
+                .likeCount(likeCount)
+                .favoriteCount(favoriteCount)
+                .viewCount(viewCount)
+                .marketLink(nftInfo.getOpenseaLink())
+                .userImageUrl(userImage)
+                .nftImageUrl(nftInfo.getImageUrl())
+                .nftCollectionName(nftInfo.getCollectionName())
+                .nftCollectionId(nftInfo.getNftCollection().getNftCollectionId())
+                .assetContractAddress(nftInfo.getAssetContractAddress())
+                .tokenId(nftInfo.getTokenId())
+                .tagType(tagType)
+                .frameNftId(nftInfo.getFrameNftId())
+                .userUrl(userUrl)
+                .localDate(nftInfo.getCreateDate())
+                .description(nftInfo.getDescription())
+                .marketType(nftInfo.getMarketType())
+                .marketId(nftInfo.getMarketId())
+                .collectionName(nftInfo.getCollectionName())
+                .nftAssetId(nftInfo.getNftAsset().getNftAssetId())
+                .createdDate(nftInfo.getCreateDate())
+                .build();
+
+        return commonNftResponse;
     }
 
     public int lastNum(int num, int size) {

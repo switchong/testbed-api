@@ -205,7 +205,7 @@ function layerPopId(layerId, boxPosition){
     });
 
     $('.layer_popup_bg').on('click', function(){
-        if($(window).width > 900) {
+        if($(window).width() > 900) {
             $('.wrap_layer_popup').fadeOut();
             $(this).fadeOut();
         }

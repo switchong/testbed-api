@@ -54,6 +54,10 @@ public class GetNftOneResponse {
 
     private Long frameNftId;
 
+    private String userUrl;
+
+    private String tagType;
+
     private LocalDateTime createdDate;
 
     private NftAsset asset;
@@ -65,7 +69,7 @@ public class GetNftOneResponse {
     @Builder
     public GetNftOneResponse(String likeFlag, Long nftId, String name, String description, String assetContractAddress, String tokenId, MarketType marketType,Long marketId,
                              Long likeCount, Long favoriteCount, Long viewCount, String marketLink, String username, String userImageUrl, String nftImageUrl,
-                             String collectionName, Long nftCollectionId, Long nftAssetId, Long frameNftId, LocalDateTime createdDate,
+                             String collectionName, Long nftCollectionId, Long nftAssetId, Long frameNftId, String userUrl, String tagType, LocalDateTime createdDate,
                              NftAsset asset, NftCollection collections, List<NftPropertyResponse> propList ) {
         this.likeFlag = likeFlag;
         this.nftId = nftId;
@@ -86,6 +90,8 @@ public class GetNftOneResponse {
         this.nftCollectionId = nftCollectionId;
         this.nftAssetId = nftAssetId;
         this.frameNftId = frameNftId;
+        this.userUrl = userUrl;
+        this.tagType = tagType;
         this.createdDate = createdDate;
         this.asset = asset;
         this.collections = collections;
