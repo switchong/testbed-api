@@ -34,7 +34,7 @@ const setBackHeight = () => {
 const MoreEdit = () => {
     const parentNode = $('.gallery-slide-list-container');
     const editContent = `
-        <div class="gallery-slide-list">
+        <div class="gallery-slide-list" save="false" moreValue="0" nftNum="0" frameNum="0" backgroundNum="0">
                         <img src="../img/etc/no-image.png" class="back-frame" alt="background" />
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
@@ -48,7 +48,7 @@ const MoreEdit = () => {
                                         <p class="picture-title">NFT TITLE #0000</p>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
-                                                <img src="/img/icon/Profile_icon.png" />
+                                                <img src="/img/icon/ic-gallery-profile.svg" />
                                                 <div class="nft-title-user">
                                                     <div class="user-info-name">
                                                         <span></span>
@@ -59,9 +59,9 @@ const MoreEdit = () => {
                                                 </div>
                                             </div>
                                             <div class="picture-price">
-                                                <img src="/img/icon/Price_icon.png" />
+                                                <img src="/img/icon/ic-gallery-eyes.svg" />
                                                 <span>00</span>
-                                                <img src="/img/icon/Like_icon.png" />
+                                                <img src="/img/icon/ic-gallery-like.svg" />
                                                 <span>00</span>
                                             </div>
                                         </div>
@@ -76,7 +76,7 @@ const MoreEdit = () => {
                                         <p class="picture-title">NFT TITLE #0000</p>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
-                                                <img src="/img/icon/Profile_icon.png" />
+                                                <img src="/img/icon/ic-gallery-profile.svg" />
                                                 <div class="nft-title-user">
                                                     <div class="user-info-name">
                                                         <span></span>
@@ -87,9 +87,9 @@ const MoreEdit = () => {
                                                 </div>
                                             </div>
                                             <div class="picture-price">
-                                                <img src="/img/icon/Price_icon.png" />
+                                                <img src="/img/icon/ic-gallery-eyes.svg" />
                                                 <span>00</span>
-                                                <img src="/img/icon/Like_icon.png" />
+                                                <img src="/img/icon/ic-gallery-like.svg" />
                                                 <span>00</span>
                                             </div>
                                         </div>
@@ -104,7 +104,7 @@ const MoreEdit = () => {
                                         <p class="picture-title">NFT TITLE #0000</p>
                                         <div class="picture-explain-bottom">
                                             <div class="user-info">
-                                                <img src="/img/icon/Profile_icon.png" />
+                                                <img src="/img/icon/ic-gallery-profile.svg" />
                                                 <div class="nft-title-user">
                                                     <div class="user-info-name">
                                                         <span></span>
@@ -115,9 +115,9 @@ const MoreEdit = () => {
                                                 </div>
                                             </div>
                                             <div class="picture-price">
-                                                <img src="/img/icon/Price_icon.png" />
+                                                <img src="/img/icon/ic-gallery-eyes.svg" />
                                                 <span>00</span>
-                                                <img src="/img/icon/Like_icon.png" />
+                                                <img src="/img/icon/ic-gallery-like.svg" />
                                                 <span>00</span>
                                             </div>
                                         </div>
@@ -250,17 +250,48 @@ const makeGalleryList = (data) => {
 }
 
 const goNext = () => {
+    let nowList6 = document.querySelectorAll('.gallery-slide-list')[currentNum];
     if(slides.length !== currentNum + 1) {
-        currentNum++;
         slides.forEach((item)=>{
             item.style.transform = 'scale(1)';
         });
         if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
-            slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+            if(nowLocation === 'edit') {
+                if(nowList6.getAttribute('save') === 'false') {
+                    alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
+                }
+                else {
+                    currentNum++;
+                    slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                    dontclick(nftImages);
+                    dontclick(frameImages);
+                    dontclick(backgroundImages);
+                }
+            }
+            else {
+                currentNum++;
+                slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+            }
         }
         else {
-            slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+            if(nowLocation === 'edit') {
+                if(nowList6.getAttribute('save') === 'false') {
+                    alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
+                }
+                else {
+                    currentNum++;
+                    slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                    dontclick(nftImages);
+                    dontclick(frameImages);
+                    dontclick(backgroundImages);
+                }
+            }
+            else {
+                currentNum++;
+                slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+            }
         }
+
         slides.forEach((item, index)=>{
             if(index !== currentNum) {
                 item.style.transform = 'scale(0.9)';
@@ -271,34 +302,52 @@ const goNext = () => {
         if(nowLocation === undefined) {
             MoreSlide('main/page/gallery', '', sort1);
         }
-        if(nowLocation === 'edit') {
-            if(nftOk && nftTotalOK) {
-                MoreEdit();
-            }
-            else {
-                if(!nftTotalOK) {
-                    alert('모든 nft를 넣으셔서 추가 틀을 만들 수 없습니다.');
-                }
-                else if(!nftOk) {
-                    alert(`${nftMaxLength}개를 모두 채우셔야 합니다!`);
-                }
-            }
-        }
     }
 }
 
 const goPrev = () => {
+    let nowList7 = document.querySelectorAll('.gallery-slide-list')[currentNum];
     if(currentNum > 0) {
-        currentNum--;
         slides.forEach((item)=>{
             item.style.transform = 'scale(1)';
         });
         if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
-            slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+            if(nowLocation === 'edit') {
+                if(nowList7.getAttribute('save') === 'false') {
+                    alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
+                }
+                else {
+                    currentNum--;
+                    slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                    dontclick(nftImages);
+                    dontclick(frameImages);
+                    dontclick(backgroundImages);
+                }
+            }
+            else {
+                currentNum--;
+                slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+            }
         }
         else {
-            slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+            if(nowLocation === 'edit') {
+                if(nowList7.getAttribute('save') === 'false') {
+                    alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
+                }
+                else {
+                    currentNum--;
+                    slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                    dontclick(nftImages);
+                    dontclick(frameImages);
+                    dontclick(backgroundImages);
+                }
+            }
+            else {
+                currentNum--;
+                slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+            }
         }
+
         slides.forEach((item, index)=>{
             if(index !== currentNum) {
                 item.style.transform = 'scale(0.9)';

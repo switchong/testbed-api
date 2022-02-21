@@ -9,6 +9,21 @@ let nftMaxLength = 3;
 let frameMaxLength = 3;
 let backgroundMaxLength = 1;
 let nowSelect = 'NFT';
+let nftImages;
+let frameImages;
+let backgroundImages;
+
+const dontclick = (list) => {
+    list.forEach((item, index)=>{
+        if(Number(item.childNodes[3].innerText) === currentNum || item.childNodes[3].innerText === '') {
+            item.classList.remove('dontClick');
+        }
+        else {
+            item.classList.add('dontClick');
+        }
+    })
+}
+
 
 window.addEventListener("DOMContentLoaded", ()=>{
     let nftNum = 0;
@@ -23,16 +38,18 @@ window.addEventListener("DOMContentLoaded", ()=>{
     const totalBackground = document.querySelectorAll('.edit-background').length;
     const selectList = document.querySelectorAll('.gallery-edit-select');
     const saveBtn = document.querySelectorAll('.gallery-edit-save');
+    const plusBtn = document.querySelectorAll('.gallery-edit-plus-section');
 
-    const nftImages = document.querySelectorAll(".gallery-edit-slide-item.edit-slice-item-nft");
-    const frameImages = document.querySelectorAll(".gallery-edit-slide-item.edit-slice-item-frame");
-    const backgroundImages = document.querySelectorAll('.gallery-edit-slide-item.edit-slice-item-background');
+    nftImages = document.querySelectorAll(".gallery-edit-slide-item.edit-slice-item-nft");
+    frameImages = document.querySelectorAll(".gallery-edit-slide-item.edit-slice-item-frame");
+    backgroundImages = document.querySelectorAll('.gallery-edit-slide-item.edit-slice-item-background');
     const closeBtn = document.querySelector('#closeEditBtn');
 
     window.addEventListener('beforeunload',(e)=>{
+        let nowList3 = document.querySelectorAll('.gallery-slide-list')[currentNum];
         e.preventDefault();
         if(choiceOne) {
-            if(isSave && (nftArray.length || frameArray.length || backgroundArray.length)) {
+            if(nowList3.getAttribute('save') === 'false' && (nftArray.length || frameArray.length || backgroundArray.length)) {
                 e.returnValue = '지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?';
             }
             return;
@@ -42,9 +59,28 @@ window.addEventListener("DOMContentLoaded", ()=>{
         }
     })
 
+    plusBtn.forEach((item, index)=>{
+        item.addEventListener('click',()=>{
+            if(nowLocation === 'edit') {
+                let nowList2 = document.querySelectorAll('.gallery-slide-list')[currentNum];
+                if(nowList2.getAttribute('save') === 'true' && nowList2.getAttribute('moreValue') === '0') {
+                    nowList2.setAttribute('moreValue','1');
+                    MoreEdit();
+                }
+                else if(nowList2.getAttribute('moreValue') !== '0') {
+
+                }
+                else {
+                    alert(`현재 섹션(${currentNum})에 대해서 저장되지 않았습니다.`);
+                }
+            }
+        })
+    })
+
     closeBtn.addEventListener('click',()=>{
+        let nowList1 = document.querySelectorAll('.gallery-slide-list')[currentNum];
         if(choiceOne) {
-            if(isSave && (nftArray.length || frameArray.length || backgroundArray.length)) {
+            if(nowList1.getAttribute('save') === 'false' && (nftArray.length || frameArray.length || backgroundArray.length)) {
                 if(!window.confirm('지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?')){
                     return;
                 }
@@ -56,8 +92,31 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
     saveBtn.forEach((item, index) => {
         item.addEventListener('click',() => {
-            isSave = false;
-            alert('저장되었습니다.');
+            let imageContainers = document.querySelectorAll('.inner-picture');
+            let nowList = document.querySelectorAll('.gallery-slide-list')[currentNum];
+            let countNft=0;
+            imageContainers.forEach((item, index)=>{
+                if(index >= 3 * (currentNum + 1) - 3 && index <= 3*(currentNum + 1) - 1) {
+                    if(item.getAttribute('src').includes("http")){
+                        countNft++;
+                    }
+                }
+            })
+            if(countNft === 3 && nftTotalOK && nowList.getAttribute('save') === "false") {
+                nowList.setAttribute('save', 'true');
+                alert('저장되었습니다.');
+            }
+            else {
+                if(!nftTotalOK) {
+                    alert('모든 nft를 넣으셔야 저장 할수 있습니다.');
+                }
+                else if(countNft !== 3) {
+                    alert(`3개를 모두 채우셔야 저장 할수 있습니다!`);
+                }
+                else if(nowList.getAttribute('save') === 'true') {
+                    alert(`현재 섹션(${currentNum})에 대해서 이미 저장 되었습니다.`);
+                }
+            }
         })
     })
 
@@ -65,129 +124,71 @@ window.addEventListener("DOMContentLoaded", ()=>{
         item.addEventListener('click', ()=>{
             if(nowSelect !== item.innerText) {
                 nowSelect = item.innerText;
-                goFirst();
                 frameMaxLength = nftMaxLength;
                 console.log(backgroundMaxLength);
             }
         })
     })
 
-    function changeImage(item, str) {
-        let nowSlideItems = document.querySelectorAll(".image-container");
-        if(str === 'nft') {
-            if(item !== '') {
-                nftArray.push(item.childNodes[1].getAttribute('src'));
-            }
-            else {
-                nowSlideItems.forEach((item, index)=>{
-                    item.getElementsByClassName('inner-picture')[0].setAttribute('src','../../img/etc/no-image.png');
-                })
-            }
-            nftArray.forEach((item, index)=>{
-                nowSlideItems[index].getElementsByClassName('inner-picture')[0].setAttribute('src',item);
-            })
-        }
-        else if(str === 'frame') {
-            if(item !== '') {
-                frameArray.push(item.childNodes[1].getAttribute('src'));
-            }
-            else {
-                nowSlideItems.forEach((item, index) => {
-                    item.getElementsByClassName('outer-frame')[0].setAttribute('src', '../../img/etc/no-image.png');
-                })
-            }
-            frameArray.forEach((item, index) => {
-                nowSlideItems[index].getElementsByClassName('outer-frame')[0].setAttribute('src',item);
-            })
-        }
-        else if(str === 'background') {
-            nowSlideItems = document.querySelectorAll('.gallery-slide-list');
-            if(item !== '') {
-                backgroundArray.push(item.childNodes[1].getAttribute('src'));
-            }
-            else {
-                nowSlideItems.forEach((item, index) => {
-                    item.getElementsByClassName('back-frame')[0].setAttribute('src','../../img/etc/no-image.png');
-                })
-            }
-            backgroundArray.forEach((item, index) => {
-               nowSlideItems[index].getElementsByClassName('back-frame')[0].setAttribute('src', item);
-            });
-        }
-        isSave = true;
-    }
-
-    function numberRerange(num, str) {
-        let numberList;
-        if(str === 'nft') {
-            numberList = document.querySelectorAll('.gallery-edit-select-number.number-nft');
-            nftNum -= 1;
-            nftOk = false;
-        }
-        else if(str === 'frame') {
-            numberList = document.querySelectorAll('.gallery-edit-select-number.number-frame');
-            frameNum -= 1;
-            frameOk = false;
-        }
-        else if(str === 'background') {
-            numberList = document.querySelectorAll('.gallery-edit-select-number.number-background');
-            backgroundNum -= 1;
-            backgroundOk = false;
-        }
-
-
-        numberList.forEach((item, index) => {
-            if(item.innerText) {
-                if(item.innerText > num) {
-                    item.innerText = item.innerText - 1;
-                }
-            }
-        })
-    }
-
-    function deleteImage(num, str) {
-        if(str === 'nft') {
-            nftArray.splice(num-1,1);
-            console.log(nftArray);
-            changeImage('', 'nft');
-        }
-        else if(str === 'frame') {
-            frameArray.splice(num-1, 1);
-            console.log(frameArray);
-            changeImage('', 'frame');
-        }
-        else if(str === 'background') {
-            backgroundArray.splice(num-1,1);
-            console.log(backgroundArray);
-            changeImage('', 'background');
-        }
-        isSave = true;
-    }
-
     nftImages.forEach((item, index) => {
-        item.addEventListener("click",()=>{
-
-            if(item.childNodes[5].innerText !== '') {
-                const containNum = item.childNodes[5].innerText;
-                item.childNodes[5].innerText = '';
-                numberRerange(containNum, 'nft');
-                deleteImage(containNum, 'nft');
-                if(!nftTotalOK) {
-                    nftTotalOK = true;
+        item.addEventListener("click",(e)=>{
+            const nowNft = document.querySelectorAll('.gallery-slide-list')[currentNum];
+            const nowNftNum = Number(nowNft.getAttribute('nftNum'));
+            if(item.childNodes[3].innerText !== '') {
+                if(Number(item.childNodes[3].innerText) === currentNum) {
+                    item.childNodes[3].innerText = '';
+                    nowNft.querySelectorAll('.inner-picture').forEach((items, index)=>{
+                        if(items.getAttribute('data-nftid') === item.childNodes[1].getAttribute('data-nftid')) {
+                            items.setAttribute('src', '../../img/etc/no-image.png');
+                            items.setAttribute('data-nftid','null');
+                            items.parentNode.querySelector('.inner-picture-delete-btn').remove();
+                            nowNft.setAttribute('nftNum', (nowNftNum -1).toString());
+                            nowNft.setAttribute('save', 'false');
+                            nftNum--;
+                        }
+                    })
                 }
             }
 
            else  {
                if(nftNum < nftMaxLength) {
-                   console.log(item.childNodes[1].getAttribute('src'));
-                   item.childNodes[5].innerText = nftNum + 1;
-                   changeImage(item, 'nft')
-                   nftNum++;
-                   if(nftNum === nftMaxLength) {
-                       nftOk = true;
-                   }
-                   if(nftNum === totalNft) {
-                       nftTotalOK = false;
+                   if(nowNftNum < 3) {
+                       const nftDelete = document.createElement('div');
+                       nftDelete.classList.add('inner-picture-delete-btn');
+                       nftDelete.innerText = 'X';
+                       item.childNodes[3].innerText = currentNum;
+                       nowNft.setAttribute('nftNum', (nowNftNum + 1).toString());
+                       let count=0;
+                       nowNft.querySelectorAll('.inner-picture').forEach((items, index) =>{
+                           if(items.getAttribute('src').includes('http')) {
+
+                           }
+                           else {
+                               if(count === 0) {
+                                   items.setAttribute('src',item.childNodes[1].getAttribute('src'));
+                                   items.setAttribute('data-nftid',item.childNodes[1].getAttribute('data-nftid'));
+                                   count++;
+                                   items.parentNode.appendChild(nftDelete);
+                                   nftDelete.addEventListener('click',(e)=>{
+                                       const nowNftNum = Number(nowNft.getAttribute('nftNum'));
+                                       const searchNumNft = e.target.parentNode.childNodes[3].getAttribute('data-nftid');
+                                       nftImages.forEach((items, index)=>{
+                                           if(items.childNodes[1].getAttribute('data-nftid') === searchNumNft) {
+                                               items.childNodes[3].innerText = '';
+                                           }
+                                       })
+                                       e.target.parentNode.childNodes[3].setAttribute('src','../../img/etc/no-image.png');
+                                       e.target.parentNode.childNodes[3].setAttribute('data-nftid','null');
+                                       nowNft.setAttribute('nftNum',  (nowNftNum - 1).toString());
+                                       nowNft.setAttribute('save','false');
+                                       nftNum--;
+                                       e.target.remove();
+                                   })
+                               }
+                           }
+                       })
+                       nftNum++;
+                       nowNft.setAttribute('save','false');
                    }
                }
            }
@@ -196,57 +197,112 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
     frameImages.forEach((item, index) => {
         item.addEventListener('click', ()=>{
-
-            if(item.childNodes[5].innerText !== '') {
-                const containNum = item.childNodes[5].innerText;
-                item.childNodes[5].innerText = '';
-                numberRerange(containNum, 'frame');
-                deleteImage(containNum, 'frame');
-                if(!frameTotalOK) {
-                    frameTotalOK = true;
+            const nowframe = document.querySelectorAll('.gallery-slide-list')[currentNum];
+            const nowFrameNum = Number(nowframe.getAttribute('frameNum'));
+            if(item.childNodes[3].innerText !== '') {
+                if(Number(item.childNodes[3].innerText) === currentNum) {
+                    item.childNodes[3].innerText = '';
+                    nowframe.querySelectorAll('.outer-frame').forEach((items, index)=>{
+                        if(items.getAttribute('data-nftid') === item.childNodes[1].getAttribute('data-nftid')) {
+                            items.setAttribute('src', '../../img/etc/no-image.png');
+                            items.setAttribute('data-nftid', 'null');
+                            items.parentNode.querySelector('.outer-frame-delete-btn').remove();
+                            nowframe.setAttribute('frameNum',  (nowFrameNum - 1).toString());
+                            nowframe.setAttribute('save','false');
+                            frameNum--;
+                        }
+                    })
                 }
             }
-
-            else  {
+            else {
                 if(frameNum < frameMaxLength) {
-                    console.log(item.childNodes[1].getAttribute('src'));
-                    item.childNodes[5].innerText = frameNum + 1;
-                    changeImage(item, 'frame')
-                    frameNum++;
-                    if(frameNum === frameMaxLength) {
-                        frameOk = true;
-                    }
-                    if(frameNum === totalFrame) {
-                        frameTotalOK = false;
+                    if(nowFrameNum < 3) {
+                        const frameDelete = document.createElement('div');
+                        frameDelete.classList.add('outer-frame-delete-btn');
+                        frameDelete.innerText = 'X';
+                        item.childNodes[3].innerText = currentNum;
+                        nowframe.setAttribute('frameNum',  (nowFrameNum + 1).toString());
+                        let count = 0;
+                        nowframe.querySelectorAll('.outer-frame').forEach((items, index)=>{
+                            if(items.getAttribute('src').includes('http')) {
+
+                            }
+                            else {
+                                if(count === 0) {
+                                    items.setAttribute('src', item.childNodes[1].getAttribute('src'));
+                                    items.setAttribute('data-nftid', item.childNodes[1].getAttribute('data-nftid'))
+                                    count++;
+                                    items.parentNode.appendChild(frameDelete);
+                                    frameDelete.addEventListener('click',(e)=>{
+                                        const nowFrameNum = Number(nowframe.getAttribute('frameNum'));
+                                        const searchNumFrame = e.target.parentNode.childNodes[1].getAttribute('data-nftid');
+                                        frameImages.forEach((items, index)=>{
+                                            if(items.childNodes[1].getAttribute('data-nftid') === searchNumFrame) {
+                                                items.childNodes[3].innerText = '';
+                                            }
+                                        })
+                                        e.target.parentNode.childNodes[1].setAttribute('src','../../img/etc/no-image.png');
+                                        e.target.parentNode.childNodes[1].setAttribute('data-nftid','null');
+                                        nowframe.setAttribute('frameNum',  (nowFrameNum - 1).toString());
+                                        nowframe.setAttribute('save','false');
+                                        frameNum--;
+                                        e.target.remove();
+                                    })
+                                }
+                            }
+                        })
+                        frameNum++;
+                        nowframe.setAttribute('save','false');
                     }
                 }
+
             }
         })
     })
 
     backgroundImages.forEach((item, index) => {
         item.addEventListener('click', () => {
-            if(item.childNodes[5].innerText !== '') {
-                const containNum = item.childNodes[5].innerText;
-                item.childNodes[5].innerText = '';
-                numberRerange(containNum, 'background');
-                deleteImage(containNum, 'background');
-                if(!backgroundTotalOK) {
-                    backgroundTotalOK = true;
+            const nowBackground = document.querySelectorAll('.gallery-slide-list')[currentNum];
+            const nowBackgroundNum = Number(nowBackground.getAttribute('backgroundNum'));
+            if(item.childNodes[3].innerText !=='') {
+                if(Number(item.childNodes[3].innerText) === currentNum) {
+                    item.childNodes[3].innerText = '';
+                    nowBackground.querySelector('.back-frame').setAttribute('src', '../../img/etc/no-image.png');
+                    nowBackground.querySelector('.back-frame').setAttribute('data-nftid', 'null');
+                    nowBackground.querySelector('.background-frame-delete-btn').remove();
+                    nowBackground.setAttribute('backgroundNum', (nowBackgroundNum - 1).toString());
+                    nowBackground.setAttribute('save','false');
+                    backgroundNum--;
                 }
             }
-
-            else  {
+            else {
                 if(backgroundNum < backgroundMaxLength) {
-                    console.log(item.childNodes[1].getAttribute('src'));
-                    item.childNodes[5].innerText = backgroundNum + 1;
-                    changeImage(item, 'background');
-                    backgroundNum++;
-                    if(backgroundNum === backgroundMaxLength) {
-                        backgroundOk = true;
-                    }
-                    if(backgroundNum === totalBackground) {
-                        backgroundTotalOK = false;
+                    if(nowBackgroundNum < 1) {
+                        const backgroundDelete = document.createElement('div');
+                        backgroundDelete.classList.add('background-frame-delete-btn');
+                        backgroundDelete.innerText = 'X';
+                        item.childNodes[3].innerText = currentNum;
+                        nowBackground.setAttribute('backgroundNum', (nowBackgroundNum + 1).toString());
+                        nowBackground.querySelector('.back-frame').setAttribute('src', item.childNodes[1].getAttribute('src'));
+                        nowBackground.querySelector('.back-frame').setAttribute('data-nftid',item.childNodes[1].getAttribute('data-nftid'));
+                        nowBackground.appendChild(backgroundDelete);
+                        backgroundNum++;
+                        nowBackground.setAttribute('save','false');
+                        backgroundDelete.addEventListener('click',(e)=>{
+                            const nowBackgroundNum = Number(nowBackground.getAttribute('backgroundNum'));
+                            const searchNumBackground = e.target.previousSibling.previousSibling.previousSibling.previousSibling.getAttribute('data-nftid');
+                            backgroundImages.forEach((items, index)=>{
+                                if(items.childNodes[1].getAttribute('data-nftid') === searchNumBackground) {
+                                    items.childNodes[3].innerText='';
+                                    nowBackground.querySelector('.back-frame').setAttribute('src', '../../img/etc/no-image.png');
+                                    nowBackground.querySelector('.back-frame').setAttribute('data-nftid', 'null');
+                                    nowBackground.querySelector('.background-frame-delete-btn').remove();
+                                    nowBackground.setAttribute('backgroundNum', (nowBackgroundNum - 1).toString());
+                                    nowBackground.setAttribute('save','false');
+                                    backgroundNum--;
+                                }
+                            })
+                        })
                     }
                 }
             }

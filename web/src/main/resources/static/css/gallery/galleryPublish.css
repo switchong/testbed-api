@@ -710,12 +710,12 @@ img[id*="image-edit-icon"] {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.8);
     display: none;
 }
 
-.gallery-edit-slide-item:hover > .gallery-edit-img-hover {
-    display: block;
+.gallery-edit-img-hover {
+    display: none;
 }
 
 .list {
@@ -724,4 +724,8 @@ img[id*="image-edit-icon"] {
     display: flex;
     column-gap: 1.5%;
     transform: translate(0, 0);
+}
+
+.dontClick > div.gallery-edit-img-hover {
+    display: block;
 }
