@@ -1,6 +1,7 @@
 package com.nftgram.web.api.controller;
 
 import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.dto.NftMemberBgDto;
 import com.nftgram.core.dto.request.NftGalleryRequest;
 import com.nftgram.web.api.dto.MainPageDto;
 import com.nftgram.web.api.dto.MemberWalletDto;
@@ -47,7 +48,7 @@ public class ApiRestController {
     private final MemberLoginManager memberLoginManager;
     private final GalleryService galleryService;
 
-    @GetMapping("/main/page")
+    @GetMapping(value="/main/page")
     public MainPageDto getMainPage(Pageable pageable, String keyword , Long sort) throws ParseException {
         List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable  , keyword , sort);
 
@@ -59,7 +60,7 @@ public class ApiRestController {
         return mainPageDto;
     }
 
-    @GetMapping("/main/page/gallery")
+    @GetMapping(value="/main/page/gallery")
     public MainPageDto getMoreExplore(Pageable pageable, String keyword, Long sort) throws ParseException {
         List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable  , keyword , sort);
 
@@ -92,9 +93,9 @@ public class ApiRestController {
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
         }
-        if(nftGalleryRequest.getMemberId() != null) {
+        /*if(nftGalleryRequest.getMemberId() != null) {
             memberId = nftGalleryRequest.getMemberId();
-        }
+        }*/
         nftGalleryRequest.setMemberId(memberId);
 
         NftGalleryCommonDto nftGalleryCommonDto = nftFindService.nftGalleryCommonData(pageable, nftGalleryRequest);
@@ -146,6 +147,14 @@ public class ApiRestController {
         return updateLikeCountResponse;
     }
 
+    @PostMapping(value="/member/background", produces = "application/json")
+    public List<NftMemberBgDto> memberBackgroundList(Pageable pageable, @RequestParam(name = "memberId") Long memberId) {
+
+        List<NftMemberBgDto> nftMemberBackground = apiRestService.memberBackgroundList(pageable, memberId);
+
+        return nftMemberBackground;
+    }
+
     @PostMapping(value = "/member/{memberId}")
     public NftMember GetMemberInfo(@PathVariable("memberId") Long memberId) throws GeneralSecurityException, UnsupportedEncodingException {
         NftMember nftMember = NftMember.builder().build();
@@ -158,8 +167,6 @@ public class ApiRestController {
         return nftMember;
 
     }
-
-
 
     @PostMapping(value = "/member/nft", produces = "application/json")
     public MemberNftResponse GetMemberNftInfo(MemberNftRequest memberNftRequest) {

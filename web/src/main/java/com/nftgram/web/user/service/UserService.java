@@ -64,6 +64,43 @@ public class UserService {
         return galleryMemberDto;
     }
 
+    public GalleryMemberDto findNftUsernameMember(Pageable pageable, Long memberId, String username, String page) {
+
+        NftMember urlNftMember = nftMemberRepository.findNftUsername(username);
+
+        List<Nft> galleryLikeList = new ArrayList<>();
+
+        List<CommonNftResponse> nftResponse = new ArrayList<>();
+
+        Long sliderCount = Long.valueOf(0);
+
+        List<List<CommonNftResponse>> sliderResponse =  new ArrayList<>();
+
+        if(urlNftMember != null) {
+            if(page.equals("favorite")) {
+                galleryLikeList = nftRepository.findByNftLikeMember(pageable, urlNftMember.getNftMemberId());
+            } else {
+                galleryLikeList = nftRepository.findByNftMemberList(pageable, urlNftMember.getNftMemberId());
+            }
+
+            nftResponse = nftFindService.setCommonNftResponses(galleryLikeList);
+
+            sliderCount = Long.valueOf((long) Math.ceil(nftResponse.size()/(3 * 1.0)));
+
+            sliderResponse = nftFindService.nftResponseList(sliderCount, nftResponse);
+        }
+
+
+        GalleryMemberDto galleryMemberDto = GalleryMemberDto.builder()
+                .sliderCount(sliderCount)
+                .nftMember(urlNftMember)
+                .nftSliderList(sliderResponse)
+                .nftResponseList(nftResponse)
+                .build();
+
+        return galleryMemberDto;
+    }
+
     public GalleryMemberDto findNftUsername(Pageable pageable, String keyword, String username) {
         NftMember urlNftMember = NftMember.builder().build();
 

@@ -152,7 +152,7 @@ public class GalleryController {
                 model.addAttribute("nav_active","mycollection");
                 model.addAttribute("member",nftGalleryCommonDto.getMember());
                 model.addAttribute("total",nftGalleryCommonDto.getTotal());
-                model.addAttribute("nftList",nftGalleryCommonDto.getNftResponseList());
+                model.addAttribute("nftList",nftGalleryCommonDto.getNftList());
                 model.addAttribute("slideList", nftGalleryCommonDto.getNftSliderList());
             }
 

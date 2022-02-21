@@ -8,7 +8,6 @@ import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.request.NftGalleryRequest;
 import com.nftgram.core.repository.custom.NftCustomRepository;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -19,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.nftgram.core.domain.nftgram.QNft.nft;
@@ -268,39 +266,31 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
     @Override
     public NftCommonDto findAllNftCommon(Pageable pageable, NftGalleryRequest nftGalleryRequest) {
-        QueryResults<Nft> results = queryFactory.select(nft)
+        Long totals = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
                 .where(nftAsset.contractType.eq(ContractType.NFT),
                         nft.imageUrl.isNotEmpty(),
                         pageTypeWhere(nftGalleryRequest))
-                .orderBy(nft.nftId.asc())
-                .fetchResults();
+                .orderBy(nft.orderSeq.asc())
+                .fetchCount();
 
-        long totals = pageable.getPageSize();
-        List<Nft> result = new ArrayList<>();
-
-        if(nftGalleryRequest.getPageType() == "test" || nftGalleryRequest.getPageType() == "edit") {
-            totals = 100;//results.getTotal();
-        }
-        result = queryFactory.select(nft)
+        List<Nft> results = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
                 .where(nftAsset.contractType.eq(ContractType.NFT),
                         nft.imageUrl.isNotEmpty(),
                         pageTypeWhere(nftGalleryRequest))
-                .orderBy(nft.nftId.asc())
+                .orderBy(nft.nftId.desc(), nft.orderSeq.asc())
                 .offset(pageable.getOffset())
-                .limit(totals)
+                .limit(pageable.getPageSize())
                 .fetch();
 
-        NftCommonDto nftCommonDto = NftCommonDto.builder()
-                .totals(totals)
-                .offset(results.getOffset())
-                .limit(results.getLimit())
-                .nftList(result)
-                .nftLists(results.getResults())
-                .build();
+        NftCommonDto nftCommonDto = new NftCommonDto();
+        nftCommonDto.setTotals(totals);
+        nftCommonDto.setOffset(pageable.getOffset());
+        nftCommonDto.setLimit(Long.valueOf(pageable.getPageSize()));
+        nftCommonDto.setNftList(results);
 
         return nftCommonDto;
     }

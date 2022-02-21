@@ -3,7 +3,9 @@ package com.nftgram.web.api.service;
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.NftLike;
 import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.domain.nftgram.NftMemberBackground;
 import com.nftgram.core.domain.nftgram.NftMemberWallet;
+import com.nftgram.core.dto.NftMemberBgDto;
 import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.NftPropGroupDto;
 import com.nftgram.core.repository.*;
@@ -13,7 +15,10 @@ import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.dto.response.NftPropertiesGroupResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -31,9 +36,12 @@ public class ApiRestService {
     private final NftRepository nftRepository;
     private final NftMemberRepository nftMemberRepository;
     private final NftMemberWalletRepository nftMemberWalletRepository;
+    private final NftMemberBackgroundRepository nftMemberBackgroundRepository;
     private final NftLikeRepository nftLikeRepository;
     private final NftPropertyRepository nftPropertyRepository;
-    private Object typeArr;
+
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @Transactional(readOnly = true)
     public NftPropertiesGroupDto nftPropertiesCountDto() {
@@ -125,11 +133,27 @@ public class ApiRestService {
     }
 
     @Transactional(readOnly = true)
+    public List<NftMemberBgDto> memberBackgroundList(Pageable pageable, Long memberId) {
+
+        List<NftMemberBackground> nftMemberBgList = nftMemberBackgroundRepository.memberBackgrounds(pageable, memberId);
+
+        List<NftMemberBgDto> nftMemberBgDtoList = new ArrayList<>();
+
+        nftMemberBgList.forEach(nftBackground -> {
+            NftMemberBgDto nftMemberBgDto = NftMemberBgDto.builder()
+                    .nftMemberBackground(nftBackground)
+                    .build();
+            nftMemberBgDtoList.add(nftMemberBgDto);
+        });
+
+        return nftMemberBgDtoList;
+    }
+
+    @Transactional(readOnly = true)
     public NftMember memberInfo(Long memberId ) {
 
         NftMember nftMemberResponse = nftMemberRepository.findByNftMemberId(memberId);
         //Long nftMemberSnsUrlUpdate = nftMemberRepository.updateNftMember(memberId );
-
 
         return nftMemberResponse;
     }

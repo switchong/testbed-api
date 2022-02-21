@@ -57,6 +57,33 @@ public class UserController {
 
     }
 
+    @GetMapping("/name/{username}")
+    public String usernameMember(Model model, Pageable pageable, String keyword , Long sort, String page, @PathVariable("username") String username) throws GeneralSecurityException, UnsupportedEncodingException {
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+
+        memberId = authDto.getNftMemberId();
+        if(page == null) {
+            page = "";
+        }
+
+        GalleryMemberDto galleryMemberDto = userService.findNftUsernameMember(pageable, memberId, username, page);
+
+        model.addAttribute("nav_active", "");
+        if(galleryMemberDto.getNftMember() != null) {
+            model.addAttribute("member", galleryMemberDto.getNftMember());
+            model.addAttribute("sliderList", galleryMemberDto.getNftSliderList());
+            model.addAttribute("nftList", galleryMemberDto.getNftResponseList());
+
+            return "user/index";
+        } else {
+            model.addAttribute("message","Not Found User!!");
+
+            return "error/not_found";
+        }
+
+    }
+
     @GetMapping("/username/{username}")
     public String userName(Model model, Pageable pageable, String keyword , @PathVariable("username") String username) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);

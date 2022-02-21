@@ -21,11 +21,12 @@ public class NftGalleryRequest {
 
     private Long cid;
 
-    private Long memberId;
+    private Long memberId;      // LoingManager.memberId
 
     private String username;
 
     private String address;
 
-    private Long userno;
+    private Long userno;    // request userno
+
 }

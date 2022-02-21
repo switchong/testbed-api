@@ -86,11 +86,10 @@ public class NftFindService {
      * @return
      * @throws ParseException
      */
-    @Transactional(readOnly = true)
     public NftGalleryCommonDto nftGalleryCommonData(Pageable pageable , NftGalleryRequest nftGalleryRequest) throws ParseException {
-        long totals = 0;
-        boolean sortFlag = false;
-        NftCommonDto commonDto = NftCommonDto.builder().build();
+        Long totals = Long.valueOf(0);
+        boolean sortFlag = false;   // Nft.orderSeq 정렬 사용 시
+        NftCommonDto commonDto = new NftCommonDto();
         NftMember memberInfo = NftMember.builder().build();
         NftCollection collection = NftCollection.builder().build();
         List<Nft> nftList = new ArrayList<>();
@@ -137,6 +136,7 @@ public class NftFindService {
             case "test" :
                 sortFlag = true;
                 commonDto = nftRepository.findAllNftCommon(pageable, nftGalleryRequest);
+                totals = commonDto.getTotals();
                 nftList = commonDto.getNftList();
                 break;
             case "all":
@@ -152,12 +152,12 @@ public class NftFindService {
 
         NftGalleryCommonDto nftGalleryCommonResponse = NftGalleryCommonDto.builder()
                 .sortFlag(sortFlag)
-                .total(nftResponseList.size())
-                .commonDto(commonDto)
+                .total(totals)
                 .sliderCount(sliderCount)
+                .nftListCount(Long.valueOf(nftResponseList.size()))
                 .member(memberInfo)
                 .collection(collection)
-                .nftResponseList(nftResponseList)
+                .nftList(nftResponseList)
                 .nftSliderList(sliderResponseList)
                 .build();
 
