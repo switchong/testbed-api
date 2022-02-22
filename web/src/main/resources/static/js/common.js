@@ -20,10 +20,10 @@ $(document).ready(function(){
         location.href="/gallery/"+collectionId;
     });
     // scroll auto load
-    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+    /*if($(window).scrollTop() + $(window).height() == $(document).height()) {
         moreView();
 
-    };
+    };*/
     // scroll auto load
     $(window).scroll(function(){
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
@@ -100,6 +100,7 @@ function DontLongNumber() {
 const size = 20;
 
 function moreView(type , sort1) {
+    console.log(type);
     if(currentPagePath !== "/") {
         $(window).unbind();
         return;
