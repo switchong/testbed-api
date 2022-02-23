@@ -29,4 +29,6 @@ public class NftGalleryRequest {
 
     private Long userno;    // request userno
 
+    private String likeFlag = "N";
+
 }
