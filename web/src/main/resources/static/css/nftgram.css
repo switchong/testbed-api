@@ -558,7 +558,7 @@ video.card-img-top {
 }
 
 .left-nft-title {
-    width: 85%;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -797,4 +797,25 @@ body {
 
 #navigation-top {
     background-color: #090909;
+}
+
+.home-nft-username {
+    width: 85%;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.home-nft-username:link {
+    color: #6c757d;
+}
+
+.home-nft-username:visited {
+    color: #6c757d;
+}
+
+.login-container {
+    margin-left: 0;
+    margin-right: 0;
 }

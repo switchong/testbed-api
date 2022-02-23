@@ -9,7 +9,7 @@
 <body>
 <nav th:replace="fragment/nav.html :: fragment-nav"></nav>
 <div class="container" id="nftgram_wrap">
-    <div class="gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    <div class="row login-container gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
         <form th:action="@{/auth/signup}" method="post" th:object="${nftMemberSignupRequest}">
             <div style="margin-top:100px">
