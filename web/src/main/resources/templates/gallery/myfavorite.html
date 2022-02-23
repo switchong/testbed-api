@@ -9,7 +9,13 @@
 
 <body>
 <nav th:replace="fragment/nav.html :: fragment-nav"></nav>
+<script th:inline="javascript">
+    /*<![CDATA[*/
 
+    let userno = [[${member.nftMemberId}]];
+
+    /*]]>*/
+</script>
 <div class="container2" id="nftgram_wrap">
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
