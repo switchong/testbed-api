@@ -45,12 +45,12 @@ spring:
 logging:
   level:
     com:
-      nftgram: debug
+      nftgram: trace
     org:
       springframework:
         #        security: debug
         boot:
-          autoconfigure: debug
+          autoconfigure: trace
       hibernate:
         SQL: debug
         type: trace

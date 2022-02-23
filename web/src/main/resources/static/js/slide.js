@@ -31,109 +31,6 @@ const setBackHeight = () => {
     goSlide();
 }
 
-const MoreEdit = () => {
-    const parentNode = $('.gallery-slide-list-container');
-    const editContent = `
-        <div class="gallery-slide-list" save="false" moreValue="0" nftNum="0" frameNum="0" backgroundNum="0">
-                        <img src="../img/etc/no-image.png" class="back-frame" alt="background" />
-                        <div class="gallery-slide-list-item">
-                            <div class="gallery-slide-list-item-picture">
-                                <div class="gallery-slide-list-item-down"></div>
-                                <div class="image-container">
-                                    <div class="image-container-content">
-                                        <img class="outer-frame" src="../img/etc/no-image.png"/>
-                                        <img class="inner-picture" src="../img/etc/no-image.png" style="border : 1px solid lightgray;"/>
-                                    </div>
-                                    <div class="picture-explain" style="opacity: 0">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img src="/img/icon/ic-gallery-profile.svg" />
-                                                <div class="nft-title-user">
-                                                    <div class="user-info-name">
-                                                        <span></span>
-                                                        <span class="time"></span>
-                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
-                                                        <!--                                                    <div class="nft-title-user-info" th:text="">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img src="/img/icon/ic-gallery-eyes.svg" />
-                                                <span>00</span>
-                                                <img src="/img/icon/ic-gallery-like.svg" />
-                                                <span>00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="image-container">
-                                    <div class="image-container-content">
-                                        <img class="outer-frame" src="../img/etc/no-image.png"/>
-                                        <img class="inner-picture" src="../img/etc/no-image.png" style="border : 1px solid lightgray;"/>
-                                    </div>
-                                    <div class="picture-explain" style="opacity: 0">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img src="/img/icon/ic-gallery-profile.svg" />
-                                                <div class="nft-title-user">
-                                                    <div class="user-info-name">
-                                                        <span></span>
-                                                        <span class="time"></span>
-                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
-                                                        <!--                                                    <div class="nft-title-user-info" th:text="">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img src="/img/icon/ic-gallery-eyes.svg" />
-                                                <span>00</span>
-                                                <img src="/img/icon/ic-gallery-like.svg" />
-                                                <span>00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="image-container">
-                                    <div class="image-container-content">
-                                        <img class="outer-frame" src="../img/etc/no-image.png"/>
-                                        <img class="inner-picture" src="../img/etc/no-image.png" style="border : 1px solid lightgray;"/>
-                                    </div>
-                                    <div class="picture-explain" style="opacity: 0">
-                                        <p class="picture-title">NFT TITLE #0000</p>
-                                        <div class="picture-explain-bottom">
-                                            <div class="user-info">
-                                                <img src="/img/icon/ic-gallery-profile.svg" />
-                                                <div class="nft-title-user">
-                                                    <div class="user-info-name">
-                                                        <span></span>
-                                                        <span class="time"></span>
-                                                        <!--                                                    <span>1 MINUTE AGO</span>-->
-                                                        <!--                                                    <div class="nft-title-user-info" th:text="">USERNAME<br><span class="time">1 MINUTE AGO</span></div>-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="picture-price">
-                                                <img src="/img/icon/ic-gallery-eyes.svg" />
-                                                <span>00</span>
-                                                <img src="/img/icon/ic-gallery-like.svg" />
-                                                <span>00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    `;
-    parentNode.append(editContent);
-    Refresh();
-    nftMaxLength = 3 * (slides.length);
-    backgroundMaxLength += 1;
-    nftOk = false;
-}
-
 const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) => {
 
     let keyword = $('#searchKeyword').val();
@@ -213,7 +110,7 @@ const makeGalleryList = (data) => {
         item.forEach((inner)=>{
             let date = timeToElapsed(inner.localDate);
             innerNewList = innerNewList + `
-                            <div class="image-container">
+                            <div class="image-container" id="nft-content-${inner.nftId}" >
                                 <div class="image-container-content" data-nftid="${inner.nftId}">
                                     <img class="outer-frame" src="/img/etc/no-image.png"/>`;
             if(inner.tagType == "video") {
@@ -238,9 +135,9 @@ const makeGalleryList = (data) => {
                                         </div>
                                         <div class="picture-price">
                                             <img src="/img/icon/ic-gallery-eyes.svg" class="hIs24 wIs20" />
-                                            <span class="viewCount count-text" id="viewCount1">${inner.viewCount}</span>
+                                            <span class="viewCount count-text">${inner.viewCount}</span>
                                             <img src="/img/icon/ic-gallery-like.svg" class="hIs24 wIs20" />
-                                            <span class="likeCount count-text" id="likeCount1">${inner.likeCount}</span>
+                                            <span class="likeCount count-text">${inner.likeCount}</span>
                                         </div>
                                     </div>
                                 </div>

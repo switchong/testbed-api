@@ -271,14 +271,16 @@ function updateLike(likeFlag, nftId) {
     let method = "POST";
     let url = "/api/uplike";
     let param = {"nftId":nftId, "likeFlag":likeFlag};
-    let likeCount = parseInt($('#likeCount').text());
+    let nft_content = $('#nft-content-'+nftId)
+    let likeCount = parseInt(nft_content.find('.likeCount').text());
 
     if(nftId > 0) {
         result = commonAjaxUrl(method, url, param);
         likeCount = result.likeTotalCount;
 
         $('#likeCount').text(likeCount);
-        $('figure#nft_'+nftId).find('.likeCount').text(likeCount);
+
+        nft_content.find('.likeCount').text(likeCount);
     }
     return result;
 }
@@ -448,4 +450,11 @@ function checkId() {
     }
 
     return result;
+}
+
+function getParameter(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }

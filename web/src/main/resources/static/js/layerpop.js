@@ -6,7 +6,7 @@ function nftImageClick (e, index) {
         var PopId = "nft-layer-pop";
         layerPopId(PopId);
         currentIndex = index;
-        console.log(index);
+        console.log("aaa"+index);
         layerPopGallery(nftId);
     }
 }
@@ -55,9 +55,6 @@ function giveClickEvent() {
 }
 
 $(document).ready(function(){
-    if(currentPagePath !== '/gallery/edit') {
-        giveClickEvent();
-    }
     //web
 
     // $('#gallery-slide-container .image-container-content img').on('click',function(){
@@ -273,7 +270,7 @@ function layerPopByNft(data) {
     let popup = $('#nft-layer-pop');
     let nft_info_form = popup.find('#nft-info');
     let nft_title_area = popup.find('.nft-title-area');
-    let nft_gallery_figure = $('figure#nft_'+data.nftId);
+    let nft_content = $('#nft-content-'+data.nftId)
 
 
     // div nft-info
@@ -349,8 +346,8 @@ function layerPopByNft(data) {
     nft_title_area.find('.ethPrice').text(data.viewCount);
     nft_title_area.find('.likeCount').text(data.likeCount);
 
-    nft_gallery_figure.find('.viewCount').text(data.viewCount);
-    nft_gallery_figure.find('.likeCount').text(data.likeCount);
+    nft_content.find('.viewCount').text(data.viewCount);
+    nft_content.find('.likeCount').text(data.likeCount);
 
     if(data.likeFlag == "Y") {
         $('#nft-btn-like').addClass("on");
