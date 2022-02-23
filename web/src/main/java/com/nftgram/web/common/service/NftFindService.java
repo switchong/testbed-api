@@ -100,7 +100,7 @@ public class NftFindService {
                 collection = nftCollectionRepository.findNftCollection(collectionId);
                 nftList = nftRepository.findByNftCollectionId(pageable, collectionId);
                 break;
-            case "user" :
+            case "user" : // case "myfavorite" :
                 if(nftGalleryRequest.getUserno() != null) {
                     memberInfo = nftMemberRepository.findByNftMemberId(nftGalleryRequest.getUserno());
                 }
@@ -120,31 +120,31 @@ public class NftFindService {
                     nftList = nftRepository.findByNftMemberList(pageable, memberInfo.getNftMemberId());
                 }
                 break;
-            case "userunnamed" :
-                nftList = nftRepository.findNftUsername(pageable, nftGalleryRequest.getKeyword(), nftGalleryRequest.getUsername());
-                break;
             case "address" :
                 memberInfo = nftMemberRepository.findNftMemberWalletAddress(nftGalleryRequest.getAddress());
 
-                nftList = nftRepository.findByNftMemberList(pageable, memberInfo.getNftMemberId());
+                if(nftGalleryRequest.getLikeFlag().equals("Y")) {
+                    nftList = nftRepository.findByNftLikeMember(pageable, memberInfo.getNftMemberId());
+                } else {
+                    nftList = nftRepository.findByNftMemberList(pageable, memberInfo.getNftMemberId());
+                }
+                break;
+            case "externaluname" :
+                nftList = nftRepository.findNftUsername(pageable, nftGalleryRequest.getKeyword(), nftGalleryRequest.getUsername());
                 break;
             case "mycollection" :
                 if(nftGalleryRequest.getMemberId() != null) {
                     memberInfo = nftMemberRepository.findByNftMemberId(nftGalleryRequest.getMemberId());
                 }
-
-                nftList = nftCollectionRepository.findAllNftGallery(pageable, nftGalleryRequest.getMemberId());
+                nftList = nftCollectionRepository.findAllNftGallery(pageable, memberInfo.getNftMemberId());
                 break;
-            case "myfavorite" :
+            case "edit" :
+            case "test" :
+            case "editNotVideo" :
                 if(nftGalleryRequest.getMemberId() != null) {
                     memberInfo = nftMemberRepository.findByNftMemberId(nftGalleryRequest.getMemberId());
                 }
 
-                nftList = nftCollectionRepository.findAllNftGalleryLike(pageable, nftGalleryRequest.getMemberId());
-                break;
-            case "edit" :
-            case "test" :
-            case "editNotNft" :
                 sortFlag = true;
                 commonDto = nftRepository.findAllNftCommon(pageable, nftGalleryRequest);
                 totals = commonDto.getTotals();

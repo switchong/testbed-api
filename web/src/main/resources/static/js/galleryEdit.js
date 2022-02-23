@@ -358,7 +358,7 @@ const constEditContent = {
     getEditNftNotVideoList(editType) {
         let slideItemTotal = $('#edit-'+editType+'-list .gallery-edit-slide-item.edit-slice-item-'+editType).length;
         let page = (editType=="frame")? pageData.fPage :  pageData.bPage;
-        let nftNotVideoList = commonAjaxUrl("GET", "/api/gallery/page?page="+page+"&size="+pageData.size+"&pageType=editNotNft", {});
+        let nftNotVideoList = commonAjaxUrl("GET", "/api/gallery/page?page="+page+"&size="+pageData.size+"&pageType=editNotVideo", {});
 
         this.ContainerHtml(editType,nftNotVideoList);
     }

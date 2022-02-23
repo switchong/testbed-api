@@ -93,9 +93,9 @@ public class ApiRestController {
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
         }
-        /*if(nftGalleryRequest.getMemberId() != null) {
+        if(nftGalleryRequest.getMemberId() != null) {
             memberId = nftGalleryRequest.getMemberId();
-        }*/
+        }
         nftGalleryRequest.setMemberId(memberId);
 
         NftGalleryCommonDto nftGalleryCommonDto = nftFindService.nftGalleryCommonData(pageable, nftGalleryRequest);

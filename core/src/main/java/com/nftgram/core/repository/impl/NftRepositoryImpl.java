@@ -361,15 +361,11 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 break;
             case "address" :
                 break;
-            case "mycollection" :
-                break;
-            case "myfavorite" :
-                break;
             case "test" :
             case "edit" :
                 builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
                 break;
-            case "editNotNft" :
+            case "editNotVideo" :
                 builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
                 builder.and(nft.imageUrl.like(Expressions.asString("%").concat(".mp4").concat("%")).not());
                 break;
