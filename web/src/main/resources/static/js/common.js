@@ -6,6 +6,15 @@ let sort1 = 0;
 
 $(document).ready(function(){
 
+    if(currentPagePath === '/') {
+        $('#navigation-top').css({
+            "position" : "sticky",
+            "top" : "0",
+            "left" : "0",
+            "z-index" : "99999999999"
+        })
+    }
+
     //nav country
     $('#navigation-country .nav-country').on('click',function(){
         let country = $(this).data('country');
@@ -25,8 +34,8 @@ $(document).ready(function(){
 
     };*/
     // scroll auto load
-    $(window).scroll(function(){
-        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+    $('body').scroll(function(){
+        if($('body').scrollTop() + $('body').height() == $(document).height()) {
             moreView();
         }
     });
@@ -44,9 +53,10 @@ $(document).ready(function(){
         $('#dropdownMenuButton1').text($(this).text());
         sort1 = $(this).attr("value");
         currentPage = 0;
+        let currenLocation = window.location.pathname;
         $('#dropdownsearch').prop('checked',false);
-        if(currentPagePath.split('/')[1] === 'gallery' && currentPagePath.split('/')[2] === undefined) {
-            MoreSlide( 'main/page/gallery','html', sort1);
+        if(currenLocation === '/gallery') {
+            MoreSlide( 'all','html', sort1, 0,0);
         }
         moreView("html", sort1);
     })
@@ -68,8 +78,9 @@ $(document).ready(function(){
             return false;
         }
         currentPage = 0;
-        if(currentPagePath.split('/')[1] === 'gallery' && currentPagePath.split('/')[2] === undefined) {
-            MoreSlide('main/page/gallery','html', sort1);
+        let currenLocation = window.location.pathname;
+        if(currenLocation === '/gallery') {
+            MoreSlide('all','html', sort1, 0,0);
         }
         moreView("html", sort1);
     });
@@ -96,7 +107,12 @@ function DontLongNumber() {
 
     countText.forEach((item, index) => {
         if(Number(item.innerHTML) >= 1000) {
-            item.innerHTML = `${Math.floor(Number(item.innerHTML)/1000)}k+`;
+            if(Math.floor(Number(item.innerHTML)/1000 > 99)) {
+                item.innerHTML = `99k+`;
+            }
+            else {
+                item.innerHTML = `${Math.floor(Number(item.innerHTML)/1000)}k+`;
+            }
         }
     })
 }
@@ -110,7 +126,6 @@ function DontLongNumber() {
 const size = 20;
 
 function moreView(type , sort1) {
-    console.log(type);
     if(currentPagePath !== "/") {
         $(window).unbind();
         return;
@@ -210,10 +225,11 @@ function toList(list) {
 function searchFormClose() {
     $('#searchKeyword').val('');
     $("#nftgram-tag").html('');
-    if(window.location.href.split('/')[3] === 'gallery' && window.location.href.split('/')[4] === undefined) {
+    let currenLocation = window.location.pathname;
+    if(currenLocation === '/gallery') {
         $('.search-box').remove();
         currentPage = 0;
-        MoreSlide('main/page/gallery','html', sort1);
+        MoreSlide('all','html', sort1, 0,0);
     }
     moreView("html", sort1);
 }

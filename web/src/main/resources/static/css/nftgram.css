@@ -562,6 +562,7 @@ video.card-img-top {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-weight: bold;
 }
 
 #nftgram-list .card-body .row .row-data-right {

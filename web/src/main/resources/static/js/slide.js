@@ -27,7 +27,7 @@ const setBackHeight = () => {
     $('#nftgram_wrap').css({
         'height' : newHeight,
     });
-
+    currentPage = 0;
     goSlide();
 }
 
@@ -134,7 +134,7 @@ const MoreEdit = () => {
     nftOk = false;
 }
 
-const MoreSlide = (uri, type, sort1) => {
+const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) => {
 
     let keyword = $('#searchKeyword').val();
     let insTag = "" +
@@ -145,7 +145,6 @@ const MoreSlide = (uri, type, sort1) => {
         '</div>'
     "</div>";
     let sort = sort1;
-    console.log(sort);
     if (type === 'html') {
         if(prevSort !== sort || prevSort === "0" || prevKeyword !== keyword) {
             goFirst();
@@ -161,9 +160,24 @@ const MoreSlide = (uri, type, sort1) => {
         $(".gallery-container").prepend(insTag);
     }
     let size = 18;
-    let url = `/api/${uri}?page=${currentPage++}&size=` + size + `&keyword=` + keyword;
+    let url = `/api/gallery/page?pageType=${uri}&page=${currentPage++}&size=` + size + `&keyword=` + keyword;
     if(sort !== "0") {
         url += "&sort=" + sort;
+    }
+    if(userno !== 0) {
+        url += "&userno=" + userno;
+    }
+    if(cid !== 0) {
+        url += "&cid=" + cid;
+    }
+    if(address) {
+        url += "&address=" + address;
+    }
+    if(likeFlag) {
+        url += "&likeFlag=" + likeFlag;
+    }
+    if(username) {
+        url += "&username=" + username;
     }
     $.ajax({
         url: url,
@@ -172,7 +186,7 @@ const MoreSlide = (uri, type, sort1) => {
         data: {total: this.value},
         async: false,
         success : function (data) {
-            if(data.total === 0) {
+            if(data.nftListCount === 0) {
                 alert('lastData');
             }
             else {
@@ -194,14 +208,14 @@ const MoreSlide = (uri, type, sort1) => {
 }
 
 const makeGalleryList = (data) => {
-    const newList = data.slideList.map((item)=> {
+    const newList = data.nftSliderList.map((item)=> {
         let innerNewList = ''
         item.forEach((inner)=>{
             let date = timeToElapsed(inner.localDate);
             innerNewList = innerNewList + `
                             <div class="image-container">
                                 <div class="image-container-content" data-nftid="${inner.nftId}">
-                                    <img class="outer-frame" src="../img/etc/no-image.png"/>`;
+                                    <img class="outer-frame" src="/img/etc/no-image.png"/>`;
             if(inner.tagType == "video") {
                 innerNewList += `<video class="inner-picture gimage${inner.nftId}" controls controlsList="nodownload"  data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}"/>`;
             } else {
@@ -223,10 +237,10 @@ const makeGalleryList = (data) => {
                                             </div>
                                         </div>
                                         <div class="picture-price">
-                                            <img src="../img/icon/ic-gallery-eyes.svg" class="hIs24 wIs20" />
-                                            <span class="viewCount count-text">${inner.viewCount}</span>
-                                            <img src="../img/icon/ic-gallery-like.svg" class="hIs24 wIs20" />
-                                            <span class="likeCount count-text">${inner.likeCount}</span>
+                                            <img src="/img/icon/ic-gallery-eyes.svg" class="hIs24 wIs20" />
+                                            <span class="viewCount count-text" id="viewCount1">${inner.viewCount}</span>
+                                            <img src="/img/icon/ic-gallery-like.svg" class="hIs24 wIs20" />
+                                            <span class="likeCount count-text" id="likeCount1">${inner.likeCount}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -256,13 +270,15 @@ const goNext = () => {
             item.style.transform = 'scale(1)';
         });
         if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
-            if(nowLocation === 'edit') {
+            if(nowLocation === '/gallery/edit') {
                 if(nowList6.getAttribute('save') === 'false') {
                     alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
                 }
                 else {
                     currentNum++;
-                    slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                    setTimeout(()=>{
+                        slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                    },300);
                     dontclick(nftImages);
                     dontclick(frameImages);
                     dontclick(backgroundImages);
@@ -270,17 +286,21 @@ const goNext = () => {
             }
             else {
                 currentNum++;
-                slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                setTimeout(()=>{
+                    slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                },300)
             }
         }
         else {
-            if(nowLocation === 'edit') {
+            if(nowLocation === '/gallery/edit') {
                 if(nowList6.getAttribute('save') === 'false') {
                     alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
                 }
                 else {
                     currentNum++;
-                    slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                    setTimeout(()=>{
+                        slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                    },300);
                     dontclick(nftImages);
                     dontclick(frameImages);
                     dontclick(backgroundImages);
@@ -288,7 +308,9 @@ const goNext = () => {
             }
             else {
                 currentNum++;
-                slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                setTimeout(()=>{
+                    slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                },300);
             }
         }
 
@@ -299,8 +321,36 @@ const goNext = () => {
         });
     }
     else {
-        if(nowLocation === undefined) {
-            MoreSlide('main/page/gallery', '', sort1);
+        if(nowLocation === '/gallery') {
+            MoreSlide('all', '', sort1,0, 0, '', '','');
+        }
+        else if(nowLocation === '/gallery/myfavorite') {
+            MoreSlide('user','',sort1,userno, 0, '' , "Y", '')
+        }
+        else if(nowLocation === '/gallery/mycollection') {
+            MoreSlide('mycollection', '', sort1, 0,0, '','', '');
+        }
+        else if(nowLocation === '/gallery/' + nowLocation.split('/')[2]) {
+            if(nowLocation.split('/')[2] !== 'edit') {
+                MoreSlide('gallery','', sort1, 0, nowLocation.split('/')[2], '','', '');
+            }
+        }
+        else if(nowLocation.split('/')[2] === 'address') {
+            MoreSlide('address', '', sort1, 0, 0, nowLocation.split('/')[3],'', '')
+        }
+        else if(nowLocation.split('/')[2] === 'name') {
+            MoreSlide('username','',sort1,0,0,'','', nowLocation.split('/')[3])
+        }
+        else if(nowLocation.split('/')[2] === 'username') {
+            MoreSlide(' externaluname','',sort1,0,0,'','', nowLocation.split('/')[3])
+        }
+        else if(nowLocation === '/user/' + nowLocation.split('/')[2]) {
+            if(window.location.search === '?page=favorite') {
+                MoreSlide('user','',sort1,nowLocation.split('/')[2], 0, '', "Y", '');
+            }
+            else {
+                MoreSlide('user','',sort1,nowLocation.split('/')[2],0, '',"N", '');
+            }
         }
     }
 }
@@ -312,13 +362,15 @@ const goPrev = () => {
             item.style.transform = 'scale(1)';
         });
         if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
-            if(nowLocation === 'edit') {
+            if(nowLocation === '/gallery/edit') {
                 if(nowList7.getAttribute('save') === 'false') {
                     alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
                 }
                 else {
                     currentNum--;
-                    slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                    setTimeout(()=>{
+                        slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                    },300);
                     dontclick(nftImages);
                     dontclick(frameImages);
                     dontclick(backgroundImages);
@@ -326,17 +378,21 @@ const goPrev = () => {
             }
             else {
                 currentNum--;
-                slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                setTimeout(()=>{
+                    slideContainer.style.transform = `translateX(${-(slides[currentNum].getBoundingClientRect().left - slideContainer.getBoundingClientRect().left)}px)`;
+                },300);
             }
         }
         else {
-            if(nowLocation === 'edit') {
+            if(nowLocation === '/gallery/edit') {
                 if(nowList7.getAttribute('save') === 'false') {
                     alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
                 }
                 else {
                     currentNum--;
-                    slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                    setTimeout(()=>{
+                        slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                    },300);
                     dontclick(nftImages);
                     dontclick(frameImages);
                     dontclick(backgroundImages);
@@ -344,7 +400,9 @@ const goPrev = () => {
             }
             else {
                 currentNum--;
-                slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                setTimeout(()=>{
+                    slideContainer.style.transform = `translateX(${(slides[currentNum].getBoundingClientRect().bottom - slideContainer.getBoundingClientRect().bottom)}px)`;
+                },300);
             }
         }
 
@@ -377,11 +435,40 @@ const Refresh = () => {
 }
 
 const goSlide = () => {
-    nowLocation = window.location.href.split('/')[4];
+    nowLocation = window.location.pathname;
+    console.log(nowLocation)
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
-    if(nowLocation === undefined && currentPage === 0) {
-        MoreSlide('main/page/gallery', '', sort1);
+    if(nowLocation === '/gallery' && currentPage === 0) {
+        MoreSlide('all', '', sort1,0, 0, '', '', '');
+    }
+    else if(nowLocation === '/gallery/myfavorite' && currentPage === 0) {
+        MoreSlide('user','',sort1,userno, 0, '', 'Y', '');
+    }
+    else if(nowLocation === '/gallery/mycollection' && currentPage === 0) {
+        MoreSlide('mycollection', '', sort1, 0,0, '', '', '');
+    }
+    else if(nowLocation === '/gallery/' + nowLocation.split('/')[2] && currentPage === 0) {
+        if(nowLocation.split('/')[2] !== 'edit') {
+            MoreSlide('gallery','', sort1, 0, nowLocation.split('/')[2], 0, '', '');
+        }
+    }
+    else if(nowLocation.split('/')[2] === 'address' && currentPage === 0) {
+        MoreSlide('address', '', sort1, 0, 0, nowLocation.split('/')[3], '', '')
+    }
+    else if(nowLocation.split('/')[2] === 'name' && currentPage === 0) {
+        MoreSlide('username','',sort1,0,0,'','', nowLocation.split('/')[3])
+    }
+    else if(nowLocation.split('/')[2] === 'username' && currentPage === 0) {
+        MoreSlide(' externaluname','',sort1,0,0,'','', nowLocation.split('/')[3])
+    }
+    else if(nowLocation === '/user/' + nowLocation.split('/')[2] && currentPage === 0) {
+        if(window.location.search === '?page=favorite') {
+            MoreSlide('user','',sort1,nowLocation.split('/')[2], 0, '', 'Y', '');
+        }
+        else {
+            MoreSlide('user','',sort1,nowLocation.split('/')[2],0, '', 'N', '');
+        }
     }
     prevBtn = document.querySelector('#prevBtn');
     nextBtn = document.querySelector('#nextBtn');

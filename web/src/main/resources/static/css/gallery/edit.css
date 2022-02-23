@@ -166,6 +166,59 @@ input#discord {
     margin-bottom: 0;
 }
 
+.inner-picture-delete-btn {
+    width: 9%;
+    height: 9%;
+    background-color: #b1b1b1;
+    color: #090909;
+    position: absolute;
+    top: 11%;
+    right: 11%;
+    z-index: 999999;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.outer-frame-delete-btn {
+    width: 9%;
+    height: 9%;
+    background-color: #b1b1b1;
+    color: #090909;
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    z-index: 99999999;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.background-frame-delete-btn {
+    width: 3%;
+    height: 6%;
+    background-color: #b1b1b1;
+    color: #090909;
+    position: absolute;
+    top : 3%;
+    right: 1%;
+    z-index: 9999999;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.dropdown > label {
+    width: 100% !important;
+    height: 100%;
+}
+
 @media screen and (max-width: 930px) {
     .wrap-edit-frame-collection .edit-box-container-collection input {
         width: 100%;
@@ -187,52 +240,24 @@ input#discord {
         bottom: 0.2rem;
         right: 0.3rem;
     }
-}
 
-.inner-picture-delete-btn {
-    width: 9%;
-    height: 9%;
-    background-color: #b1b1b1;
-    color: #090909;
-    position: absolute;
-    top: 11%;
-    left: 11%;
-    z-index: 999999;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
+    .inner-picture-delete-btn {
+        font-size: 0.9rem;
+    }
 
-.outer-frame-delete-btn {
-    width: 9%;
-    height: 9%;
-    background-color: #b1b1b1;
-    color: #090909;
-    position: absolute;
-    top: 1%;
-    left: 1%;
-    z-index: 99999999;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
+    .outer-frame-delete-btn {
+        font-size: 0.9rem;
+    }
 
-.background-frame-delete-btn {
-    width: 3%;
-    height: 6%;
-    background-color: #b1b1b1;
-    color: #090909;
-    position: absolute;
-    top : 3%;
-    left: 1%;
-    z-index: 9999999;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    .background-frame-delete-btn {
+        font-size: 0.9rem;
+    }
+
+    .gallery-edit-plus-section {
+        font-size: 1rem;
+    }
+
+    .gallery-edit-save {
+        font-size: 1rem;
+    }
 }

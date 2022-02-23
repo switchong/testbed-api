@@ -48,7 +48,7 @@ const contentListLoad = () => {
         let nowList3 = document.querySelectorAll('.gallery-slide-list')[currentNum];
         e.preventDefault();
         if(choiceOne) {
-            if(nowList3.getAttribute('save') === 'false' && (nftArray.length || frameArray.length || backgroundArray.length)) {
+            if(nowList3.getAttribute('save') === 'false' && (nftNum !==0|| frameNum !==0 || backgroundNum !==0)) {
                 e.returnValue = '지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?';
             }
             return;
@@ -60,7 +60,7 @@ const contentListLoad = () => {
 
     plusBtn.forEach((item, index)=>{
         item.addEventListener('click',()=>{
-            if(nowLocation === 'edit') {
+            if(nowLocation === '/gallery/edit') {
                 let nowList2 = document.querySelectorAll('.gallery-slide-list')[currentNum];
                 if(nowList2.getAttribute('save') === 'true' && nowList2.getAttribute('moreValue') === '0') {
                     nowList2.setAttribute('moreValue','1');
@@ -79,7 +79,7 @@ const contentListLoad = () => {
     closeBtn.addEventListener('click',()=>{
         let nowList1 = document.querySelectorAll('.gallery-slide-list')[currentNum];
         if(choiceOne) {
-            if(nowList1.getAttribute('save') === 'false' && (nftArray.length || frameArray.length || backgroundArray.length)) {
+            if(nowList1.getAttribute('save') === 'false' && (nftNum !==0|| frameNum !==0 || backgroundNum !==0)) {
                 if(!window.confirm('지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?')){
                     return;
                 }

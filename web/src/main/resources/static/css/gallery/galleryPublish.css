@@ -24,8 +24,10 @@
 }
 
 .gallery-top {
-    width: 100%;
-    padding: 1rem 3rem;
+    position: absolute;
+    top: 3%;
+    left: 2%;
+    width: 80%;
     box-sizing: border-box;
 }
 
@@ -50,6 +52,7 @@
     justify-content: center;
     position: relative;
     margin-bottom : 1%;
+    z-index: 5;
 }
 
 .myCollection-user-top label {
@@ -127,30 +130,40 @@
     top : 50%;
     transform : translateY(-50%);
     left: 2%;
-    width: 2.5%;
+    width: 4%;
     min-width: 2.25rem;
+    max-width: 50px;
     /*height: 40%;*/
     background-color: #343434;
-    border-radius: 1.25rem;
+    border-radius: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
     row-gap: 0.5rem;
-    padding: 0.6rem 0.3rem;
+    padding: 0.5rem 0rem;
 }
 
 .gallery-container .sns-container > img {
     width: 100%;
+    max-width: 37px;
     object-fit: fill;
     cursor: pointer;
+    transition: all 0.5s ease;
 }
 
 .gallery-container .sns-container .sns-link-img > img {
     width: 100%;
+    max-width: 37px;
     object-fit: fill;
     cursor: pointer;
+    transition: all 0.5s ease;
 }
+
+.gallery-container .sns-container img:hover {
+        transform: scale3d(115%,115%,115%);
+}
+
 .gallery-content .gallery-slide-container {
     width: 84.7%;
     height: 100%;
@@ -164,7 +177,7 @@
 
 .gallery-content .gallery-slide-container .gallery-slide-list-container {
     display: flex;
-    transition : all 0.5s;
+    transition : all 0.5s ease-in;
     width: 100%;
     height: 100%;
     position: relative;
@@ -181,6 +194,7 @@
     position: relative;
     margin-right: 0;
     background-color: #676767;
+    transition: all 0.3s ease-in;
 }
 
 .gallery-content .gallery-slide-container .gallery-slide-list > img {
@@ -227,6 +241,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    font-weight: bold;
 }
 
 .picture-explain .picture-explain-bottom {
@@ -270,6 +285,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    font-weight: bold;
 }
 
 .picture-explain .picture-explain-bottom .user-info .user-info-name > span:last-child {
@@ -299,7 +315,7 @@
 }
 
 .picture-explain .picture-explain-bottom .picture-price > span {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-right: 8%;
 }
 
@@ -510,9 +526,18 @@ img[id*="image-edit-icon"] {
         align-items: center;
     }
 
+    .gallery-top {
+        font-size: 0.8rem;
+    }
+
     .gallery-top-myCollection > div {
         margin-right: 0.7rem;
         margin-bottom: 0;
+    }
+
+    .gallery-container .sns-container {
+        row-gap: 0.2rem;
+        padding : 0.3rem 0.3rem;
     }
 }
 
@@ -586,6 +611,10 @@ img[id*="image-edit-icon"] {
 .gallery-edit-container .gallery-edit-slide-container::-webkit-scrollbar-thumb {
     background-color: white;
     cursor: pointer;
+}
+
+.gallery-edit-container .gallery-edit-slide-container::-webkit-scrollbar-track {
+    background-color: #b1b1b1;
 }
 
 .edit-image-moreBtn {

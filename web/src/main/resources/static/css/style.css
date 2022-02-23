@@ -19,6 +19,13 @@
   font-weight: normal;
 }
 
+@font-face {
+  font-family: 'basic-font';
+  src : url("fonts/basicfont.ttf") format("truetype");
+  font-style: normal;
+  font-weight: bold;
+}
+
 * {
   font-family: 'basic-font', cursive;
 }
@@ -26,6 +33,15 @@
 html {
   font-family: 'basic-font' !important;
   font-size: 16px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
 @media screen and (max-width: 1200px) {
@@ -4175,6 +4191,7 @@ textarea.form-control-lg {
 .navbar-light .navbar-nav .show > .nav-link,
 .navbar-light .navbar-nav .nav-link.active {
   color: #19c8ff !important;
+  font-weight: bold;
 }
 .navbar-light .navbar-toggler {
   color: rgba(0, 0, 0, 0.55);

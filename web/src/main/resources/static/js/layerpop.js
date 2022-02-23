@@ -55,10 +55,10 @@ function giveClickEvent() {
 }
 
 $(document).ready(function(){
-
-    giveClickEvent();
+    if(currentPagePath !== '/gallery/edit') {
+        giveClickEvent();
+    }
     //web
-
 
     // $('#gallery-slide-container .image-container-content img').on('click',function(){
     //     console.log($(this));
@@ -217,6 +217,9 @@ function layerPopGallery(nftId) {
     let nftInfo = getNftOne(nftId);
     // NFT INTO
     layerPopByNft(nftInfo);
+    $('body').css({
+        'touch-action' : 'none'
+    })
 
     $('#nft-layer-pop .nft-btn').find('.nft-btn-form').eq(0).trigger('click');
     $('.nft-form').css({"display":"none","height":"100%"});
@@ -258,6 +261,9 @@ function layerPopGallery(nftId) {
 
 // 레이어 팝업창 닫기
 function layerPopClose(){
+    $('body').css({
+        'touch-action' : 'initial'
+    })
     $('.wrap_layer_popup').fadeOut();
     $('.layer_popup_bg').fadeOut();
     // location.reload();
