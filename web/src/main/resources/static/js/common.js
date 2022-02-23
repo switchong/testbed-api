@@ -205,7 +205,7 @@ function toList(list) {
             '                <div class="card-body">\n' +
             '                     <div class="row">' +
             '                        <div class="row-data-left" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">\n' +
-            '                            <img src="/img/icon/ic-gallery-profile.svg" class="card-img-user" > <span class="text-muted left-nft-title">'+nft.username+'</span>\n' +
+            '                            <img src="/img/icon/ic-gallery-profile.svg" class="card-img-user" > <a href="'+nft.userUrl+'"><span class="text-muted left-nft-title">'+nft.username+'</span></a>\n' +
             '                        </div>\n'+'' +
             '                        <div class="row-data-right">\n' +
             '                            <img src="/img/icon/ic-gallery-eyes.svg" class="card-img-icon view-icon whIs19 ml20"> <span class="text-muted count-text">'+nft.viewCount+'</span>\n' +

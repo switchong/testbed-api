@@ -342,7 +342,7 @@ const goNext = () => {
             MoreSlide('username','',sort1,0,0,'','', nowLocation.split('/')[3])
         }
         else if(nowLocation.split('/')[2] === 'username') {
-            MoreSlide(' externaluname','',sort1,0,0,'','', nowLocation.split('/')[3])
+            MoreSlide('externaluname','',sort1,0,0,'','', nowLocation.split('/')[3])
         }
         else if(nowLocation === '/user/' + nowLocation.split('/')[2]) {
             if(window.location.search === '?page=favorite') {
@@ -460,7 +460,7 @@ const goSlide = () => {
         MoreSlide('username','',sort1,0,0,'','', nowLocation.split('/')[3])
     }
     else if(nowLocation.split('/')[2] === 'username' && currentPage === 0) {
-        MoreSlide(' externaluname','',sort1,0,0,'','', nowLocation.split('/')[3])
+        MoreSlide('externaluname','',sort1,0,0,'','', nowLocation.split('/')[3])
     }
     else if(nowLocation === '/user/' + nowLocation.split('/')[2] && currentPage === 0) {
         if(window.location.search === '?page=favorite') {

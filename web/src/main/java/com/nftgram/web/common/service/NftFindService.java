@@ -151,7 +151,6 @@ public class NftFindService {
                 nftList = commonDto.getNftList();
                 break;
             case "all":
-            default:
                 nftList = nftRepository.findAllNft(pageable, nftGalleryRequest.getKeyword() , nftGalleryRequest.getSort() );
                 break;
         }

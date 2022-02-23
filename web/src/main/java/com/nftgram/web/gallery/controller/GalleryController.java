@@ -7,7 +7,6 @@ import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.dto.GalleryDto;
 import com.nftgram.web.common.dto.GalleryMemberDto;
 import com.nftgram.web.common.dto.NftGalleryCommonDto;
-import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.service.NftFindService;
 import com.nftgram.web.gallery.service.GalleryService;
 import com.nftgram.web.member.dto.NftMemberAuthDto;
@@ -27,8 +26,6 @@ import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -136,7 +133,6 @@ public class GalleryController {
 
     @GetMapping("/gallery/edit")
     public String editgallery(Model model, Pageable pageable) throws GeneralSecurityException, UnsupportedEncodingException, ParseException {
-        Long isResult = Long.valueOf(0);
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
 
@@ -144,31 +140,31 @@ public class GalleryController {
 
         model.addAttribute("nav_active", "mycolllection");
 
-        List<CommonNftResponse> mainResponseAll = new ArrayList<>();
-
         // Login Manager Check
         if(authDto.getLoginYN().equals("Y")) {
             memberId = authDto.getNftMemberId();
-            if(nftGalleryRequest.getMemberId() != null) {
-                memberId = nftGalleryRequest.getMemberId();
-            }
-            isResult = Long.valueOf(1); // Account Check Success
+
             nftGalleryRequest.setPageType("edit");
             nftGalleryRequest.setMemberId(memberId);
 
             NftGalleryCommonDto nftGalleryCommonDto = nftFindService.nftGalleryCommonData(pageable, nftGalleryRequest);
 
-            if(nftGalleryCommonDto.getSliderCount() >= 0) {
+            if(nftGalleryCommonDto.getSliderCount() > 0) {
                 model.addAttribute("nav_active","mycollection");
                 model.addAttribute("member",nftGalleryCommonDto.getMember());
                 model.addAttribute("total",nftGalleryCommonDto.getTotal());
                 model.addAttribute("nftList",nftGalleryCommonDto.getNftList());
                 model.addAttribute("slideList", nftGalleryCommonDto.getNftSliderList());
+
+                return "gallery/galleryEdit";
+            } else {
+                model.addAttribute("message","NFT is No Data!!");
+
+                return "error/not_found";
             }
 
-            return "gallery/galleryEdit";
+
         } else {
-            isResult = Long.valueOf(2); //Error
             model.addAttribute("message","The wrong Approach!!");
 
             return "error/not_found";

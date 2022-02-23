@@ -1,9 +1,12 @@
 package com.nftgram.web.common.dto.response;
 
-import lombok.Builder;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 public class NftMemberResponse {
     private Long nftMemberId;
 
