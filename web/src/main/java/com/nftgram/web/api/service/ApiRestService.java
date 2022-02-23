@@ -5,20 +5,17 @@ import com.nftgram.core.domain.nftgram.NftLike;
 import com.nftgram.core.domain.nftgram.NftMember;
 import com.nftgram.core.domain.nftgram.NftMemberBackground;
 import com.nftgram.core.domain.nftgram.NftMemberWallet;
-import com.nftgram.core.dto.NftMemberBgDto;
+import com.nftgram.core.dto.NftIdWalletList;
 import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.NftPropGroupDto;
 import com.nftgram.core.repository.*;
 import com.nftgram.web.api.dto.response.MemberWalletResponses;
 import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
-import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.dto.response.NftPropertiesGroupResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -32,16 +29,12 @@ import static com.nftgram.core.domain.common.value.ActiveStatus.DELETE;
 @Transactional
 public class ApiRestService {
 
-    private CommonNftResponse commonNftResponse;
     private final NftRepository nftRepository;
     private final NftMemberRepository nftMemberRepository;
     private final NftMemberWalletRepository nftMemberWalletRepository;
     private final NftMemberBackgroundRepository nftMemberBackgroundRepository;
     private final NftLikeRepository nftLikeRepository;
     private final NftPropertyRepository nftPropertyRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     @Transactional(readOnly = true)
     public NftPropertiesGroupDto nftPropertiesCountDto() {
@@ -133,20 +126,25 @@ public class ApiRestService {
     }
 
     @Transactional(readOnly = true)
-    public List<NftMemberBgDto> memberBackgroundList(Pageable pageable, Long memberId) {
+    public List<NftMemberBackground> memberBackgroundList(Pageable pageable, Long memberId) {
 
         List<NftMemberBackground> nftMemberBgList = nftMemberBackgroundRepository.memberBackgrounds(pageable, memberId);
 
-        List<NftMemberBgDto> nftMemberBgDtoList = new ArrayList<>();
+//        List<NftMemberBgDto> nftMemberBgDtoList = new ArrayList<>();
+//
+//        nftMemberBgList.forEach(nftBackground -> {
+//            NftOneJoinDto nftOneJoinDto = nftRepository.findByNftIdOne(nftBackground.getNft().getNftId());
+//
+//            NftMemberBgDto nftMemberBgDto = NftMemberBgDto.builder()
+//                    .nftMemberBackground(nftBackground)
+//                    .nft(nftOneJoinDto.getNft())
+//                    .nftAsset(nftOneJoinDto.getNftAsset())
+//                    .nftCollection(nftOneJoinDto.getNftCollection())
+//                    .build();
+//            nftMemberBgDtoList.add(nftMemberBgDto);
+//        });
 
-        nftMemberBgList.forEach(nftBackground -> {
-            NftMemberBgDto nftMemberBgDto = NftMemberBgDto.builder()
-                    .nftMemberBackground(nftBackground)
-                    .build();
-            nftMemberBgDtoList.add(nftMemberBgDto);
-        });
-
-        return nftMemberBgDtoList;
+        return nftMemberBgList;
     }
 
     @Transactional(readOnly = true)
@@ -183,7 +181,7 @@ public class ApiRestService {
 
     @Transactional(rollbackFor = Exception.class)
     public Long memberWalletSave(String walletContractAddress, Long memberId) {
-        Long isResult = Long.valueOf(1);
+        Long isResult = Long.valueOf(1);    // alert("지갑 연동이 완료되었습니다.");
         // 지갑주소 중복 체크
 
         NftMember nftMember = nftMemberRepository.findByNftMemberId(memberId);
@@ -193,16 +191,17 @@ public class ApiRestService {
         if(chkNftMemberWallet != null) {
             if(chkNftMemberWallet.getActiveStatus() == ACTIVE){
                 if(chkNftMemberWallet.getNftMember().getNftMemberId().equals(memberId)) {
-                    isResult = Long.valueOf(3);
+                    isResult = Long.valueOf(3);     // alert("이미 연동된 지갑입니다.");
                 } else {
-                    isResult = Long.valueOf(4);
+                    isResult = Long.valueOf(4);     // alert("다른 계정에 연동된 지갑입니다.");
                 }
             } else {
                 if(chkNftMemberWallet.getNftMember().getNftMemberId().equals(memberId)) {
-                    isResult = Long.valueOf(5);
+                    isResult = Long.valueOf(5);     // alert("지갑 연동이 완료되었습니다.");
+                    // DELETE > ACTIVE
                     nftMemberWalletRepository.updateWalletStatus(chkNftMemberWallet.getNftMemberWalletId(),memberId, ACTIVE);
                 } else {
-                    isResult = Long.valueOf(6);
+                    isResult = Long.valueOf(6);     // alert("다른 계정에 연동된 지갑입니다.");
                 }
             }
         }
@@ -217,6 +216,15 @@ public class ApiRestService {
             nftMemberWalletRepository.save(nftMemberWallet);
         }
 
+        /* 지갑 연동 시 NFT 동기화*/
+        if(isResult == 1 || isResult == 3 || isResult == 5) {
+            List<Long> nftIdList = memberWalletByNftMatching(walletContractAddress);
+            System.out.println("nftIdList : " + nftIdList.size() + "   ");
+            if(nftIdList.size() > 0) {
+                nftRepository.updateNftMemberWallet(nftIdList, memberId);
+            }
+        }
+
         return isResult;
     }
 
@@ -228,9 +236,27 @@ public class ApiRestService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Long memberWalletByNftMatching() {
-        Long isResult = Long.valueOf(1);
-        return isResult;
+    public List<Long> memberWalletByNftMatching(String walletContractAddress) {
+        List<Long> nftIdList = new ArrayList<>();
+        List<NftIdWalletList> nftAddressList = nftRepository.findNftContractAddress(walletContractAddress);
+        if(nftAddressList.size() > 0) {
+            nftAddressList.forEach(nftAddress->{
+                // NFT 소유주 확인 : creator > owner > last_sale
+                String nft_contract_address = null;
+                nft_contract_address = (nftAddress.getCreatorContractAddress()==null)? null :nftAddress.getCreatorContractAddress();
+                if(nftAddress.getLastSalesContractAddress() == null && nftAddress.getOwnerContractAddress() != "0x0000000000000000000000000000000000000000") {
+                    nft_contract_address = nftAddress.getOwnerContractAddress();
+                } else if(nftAddress.getLastSalesContractAddress() != null) {
+                    nft_contract_address = nftAddress.getLastSalesContractAddress();
+                }
+                System.out.println("nftIdList > nft_contract_address : " + nft_contract_address + "  ");
+                if(nft_contract_address != null && nft_contract_address.equals(walletContractAddress)) {
+                    nftIdList.add(nftAddress.getNftId());
+                }
+            });
+        }
+
+        return nftIdList;
 
     }
 }

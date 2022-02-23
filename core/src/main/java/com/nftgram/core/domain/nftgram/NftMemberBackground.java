@@ -18,7 +18,7 @@ public class NftMemberBackground extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftMemberBgId; //PK
 
-    @OneToOne(fetch = FetchType.EAGER , optional = false)
+    @ManyToOne(fetch = FetchType.LAZY , optional = false)
     @JoinColumn(name = "nft_id" , nullable = false)
     private Nft nft;
 

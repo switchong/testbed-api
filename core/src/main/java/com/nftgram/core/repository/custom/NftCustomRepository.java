@@ -2,6 +2,7 @@ package com.nftgram.core.repository.custom;
 
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.dto.NftCommonDto;
+import com.nftgram.core.dto.NftIdWalletList;
 import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.request.NftGalleryRequest;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,10 @@ public interface NftCustomRepository {
     void updateNftLikeCountPuls(Long nftId);
 
     void updateNftLikeCountMinus(Long nftId);
+
+    List<NftIdWalletList> findNftContractAddress(String walletAddress);
+
+    Long updateNftMemberWallet(List<Long> nftIdArr, Long memberId);
 
     NftCommonDto findAllNftCommon(Pageable pageable, NftGalleryRequest nftGalleryRequest);
 }

@@ -110,11 +110,11 @@ public class Nft  extends BaseEntity {
     @Column
     private String lastSaleProfileImageUrl;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "nft_asset_id" , nullable = false)
     private NftAsset nftAsset;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "nft_collection_id" , nullable = false)
     private NftCollection nftCollection;
 

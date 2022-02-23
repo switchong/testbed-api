@@ -134,6 +134,7 @@ public class NftFindService {
                 break;
             case "edit" :
             case "test" :
+            case "editNotNft" :
                 sortFlag = true;
                 commonDto = nftRepository.findAllNftCommon(pageable, nftGalleryRequest);
                 totals = commonDto.getTotals();

@@ -161,16 +161,8 @@
                 </div>
             </label>
             <div class="gallery-edit-slide">
-                <div class="gallery-edit-slide-container">
-                    <div class="gallery-edit-slide-item edit-slice-item-nft" th:each="nft : ${nftList}"  >
-                        <img class="gallery-edit-img edit-nft" th:classappend="'nft_'+${nft.nftId}" th:if="${nft.tagType == 'image'}" data-layer-btn="nft-layer-pop" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" th:src="${nft.nftImageUrl}"/>
-                        <video class="gallery-edit-img edit-nft" th:classappend="'nft_'+${nft.nftId}" controls controlsList="nodownload"  th:if="${nft.tagType == 'video'}" data-layer-btn="nft-layer-pop" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" th:src="${nft.nftImageUrl}"/>
-                        <div class="gallery-edit-select-number number-nft"></div>
-                        <div class="gallery-edit-img-hover"></div>
-                    </div>
-                    <div class="edit-image-moreBtn nft-moreBtn">
-                        <img th:src="@{/img/icon/ic-popup-right.png}">
-                    </div>
+                <div class="gallery-edit-slide-container" id="edit-nft-list">
+
                 </div>
                 <div class="gallery-edit-plus-section">
                     section+
@@ -186,20 +178,8 @@
                 </div>
             </label>
             <div class="gallery-edit-slide">
-                <div class="gallery-edit-slide-container">
-                    <div class="gallery-edit-slide-item edit-slice-item-frame" th:each="nftframe : ${nftList}">
-                        <img class="gallery-edit-img edit-frame" th:classappend="'nft_'+${nftframe.nftId}" th:if="${nftframe.tagType == 'image'}" th:alt="${nftframe.name}" th:data-nftid="${nftframe.nftId}" th:src="${nftframe.nftImageUrl}"/>
-                        <div class="gallery-edit-select-number number-frame"></div>
-                        <div class="gallery-edit-img-hover"></div>
-                    </div>
-                    <div class="edit-image-moreBtn frame-moreBtn">
-                        <img th:src="@{/img/icon/ic-popup-right.png}">
-                    </div>
-                    <!--<div class="gallery-edit-slide-item edit-slice-item-frame">
-                        <img class="gallery-edit-img edit-background" th:src="@{/img/gallery/10.jpg}" alt="editGallery" />
-                        <div class="gallery-edit-img-hover"></div>
-                        <div class="gallery-edit-select-number number-frame"></div>
-                    </div>-->
+                <div class="gallery-edit-slide-container" id="edit-frame-list">
+
                 </div>
                 <div class="gallery-edit-plus-section">
                     section+
@@ -215,15 +195,8 @@
                 </div>
             </label>
             <div class="gallery-edit-slide">
-                <div class="gallery-edit-slide-container">
-                    <div class="gallery-edit-slide-item edit-slice-item-background" th:each="nftbg : ${nftList}">
-                        <img class="gallery-edit-img edit-background" th:classappend="'nft_'+${nftbg.nftId}" th:if="${nftbg.tagType == 'image'}" data-layer-btn="nft-layer-pop" th:alt="${nftbg.name}" th:data-nftid="${nftbg.nftId}" th:src="${nftbg.nftImageUrl}"/>
-                        <div class="gallery-edit-select-number number-background"></div>
-                        <div class="gallery-edit-img-hover"></div>
-                    </div>
-                    <div class="edit-image-moreBtn background-moreBtn">
-                        <img th:src="@{/img/icon/ic-popup-right.png}">
-                    </div>
+                <div class="gallery-edit-slide-container" id="edit-background-list">
+
                 </div>
                 <div class="gallery-edit-plus-section">
                     section+

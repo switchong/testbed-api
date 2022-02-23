@@ -8,10 +8,10 @@
 <div th:fragment="frame-edit-collection" class="editFrame-collection" >
     <div class="wrap-edit-frame-collection" >
         <div class="edit-box-container-collection"  >
-            <form th:action="@{/gallery/mycollection/save}"  th:object="${member}" method="post"> <!--th:action="@{'/gallery/mycollection/save/' + ${member.nftMemberId}}" -->
+            <form id="editProfileForm" th:action="@{/gallery/mycollection/save}"  th:object="${member}" method="post"> <!--th:action="@{'/gallery/mycollection/save/' + ${member.nftMemberId}}" -->
                 <div class="edit-box-collection" >
                     <p>USER NAME</p>
-                    <input type="text" id="username" class="username" name="username"  th:field="*{username}"  oninput="checkId()" onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)"/>
+                    <input type="text" id="username" class="username" name="username"  th:field="*{username}"  onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)"/>
 <!--                    <small class="text-danger" th:field="*{username}"></small>-->
                     <!-- th:value="${member.username}"-->
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                     <!--  th:value="${member.discord}" -->
                 </div><br />
-                <button class="edit-submit-button" type="submit">ok</button>
+                <button class="edit-submit-button" id="editProfileBtn">ok</button>
                 <!--                <input type ="button" value="수정" class="btn btn-secondary" id="btnUpdate">-->
             </form>
         </div>

@@ -79,6 +79,16 @@ $(document).ready(function(){
     }
 
     DontLongNumber();
+
+    $('#editProfileBtn').on('click',function(){
+        let form = $('#editProfileForm');
+        if(!checkId()) { // 중복값 없을때
+            form.submit();
+        } else {    // 중복값 존재
+            alert("Is username Conflict");
+        }
+        return false;
+    })
 });
 
 function DontLongNumber() {
@@ -399,37 +409,27 @@ function noSpaceForm(obj){
 }
 
 
-var idCheck = 0;
-var pwdCheck = 0;
+let idCheck = 0;
+let pwdCheck = 0;
 //아이디 체크하여 가입버튼 비활성화, 중복확인.
 function checkId() {
-    var inputed = $('.username').val();
-    $.ajax({
-        data : {
-            id : inputed
-        },
-        type: "GET",
-        url : "/username/check",
-        success : function(data) {
-            if(inputed=="" && data=='0') {
-                $(".edit-submit-button").prop("disabled", true);
-                $(".edit-submit-button").css("background-color", "#aaaaaa");
-                $("#username").css("background-color", "#FFCECE");
-                idCheck = 0;
-            } else if (data == '0') {
-                $("#username").css("background-color", "#B0F6AC");
-                idCheck = 1;
-                if(idCheck==1 && pwdCheck == 1) {
-                    $(".edit-submit-button").prop("disabled", false);
-                    $(".edit-submit-button").css("background-color", "#4CAF50");
-                    signupCheck();
-                }
-            } else if (data == '1') {
-                $(".edit-submit-button").prop("disabled", true);
-                $(".edit-submit-button").css("background-color", "#aaaaaa");
-                $("#username").css("background-color", "#FFCECE");
-                idCheck = 0;
-            }
+    let inputed = $('.username').val();
+    // true : 중복값 존재, false : 중복값없음
+    let param = {"id" : inputed};
+    let result = commonAjaxUrl("POST", "/username/check",param);
+    if(inputed=="" && result == false) {
+        $("#username").css("background-color", "#FFCECE");
+        idCheck = 0;
+    } else if ( result == false) {
+        $("#username").css("background-color", "#B0F6AC");
+        idCheck = 1;
+        if(idCheck==1 && pwdCheck == 1) {
+            signupCheck();
         }
-    });
+    } else if ( result == true) {
+        $("#username").css("background-color", "#FFCECE");
+        idCheck = 0;
+    }
+
+    return result;
 }

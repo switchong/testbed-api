@@ -4,6 +4,7 @@ import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.domain.nftgram.value.ContractType;
 import com.nftgram.core.dto.NftCommonDto;
+import com.nftgram.core.dto.NftIdWalletList;
 import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.request.NftGalleryRequest;
 import com.nftgram.core.repository.custom.NftCustomRepository;
@@ -11,6 +12,8 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -154,6 +157,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return nftResult;
     }
 
+
     @Override
     public List<Nft> findByNftLikeMember(Pageable pageable, Long nftMemberId) {
         List<Nft> nftResult = queryFactory.select(nft)
@@ -265,6 +269,45 @@ public class NftRepositoryImpl implements NftCustomRepository {
     }
 
     @Override
+    public List<NftIdWalletList> findNftContractAddress(String walletAddress) {
+        List<NftIdWalletList> result = queryFactory
+                .select(Projections.constructor(
+                        NftIdWalletList.class,
+                                nft.nftId,
+                                nft.ownerContractAddress,
+                                nft.creatorContractAddress,
+                                nft.lastSaleContractAddress
+                ))
+                .from(nft)
+                .where(nft.nftId.in(
+                        JPAExpressions.select(nft.nftId)
+                                .from(nft)
+                                .where(nft.lastSaleContractAddress.eq(walletAddress).and(nft.lastSaleContractAddress.isNotNull()).and(nft.lastSaleContractAddress.ne("0x0000000000000000000000000000000000000000")))
+                ).or(nft.nftId.in(
+                        JPAExpressions.select(nft.nftId)
+                                .from(nft)
+                                .where(nft.creatorContractAddress.eq(walletAddress).and(nft.creatorContractAddress.isNotNull()).and(nft.creatorContractAddress.ne("0x0000000000000000000000000000000000000000"))))
+                ).or(nft.nftId.in(
+                        JPAExpressions.select(nft.nftId)
+                                .from(nft)
+                                .where(nft.ownerContractAddress.eq(walletAddress).and(nft.ownerContractAddress.isNotNull()).and(nft.ownerContractAddress.ne("0x0000000000000000000000000000000000000000"))))
+                ))
+                .fetch();
+
+        return result;
+    }
+
+    @Override
+    public Long updateNftMemberWallet(List<Long> nftIdArr, Long memberId) {
+        Long result = queryFactory.update(nft)
+                .set(nft.nft_member_id, memberId)
+                .where(nft.nftId.in(nftIdArr))
+                .execute();
+
+        return result;
+    }
+
+    @Override
     public NftCommonDto findAllNftCommon(Pageable pageable, NftGalleryRequest nftGalleryRequest) {
         Long totals = queryFactory.select(nft)
                 .from(nft)
@@ -298,7 +341,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
     public BooleanBuilder pageTypeWhere(NftGalleryRequest nftGalleryRequest) {
         BooleanBuilder builder = new BooleanBuilder();
 
-
         switch (nftGalleryRequest.getPageType()) {
             case "all":
                 builder.and(nft.activeStatus.eq(ActiveStatus.ACTIVE));
@@ -307,10 +349,12 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 break;
             case "user" :
                 break;
+            case "username" :
+                break;
             case "userlike" :
                 builder.and(nftLike.nftMember.nftMemberId.eq(nftGalleryRequest.getMemberId()).and(nftLike.activeStatus.eq(ActiveStatus.ACTIVE)));
                 break;
-            case "username" :
+            case "userunnamed" :
                 builder.or(nft.lastSaleUserName.eq(nftGalleryRequest.getUsername()).and(nft.lastSaleUserName.isNotNull()).and(nft.lastSaleUserName.ne("NullAddress")));
                 builder.or(nft.creatorUserName.eq(nftGalleryRequest.getUsername()).and(nft.creatorUserName.isNotNull()).and(nft.creatorUserName.ne("NullAddress")));
                 builder.or(nft.ownerUserName.eq(nftGalleryRequest.getUsername()).and(nft.ownerUserName.isNotNull()).and(nft.ownerUserName.ne("NullAddress")));
@@ -324,6 +368,10 @@ public class NftRepositoryImpl implements NftCustomRepository {
             case "test" :
             case "edit" :
                 builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
+                break;
+            case "editNotNft" :
+                builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
+                builder.and(nft.imageUrl.like(Expressions.asString("%").concat(".mp4").concat("%")).not());
                 break;
             default:
                 builder.and(nft.activeStatus.eq(ActiveStatus.ACTIVE));

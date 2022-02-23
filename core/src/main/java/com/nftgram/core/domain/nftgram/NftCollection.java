@@ -18,7 +18,7 @@ public class NftCollection  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long nftCollectionId;  //PK
+    private Long nftCollectionId;  //PK
 
     @Column(nullable = false , unique = true, length = 100)
     private String collectionSlug;

@@ -24,8 +24,7 @@ const dontclick = (list) => {
     })
 }
 
-
-window.addEventListener("DOMContentLoaded", ()=>{
+const contentListLoad = () => {
     let nftNum = 0;
     let frameNum = 0;
     let backgroundNum = 0;
@@ -308,4 +307,64 @@ window.addEventListener("DOMContentLoaded", ()=>{
             }
         })
     })
+}
+
+const pageData =  {
+    sPage : 0,
+    nPage : 0,
+    fPage : 0,
+    bPage : 0,
+    size : 36
+}
+const constEditContent = {
+    getNftData() {
+        this.getEditNftList();
+        this.getEditNftNotVideoList("frame");
+        this.getEditNftNotVideoList("background");
+
+        // window.addEventListener("DOMContentLoaded", contentListLoad);
+        contentListLoad();
+    },
+    ContainerHtml(editType, data) {
+        let html = "";
+        let edit_list = $('#edit-'+editType+'-list');
+        $.each(data.nftList, function(k, nft){
+            let imageUrlHtml = "<img class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"/>";
+            if(nft.tagType == 'video') {
+                imageUrlHtml = "<video class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" controls controlsList=\"nodownload\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"/>";
+            }
+
+            html += "<div class=\"gallery-edit-slide-item edit-slice-item-"+editType+"\">\n" +
+                "              "+ imageUrlHtml +
+                "               <div class=\"gallery-edit-select-number number-"+editType+"\"></div>\n" +
+                "               <div class=\"gallery-edit-img-hover\"></div>\n" +
+                "           </div>";
+        });
+        if(data.total > 36) {
+            html += "<div class=\"edit-image-moreBtn "+editType+"-moreBtn\">\n" +
+                "               <img src=\"/img/icon/ic-popup-right.png\">\n" +
+                "           </div>";
+            // console.log(html);
+        }
+
+        edit_list.html(html);
+    },
+    getEditNftList(type) {
+        let slideItemTotal = $('#edit-nft-list .gallery-edit-slide-item.edit-slice-item-nft').length;
+        let editType = "nft";
+        let nftList = commonAjaxUrl("GET", "/api/gallery/page?page="+pageData.sPage+"&size="+pageData.size+"&pageType=edit", {});
+        this.ContainerHtml(editType, nftList);
+    },
+    getEditNftNotVideoList(editType) {
+        let slideItemTotal = $('#edit-'+editType+'-list .gallery-edit-slide-item.edit-slice-item-'+editType).length;
+        let page = (editType=="frame")? pageData.fPage :  pageData.bPage;
+        let nftNotVideoList = commonAjaxUrl("GET", "/api/gallery/page?page="+page+"&size="+pageData.size+"&pageType=editNotNft", {});
+
+        this.ContainerHtml(editType,nftNotVideoList);
+    }
+}
+
+$(document).ready(function(){
+    constEditContent.getNftData();
+
 })

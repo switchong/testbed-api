@@ -39,7 +39,7 @@ if(typeof window.ethereum !== 'undefined') {
 
     // 메타마스크 계정 변경시
     window.ethereum.on('accountsChanged', function(accounts) {
-        let address;
+        let address, result;
         let isUse = false;
         if(accounts.length > 0) {
             address = accounts[0];
@@ -51,22 +51,21 @@ if(typeof window.ethereum !== 'undefined') {
                             isUse = true;
                         }
                     });
-                    console.log(isUse);
                     if(isUse == false) {
                         // 지갑주소 저장
-                        walletSave(address);
+                        result = walletSave(address);
                     }
                 }
             }
+            if(result == 1 || result == 5) {
+                location.href = "/";
+            }
         }
-
-        console.log('accountsChanged : '+accounts);
     });
 
     // 메타마스크 메인넷 변경시
     window.ethereum.on('chainChanged', (networkId) => {
         webEth.chainId = parseInt(networkId, 16);
-        console.log(webEth.chainId);
         if(webEth.chainId != 1) {
             alert("Please select your Metamask wallet as your Ethereum Mainnet.");
             return false;
@@ -97,7 +96,7 @@ $(document).ready(function(){
 
     // Metamask Connect Button
     $('.btn-metamask').on('click',function(){
-        let address, userResult, failResult;
+        let address, userResult, failResult, result;
         if(walletCheck("metamask") == true) {
             if(metamask.beforeWalletCheck() == true) {
                 if(metamask.isConnect() == true) { // 메타마스크 연결 확인
@@ -113,15 +112,14 @@ $(document).ready(function(){
                     }
 
                 } else {    // 연결한 메타마스크 없을 경우
-                    let result;
                     metamask.connectWallet().then((addr) => {
                         result = walletSave(addr);
                     });
-                    if(result == 1 || result == 5) {
-                        location.href = "/";
-                    }
                 }
             }
+        }
+        if(result == 1 || result == 5) {
+            location.href = "/";
         }
     });
 });
@@ -141,7 +139,6 @@ function walletCheck(place, event) {
     let walletInfo;
 
     if(event) {
-        console.log(event.target.parentNode.parentNode.parentNode.parentNode.nextSibling.nextSibling);
         walletInfo = $(event.target.parentNode.parentNode.parentNode.parentNode.nextSibling.nextSibling);
         if(place == "nav" && walletInfo.hasClass('on')) {
             walletInfo.removeClass('on');
@@ -217,7 +214,6 @@ function walletSave(address) {
     let param = {"address":address};
     if(address != null) {
         result = commonAjaxUrl(method, url, param);
-        console.log(result);
         if(result == 1 || result == 5) {
             alert("지갑 연동이 완료되었습니다.");
         } else if(result == 2) {
