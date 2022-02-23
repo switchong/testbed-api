@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:td="http://www.thymeleaf.org">
 
 
 <head th:replace="fragment/header.html :: fragment-header" />
@@ -16,10 +16,19 @@
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
         <div class="sns-container" th:if="${collection.nftCollectionId > 0}">
-            <img th:src="@{/img/icon/ic-sns-share.svg}" />
-            <img th:src="@{/img/icon/ic-sns-insta.svg}" th:data-link="${collection.collectionInstagramUsername}"/>
-            <img th:src="@{/img/icon/ic-sns-twiter.svg}" th:data-link="${collection.collectionTwitterUsername}" />
-            <img th:src="@{/img/icon/ic-sns-discord.svg}" th:data-link="${collection.collectionDiscordUrl}" />
+            <img th:onclick="clip([[${collection.nftCollectionId}]])" th:src="@{/img/icon/ic-sns-share.svg}" />
+            <img th:onclick="urlCheck([['https://instagram.com/'+${collection.collectionInstagramUsername}]])" th:src="@{/img/icon/ic-sns-insta.svg}"
+                 th:if="${collection.collectionInstagramUsername} != null"/>
+            <img th:onclick="swal('Sorry','Don`t have any information.' , 'error')" th:src="@{/img/icon/ic-sns-insta.svg}"
+                 th:unless="${collection.collectionInstagramUsername} != null"/>
+            <img th:onclick="urlCheck([['https://twitter.com/'+${collection.collectionTwitterUsername}]])" th:src="@{/img/icon/ic-sns-twiter.svg}"
+                 th:if="${collection.collectionTwitterUsername} != null"/>
+            <img th:onclick="swal('Sorry','Don`t have any information.' , 'error')" th:src="@{/img/icon/ic-sns-twiter.svg}"
+                 th:unless="${collection.collectionTwitterUsername} != null"/>
+            <img th:onclick="urlCheck([[${collection.collectionDiscordUrl}]])" th:src="@{/img/icon/ic-sns-discord.svg}"
+                 th:if="${collection.collectionDiscordUrl} != null"/>
+            <img th:onclick="swal('Sorry','Don`t have any information.' , 'error')" th:src="@{/img/icon/ic-sns-discord.svg}"
+                 th:unless="${collection.collectionDiscordUrl} != null"/>
         </div>
         <div class="gallery-top" th:if="${collection.nftCollectionId > 0}">
             <div class="user-space">

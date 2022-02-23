@@ -9,5 +9,5 @@ public interface NftMemberRepository extends JpaRepository<NftMember , Long>, Nf
 
 //   NftMember findByNftMemberUserId(String nftMemberUserId);
 
-
+    boolean existsByUsername(String username);
 }

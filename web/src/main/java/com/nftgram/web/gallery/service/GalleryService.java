@@ -18,10 +18,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManagerFactory;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -33,6 +33,7 @@ public class GalleryService {
     private final NftMemberRepository nftMemberRepository;
     private final NftAssetRepository nftAssetRepository;
     private final NftCollectionRepository nftCollectionRepository;
+
 
 
     private CommonNftResponse commonNftResponse;
@@ -121,17 +122,20 @@ public class GalleryService {
         }
         return num;
     }
-
-
-
     @Transactional
     public Long nftMemberUpdate(NftMemberRequestDto update , Long nftMemberId){
         Long isResult = Long.valueOf(1);
-
+        checkUsername(update.getUsername());
         NftMember nftMember1 = nftMemberRepository.findByNftMemberId(nftMemberId);
 
         Long nftMember = nftMemberRepository.updateNftMember(update , nftMemberId);
 
         return isResult;
+    }
+
+
+
+    public boolean checkUsername(String username){
+        return nftMemberRepository.existsByUsername(username);
     }
 }

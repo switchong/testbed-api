@@ -718,6 +718,8 @@ img[id*="image-edit-icon"] {
     display: none;
 }
 
+input::placeholder {color:#29abe2; font-weight: bold;}
+
 .list {
     width: 100%;
     height: 100%;

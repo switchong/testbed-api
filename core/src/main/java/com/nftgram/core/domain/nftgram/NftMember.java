@@ -32,7 +32,7 @@ public class NftMember  extends BaseEntity {
     @Column
     private String displayStyle;
 
-    @Column
+    @Column(unique = true)
     private String username;
 
     @Column

@@ -16,12 +16,24 @@
 <div class="container2" id="nftgram_wrap">
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
-        <div class="sns-container" th:if="${member}">
+        <div class="sns-container">
             <a class="sns-link-img" th:onclick="clip([[${member.nftMemberId}]])"><img th:src="@{/img/icon/ic-sns-share.svg}" /></a>
-            <a  class="sns-link-img" th:href="${member.instagram}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-insta.svg}"  /></a>
-            <a  class="sns-link-img" th:href="${member.twitter}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-twiter.svg}"/></a>
-            <a  class="sns-link-img" th:href="${member.facebook}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-facebook.svg}"/></a>
-            <a  class="sns-link-img" th:href="${member.discord}" th:target="_blank"><img th:src="@{/img/icon/ic-sns-discord.svg}"/></a>
+            <img th:if="${member.instagram} != ''"
+                    th:onclick="urlCheck([['https://www.instagram.com/'+${member.instagram}]])"  th:src="@{/img/icon/ic-sns-insta.svg}" />
+            <img th:unless="${member.instagram} != ''"
+                    th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-insta.svg}" />
+            <img th:if="${member.twitter} != ''"
+                    th:onclick="urlCheck([['https://twitter.com/'+${member.twitter}]])"  th:src="@{/img/icon/ic-sns-twiter.svg}"/>
+            <img th:unless="${member.twitter} != ''"
+                    th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-twiter.svg}" />
+            <img th:if="${member.facebook} != ''"
+                    th:onclick="urlCheck([['https://www.facebook.com/'+${member.facebook}]])" th:src="@{/img/icon/ic-sns-facebook.svg}"/>
+            <img th:unless="${member.facebook} != ''"
+                    th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-facebook.svg}" />
+            <img th:if="${member.discord} != ''"
+                    th:onclick="urlCheck([['https://discord.com/channels/'+${member.discord}]])" th:src="@{/img/icon/ic-sns-discord.svg}"/>
+            <img th:unless="${member.discord} != ''"
+                    th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-discord.svg}" />
         </div>
         <div class="gallery-top-myCollection">
             <!--            <img th:src="@{/img/icon/Profile_icon.png}" alt="profile" id="imgProfile_myCollection" />-->

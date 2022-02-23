@@ -308,7 +308,7 @@ public class NftFindService {
             if(nftInfo.getNft_member_id() != null) {
                 userUrl = "/user/" + nftInfo.getNft_member_id();
             } else {
-                userUrl = "/user/username" + userName;
+                userUrl = "/user/username/" + userName;
             }
         }
         String regExp = ".mp4";

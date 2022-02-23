@@ -21,6 +21,13 @@
                 </div>
             </div>
         </div>
+        <div class="sns-container" >
+            <img th:onclick="clip([[${username}]])" th:src="@{/img/icon/ic-sns-share.svg}" />
+<!--            <img th:onclick="urlCheck([['https://www.instagram.com/'+${username}]])"  th:src="@{/img/icon/ic-sns-insta.svg}" />-->
+<!--            <img th:onclick="urlCheck([['https://twitter.com/'+${username}]])"  th:src="@{/img/icon/ic-sns-twiter.svg}"/>-->
+<!--            <img th:onclick="urlCheck([['https://www.facebook.com/'+${username}]])" th:src="@{/img/icon/ic-sns-facebook.svg}"/>-->
+<!--            <img th:onclick="urlCheck([['https://discord.com/channels/'+${username}]])" th:src="@{/img/icon/ic-sns-discord.svg}"/>-->
+        </div>
         <div class="gallery-content">
             <img th:src="@{/img/icon/ic-Left-icon.png}" id="prevBtn"/>
             <div class="gallery-slide-container" id="gallery-slide-container">

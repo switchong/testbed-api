@@ -361,7 +361,6 @@ function clip(memberId){
             }
             break;
     }
-    console.log(memberId);
 
     const textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
@@ -370,7 +369,67 @@ function clip(memberId){
     textarea.select();
     document.execCommand("copy");
     document.body.removeChild(textarea);
-    alert("Link copied!!!!")
+    swal("Link copied!!!!" , "", "success")
 
 }
 
+function urlCheck(memberId){
+
+    let reqUrl = memberId;  // 기본 현재 페이지 링크
+
+    if (memberId){
+        window.open(reqUrl);
+    }
+}
+
+
+// 공백체크
+function noSpaceForm(obj){
+
+    var idCheck = 0;
+    var pwdCheck = 0;
+    let id = $('#username').val();
+    const str_space =/\s/;
+    if (str_space.exec(obj.value)){
+        swal("No spaces allowed" , "" , "error");
+         obj.focus();
+         obj.value = obj.value.replace(' ' ,'');
+         return false;
+    }
+}
+
+
+var idCheck = 0;
+var pwdCheck = 0;
+//아이디 체크하여 가입버튼 비활성화, 중복확인.
+function checkId() {
+    var inputed = $('.username').val();
+    $.ajax({
+        data : {
+            id : inputed
+        },
+        type: "GET",
+        url : "/username/check",
+        success : function(data) {
+            if(inputed=="" && data=='0') {
+                $(".edit-submit-button").prop("disabled", true);
+                $(".edit-submit-button").css("background-color", "#aaaaaa");
+                $("#username").css("background-color", "#FFCECE");
+                idCheck = 0;
+            } else if (data == '0') {
+                $("#username").css("background-color", "#B0F6AC");
+                idCheck = 1;
+                if(idCheck==1 && pwdCheck == 1) {
+                    $(".edit-submit-button").prop("disabled", false);
+                    $(".edit-submit-button").css("background-color", "#4CAF50");
+                    signupCheck();
+                }
+            } else if (data == '1') {
+                $(".edit-submit-button").prop("disabled", true);
+                $(".edit-submit-button").css("background-color", "#aaaaaa");
+                $("#username").css("background-color", "#FFCECE");
+                idCheck = 0;
+            }
+        }
+    });
+}

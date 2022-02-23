@@ -8,6 +8,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 import static com.nftgram.core.domain.nftgram.QNftMember.nftMember;
 import static com.nftgram.core.domain.nftgram.QNftMemberWallet.nftMemberWallet;
 
@@ -60,7 +62,10 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
                 .fetchOne();
 
         return result;
+
     }
+
+
 
     @Override
     public NftMember findNftMemberWalletAddress(String address) {
@@ -73,5 +78,8 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
 
         return result;
     }
+
+
+
 
 }
