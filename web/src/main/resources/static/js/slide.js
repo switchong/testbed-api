@@ -340,7 +340,6 @@ const Refresh = () => {
 
 const goSlide = () => {
     nowLocation = window.location.pathname;
-    console.log(nowLocation)
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
     if(nowLocation === '/gallery' && currentPage === 0) {
