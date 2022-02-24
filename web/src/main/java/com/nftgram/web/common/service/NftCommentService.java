@@ -40,16 +40,19 @@ public class NftCommentService {
 
         List<NftCommentResponse> response = new ArrayList<>();
 
-        commentList.forEach(comment -> {
+        for (NftCommentMemberDto comment : commentList) {
             String isMine = "N";
-            if(memberId.equals(comment.getNftMember().getNftMemberId())) {
+            if (memberId.equals(comment.getNftMember().getNftMemberId())) {
                 isMine = "Y";
             }
+
+
             LocalDate createdDate = LocalDate.from(comment.getNftComment().getCreateDate());
             commentResponse = NftCommentResponse.builder()
+                    .nftMemberUserId(comment.getNftMember().getNftMemberUserId())
                     .commId(comment.getNftComment().getCommId())
                     .nftId(comment.getNftComment().getNft().getNftId())
-                    .user(comment.getNftMember().getNftMemberUserId())
+                    .user(comment.getNftMember().getUsername())
                     .assetContractAddress(comment.getNftComment().getAssetContractAddress())
                     .tokenId(comment.getNftComment().getTokenId())
                     .title(comment.getNftComment().getTitle())
@@ -58,8 +61,9 @@ public class NftCommentService {
                     .createdDate(createdDate)
                     .build();
             response.add(commentResponse);
-        });
 
+
+        }
         NftCommentDto nftCommentDto = NftCommentDto.builder()
                 .nftId(commentRequest.getNftId())
                 .total(response.size())
@@ -76,6 +80,7 @@ public class NftCommentService {
         NftOneJoinDto nftResponse = nftRepository.findByNftIdOne(commentRequest.getNftId());
         NftMember nftMember = nftMemberRepository.findByNftMemberId(nftMemberId);
 
+
         NftComment nftComment = NftComment.builder()
                 .nft(nftResponse.getNft())
                 .nftMember(nftMember)
@@ -88,8 +93,6 @@ public class NftCommentService {
                 .build();
 
         commentRepository.saveAndFlush(nftComment);
-
-
 
         return isResult;
     }

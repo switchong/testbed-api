@@ -11,9 +11,9 @@
             <form id="editProfileForm" th:action="@{/gallery/mycollection/save}"  th:object="${member}" method="post"> <!--th:action="@{'/gallery/mycollection/save/' + ${member.nftMemberId}}" -->
                 <div class="edit-box-collection" >
                     <p>USER NAME</p>
-                    <input type="text" id="username" class="username" name="username"  th:field="*{username}"  onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)"/>
-<!--                    <small class="text-danger" th:field="*{username}"></small>-->
-                    <!-- th:value="${member.username}"-->
+                    <input type="text" id="username"
+                           th:value="${username}"
+                           th:field="*{username}"  onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)"/>
                 </div>
                 <div class="edit-box-collection">
                     <p>INSTAGRAM</p>

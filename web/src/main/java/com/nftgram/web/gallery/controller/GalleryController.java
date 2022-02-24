@@ -17,10 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
@@ -113,7 +110,7 @@ public class GalleryController {
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
 
         if(authDto.getLoginYN().equals("Y")) {
-            galleryService.checkUsername(update.getUsername());
+
             memberId = authDto.getNftMemberId();
             isResult = galleryService.nftMemberUpdate(update, memberId);
         } else {
@@ -122,8 +119,6 @@ public class GalleryController {
         return "redirect:/gallery/mycollection";
 
     }
-
-
 
 
     @PostMapping("/username/check")

@@ -23,22 +23,22 @@
         </div>
         <div class="sns-container">
             <a class="sns-link-img"  th:onclick="clip([[${member.nftMemberId}]])"><img th:src="@{/img/icon/ic-sns-share.svg}" /></a>
-            <img th:if="${member.instagram} != ''"
-                    th:onclick="urlCheck([['https://www.instagram.com/'+${member.instagram}]])"  th:src="@{/img/icon/ic-sns-insta.svg}" />
-            <img th:unless="${member.instagram} != ''"
-                    th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-insta.svg}" />
-            <img th:if="${member.twitter} != ''"
-                    th:onclick="urlCheck([['https://twitter.com/'+${member.twitter}]])"  th:src="@{/img/icon/ic-sns-twiter.svg}"/>
-            <img th:unless="${member.twitter} != ''"
-                    th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-twiter.svg}" />
-            <img th:if="${member.facebook} != ''"
-                    th:onclick="urlCheck([['https://www.facebook.com/'+${member.facebook}]])" th:src="@{/img/icon/ic-sns-facebook.svg}"/>
-            <img th:unless="${member.facebook} != ''"
-                    th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-facebook.svg}" />
-            <img th:if="${member.discord} != ''"
-                    th:onclick="urlCheck([['https://discord.com/channels/'+${member.discord}]])" th:src="@{/img/icon/ic-sns-discord.svg}"/>
-            <img th:unless="${member.discord} != ''"
-                    th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-discord.svg}" />
+            <img th:if="${member.instagram} != '' and ${member.instagram} != null"
+                 th:onclick="urlCheck([['https://www.instagram.com/'+${member.instagram}]])"  th:src="@{/img/icon/ic-sns-insta.svg}" />
+            <img th:unless="${member.instagram} != '' and ${member.instagram} != null"
+                 th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-insta.svg}" />
+            <img th:if="${member.twitter} != '' and ${member.twitter} != null"
+                 th:onclick="urlCheck([['https://twitter.com/'+${member.twitter}]])"  th:src="@{/img/icon/ic-sns-twiter.svg}"/>
+            <img th:unless="${member.twitter} != '' and ${member.twitter} != null"
+                 th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-twiter.svg}" />
+            <img th:if="${member.facebook} != '' and ${member.twitter} != null"
+                 th:onclick="urlCheck([['https://www.facebook.com/'+${member.facebook}]])" th:src="@{/img/icon/ic-sns-facebook.svg}"/>
+            <img th:unless="${member.facebook} != '' and ${member.twitter} != null"
+                 th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-facebook.svg}" />
+            <img th:if="${member.discord} != '' and ${member.twitter} != null"
+                 th:onclick="urlCheck([['https://discord.com/channels/'+${member.discord}]])" th:src="@{/img/icon/ic-sns-discord.svg}"/>
+            <img th:unless="${member.discord} != '' and ${member.twitter} != null"
+                 th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-discord.svg}" />
         </div>
         <div class="gallery-content">
             <img th:src="@{/img/icon/ic-Left-icon.png}" id="prevBtn"/>

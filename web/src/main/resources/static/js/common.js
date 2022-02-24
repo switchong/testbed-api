@@ -18,7 +18,7 @@ $(document).ready(function(){
     $('input[type="text"] , textarea[name="comment"]').css('ime-mode','disabled');
 
     $('input[type="text"] , textarea[name="comment"]').on('keyup', function(e){
-        console.log($(this).val());
+
         if(!(e.keyCode >= 37 && e.keyCode <= 40)) {
             let inputVal = $(this).val();
             var check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
@@ -104,7 +104,8 @@ $(document).ready(function(){
         if(!checkId()) { // 중복값 없을때
             form.submit();
         } else {    // 중복값 존재
-            alert("Is username Conflict");
+
+            swal("Is username Conflict" , "" ,"error");
         }
         return false;
     })
@@ -144,6 +145,7 @@ function moreView(type) {
     let nextPage = parseInt(total / size);
     let keyword = $('#searchKeyword').val();
     let sort = $('input[name="dropdownsort"]').val();
+    console.log(sort);
     let url = "/api/main/page?page=" + nextPage + "&size=" + size + "&keyword=" + keyword;
     let insTag = "" +
         '<div class=\"search-box\">' +
@@ -167,7 +169,7 @@ function moreView(type) {
             let html = toList(data.nftList);
 
             if(keyword && data.total <= 0) {
-                swal("Search No Data!!", '', 'error');
+                //alert("Search No Data!!");
                 return;
             } else {
                 if(type == "html") {
@@ -311,12 +313,21 @@ function getCommentList(nftId) {
         if(result.total > 0) {
             $.each(result.commentResponseList, function(k, comm) {
                 let row_chk = $('#comment-row-'+comm.commId).length;
-                if(row_chk == 0) {
+
+                let check = comm.user;
+                if (check == null || check == ""){
+                    check = comm.nftMemberUserId;
+                }else {
+                    check;
+                }
+
+                if(row_chk == 0 ) {
                     row_html += '<div class="comment-list-row" id="comment-row-'+comm.commId+'">\n' +
                         '                            <div class="user-image"><img src="/img/icon/ic-gallery-profile.svg" class="whIs30"/></div>\n' +
-                        '                            <div class="user-info">'+comm.user+'<br><span class="time">'+comm.createdDate+'</span></div>\n' +
+                        '                            <div class="user-info">'+check+'<br><span class="time">'+comm.createdDate+'</span></div>\n' +
                         '                            <div class="user-comment">'+$.nl2br(comm.comment)+'</div>\n' +
                         '                        </div>';
+
                 }
             });
             $('#nft-comment .comment-list').append(row_html);
@@ -439,7 +450,7 @@ let idCheck = 0;
 let pwdCheck = 0;
 //아이디 체크하여 가입버튼 비활성화, 중복확인.
 function checkId() {
-    let inputed = $('.username').val();
+    let inputed = $('#username').val();
     // true : 중복값 존재, false : 중복값없음
     let param = {"id" : inputed};
     let result = commonAjaxUrl("POST", "/username/check",param);

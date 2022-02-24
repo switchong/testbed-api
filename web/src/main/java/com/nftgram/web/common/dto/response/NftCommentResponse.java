@@ -1,6 +1,8 @@
 package com.nftgram.web.common.dto.response;
 
 
+
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +13,10 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NftCommentResponse {
+
+
+
+    private String nftMemberUserId;
 
     private Long commId;
 
@@ -37,8 +43,10 @@ public class NftCommentResponse {
     private LocalDate createdDate;
 
     @Builder
-    public NftCommentResponse(Long commId, Long nftId, String user, String assetContractAddress, String tokenId,
+    public NftCommentResponse(String nftMemberUserId , Long commId, Long nftId, String user, String assetContractAddress, String tokenId,
                               Long depth, Long parent, String title, String comment, String activeStatus, String isMine, LocalDate createdDate) {
+
+        this.nftMemberUserId  = nftMemberUserId;
         if(isMine.isEmpty()) {
             isMine = "N";
         }

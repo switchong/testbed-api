@@ -129,28 +129,38 @@ $(document).ready(function(){
             attr_row.show();
         }
     });
+    $('input[type="text"] , textarea[name="comment"]').on('keyup', function(){
+        //console.log($(this).val());
+        $(this).val();
+    })
     // nft-comment
     $('#nft-comment .comment_btn').on('click',function() {
         let result;
         let nftId = $('input[name="nft_id"]').val();
         let comment = $('textarea[name="comment"]').val();
-        if(nftId > 0) {
-            let method = "POST";
-            let url = "/api/comment/save";
-            let param = {"nftId":nftId, "comment":comment};
+        if (comment  == "" || comment == null){
 
-            result = commonAjaxUrl(method, url, param);
-            if(result == 1) {
-                getCommentList(nftId);
-                //alert("Success");
-                $('textarea[name="comment"]').val('');
-                return false;
-            } else if(result == 2) {
-                alert("Please Login to use");
-                return false;
-            } else {
-                alert("Error");
-                return false;
+            swal("Please enter text." , "" , "error");
+        }else {
+            if (nftId > 0) {
+                let method = "POST";
+                let url = "/api/comment/save";
+                let param = {"nftId": nftId, "comment": comment};
+
+                result = commonAjaxUrl(method, url, param);
+                if (result == 1) {
+                    getCommentList(nftId);
+                    //alert("Success");
+                    $('textarea[name="comment"]').val('');
+
+                    return false;
+                } else if (result == 2) {
+                    alert("Please Login to use");
+                    return false;
+                } else {
+                    alert("Error");
+                    return false;
+                }
             }
         }
     })
