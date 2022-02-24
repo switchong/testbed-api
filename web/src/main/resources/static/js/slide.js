@@ -42,20 +42,6 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
         '</div>'
     "</div>";
     let sort = sort1;
-    if (type === 'html') {
-        if(prevSort !== sort || prevSort === "0" || prevKeyword !== keyword) {
-            goFirst();
-            $('.gallery-slide-list-container').empty();
-            prevSort = sort;
-            prevKeyword = keyword;
-        }
-    }
-    if(keyword) {
-        if($('.search-box')) {
-            $('.search-box').remove();
-        }
-        $(".gallery-container").prepend(insTag);
-    }
     let size = 18;
     let url = `/api/gallery/page?pageType=${uri}&page=${currentPage++}&size=` + size + `&keyword=` + keyword;
     if(sort !== "0") {
@@ -83,10 +69,30 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
         data: {total: this.value},
         async: false,
         success : function (data) {
-            if(data.nftListCount === 0) {
-                alert('lastData');
+            if(data.nftListCount <= 0) {
+                if(keyword) {
+                    swal('No Search Data', '', 'error');
+                    return;
+                }
+                else {
+                    swal('Display your Unique Digital Creation',"",'error');
+                }
             }
             else {
+                if (type === 'html') {
+                    if(prevSort !== sort || prevSort === "0" || prevKeyword !== keyword) {
+                        goFirst();
+                        $('.gallery-slide-list-container').empty();
+                        prevSort = sort;
+                        prevKeyword = keyword;
+                    }
+                }
+                if(keyword) {
+                    if($('.search-box')) {
+                        $('.search-box').remove();
+                    }
+                    $(".gallery-container").prepend(insTag);
+                }
                 deleteEventPopUp();
                 $(".gallery-slide-list-container").append(makeGalleryList(data));
                 if(currentPage !== 1) {
@@ -147,7 +153,7 @@ const makeGalleryList = (data) => {
         });
         return `
                         <div class="gallery-slide-list">
-                            <img src="/img/gallery/backframe.jpg" alt="background" />
+                            <img src="/img/etc/no-image.png" alt="background" />
                             <div class="gallery-slide-list-item">
                                 <div class="gallery-slide-list-item-picture">
                                     <div class="gallery-slide-list-item-down"></div>
@@ -170,7 +176,7 @@ const goNext = () => {
         if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
             if(nowLocation === '/gallery/edit') {
                 if(nowList6.getAttribute('save') === 'false') {
-                    alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
+                    swal(`Currently not saved for section ${currentNum}`,'','error');
                 }
                 else {
                     currentNum++;
@@ -192,7 +198,7 @@ const goNext = () => {
         else {
             if(nowLocation === '/gallery/edit') {
                 if(nowList6.getAttribute('save') === 'false') {
-                    alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
+                    swal(`Currently not saved for section ${currentNum}`,'','error');
                 }
                 else {
                     currentNum++;
@@ -262,7 +268,7 @@ const goPrev = () => {
         if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
             if(nowLocation === '/gallery/edit') {
                 if(nowList7.getAttribute('save') === 'false') {
-                    alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
+                    swal(`Currently not saved for section ${currentNum}`,'','error');
                 }
                 else {
                     currentNum--;
@@ -284,7 +290,7 @@ const goPrev = () => {
         else {
             if(nowLocation === '/gallery/edit') {
                 if(nowList7.getAttribute('save') === 'false') {
-                    alert(`현재 섹션${currentNum}에 대하여 저장되지 않았습니다.`)
+                    swal(`Currently not saved for section ${currentNum}`,'','error');
                 }
                 else {
                     currentNum--;

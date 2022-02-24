@@ -80,7 +80,7 @@
         <div class="container">
             <div class="input-group">
                 <div class="input-group-left">
-                    <input type="search" class="form-control me-2"  id="searchKeyword"  name="keyword" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}"/>
+                    <input class="form-control me-2"  id="searchKeyword"  name="keyword" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}" type="text"/>
                     <div class="input-group-append">
                         <button class="btn btn-secondary me-2" id="btnSearch">Search</button>
                     </div>
@@ -96,9 +96,9 @@
                         </label>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" value="0">Sort By</a></li>
-                            <li><a class="dropdown-item" value="1">최신순</a></li>
-                            <li><a class="dropdown-item" value="2">조회순</a></li>
-                            <li><a class="dropdown-item" value="3">좋아요순</a></li>
+                            <li><a class="dropdown-item" value="1">Recently</a></li>
+                            <li><a class="dropdown-item" value="2">Top views</a></li>
+                            <li><a class="dropdown-item" value="3">Popularity</a></li>
                         </ul>
                     </div>
                     <div class="d-flex me-2" id="list-view-btn">

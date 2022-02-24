@@ -7,11 +7,13 @@
 <body>
 <script th:inline="javascript">
     /*<![CDATA[*/
+    async function Error() {
+        var message = [[${message}]];
+        await swal(message,'','error');
 
-    var message = [[${message}]];
-    alert(message);
-
-    location.href="/";
+        location.href="/";
+    }
+    Error();
 
     /*]]>*/
 </script>

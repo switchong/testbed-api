@@ -71,22 +71,53 @@ const contentListLoad = () => {
 
                 }
                 else {
-                    alert(`현재 섹션(${currentNum})에 대해서 저장되지 않았습니다.`);
+                    swal(`Currently not saved for section ${currentNum}`,'','error');
                 }
             }
         })
     })
 
-    closeBtn.addEventListener('click',()=>{
+    closeBtn.addEventListener('click',async ()=>{
         let nowList1 = document.querySelectorAll('.gallery-slide-list')[currentNum];
         if(choiceOne) {
             if(nowList1.getAttribute('save') === 'false' && (nftNum !==0|| frameNum !==0 || backgroundNum !==0)) {
-                if(!window.confirm('지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?')){
-                    return;
-                }
+                // if(!window.confirm('지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?')){
+                //     return;
+                // }
+                await swal({
+                    title : 'Are you sure?',
+                    text : "You Won't be able to revert this!",
+                    icon : 'warning',
+                    buttons : {
+                        cancel: {
+                            text : 'Cancel',
+                            value : false,
+                            visible : true,
+                            className : "",
+                            closeModal: true,
+                        },
+                        confirm : {
+                            text : 'Leave',
+                            value : true,
+                            visible : true,
+                            className : "",
+                            closeModal: true,
+                        }
+                    },
+                }).then((result) => {
+                    if(!result) {
+                        return;
+                    }
+                    else {
+                        choiceOne = false;
+                        window.location.href = '/gallery/mycollection';
+                    }
+                })
             }
-            choiceOne = false;
-            window.location.href = '/gallery/mycollection';
+            else {
+                choiceOne = false;
+                window.location.href = '/gallery/mycollection';
+            }
         }
     })
 
@@ -104,17 +135,17 @@ const contentListLoad = () => {
             })
             if(countNft === 3 && nftTotalOK && nowList.getAttribute('save') === "false") {
                 nowList.setAttribute('save', 'true');
-                alert('저장되었습니다.');
+                swal('Section 3 is now saved','','info');
             }
             else {
                 if(!nftTotalOK) {
-                    alert('모든 nft를 넣으셔야 저장 할수 있습니다.');
+                    swal('모든 nft를 넣으셔야 저장 할수 있습니다.','','error');
                 }
                 else if(countNft !== 3) {
-                    alert(`3개를 모두 채우셔야 저장 할수 있습니다!`);
+                    swal(`You must fill 3 nfts to be able to save`,'','error');
                 }
                 else if(nowList.getAttribute('save') === 'true') {
-                    alert(`현재 섹션(${currentNum})에 대해서 이미 저장 되었습니다.`);
+                    swal(`Current section ${currentNum} is already saved`,'','error');
                 }
             }
         })
@@ -125,7 +156,6 @@ const contentListLoad = () => {
             if(nowSelect !== item.innerText) {
                 nowSelect = item.innerText;
                 frameMaxLength = nftMaxLength;
-                console.log(backgroundMaxLength);
             }
         })
     })
@@ -138,7 +168,6 @@ const contentListLoad = () => {
                 if(Number(item.childNodes[3].innerText) === currentNum) {
                     item.childNodes[3].innerText = '';
                     nowNft.querySelectorAll('.inner-picture').forEach((items, index)=>{
-                        console.log(item.childNodes)
                         if(items.childNodes.length > 1) {
                             if(items.childNodes[1].getAttribute('data-nftid') === item.childNodes[1].getAttribute('data-nftid')) {
                                 items.childNodes[1].remove();

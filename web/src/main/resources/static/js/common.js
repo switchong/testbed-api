@@ -15,8 +15,15 @@ $(document).ready(function(){
         })
     }
 
-    $('input[type="text"] , textarea[name="comment"]').on('keyup', function(){
+    $('input[type="text"] , textarea[name="comment"]').css('ime-mode','disabled');
+
+    $('input[type="text"] , textarea[name="comment"]').on('keyup', function(e){
         console.log($(this).val());
+        if(!(e.keyCode >= 37 && e.keyCode <= 40)) {
+            let inputVal = $(this).val();
+            var check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
+            $(this).val(inputVal.replace(check,''));
+        }
     })
 
     //nav country
@@ -160,7 +167,7 @@ function moreView(type) {
             let html = toList(data.nftList);
 
             if(keyword && data.total <= 0) {
-                //alert("Search No Data!!");
+                swal("Search No Data!!", '', 'error');
                 return;
             } else {
                 if(type == "html") {

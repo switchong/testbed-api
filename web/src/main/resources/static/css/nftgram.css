@@ -796,6 +796,8 @@ body {
 }
 
 #navigation-top {
+    max-width: 1950px;
+    margin : 0 auto;
     background-color: #090909;
 }
 
