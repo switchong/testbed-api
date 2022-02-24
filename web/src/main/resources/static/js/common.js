@@ -89,8 +89,6 @@ $(document).ready(function(){
         moreView();
     }
 
-    DontLongNumber();
-
     $('#editProfileBtn').on('click',function(){
         let form = $('#editProfileForm');
         if(!checkId()) { // 중복값 없을때
@@ -188,6 +186,7 @@ function moreView(type , sort1) {
         let collectionId = $(this).data('collectionid');
         location.href = "/gallery/" + collectionId;
     })
+    DontLongNumber();
 }
 
 function toList(list) {

@@ -102,6 +102,7 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
             console.log('error!');
         }
     })
+    DontLongNumber();
 }
 
 const makeGalleryList = (data) => {

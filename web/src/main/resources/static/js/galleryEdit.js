@@ -97,7 +97,7 @@ const contentListLoad = () => {
             let countNft=0;
             imageContainers.forEach((item, index)=>{
                 if(index >= 3 * (currentNum + 1) - 3 && index <= 3*(currentNum + 1) - 1) {
-                    if(item.getAttribute('src').includes("http")){
+                    if(item.childNodes.length > 1){
                         countNft++;
                     }
                 }
@@ -132,20 +132,21 @@ const contentListLoad = () => {
 
     nftImages.forEach((item, index) => {
         item.addEventListener("click",(e)=>{
-            console.log("item : " + item);
             const nowNft = document.querySelectorAll('.gallery-slide-list')[currentNum];
             const nowNftNum = Number(nowNft.getAttribute('nftNum'));
             if(item.childNodes[3].innerText !== '') {
                 if(Number(item.childNodes[3].innerText) === currentNum) {
                     item.childNodes[3].innerText = '';
                     nowNft.querySelectorAll('.inner-picture').forEach((items, index)=>{
-                        if(items.getAttribute('data-nftid') === item.childNodes[1].getAttribute('data-nftid')) {
-                            items.setAttribute('src', '../../img/etc/no-image.png');
-                            items.setAttribute('data-nftid','null');
-                            items.parentNode.querySelector('.inner-picture-delete-btn').remove();
-                            nowNft.setAttribute('nftNum', (nowNftNum -1).toString());
-                            nowNft.setAttribute('save', 'false');
-                            nftNum--;
+                        console.log(item.childNodes)
+                        if(items.childNodes.length > 1) {
+                            if(items.childNodes[1].getAttribute('data-nftid') === item.childNodes[1].getAttribute('data-nftid')) {
+                                items.childNodes[1].remove();
+                                items.parentNode.querySelector('.inner-picture-delete-btn').remove();
+                                nowNft.setAttribute('nftNum', (nowNftNum -1).toString());
+                                nowNft.setAttribute('save', 'false');
+                                nftNum--;
+                            }
                         }
                     })
                 }
@@ -161,25 +162,39 @@ const contentListLoad = () => {
                        nowNft.setAttribute('nftNum', (nowNftNum + 1).toString());
                        let count=0;
                        nowNft.querySelectorAll('.inner-picture').forEach((items, index) =>{
-                           if(items.getAttribute('src').includes('http')) {
+                           if(items.childNodes.length > 1) {
 
                            }
                            else {
                                if(count === 0) {
-                                   items.setAttribute('src',item.childNodes[1].getAttribute('src'));
-                                   items.setAttribute('data-nftid',item.childNodes[1].getAttribute('data-nftid'));
-                                   count++;
+                                   if(item.childNodes[1].tagName === 'IMG') {
+                                       const imageNft = document.createElement('img');
+                                       imageNft.classList.add('gallery-edit-img', 'edit-nft');
+                                       imageNft.setAttribute('data-nftid',item.childNodes[1].getAttribute('data-nftid'));
+                                       imageNft.setAttribute('src',item.childNodes[1].getAttribute('src'));
+                                       items.appendChild(imageNft);
+                                       count++;
+                                   }
+                                   else if(item.childNodes[1].tagName === 'VIDEO') {
+                                       const videoNft = document.createElement('video');
+                                       videoNft.classList.add('gallery-edit-img', 'edit-nft');
+                                       videoNft.setAttribute('data-nftid',item.childNodes[1].getAttribute('data-nftid'));
+                                       videoNft.setAttribute('src',item.childNodes[1].getAttribute('src'));
+                                       items.appendChild(videoNft);
+                                       count++;
+                                   }
                                    items.parentNode.appendChild(nftDelete);
                                    nftDelete.addEventListener('click',(e)=>{
                                        const nowNftNum = Number(nowNft.getAttribute('nftNum'));
-                                       const searchNumNft = e.target.parentNode.childNodes[3].getAttribute('data-nftid');
+                                       const searchNumNft = items.childNodes[1].getAttribute('data-nftid');
                                        nftImages.forEach((items, index)=>{
                                            if(items.childNodes[1].getAttribute('data-nftid') === searchNumNft) {
                                                items.childNodes[3].innerText = '';
                                            }
                                        })
-                                       e.target.parentNode.childNodes[3].setAttribute('src','../../img/etc/no-image.png');
-                                       e.target.parentNode.childNodes[3].setAttribute('data-nftid','null');
+                                       items.childNodes[1].remove();
+                                       // e.target.parentNode.childNodes[3].setAttribute('src','../../img/etc/no-image.png');
+                                       // e.target.parentNode.childNodes[3].setAttribute('data-nftid','null');
                                        nowNft.setAttribute('nftNum',  (nowNftNum - 1).toString());
                                        nowNft.setAttribute('save','false');
                                        nftNum--;
@@ -405,7 +420,8 @@ const constEditContent = {
                                 <div class="image-container">
                                     <div class="image-container-content">
                                         <img class="outer-frame" src="../img/etc/no-image.png"/>
-                                        <img class="inner-picture" src="../img/etc/no-image.png" style="border : 1px solid lightgray;"/>
+                                        <div class="inner-picture" style="border : 1px solid lightgray;">
+                                        </div>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
                                         <p class="picture-title">NFT TITLE #0000</p>
@@ -433,7 +449,8 @@ const constEditContent = {
                                 <div class="image-container">
                                     <div class="image-container-content">
                                         <img class="outer-frame" src="../img/etc/no-image.png"/>
-                                        <img class="inner-picture" src="../img/etc/no-image.png" style="border : 1px solid lightgray;"/>
+                                        <div class="inner-picture" style="border : 1px solid lightgray;">
+                                        </div>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
                                         <p class="picture-title">NFT TITLE #0000</p>
@@ -461,7 +478,8 @@ const constEditContent = {
                                 <div class="image-container">
                                     <div class="image-container-content">
                                         <img class="outer-frame" src="../img/etc/no-image.png"/>
-                                        <img class="inner-picture" src="../img/etc/no-image.png" style="border : 1px solid lightgray;"/>
+                                        <div class="inner-picture" style="border : 1px solid lightgray;">
+                                        </div>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
                                         <p class="picture-title">NFT TITLE #0000</p>

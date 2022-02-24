@@ -423,7 +423,6 @@ img[id*="image-edit-icon"] {
     left: 50%;
     transform: translate(-50%,-50%);
     border-radius: 5px;
-    background-color: #090909;
 }
 
 #prevBtn, #nextBtn {
