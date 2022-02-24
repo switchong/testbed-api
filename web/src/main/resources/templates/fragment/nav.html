@@ -80,19 +80,14 @@
         <div class="container">
             <div class="input-group">
                 <div class="input-group-left">
-                    <input class="form-control me-2"  id="searchKeyword"  name="keyword" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}" type="search"/>
+                    <input type="search" class="form-control me-2"  id="searchKeyword"  name="keyword" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}"/>
                     <div class="input-group-append">
                         <button class="btn btn-secondary me-2" id="btnSearch">Search</button>
                     </div>
                 </div>
                 <div class="input-group-right">
-<!--                    <select aria-label="Default select example" class="form-select-sm mr-2 selSort" id="selSort" name="selSort" style="width:180px;padding: 0.5rem 0.5rem;">-->
-<!--                        <option  value="0">Sort By</option>-->
-<!--                        <option  value="1" >최신순</option>-->
-<!--                        <option  value="2"> 조회순</option>-->
-<!--                        <option  value="3">좋아요순</option>-->
-<!--                    </select>-->
                     <div class="dropdown" style="width:180px;">
+                        <input type="hidden" name="dropdownsort" id="dropdownsort" value="0" />
                         <input type="checkbox" name="dropdownsearch" id="dropdownsearch" />
                         <label for="dropdownsearch">
                             <p class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

@@ -11,7 +11,6 @@ import com.nftgram.core.repository.custom.NftCustomRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -167,6 +166,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .where(nftAsset.contractType.eq(ContractType.NFT),
                         nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        nftLike.activeStatus.eq(ActiveStatus.ACTIVE),
                         nftLike.nftMember.nftMemberId.eq(nftMemberId))
                 .orderBy(nft.nftId.desc())
                 .offset(pageable.getOffset())
@@ -240,11 +240,20 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .execute();
     }
 
-    public BooleanExpression eqKeyword(String keyword) {
+    public BooleanBuilder eqKeyword(String keyword) {
+        BooleanBuilder nameBuilder = new BooleanBuilder();
+
         if (StringUtils.isEmpty(keyword)) {
             return null;
         }
-        return nft.collectionName.contains(keyword).or(nft.name.contains(keyword));
+
+        nameBuilder.or(nft.collectionName.contains(keyword));
+        nameBuilder.or(nft.name.contains(keyword));
+        nameBuilder.or(nft.lastSaleUserName.eq(keyword));
+        nameBuilder.or(nft.creatorUserName.eq(keyword));
+        nameBuilder.or(nft.ownerUserName.eq(keyword));
+
+        return nameBuilder;
     }
 
     public OrderSpecifier<Long> SortNftPage(String sort) {
@@ -354,7 +363,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
             case "userlike" :
                 builder.and(nftLike.nftMember.nftMemberId.eq(nftGalleryRequest.getMemberId()).and(nftLike.activeStatus.eq(ActiveStatus.ACTIVE)));
                 break;
-            case "userunnamed" :
+            case "externaluname" :
                 builder.or(nft.lastSaleUserName.eq(nftGalleryRequest.getUsername()).and(nft.lastSaleUserName.isNotNull()).and(nft.lastSaleUserName.ne("NullAddress")));
                 builder.or(nft.creatorUserName.eq(nftGalleryRequest.getUsername()).and(nft.creatorUserName.isNotNull()).and(nft.creatorUserName.ne("NullAddress")));
                 builder.or(nft.ownerUserName.eq(nftGalleryRequest.getUsername()).and(nft.ownerUserName.isNotNull()).and(nft.ownerUserName.ne("NullAddress")));

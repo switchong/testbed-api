@@ -15,6 +15,10 @@ $(document).ready(function(){
         })
     }
 
+    $('input[type="text"] , textarea[name="comment"]').on('keyup', function(){
+        console.log($(this).val());
+    })
+
     //nav country
     $('#navigation-country .nav-country').on('click',function(){
         let country = $(this).data('country');
@@ -51,14 +55,14 @@ $(document).ready(function(){
 
     $('.dropdown-item').on('click',function (){
         $('#dropdownMenuButton1').text($(this).text());
+        $('input[name="dropdownsort"]').val($(this).attr("value"));
         sort1 = $(this).attr("value");
         currentPage = 0;
-        let currenLocation = window.location.pathname;
         $('#dropdownsearch').prop('checked',false);
-        if(currenLocation === '/gallery') {
+        if(currentPagePath === '/gallery') {
             MoreSlide( 'all','html', sort1, 0,0);
         }
-        moreView("html", sort1);
+        moreView("html");
     })
     // view-type click event
     $('.gallery-view-type').on('click',function(){
@@ -78,11 +82,10 @@ $(document).ready(function(){
             return false;
         }
         currentPage = 0;
-        let currenLocation = window.location.pathname;
-        if(currenLocation === '/gallery') {
+        if(currentPagePath === '/gallery') {
             MoreSlide('all','html', sort1, 0,0);
         }
-        moreView("html", sort1);
+        moreView("html");
     });
 
     if($('#nftgram_wrap #nftgram-list').length > 0) {
@@ -123,16 +126,17 @@ function DontLongNumber() {
 */
 const size = 20;
 
-function moreView(type , sort1) {
+function moreView(type) {
     if(currentPagePath !== "/") {
         $(window).unbind();
         return;
     }
+
     let htmlBool = false;
     let total = (type=="html")?0:$('#nftgram-list .card').length;
     let nextPage = parseInt(total / size);
     let keyword = $('#searchKeyword').val();
-    let sort = sort1;
+    let sort = $('input[name="dropdownsort"]').val();
     let url = "/api/main/page?page=" + nextPage + "&size=" + size + "&keyword=" + keyword;
     let insTag = "" +
         '<div class=\"search-box\">' +
@@ -224,13 +228,12 @@ function toList(list) {
 function searchFormClose() {
     $('#searchKeyword').val('');
     $("#nftgram-tag").html('');
-    let currenLocation = window.location.pathname;
-    if(currenLocation === '/gallery') {
+    if(currentPagePath === '/gallery') {
         $('.search-box').remove();
         currentPage = 0;
         MoreSlide('all','html', sort1, 0,0);
     }
-    moreView("html", sort1);
+    moreView("html");
 }
 
 function getNftOne(nftId) {
@@ -314,7 +317,6 @@ function getCommentList(nftId) {
         }
 
     }
-    console.log(result);
 }
 
 function commonAjaxUrl (method, url, param) {
