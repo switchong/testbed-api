@@ -11026,3 +11026,12 @@ textarea.form-control-lg {
 .swal-overlay{
   z-index: 999999999999; !important;
 }
+
+.swal-modal {
+  width: 80%;
+  max-width: 478px;
+}
+
+.swal-modal .swal-title {
+  font-size: 1.4rem;
+}

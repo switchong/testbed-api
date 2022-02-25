@@ -75,7 +75,13 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
                     return;
                 }
                 else {
-                    swal('Display your Unique Digital Creation',"",'error');
+                    if(currentPage === 1) {
+                        swal('no Data',"",'error');
+                        $('.gallery-slide-list-container').empty();
+                    }
+                    else  {
+                        swal('Display your Unique Digital Creation',"",'error');
+                    }
                 }
             }
             else {

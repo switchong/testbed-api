@@ -51,7 +51,7 @@ div#nft-info::-webkit-scrollbar {
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info{padding:0.3rem 1rem;background-color: #fff;color: #000;text-align: center;
     width: 100%;  height: 100px;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info .prop-info-nft{margin-bottom: auto;font-size: 0.5rem;}
-.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info .prop-info-nft.prop-value{font-size: 0.8rem;font-weight: bold;}
+.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info .prop-info-nft.prop-value{font-size: 0.8rem;font-weight: bold; white-space: normal; word-break: break-all;}
 
 
 /*.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-detail-row-text .detail-info{float:left;margin:2%;padding:0.3rem 1rem;background-color: #fff;color: #000;text-align: center;*/
@@ -113,8 +113,7 @@ div#nft-info::-webkit-scrollbar {
 }
 
 p.prop-info-nft.detail-type {
-    width: 15rem;
-    overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-all;
 }

@@ -169,11 +169,14 @@ function moreView(type) {
             let html = toList(data.nftList);
 
             if(keyword && data.total <= 0) {
-                swal("Search No Data!!", '', 'error');
+                if(nextPage === 0) {
+                    swal("Search No Data!!", '', 'error');
+                }
                 return;
             } else {
                 if(type == "html") {
                     $("#nftgram-list").html(html);
+                    document.body.scrollTo(0, 0);
                 }else {
                     $("#nftgram-list").append(html);
                 }
