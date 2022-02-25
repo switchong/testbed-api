@@ -273,7 +273,12 @@ function layerPopClose(){
     })
     $('.wrap_layer_popup').fadeOut();
     $('.layer_popup_bg').fadeOut();
-    // location.reload();
+    console.log(nowLocation)
+    if(nowLocation === '/gallery/myfavorite') {
+        currentPage = 0;
+        goSlide();
+        goFirst();
+    }
 }
 
 function layerPopByNft(data) {

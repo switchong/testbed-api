@@ -93,6 +93,9 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
                     }
                     $(".gallery-container").prepend(insTag);
                 }
+                if(currentPage === 1) {
+                    $('.gallery-slide-list-container').empty();
+                }
                 deleteEventPopUp();
                 $(".gallery-slide-list-container").append(makeGalleryList(data));
                 if(currentPage !== 1) {
