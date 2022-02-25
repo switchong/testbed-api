@@ -169,7 +169,7 @@ function moreView(type) {
             let html = toList(data.nftList);
 
             if(keyword && data.total <= 0) {
-                //alert("Search No Data!!");
+                swal("Search No Data!!", '', 'error');
                 return;
             } else {
                 if(type == "html") {

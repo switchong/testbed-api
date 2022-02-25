@@ -49,7 +49,7 @@ const contentListLoad = () => {
         let nowList3 = document.querySelectorAll('.gallery-slide-list')[currentNum];
         e.preventDefault();
         if(choiceOne) {
-            if(nowList3.getAttribute('save') === 'false' && (nftNum !==0|| frameNum !==0 || backgroundNum !==0)) {
+            if(nowList3.getAttribute('save') === 'false' || (nftNum !==0&& frameNum !==0 && backgroundNum !==0)) {
                 e.returnValue = '지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?';
             }
             return;
@@ -126,6 +126,7 @@ const contentListLoad = () => {
             console.log(currentNum);
             let imageContainers = document.querySelectorAll('.inner-picture');
             let nowList = document.querySelectorAll('.gallery-slide-list')[currentNum];
+            let nowListNftNum = Number(nowList.getAttribute('nftNum'));
             let countNft=0;
             imageContainers.forEach((item, index)=>{
             console.log(item);
@@ -135,15 +136,15 @@ const contentListLoad = () => {
                     }
                 }
             })
-            if(countNft === 3 && nftTotalOK && nowList.getAttribute('save') === "false") {
+            if(nowListNftNum === 3 && nftTotalOK && nowList.getAttribute('save') === "false") {
                 nowList.setAttribute('save', 'true');
-                swal('Section 3 is now saved','','info');
+                swal(`Section ${currentNum} is now saved`,'','info');
             }
             else {
                 if(!nftTotalOK) {
                     swal('모든 nft를 넣으셔야 저장 할수 있습니다.','','error');
                 }
-                else if(countNft !== 3) {
+                else if(nowListNftNum !== 3) {
                     swal(`You must fill 3 nfts to be able to save`,'','error');
                 }
                 else if(nowList.getAttribute('save') === 'true') {
@@ -216,6 +217,7 @@ const contentListLoad = () => {
                                        videoNft.classList.add('gallery-edit-img', 'edit-nft');
                                        videoNft.setAttribute('data-nftid',data_nftid);
                                        videoNft.setAttribute('src',item.childNodes[1].getAttribute('src'));
+                                       videoNft.setAttribute('controls', true);
                                        items.appendChild(videoNft);
                                        count++;
                                    }
@@ -480,10 +482,13 @@ const constEditContent = {
                             </div>
                 `;
                 });
-                moreValue++;
+                console.log(nftList.nftSliderList.length, key)
+                if(nftList.nftSliderList.length - 1 !== key ) {
+                    moreValue++;
+                }
             }
             editContent += `
-                    <div class="gallery-slide-list" save="false" moreValue="${moreValue}" nftNum="${nftNum}" frameNum="0" backgroundNum="0">
+                    <div class="gallery-slide-list" save="true" moreValue="${moreValue}" nftNum="${nftNum}" frameNum="0" backgroundNum="0">
                         <img src="../img/etc/no-image.png" class="back-frame" alt="background" />
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
@@ -644,7 +649,9 @@ $(document).ready(function(){
     constEditContent.getBeforeNftData();
     // constEditContent.addSection();
     constEditContent.MoreEdit("html");
-
+    dontclick(nftImages);
+    dontclick(frameImages);
+    dontclick(backgroundImages);
     constEditContent.deleteBtnEvent();
 
 })
