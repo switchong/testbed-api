@@ -249,9 +249,9 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         nameBuilder.or(nft.collectionName.contains(keyword));
         nameBuilder.or(nft.name.contains(keyword));
-        nameBuilder.or(nft.lastSaleUserName.eq(keyword));
-        nameBuilder.or(nft.creatorUserName.eq(keyword));
-        nameBuilder.or(nft.ownerUserName.eq(keyword));
+        nameBuilder.or(nft.lastSaleUserName.contains(keyword));
+        nameBuilder.or(nft.creatorUserName.contains(keyword));
+        nameBuilder.or(nft.ownerUserName.contains(keyword));
 
         return nameBuilder;
     }
@@ -271,7 +271,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 sortResult = nft.likeCount.desc();
                 break;
             default:
-                sortResult = nft.nftId.asc();
+                sortResult = nft.nftId.desc();
                 break;
         }
         return sortResult;
