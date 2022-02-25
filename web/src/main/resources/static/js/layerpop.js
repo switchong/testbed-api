@@ -215,6 +215,11 @@ function layerPopId(layerId, boxPosition){
         if($(window).width() > 900) {
             $('.wrap_layer_popup').fadeOut();
             $(this).fadeOut();
+            if(nowLocation === '/gallery/myfavorite') {
+                currentPage = 0;
+                goSlide();
+                goFirst();
+            }
         }
     });
 }
@@ -262,6 +267,8 @@ function layerPopGallery(nftId) {
     // nft-comment 초기화
     $('input[name="nft_comment_page"]').val(0);
     $('#nft-comment .comment-list').html('');
+
+    DontLongNumber();
 
     return false;
 }
