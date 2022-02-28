@@ -88,7 +88,7 @@ $(document).ready(function(){
     $('#btnSearch').on('click',function(){
         let searchVal = $('#searchKeyword').val();
         if(searchVal == '' || searchVal == null) {
-            alert("Search the Value");
+            swal("Search the Value" , "" ,"error");
             return false;
         }
         currentPage = 0;
@@ -445,9 +445,9 @@ function noSpaceForm(obj){
     const str_space =/\s/;
     if (str_space.exec(obj.value)){
         swal("No spaces allowed" , "" , "error");
-         obj.focus();
-         obj.value = obj.value.replace(' ' ,'');
-         return false;
+        obj.focus();
+        obj.value = obj.value.replace(' ' ,'');
+        return false;
     }
 }
 
