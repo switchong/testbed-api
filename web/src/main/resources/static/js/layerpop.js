@@ -7,10 +7,13 @@ function nftImageClick (e, index) {
         // 팝업창 띄우기
         if(!$('div.layer_popup_bg').length){
             $('<div class="layer_popup_bg"><div class="pop_close">\n' +
-                '        <a href="javascript:void(0);" onclick="(e)=>{layerPopClose(e)};" ><img src="/img/icon/ic-popup-close.png" alt="팝업 닫기 버튼"></a>\n' +
+                '        <a href="javascript:void(0);"><img src="/img/icon/ic-popup-close.png" alt="팝업 닫기 버튼"></a>\n' +
                 '    </div></div>').appendTo('#nftgram_wrap');
         }
-        $('.layer_popup_bg').on('click', function(){
+        $('.pop_close').on('click', function (e) {
+            layerPopClose(e);
+        })
+        $('.layer_popup_bg').on('click', function(e){
             if($(window).width() > 900) {
                 $('.wrap_layer_popup').fadeOut();
                 $(this).fadeOut();
@@ -19,8 +22,10 @@ function nftImageClick (e, index) {
                     goSlide();
                     goFirst();
                 }
-                $(this).off('click');
+                $(this).unbind();
+                $('.pop_close').unbind();
             }
+            e.stopPropagation();
         });
         layerPopId(PopId);
         currentIndex = index;
@@ -287,8 +292,9 @@ function layerPopClose(e){
         goSlide();
         goFirst();
     }
-    $(this).off('click');
     e.stopPropagation();
+    $('.layer_popup_bg').unbind();
+    $('.pop_close').unbind();
 }
 
 function layerPopByNft(data) {
