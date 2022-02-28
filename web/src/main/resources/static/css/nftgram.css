@@ -13,7 +13,6 @@
 #navigation-top .navbar {
     padding : 0.5rem 0;
     background-color : #090909 !important;
-    border : 2px solid #090909;
     color : #fff;
 }
 
@@ -347,7 +346,6 @@ body {
 #navigation-top .navbar {
     padding : 0.5rem 0;
     background-color : #090909 !important;
-    border : 2px solid #090909;
     color : #fff;
     max-width: 1750px;
     margin : 0 auto;
@@ -642,7 +640,7 @@ video.card-img-top {
     justify-content: space-between;
 }
 .mywallet.on {
-    border-bottom : solid 1px rgb(26,83,232);
+    border-bottom : solid 0.126rem rgb(26,83,232);
 }
 #navigation-top .wallet-wrap .wallet-list .wallet-row span{padding-right: 0.5rem;}
 #navigation-top .wallet-wrap .wallet-list .wallet-row span.address {
@@ -787,6 +785,7 @@ body {
 .like-icon {
     height: 1.1rem;
     object-fit: fill;
+    padding-bottom: 0.1rem;
 }
 
 .main-gallery-container {

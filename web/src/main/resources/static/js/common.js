@@ -3,6 +3,7 @@ let url_this_page = location.href;
 let title_this_page = document.title;
 let url_user_page = window.location.origin;
 let sort1 = 0;
+let newFlag = true;
 
 $(document).ready(function(){
 
@@ -46,19 +47,21 @@ $(document).ready(function(){
     };*/
     // scroll auto load
     $('body').scroll(function(){
-        if($('body').scrollTop() + $('body').height() == $(document).height()) {
-            moreView();
+        if($('body').scrollTop() + $('body').height() >= $(document).height()) {
+            if($('#navigation-top').outerHeight() + $('.main-gallery-container').outerHeight() > $(window).height()) {
+                moreView();
+            }
         }
     });
 
-    $('select[name="selSort"]').change(function () {
-        let sort = $(this).val();
-        currentPage = 0;
-        if(currentPagePath.split('/')[1] === 'gallery' && currentPagePath.split('/')[2] === undefined) {
-            MoreSlide( 'main/page/gallery','html');
-        }
-        moreView("html");
-    })
+    // $('select[name="selSort"]').change(function () {
+    //     let sort = $(this).val();
+    //     currentPage = 0;
+    //     if(currentPagePath.split('/')[1] === 'gallery' && currentPagePath.split('/')[2] === undefined) {
+    //         MoreSlide( 'main/page/gallery','html');
+    //     }
+    //     moreView("html");
+    // })
 
     $('.dropdown-item').on('click',function (){
         $('#dropdownMenuButton1').text($(this).text());
@@ -145,7 +148,6 @@ function moreView(type) {
     let nextPage = parseInt(total / size);
     let keyword = $('#searchKeyword').val();
     let sort = $('input[name="dropdownsort"]').val();
-    console.log(sort);
     let url = "/api/main/page?page=" + nextPage + "&size=" + size + "&keyword=" + keyword;
     let insTag = "" +
         '<div class=\"search-box\">' +
@@ -165,18 +167,20 @@ function moreView(type) {
         dataType: "json",
         data: {total: this.value},
         async: false,
-        success: function (data) {
+        success: async function (data) {
             let html = toList(data.nftList);
 
             if(keyword && data.total <= 0) {
                 if(nextPage === 0) {
-                    swal("Search No Data!!", '', 'error');
+                    await swal("Search No Data!!", '', 'error');
+                    $('#searchKeyword').val('');
+                    $('#searchKeyword').focus();
                 }
                 return;
             } else {
                 if(type == "html") {
-                    $("#nftgram-list").html(html);
                     document.body.scrollTo(0, 0);
+                    $("#nftgram-list").html(html);
                 }else {
                     $("#nftgram-list").append(html);
                 }
@@ -189,7 +193,6 @@ function moreView(type) {
                     $("#nftgram-tag").html(insTag);
                 }
             }
-
 
         },
         error: function (data) {

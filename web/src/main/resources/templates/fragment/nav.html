@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <div id="navigation-top" th:fragment="fragment-nav" th:with="memberInfo=${@memberLoginManager.getInfo()}">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <div class="d-flex">
                 <ul class="navbar-nav-mobile">
@@ -31,7 +31,7 @@
             </div>
         </div>
     </nav>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container second-nav-flex">
             <a class="navbar-brand nav-logo" href="/">
                 <div class="whIs30">
@@ -76,11 +76,11 @@
         </div>
 
     </nav>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <div class="input-group">
                 <div class="input-group-left">
-                    <input class="form-control me-2"  id="searchKeyword"  name="keyword" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}" type="text"/>
+                    <input class="form-control me-2"  id="searchKeyword"  name="keyword" autocomplete="off" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}" type="text"/>
                     <div class="input-group-append">
                         <button class="btn btn-secondary me-2" id="btnSearch">Search</button>
                     </div>

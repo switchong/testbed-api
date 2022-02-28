@@ -75,7 +75,7 @@ if(typeof window.ethereum !== 'undefined') {
 $(document).ready(function(){
 
     // navigation mywallet-btn
-    $('.nav-link.mywallet').on('click',function(event){
+    $('.nav-link.mywallet > img').on('click',function(event){
         // wallet check
         walletCheck("nav", event);
         // lod
@@ -104,7 +104,7 @@ $(document).ready(function(){
                     let connWallet = metamask.connectedWallet(address);
                     // userWallet.promise.then(userResult, failResult);
                     if(connWallet == false) {
-                        alert("메타마스크 주소를 확인부탁드립니다.");
+                        swal("Please check the metamask address.",'','error');
                         return false;
                     } else {
                         // 지갑주소 저장
@@ -132,7 +132,9 @@ function addressClipboard(wid) {
     textarea.select();
     document.execCommand("copy");
     document.body.removeChild(textarea);
-    alert('Contract Address Copied!!');
+    swal('Contract Address Copied!!','','success');
+    $('.wallet-wrap').removeClass('on');
+    $('.mywallet').removeClass('on');
 }
 
 function walletCheck(place, event) {
@@ -154,7 +156,7 @@ function walletCheck(place, event) {
     let wResult = commonAjaxUrl(method, url, param);
 
     if(wResult.loginFlag == "N"){
-        alert("Login to Use");
+        swal("Login to Use",'', 'error');
         return false;
     } else if(wResult.loginFlag == "Y" && wResult.walletFlag == "N") {
         if(place == "nav") {
@@ -181,7 +183,7 @@ function walletCheck(place, event) {
             }
             return true;
         } else if(place == "metamask") {
-            alert("이미 1개 이상의 지갑이 연동되었습니다.");
+            swal("More than one wallet has already been linked.", '','info');
             location.href="/";
             return false;
         }
@@ -215,17 +217,17 @@ function walletSave(address) {
     if(address != null) {
         result = commonAjaxUrl(method, url, param);
         if(result == 1 || result == 5) {
-            alert("지갑 연동이 완료되었습니다.");
+            swal("Wallet linkage is complete.",'','success');
         } else if(result == 2) {
-            alert("Login to Use");
+            swal("Login to Use",'','error');
         } else if(result == 3) {
-            alert("이미 연동된 지갑입니다.");
+            swal("This is an already linked wallet.",'','info');
         } else if(result == 4) {
-            alert("다른 계정에 연동된 지갑입니다.");
+            swal("A wallet linked to another account.",'','info');
         } else if(result == 6) {
-            alert("다른 계정에 연동된 지갑입니다.");
+            swal("A wallet linked to another account.",'','info');
         } else {
-            alert("Error");
+            swal("Error",'','error');
         }
 
         return result;
@@ -233,16 +235,17 @@ function walletSave(address) {
     return false;
 }
 
-function walletDelete(wid) {
+async function walletDelete(wid) {
     let result;
     let method = "POST";
     let url = "/api/member/wallet/delete";
     let param = {"wid":wid};
     if(wid != null) {
-        result = commonAjaxUrl(method, url, param);
-        $('#wallet_'+wid).remove();
-        if($('.wallet-row').length == 0) {
+        result = await commonAjaxUrl(method, url, param);
+        $(`#wallet_${wid}.wallet-row`).remove();
+        if($('.wallet-row').length === 0) {
             $('.wallet-wrap').removeClass('on');
+            $('.mywallet').removeClass('on');
             location.href="/member/mywallet";
         }
     }

@@ -28,7 +28,7 @@ const metamask = {
         if(this.isWallet() === true)
             return true
 
-        alert("메타마스크 지갑 설치후 사용하실수 있습니다")
+        swal("You can use it after installing the Metamask wallet.",'','info');
         window.open("https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=ko")
         return false
     },

@@ -5,7 +5,7 @@ let slideContainer;
 let slides;
 let currentPage = 0;
 let nowLocation;
-let prevSort="0";
+let prevSort=0;
 let prevKeyword = '';
 
 const setBackHeight = () => {
@@ -33,7 +33,11 @@ const setBackHeight = () => {
 
 const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) => {
 
+    let size = 18;
+    let total = (type=="html")?0:currentPage;
+    total = (type === "search") ? Math.ceil($('.image-container').length / size) : total;
     let keyword = $('#searchKeyword').val();
+    let nextPage = parseInt(total / size);
     let insTag = "" +
         '<div class=\"search-box\">' +
         '<div class=\"position-box\">' +
@@ -42,8 +46,8 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
         '</div>'
     "</div>";
     let sort = sort1;
-    let size = 18;
-    let url = `/api/gallery/page?pageType=${uri}&page=${currentPage++}&size=` + size + `&keyword=` + keyword;
+    let url = `/api/gallery/page?pageType=${uri}&page=${total}&size=` + size + `&keyword=` + keyword;
+    currentPage++;
     if(sort !== "0") {
         url += "&sort=" + sort;
     }
@@ -68,18 +72,25 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
         dataType: "json",
         data: {total: this.value},
         async: false,
-        success : function (data) {
+        success : async function (data) {
             if(data.nftListCount <= 0) {
-                if(keyword) {
-                    swal('No Search Data', '', 'error');
-                    return;
-                }
-                else {
+                if(!keyword) {
                     if(currentPage === 1) {
                         swal('no Data',"",'error');
                         $('.gallery-slide-list-container').empty();
                     }
                     else  {
+                        swal('Display your Unique Digital Creation',"",'error');
+                    }
+                }
+                else {
+                    if(currentPage === 1) {
+                        await swal('No Search Data', '', 'error');
+                        $('#searchKeyword').val('');
+                        $('#searchKeyword').focus();
+                        return;
+                    }
+                    else {
                         swal('Display your Unique Digital Creation',"",'error');
                     }
                 }
@@ -162,7 +173,7 @@ const makeGalleryList = (data) => {
         });
         return `
                         <div class="gallery-slide-list">
-                            <img src="/img/etc/no-image.png" alt="background" />
+                            <img src="/img/etc/background-no-img.png" alt="background" />
                             <div class="gallery-slide-list-item">
                                 <div class="gallery-slide-list-item-picture">
                                     <div class="gallery-slide-list-item-down"></div>
@@ -237,7 +248,7 @@ const goNext = () => {
     }
     else {
         if(nowLocation === '/gallery') {
-            MoreSlide('all', '', sort1,0, 0, '', '','');
+            MoreSlide('all', 'search', sort1,0, 0, '', '','');
         }
         else if(nowLocation === '/gallery/myfavorite') {
             MoreSlide('user','',sort1,userno, 0, '' , "Y", '')
@@ -357,34 +368,34 @@ const goSlide = () => {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
     if(nowLocation === '/gallery' && currentPage === 0) {
-        MoreSlide('all', '', sort1,0, 0, '', '', '');
+        MoreSlide('all', 'html', sort1,0, 0, '', '', '');
     }
     else if(nowLocation === '/gallery/myfavorite' && currentPage === 0) {
-        MoreSlide('user','',sort1,userno, 0, '', 'Y', '');
+        MoreSlide('user','html',sort1,userno, 0, '', 'Y', '');
     }
     else if(nowLocation === '/gallery/mycollection' && currentPage === 0) {
-        MoreSlide('mycollection', '', sort1, 0,0, '', '', '');
+        MoreSlide('mycollection', 'html', sort1, 0,0, '', '', '');
     }
     else if(nowLocation === '/gallery/' + nowLocation.split('/')[2] && currentPage === 0) {
         if(nowLocation.split('/')[2] !== 'edit') {
-            MoreSlide('gallery','', sort1, 0, nowLocation.split('/')[2], 0, '', '');
+            MoreSlide('gallery','html', sort1, 0, nowLocation.split('/')[2], 0, '', '');
         }
     }
     else if(nowLocation.split('/')[2] === 'address' && currentPage === 0) {
-        MoreSlide('address', '', sort1, 0, 0, nowLocation.split('/')[3], '', '')
+        MoreSlide('address', 'html', sort1, 0, 0, nowLocation.split('/')[3], '', '')
     }
     else if(nowLocation.split('/')[2] === 'name' && currentPage === 0) {
-        MoreSlide('username','',sort1,0,0,'','', nowLocation.split('/')[3])
+        MoreSlide('username','html',sort1,0,0,'','', nowLocation.split('/')[3])
     }
     else if(nowLocation.split('/')[2] === 'username' && currentPage === 0) {
-        MoreSlide('externaluname','',sort1,0,0,'','', nowLocation.split('/')[3])
+        MoreSlide('externaluname','html',sort1,0,0,'','', nowLocation.split('/')[3])
     }
     else if(nowLocation === '/user/' + nowLocation.split('/')[2] && currentPage === 0) {
         if(window.location.search === '?page=favorite') {
-            MoreSlide('user','',sort1,nowLocation.split('/')[2], 0, '', 'Y', '');
+            MoreSlide('user','html',sort1,nowLocation.split('/')[2], 0, '', 'Y', '');
         }
         else {
-            MoreSlide('user','',sort1,nowLocation.split('/')[2],0, '', 'N', '');
+            MoreSlide('user','html',sort1,nowLocation.split('/')[2],0, '', 'N', '');
         }
     }
     prevBtn = document.querySelector('#prevBtn');

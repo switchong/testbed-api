@@ -19,7 +19,7 @@
                 <input type="password"  name="firstPassword" class="form-control" placeholder="Password"  required="" th:field="*{firstPassword}" />
             </div>
             <div class="mt-2">
-                <input type="password"  name="secondPassword" class="form-control" placeholder="password"  required=""  />
+                <input type="password"  name="secondPassword" class="form-control" placeholder="Confirm"  required=""  />
             </div>
             <small class="text-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></small>
             <small class="text-danger" th:if="${#fields.hasErrors('firstPassword')}" th:errors="*{firstPassword}"></small>

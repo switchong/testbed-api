@@ -37,7 +37,7 @@ public class MemberAuthService  {
         if (!Objects.isNull(findNftMember)) {
             return NftMemberSignupResponse.builder()
                                         .flag(false)
-                                        .data(customErrorMessage("id","가입 및 입력하신 아이디는 이미 존재합니다."))
+                                        .data(customErrorMessage("id","The ID you registered and entered already exists."))
                                         .build();
         }
 
@@ -45,7 +45,7 @@ public class MemberAuthService  {
         if (!request.getFirstPassword().equals(request.getSecondPassword())) {
             return NftMemberSignupResponse.builder()
                                         .flag(false)
-                                        .data(customErrorMessage("firstPassword","입력하신 패스워드가 동일하지 않습니다."))
+                                        .data(customErrorMessage("firstPassword","Those passwords didn’t match. Try again."))
                                         .build();
         }
 
@@ -68,7 +68,7 @@ public class MemberAuthService  {
         if (Objects.isNull(findNftMember)) {
             return NftMemberLoginResponse.builder()
                                         .flag(false)
-                                        .data(customErrorMessage("id","입력하신 아이디가 존재하지 않습니다."))
+                                        .data(customErrorMessage("id","Please input your valid ID"))
                                         .build();
         }
 
@@ -76,7 +76,7 @@ public class MemberAuthService  {
         if (passwordEncoder.matches(request.getPassword(), findNftMember.getPassword()) == false) {
             return NftMemberLoginResponse.builder()
                                         .flag(false)
-                                        .data(customErrorMessage("password","입력하신 패스워드가 일치하지 않습니다."))
+                                        .data(customErrorMessage("password","Please input your valid Password"))
                                         .build();
         }
 

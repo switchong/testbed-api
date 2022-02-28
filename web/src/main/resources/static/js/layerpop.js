@@ -4,9 +4,26 @@ function nftImageClick (e, index) {
     if(window.location.href.split('/')[4] !== 'edit') {
         var nftId = e.target.getAttribute('data-nftid');
         var PopId = "nft-layer-pop";
+        // 팝업창 띄우기
+        if(!$('div.layer_popup_bg').length){
+            $('<div class="layer_popup_bg"><div class="pop_close">\n' +
+                '        <a href="javascript:void(0);" onclick="(e)=>{layerPopClose(e)};" ><img src="/img/icon/ic-popup-close.png" alt="팝업 닫기 버튼"></a>\n' +
+                '    </div></div>').appendTo('#nftgram_wrap');
+        }
+        $('.layer_popup_bg').on('click', function(){
+            if($(window).width() > 900) {
+                $('.wrap_layer_popup').fadeOut();
+                $(this).fadeOut();
+                if(nowLocation === '/gallery/myfavorite') {
+                    currentPage = 0;
+                    goSlide();
+                    goFirst();
+                }
+                $(this).off('click');
+            }
+        });
         layerPopId(PopId);
         currentIndex = index;
-        console.log("aaa"+index);
         layerPopGallery(nftId);
     }
 }
@@ -19,7 +36,7 @@ function popupNextClick () {
         layerPopId(PopId);
         layerPopGallery(nftId);
     }
-    if(currentIndex % 3 === 0) {
+    if(currentIndex % 3 === 0 && currentIndex !== document.querySelectorAll('#gallery-slide-container .image-container-content .inner-picture').length - 1) {
         goNext();
     }
 }
@@ -200,28 +217,13 @@ function layerPopId(layerId, boxPosition){
         'transform' : translate
     });
 
-    // 팝업창 띄우기
-    if(!$('div.layer_popup_bg').length){
-        $('<div class="layer_popup_bg"><div class="pop_close">\n' +
-            '        <a href="javascript:void(0);" onclick="layerPopClose();" ><img src="/img/icon/ic-popup-close.png" alt="팝업 닫기 버튼"></a>\n' +
-            '    </div></div>').appendTo('#nftgram_wrap');
-    }
+
     $('div.layer_popup_bg').fadeIn();
     $('.wrap_layer_popup#'+layerId).fadeIn(function(){
         $('.wrap_layer_popup#'+layerId).css('display','block');
     });
 
-    $('.layer_popup_bg').on('click', function(){
-        if($(window).width() > 900) {
-            $('.wrap_layer_popup').fadeOut();
-            $(this).fadeOut();
-            if(nowLocation === '/gallery/myfavorite') {
-                currentPage = 0;
-                goSlide();
-                goFirst();
-            }
-        }
-    });
+
 }
 
 function layerPopGallery(nftId) {
@@ -274,18 +276,19 @@ function layerPopGallery(nftId) {
 }
 
 // 레이어 팝업창 닫기
-function layerPopClose(){
+function layerPopClose(e){
     $('body').css({
         'touch-action' : 'initial'
     })
     $('.wrap_layer_popup').fadeOut();
     $('.layer_popup_bg').fadeOut();
-    console.log(nowLocation)
     if(nowLocation === '/gallery/myfavorite') {
         currentPage = 0;
         goSlide();
         goFirst();
     }
+    $(this).off('click');
+    e.stopPropagation();
 }
 
 function layerPopByNft(data) {
