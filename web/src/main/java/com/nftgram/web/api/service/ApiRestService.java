@@ -234,4 +234,36 @@ public class ApiRestService {
         return nftIdList;
 
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean saveMemberEdit(Long memberId, String sectionSeq, String background, String[] nftList, String[] frameList, String[] orderSeq) {
+        boolean resultFlag = false;
+
+        // nft 순서 설정
+        if(nftList.length > 0 && orderSeq.length > 0) {
+            for(int i = 0; i < nftList.length ; i++) {
+                Long nftId = Long.valueOf(nftList[i]);
+                String orderStr = orderSeq[i];
+                Long order = Long.valueOf(orderStr.replace(":"+nftId, ""));
+                if(orderStr.contains(nftId.toString())) {
+                    nftRepository.updateNftOrderSeq(memberId, nftId, order);
+                }
+
+                Long frameNftId = (frameList[i]!=null)? Long.valueOf(frameList[i]) :0;
+                if(frameNftId > 0) {
+                    nftRepository.updateNftFrame(memberId, nftId, frameNftId);
+                }
+            }
+            resultFlag = true;
+        }
+
+        // background 설정
+        if(memberId != null && sectionSeq != null && background != null) {
+            Long bgNo = Long.valueOf(background);
+            Long sectionNo = Long.valueOf(sectionSeq);
+            nftRepository.updateNftBackground(memberId, bgNo, sectionNo);
+        }
+
+        return resultFlag;
+    }
 }

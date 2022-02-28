@@ -128,13 +128,13 @@ const contentListLoad = () => {
 
     saveBtn.forEach((item, index) => {
         item.addEventListener('click',() => {
-            console.log(item);
             let slideCount = document.querySelectorAll('.gallery-slide-list').length;
             let nowList = document.querySelectorAll('.gallery-slide-list')[currentNum];
-            let nowListNftNum = Number(nowList.getAttribute('nftNum'));
+            let nowListNftNum = Number(nowList.getAttribute('nftNum')); // editInfo.maxNft
             let sectionSeq = $('.gallery-slide-list.on').data('sectionseq');
+            let nowListImageContainer = $('.gallery-slide-list.on').find('.image-container').length;
 
-            if(nowListNftNum === 3 && nftTotalOK && nowList.getAttribute('save') === "false") {
+            if(nowListNftNum === nowListImageContainer && nftTotalOK && nowList.getAttribute('save') === "false") {
                 const saveData = {
                     sectionSeq : 0,
                     nft : new Array(),
@@ -142,39 +142,42 @@ const contentListLoad = () => {
                     background : 0,
                     orderSeq : new Array()
                 }
-                nowList.setAttribute('save', 'true');
-                swal(`Section ${currentNum} is now saved`,'','info');
 
                 $.each($('.gallery-slide-list.on'), function(key, nft) {
-                    let backgroundNum = $(this).find('.back-frame').data('nftid');
+                    let backgroundNum = $(this).find('.back-frame').attr('data-nftid');
                     let image_container = $(this).find('.image-container');
                     saveData.sectionSeq = sectionSeq;
                     $.each(image_container, function(key2, container){
-                        let nftnum = $(this).find('.gallery-edit-img.edit-nft').data('nftid');
-                        let framenum = $(this).find('.outer-frame').data('nftid');
+                        let nftnum = $(this).find('.gallery-edit-img.edit-nft').attr('data-nftid');
+                        let fnum = $(this).find('.outer-frame').attr('data-nftid');
                         let orderseq = $(this).data('orderseq');
                         if(nftnum != null || nftnum != undefined) {
                             saveData.nft.push(nftnum);
                             if(orderseq != null || orderseq != undefined) {
-                                saveData.orderSeq.push(nftnum+":"+orderseq);
+                                saveData.orderSeq.push(orderseq+":"+nftnum);
                             }
                         }
-                        if(framenum != null || framenum != undefined) {
-                            saveData.frame.push(framenum);
-                        }
+                        saveData.frame.push(fnum);
                     });
                     if(backgroundNum != null || backgroundNum != undefined) {
                         saveData.background = backgroundNum;
-                    }
-                    console.log(saveData);
-                })
 
+                    }
+                });
+
+                let url = "/api/member/edit";
+                let result = commonAjaxUrl("POST", url, saveData);
+
+                if(result == true) {
+                    nowList.setAttribute('save', 'true');
+                    swal(`Section ${sectionSeq} is now saved`,'','info');
+                }
             }
             else {
                 if(!nftTotalOK) {
                     swal('모든 nft를 넣으셔야 저장 할수 있습니다.','','error');
                 }
-                else if(nowListNftNum !== 3) {
+                else if(nowListNftNum !== nowListImageContainer) {
                     swal(`You must fill 3 nfts to be able to save`,'','error');
                 }
                 else if(nowList.getAttribute('save') === 'true') {
@@ -400,7 +403,7 @@ const pageData =  {
 }
 const constEditContent = {
     getBeforeNftData() {
-        let nftList = this.getEditNftList();
+        let nftList = this.getEditNftList("","edit");
         let nftNotVideothis = this.getEditNftNotVideoList();
 
         this.containerHtml("nft", nftList);
@@ -439,7 +442,7 @@ const constEditContent = {
         edit_list.html(html);
     },
     // slider, nft 리스트 조회
-    getEditNftList(page) {
+    getEditNftList(page, editType) {
         let parentContainer = $('#gallery-slide-container');
         let itemTotal = parentContainer.find('.image-container').length;
         let nextPage = parseInt(itemTotal / pageData.size);
@@ -449,7 +452,7 @@ const constEditContent = {
             pageData.nPage = nextPage;
         }
 
-        return commonAjaxUrl("GET", "/api/gallery/page?page="+nextPage+"&size="+pageData.size+"&pageType=edit", {});
+        return commonAjaxUrl("GET", "/api/gallery/page?page="+nextPage+"&size="+pageData.size+"&pageType="+editType, {});
     },
     // frame, background 리스트 조회
     getEditNftNotVideoList(editType) {
@@ -470,35 +473,46 @@ const constEditContent = {
 
     MoreEdit(type) {
         const parentNode = $('.gallery-slide-list-container');
-        let nftList = this.getEditNftList();
+        let nftList = this.getEditNftList("","editSlider");
         let editContent = ``;
         let ipDelBtnArr = new Array();
-        $.each(nftList.nftSliderList, function(key, section){
-            let tIdx = ((key*3)+1);
-            let nftNum = parseInt(0);
-            let frameNum = parseInt(0);
-            let backgroundNum = parseInt(0);
-            let moreValue = parseInt(0);
-            let select_number = key;
-            let editSubContent = ``;
-            if(section.length) {
-                $.each(section, function(key2, slider){
-                    nftNum++; // += parseInt(1);
-                    $('#edit-nft-list').find('.nft_item_'+slider.nftId+' .gallery-edit-select-number').text(select_number);
-                    let date = timeToElapsed(slider.localDate);
-                    let imageHtmlContainer = `<img class="gallery-edit-img edit-nft" alt="${slider.name}" data-nftid="${slider.nftId}" src="${slider.nftImageUrl}" />`;
-                    if(slider.tagType == "video") {
-                        imageHtmlContainer = `<video class="gallery-edit-img edit-nft" controls controlsList="nodownload" alt="${slider.name}" data-nftid="${slider.nftId}" src="${slider.nftImageUrl}"/>`;
-                    }
-                    let ipDelBtnId = `ip-del-btn-${slider.nftId}`;
-                    ipDelBtnArr.push("#"+ipDelBtnId);
-                    let ipDeleteBtn = `<div class="inner-picture-delete-btn" id="${ipDelBtnId}" data-nftid="${slider.nftId}">X</div>`;
-                    editSubContent += `
+        if(nftList.total > 0) {
+
+            $.each(nftList.nftSliderList, function(key, section){
+                let tIdx = ((key*3)+1);
+                let nftNum = parseInt(0);
+                let frameNum = parseInt(0);
+                let backgroundNum = parseInt(0);
+                let moreValue = parseInt(0);
+                let select_number = key;
+                let editSubContent = ``;
+                if(section.length) {
+                    $.each(section, function(key2, slider){
+                        nftNum++; // += parseInt(1);
+                        $('#edit-nft-list').find('.nft_item_'+slider.nftId+' .gallery-edit-select-number').text(select_number);
+                        let date = timeToElapsed(slider.localDate);
+                        let imageHtmlContainer = `<img class="gallery-edit-img edit-nft" alt="${slider.name}" data-nftid="${slider.nftId}" src="${slider.nftImageUrl}" />`;
+                        if(slider.tagType == "video") {
+                            imageHtmlContainer = `<video class="gallery-edit-img edit-nft" controls controlsList="nodownload" alt="${slider.name}" data-nftid="${slider.nftId}" src="${slider.nftImageUrl}"/>`;
+                        }
+                        let ipDelBtnId = `ip-del-btn-${slider.nftId}`;
+                        ipDelBtnArr.push("#"+ipDelBtnId);
+                        let ipDelBtn = `<div class="inner-picture-delete-btn" id="${ipDelBtnId}" data-nftid="${slider.nftId}">X</div>`;
+
+                        let frameNftHtml = `<img class="outer-frame" src="../img/etc/no-image.png" data-nftid="null"/>`;
+                        let ofDelBtn = ``;
+                        if(slider.frameNftId > 0) {
+                            frameNft = getNftOne(slider.frameNftId);
+                            frameNftHtml = `<img class="outer-frame" src="${frameNft.nftImageUrl}" data-nftid="${slider.frameNftId}" />`;
+                            ofDelBtn = `<div class="outer-frame-delete-btn" data-nftid="${slider.frameNftId}" id="of-del-btn-${slider.frameNftId}">X</div>`;
+                        }
+                        editSubContent += `
                             <div class="image-container" data-orderseq="${tIdx+key2}">
                                 <div class="image-container-content">
-                                    <img class="outer-frame" src="../img/etc/no-image.png"/>
+                                    `+frameNftHtml+`
                                     <div class="inner-picture ip${slider.nftId}" style="border : 1px solid lightgray;">${imageHtmlContainer}</div>
-                                    `+ipDeleteBtn+`
+                                    `+ipDelBtn+`
+                                    `+ofDelBtn+`
                                 </div>
                                 <div class="picture-explain" style="opacity: 0">
                                     <p class="picture-title">${slider.name}</p>
@@ -523,14 +537,14 @@ const constEditContent = {
                             </div>
                     `;
 
-                });
-                if(nftList.nftSliderList.length - 1 !== key ) {
-                    moreValue++;
+                    });
+                    if(nftList.nftSliderList.length - 1 !== key ) {
+                        moreValue++;
+                    }
                 }
-            }
-            editContent += `
+                editContent += `
                     <div class="gallery-slide-list" save="true" moreValue="${moreValue}" nftNum="${nftNum}" frameNum="0" backgroundNum="0" data-sectionseq="${key+1}">
-                        <img src="../img/etc/no-image.png" class="back-frame" alt="background" />
+                        <img src="../img/etc/no-image.png" class="back-frame" alt="background" data-nftid="null" />
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
                                 <div class="gallery-slide-list-item-down"></div>
@@ -539,18 +553,21 @@ const constEditContent = {
                         </div>
                     </div>
             `;
-        });
-        if(type == "html") {
-            parentNode.html(editContent);
+            });
+            if(type == "html") {
+                parentNode.html(editContent);
+            } else {
+                parentNode.append(editContent);
+            }
+            Refresh();
+            nftMaxLength = 3 * (slides.length);
+            backgroundMaxLength += 1;
+            nftOk = false;
+            // delete 버튼 이벤트
+            constEditContent.deleteBtnEvent("", ipDelBtnArr);
         } else {
-            parentNode.append(editContent);
+            this.addSection();
         }
-        Refresh();
-        nftMaxLength = 3 * (slides.length);
-        backgroundMaxLength += 1;
-        nftOk = false;
-        // delete 버튼 이벤트
-        constEditContent.deleteBtnEvent("", ipDelBtnArr);
 
     },
 
@@ -560,13 +577,13 @@ const constEditContent = {
         let maxSectionSeq = $('.gallery-slide-list').length;
         if(editInfo.maxNft > count) {
             let editContent = `<div class="gallery-slide-list" save="false" moreValue="0" nftNum="0" frameNum="0" backgroundNum="0" data-sectionseq="${maxSectionSeq+1}">
-                        <img src="../img/etc/no-image.png" class="back-frame" alt="background" />
+                        <img src="../img/etc/no-image.png" class="back-frame" alt="background" data-nftid="null" />
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
                                 <div class="gallery-slide-list-item-down"></div>
                                 <div class="image-container" data-orderseq="${count+1}">
                                     <div class="image-container-content">
-                                        <img class="outer-frame" src="../img/etc/no-image.png"/>
+                                        <img class="outer-frame" src="../img/etc/no-image.png" data-nftid="null"/>
                                         <div class="inner-picture" style="border : 1px solid lightgray;"></div>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
@@ -592,7 +609,7 @@ const constEditContent = {
                                 </div>
                                 <div class="image-container" data-orderseq="${count+2}">
                                     <div class="image-container-content">
-                                        <img class="outer-frame" src="../img/etc/no-image.png"/>
+                                        <img class="outer-frame" src="../img/etc/no-image.png" data-nftid="null"/>
                                         <div class="inner-picture" style="border : 1px solid lightgray;"></div>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
@@ -618,7 +635,7 @@ const constEditContent = {
                                 </div>
                                 <div class="image-container" data-orderseq="${count+3}">
                                     <div class="image-container-content">
-                                        <img class="outer-frame" src="../img/etc/no-image.png"/>
+                                        <img class="outer-frame" src="../img/etc/no-image.png" data-nftid="null"/>
                                         <div class="inner-picture" style="border : 1px solid lightgray;"></div>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
@@ -687,17 +704,16 @@ const constEditContent = {
                     containerPrevCls = "of";
                     editSelectItem = $('#edit-frame-list');
                     currContainer = $('.of'+nftId);
+                    currContainer.attr('data-nftid','null');
                     currContainer.attr('src', noImage);
-                    currContainer.data('nftid','null');
                     break;
                 case "background-frame-delete-btn" :
                     numName = "backgroundnum";
                     containerPrevCls = "bf";
                     editSelectItem = $('#edit-background-list');
                     currContainer = $('.bf'+nftId);
+                    currContainer.attr('data-nftid','null');
                     currContainer.attr('src', noImage);
-                    currContainer.data('nftid','null');
-                    saveData.background = 0;
                     break;
             }
             let number = parseInt(parentSlideList.attr(numName)) - 1;

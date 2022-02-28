@@ -141,6 +141,7 @@ public class NftFindService {
                 nftList = nftCollectionRepository.findAllNftGallery(pageable, memberInfo.getNftMemberId());
                 break;
             case "edit" :
+            case "editSlider" :
             case "test" :
             case "editNotVideo" :
                 if(nftGalleryRequest.getMemberId() != null) {
@@ -180,21 +181,42 @@ public class NftFindService {
     public List<NftMemberEditDto> memberBackgroundList(Pageable pageable, Long memberId) {
         boolean editFlag = nftMemberRepository.findNftMemberBackgroundFlag(memberId);
         List<Nft> nftEditList = nftRepository.findByNftMemberEditList(pageable, memberId);
+        List<Nft> nftEditBgList = nftRepository.findByNftMemberEditBgList(pageable, memberId);
 
         List<NftMemberEditDto> nftMemberBgList = new ArrayList<>();
 
         //
-        List<CommonNftResponse> nftList = new ArrayList<>();
+        List<NftMemberBackgroundResponse> nftList = new ArrayList<>();
         List<CommonNftResponse> nftFrameList = new ArrayList<>();
 
+
+        final Long[] i = {Long.valueOf(0)};
         nftEditList.forEach(nftInfo -> {
+            Long bgOrder = (long) (i[0] % 3) + 1;
+            CommonNftResponse frameNft = CommonNftResponse.builder().build();
+            if(nftInfo.getFrameNftId() > 0) {
+                NftOneJoinDto nftOneJoinDto = nftRepository.findByNftIdOne(nftInfo.getFrameNftId());
+                frameNft = getCommonNftResponse(nftOneJoinDto.getNft());
+            }
+
             CommonNftResponse commonNftResponse = getCommonNftResponse(nftInfo);
 
             NftMemberBackgroundResponse backgroundResponse = NftMemberBackgroundResponse.builder()
-                    .nft1(commonNftResponse)
+                    .nftInfo(commonNftResponse)
+                    .nftFrame(frameNft)
                     .build();
+            nftList.add(backgroundResponse);
+
+            /*NftMemberEditDto nftMemberEditDto = NftMemberEditDto.builder()
+                    .bgOrder(bgOrder)
+                    .bgNft()
+                    .backgroundNft()
+                    .build();*/
+
+            i[0]++;
 
         });
+
 
         if(editFlag == true) {
 
@@ -378,6 +400,13 @@ public class NftFindService {
         if(imageUrl) {
             tagType = "video";
         }
+/*
+        Nft frameNft = Nft.builder().build();
+        if(nftInfo.getFrameNftId() > 0) {
+            NftOneJoinDto nftOneJoinDto = nftRepository.findByNftIdOne(nftInfo.getFrameNftId());
+            frameNft = nftOneJoinDto.getNft();
+        }*/
+
         CommonNftResponse commonNftResponse = CommonNftResponse.builder()
                 .nftId(nftInfo.getNftId())
                 .name(nftInfo.getName())
@@ -394,6 +423,7 @@ public class NftFindService {
                 .tokenId(nftInfo.getTokenId())
                 .tagType(tagType)
                 .frameNftId(nftInfo.getFrameNftId())
+                .orderSeq(nftInfo.getOrderSeq())
                 .userUrl(userUrl)
                 .localDate(nftInfo.getCreateDate())
                 .description(nftInfo.getDescription())

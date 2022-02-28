@@ -136,15 +136,21 @@ const makeGalleryList = (data) => {
         let innerNewList = ''
         item.forEach((inner)=>{
             let date = timeToElapsed(inner.localDate);
+            let frameNftHtml = `<img class="outer-frame" src="/img/etc/no-image.png"/>`;
+            if(inner.frameNftId > 0) {
+                frameNft = getNftOne(inner.frameNftId);
+                frameNftHtml = `<img class="outer-frame" src="${frameNft.nftImageUrl}"/>`;
+            }
             innerNewList = innerNewList + `
                             <div class="image-container" id="nft-content-${inner.nftId}" >
-                                <div class="image-container-content" data-nftid="${inner.nftId}">
-                                    <img class="outer-frame" src="/img/etc/no-image.png"/>`;
+                                <div class="image-container-content" data-nftid="${inner.nftId}">`;
+            innerNewList += frameNftHtml;
             if(inner.tagType == "video") {
                 innerNewList += `<video class="inner-picture gimage${inner.nftId}" controls controlsList="nodownload"  data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}"/>`;
             } else {
                 innerNewList += `<img class="inner-picture gimage${inner.nftId}" data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}" />`;
             }
+
             innerNewList += `</div>
                                 <div class="picture-explain">
                                     <div class="picture-title-container">

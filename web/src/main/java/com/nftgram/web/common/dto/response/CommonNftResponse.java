@@ -1,5 +1,6 @@
 package com.nftgram.web.common.dto.response;
 
+import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.domain.nftgram.value.MarketType;
 import lombok.*;
 
@@ -42,6 +43,10 @@ public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
 
     private Long frameNftId;
 
+    private Long orderSeq;
+
+    private Nft frameNft;
+
     private String userUrl;
 
     private LocalDateTime localDate;
@@ -58,11 +63,10 @@ public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
 
     private LocalDateTime createdDate;
 
-
     @Builder
     public CommonNftResponse(Long nftId, String name, String username, Long likeCount, Long favoriteCount, Long viewCount, String marketLink, String userImageUrl, String nftImageUrl,
                              String nftCollectionName, Long nftCollectionId, String assetContractAddress, String tokenId, String tagType, Long frameNftId, String userUrl, LocalDateTime localDate,
-                             String description, MarketType marketType, Long marketId, String collectionName, Long nftAssetId, LocalDateTime createdDate) {
+                             String description, MarketType marketType, Long marketId, String collectionName, Long nftAssetId, LocalDateTime createdDate, Nft frameNft, Long orderSeq) {
         this.nftId = nftId;
         this.name = name;
         this.username = username;
@@ -78,6 +82,8 @@ public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
         this.tokenId = tokenId;
         this.tagType = tagType;
         this.frameNftId = frameNftId;
+        this.orderSeq = orderSeq;
+        this.frameNft = frameNft;
         this.userUrl = userUrl;
         this.localDate = localDate;
 

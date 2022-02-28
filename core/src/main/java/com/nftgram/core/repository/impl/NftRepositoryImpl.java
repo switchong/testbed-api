@@ -186,7 +186,8 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .where(nftAsset.contractType.eq(ContractType.NFT),
                         nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
-                        nft.nft_member_id.eq(nftMemberId))
+                        nft.nft_member_id.eq(nftMemberId),
+                        nft.orderSeq.ne(Long.valueOf(0)))
                 .orderBy(nft.nftId.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -209,6 +210,26 @@ public class NftRepositoryImpl implements NftCustomRepository {
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(nftMemberId))
                 .orderBy(caseBuilder.asc(), nft.orderSeq.asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return nftResult;
+    }
+
+    @Override
+    public List<Nft> findByNftMemberEditBgList(Pageable pageable, Long nftMemberId) {
+        // order_seq 컬럼 미설정시 맨뒤로
+        NumberExpression<Integer> caseBuilder = new CaseBuilder().when(nft.backgroundSeq.ne(Long.valueOf(0))).then(1).otherwise(2);
+
+        List<Nft> nftResult = queryFactory.select(nft)
+                .from(nft)
+                .join(nft.nftAsset, nftAsset)
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        nft.nft_member_id.eq(nftMemberId))
+                .orderBy(caseBuilder.asc(), nft.backgroundSeq.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -397,6 +418,10 @@ public class NftRepositoryImpl implements NftCustomRepository {
             case "edit" :
                 builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
                 break;
+            case "editSlider" :
+                builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
+                builder.and(nft.orderSeq.ne(Long.valueOf(0)));
+
             case "editNotVideo" :
                 builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
                 builder.and(nft.imageUrl.like(Expressions.asString("%").concat(".mp4").concat("%")).not());
@@ -409,5 +434,50 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return builder;
     }
 
+    @Override
+    public Long updateNftBackground(Long memberId, Long nftId, Long sectionSeq) {
+        queryFactory.update(nft)
+                .set(nft.backgroundSeq, Long.valueOf(0))
+                .where(nft.backgroundSeq.eq(sectionSeq), nft.nft_member_id.eq(memberId))
+                .execute();
+
+        Long result = queryFactory.update(nft)
+                .set(nft.backgroundSeq, sectionSeq)
+                .where(nft.nftId.eq(nftId), nft.nft_member_id.eq(memberId))
+                .execute();
+
+        return result;
+    }
+
+    @Override
+    public Long updateNftOrderSeq(Long memberId, Long nftId, Long orderSeq) {
+        queryFactory.update(nft)
+                .where(nft.orderSeq.eq(orderSeq), nft.nft_member_id.eq(memberId))
+                .set(nft.orderSeq, Long.valueOf(0))
+                .execute();
+
+        Long result = queryFactory.update(nft)
+                .set(nft.orderSeq, orderSeq)
+                .where(nft.nftId.eq(nftId), nft.nft_member_id.eq(memberId))
+                .execute();
+
+        return result;
+    }
+
+
+    @Override
+    public Long updateNftFrame(Long memberId, Long nftId, Long frameNftId) {
+        queryFactory.update(nft)
+                .set(nft.frameNftId, frameNftId)
+                .where(nft.nftId.eq(nftId), nft.nft_member_id.eq(memberId))
+                .execute();
+
+        Long result = queryFactory.update(nft)
+                .where(nft.nftId.eq(nftId), nft.nft_member_id.eq(memberId))
+                .set(nft.frameNftId, frameNftId)
+                .execute();
+
+        return result;
+    }
 
 }

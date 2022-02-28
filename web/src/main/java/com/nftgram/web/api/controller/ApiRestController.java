@@ -4,10 +4,7 @@ import com.nftgram.core.domain.nftgram.NftMember;
 import com.nftgram.core.dto.request.NftGalleryRequest;
 import com.nftgram.web.api.dto.MainPageDto;
 import com.nftgram.web.api.dto.MemberWalletDto;
-import com.nftgram.web.api.dto.request.GetNftOneRequest;
-import com.nftgram.web.api.dto.request.MemberNftRequest;
-import com.nftgram.web.api.dto.request.UpdateLikeCountRequest;
-import com.nftgram.web.api.dto.request.UpdateViewCountRequest;
+import com.nftgram.web.api.dto.request.*;
 import com.nftgram.web.api.dto.response.GetNftOneResponse;
 import com.nftgram.web.api.dto.response.MemberNftResponse;
 import com.nftgram.web.api.dto.response.MemberWalletResponses;
@@ -166,6 +163,20 @@ public class ApiRestController {
 
         return nftMember;
 
+    }
+
+    @PostMapping(value = "/member/edit", produces = "application/json")
+    public boolean saveEdit(@RequestParam(value = "sectionSeq") String sectionSeq, @RequestParam(value = "background") String background,@RequestParam(value = "nft[]") String[] nftList,@RequestParam(value = "frame[]", required = false) String[] frameList, @RequestParam(value = "orderSeq[]") String[] orderSeq) throws GeneralSecurityException, UnsupportedEncodingException {
+        boolean resultFlag = true;
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        Long memberId = Long.valueOf(0);
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+
+            resultFlag = apiRestService.saveMemberEdit(memberId, sectionSeq, background, nftList, frameList, orderSeq);
+        }
+
+        return resultFlag;
     }
 
     @PostMapping(value = "/member/nft", produces = "application/json")

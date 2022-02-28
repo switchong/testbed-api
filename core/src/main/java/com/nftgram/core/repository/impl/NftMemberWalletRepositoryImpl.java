@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.nftgram.core.domain.nftgram.QNftMemberWallet.nftMemberWallet;
@@ -16,6 +17,7 @@ import static com.nftgram.core.domain.nftgram.QNftMemberWallet.nftMemberWallet;
 public class NftMemberWalletRepositoryImpl implements NftMemberWalletCustomRepository {
 
     private final JPAQueryFactory queryFactory;
+    private LocalDateTime localDateTime;
 
     @Override
     public List<NftMemberWallet> walletByMemberId(Long memberId) {
@@ -36,6 +38,7 @@ public class NftMemberWalletRepositoryImpl implements NftMemberWalletCustomRepos
     public Long updateWalletStatus(Long walletId, Long memberId, ActiveStatus activeStat) {
         Long result = queryFactory.update(nftMemberWallet)
                 .set(nftMemberWallet.activeStatus, activeStat)
+                .set(nftMemberWallet.updateDate, localDateTime)
                 .where(nftMemberWallet.nftMemberWalletId.eq(walletId)
                         , nftMemberWallet.nftMember.nftMemberId.eq(memberId))
                 .execute();

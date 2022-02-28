@@ -36,6 +36,8 @@ public interface NftCustomRepository {
 
     List<Nft> findByNftMemberEditList(Pageable pageable, Long nftMemberId);
 
+    List<Nft> findByNftMemberEditBgList(Pageable pageable, Long nftMemberId);
+
     Long updateNftViewCount(Long nftId);
 
     Long countNftViewCount(Long nftId);
@@ -51,4 +53,10 @@ public interface NftCustomRepository {
     Long updateNftMemberWallet(List<Long> nftIdArr, Long memberId);
 
     NftCommonDto findAllNftCommon(Pageable pageable, NftGalleryRequest nftGalleryRequest);
+
+    Long updateNftBackground(Long memberId, Long nftId, Long sectionSeq);
+
+    Long updateNftOrderSeq(Long memberId, Long nftId, Long orderSeq);
+
+    Long updateNftFrame(Long memberId, Long nftId, Long frameNftId);
 }

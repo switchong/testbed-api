@@ -48,7 +48,8 @@ public class NftCollectionRepositoryImpl implements NftCollectionCustomRepositor
                 .where(nftAsset.contractType.eq(ContractType.NFT),
                         nft.imageUrl.ne(""),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
-                        nft.nft_member_id.eq(memberId)
+                        nft.nft_member_id.eq(memberId),
+                        nft.orderSeq.ne(Long.valueOf(0))
                 )
                 .orderBy(nft.nftId.desc())
                 .offset(pageable.getOffset())
