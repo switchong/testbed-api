@@ -181,6 +181,7 @@ const goNext = () => {
     if(slides.length !== currentNum + 1) {
         slides.forEach((item)=>{
             item.style.transform = 'scale(1)';
+            item.classList.add("on");
         });
         if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
             if(nowLocation === '/gallery/edit') {
@@ -230,6 +231,7 @@ const goNext = () => {
         slides.forEach((item, index)=>{
             if(index !== currentNum) {
                 item.style.transform = 'scale(0.9)';
+                item.classList.remove("on");
             }
         });
     }
@@ -273,6 +275,7 @@ const goPrev = () => {
     if(currentNum > 0) {
         slides.forEach((item)=>{
             item.style.transform = 'scale(1)';
+            item.classList.add("on");
         });
         if(window.innerWidth > 900 || window.innerWidth > window.innerHeight) {
             if(nowLocation === '/gallery/edit') {
@@ -322,20 +325,22 @@ const goPrev = () => {
         slides.forEach((item, index)=>{
             if(index !== currentNum) {
                 item.style.transform = 'scale(0.9)';
+                item.classList.remove("on");
             }
         });
     }
 }
 
 const goFirst = () => {
-    slides.forEach((item)=>{
-        item.style.transform = 'scale(1)';
-    });
     slideContainer.style.transform = 'translateX(0px)';
     currentNum = 0;
     slides.forEach((item, index)=>{
         if(index !== currentNum) {
             item.style.transform = 'scale(0.9)';
+            item.classList.remove("on");
+        }else {
+            item.style.transform = 'scale(1)';
+            item.classList.add("on");
         }
     });
 }
@@ -390,6 +395,8 @@ const goSlide = () => {
     slides.forEach((item, index)=>{
         if(index !== currentNum) {
             item.style.transform = 'scale(0.9)';
+        } else {
+            item.classList.add("on");
         }
     });
 

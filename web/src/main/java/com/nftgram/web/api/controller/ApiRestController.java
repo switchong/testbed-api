@@ -1,7 +1,6 @@
 package com.nftgram.web.api.controller;
 
 import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.domain.nftgram.NftMemberBackground;
 import com.nftgram.core.dto.request.NftGalleryRequest;
 import com.nftgram.web.api.dto.MainPageDto;
 import com.nftgram.web.api.dto.MemberWalletDto;
@@ -17,6 +16,7 @@ import com.nftgram.web.api.service.ApiRestService;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.dto.NftCommentDto;
 import com.nftgram.web.common.dto.NftGalleryCommonDto;
+import com.nftgram.web.common.dto.NftMemberEditDto;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.request.NftCommentRequest;
 import com.nftgram.web.common.dto.request.NftCommentSaveRequest;
@@ -148,9 +148,9 @@ public class ApiRestController {
     }
 
     @PostMapping(value="/member/background", produces = "application/json")
-    public List<NftMemberBackground> memberBackgroundList(Pageable pageable, @RequestParam(name = "memberId") Long memberId) {
+    public List<NftMemberEditDto> memberBackgroundList(Pageable pageable, @RequestParam(name = "memberId") Long memberId) {
 
-        List<NftMemberBackground> nftMemberBackground = apiRestService.memberBackgroundList(pageable, memberId);
+        List<NftMemberEditDto> nftMemberBackground = nftFindService.memberBackgroundList(pageable, memberId);
 
         return nftMemberBackground;
     }

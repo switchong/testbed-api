@@ -2,14 +2,15 @@ package com.nftgram.core.repository.impl;
 
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.domain.nftgram.value.ContractType;
 import com.nftgram.core.dto.request.NftMemberRequestDto;
 import com.nftgram.core.repository.custom.NftMemberCustomRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
+import static com.nftgram.core.domain.nftgram.QNft.nft;
+import static com.nftgram.core.domain.nftgram.QNftAsset.nftAsset;
 import static com.nftgram.core.domain.nftgram.QNftMember.nftMember;
 import static com.nftgram.core.domain.nftgram.QNftMemberWallet.nftMemberWallet;
 
@@ -65,7 +66,26 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
 
     }
 
+    @Override
+    public boolean findNftMemberBackgroundFlag(Long memberId) {
+        Long nftResult = queryFactory.select(nft.nftId)
+                .from(nft)
+                .join(nft.nftAsset, nftAsset)
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        nft.nft_member_id.eq(memberId),
+                        nft.orderSeq.ne(Long.valueOf(0)))
+                .orderBy(nft.backgroundSeq.asc(), nft.orderSeq.desc())
+                .fetchCount();
+        boolean editFlag = false;
 
+        if(nftResult > 0) {
+            editFlag = true;
+        }
+
+        return editFlag;
+    }
 
     @Override
     public NftMember findNftMemberWalletAddress(String address) {

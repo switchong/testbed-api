@@ -64,7 +64,19 @@ nftgram:
   aes256:
     secretKey: 3021ACABD914C42D80C4E9D2D1BBA293
 
-
+# 프로퍼티 암호화 설정
+#jasypt:
+#  encryptor:
+#    password: "!vhdkdnjdkagh1234"
+#    algorithm: PBEWithMD5AndDES
+#    pool-size: 1
+#    property:
+#      prefix: ENC(
+#      suffix: )
+#    salt-generator-classname: org.jasypt.salt.RandomSaltGenerator
+#    string-output-type: base64
+#    provider-name: SunJCE
+#    key-obtention-iterations: 1000
 
 
 #web:

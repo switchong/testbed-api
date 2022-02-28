@@ -108,6 +108,9 @@ public class Nft  extends BaseEntity {
     private Long orderSeq;
 
     @Column
+    private Long backgroundSeq;
+
+    @Column
     private String lastSaleProfileImageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -162,6 +165,7 @@ public class Nft  extends BaseEntity {
         this.activeStatus = ActiveStatus.ACTIVE;
         this.frameNftId = frameNftId;
         this.orderSeq = orderSeq;
+        this.backgroundSeq = backgroundSeq;
 
         for (NftProperty nftProperty : nftProperties) {
             addNftProperty(nftProperty);

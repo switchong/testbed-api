@@ -14,5 +14,7 @@ public interface NftMemberCustomRepository {
 
     NftMember findNftUsername(String username);
 
+    boolean findNftMemberBackgroundFlag(Long memberId);
+
     NftMember findNftMemberWalletAddress(String address);
 }

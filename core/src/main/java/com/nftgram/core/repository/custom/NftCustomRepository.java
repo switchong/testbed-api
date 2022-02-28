@@ -34,6 +34,8 @@ public interface NftCustomRepository {
 
     List<Nft> findByNftMemberList(Pageable pageable, Long nftMemberId);
 
+    List<Nft> findByNftMemberEditList(Pageable pageable, Long nftMemberId);
+
     Long updateNftViewCount(Long nftId);
 
     Long countNftViewCount(Long nftId);

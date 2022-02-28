@@ -11,7 +11,9 @@ import com.nftgram.core.repository.*;
 import com.nftgram.web.api.dto.response.GetNftOneResponse;
 import com.nftgram.web.common.dto.GalleryDto;
 import com.nftgram.web.common.dto.NftGalleryCommonDto;
+import com.nftgram.web.common.dto.NftMemberEditDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
+import com.nftgram.web.common.dto.response.NftMemberBackgroundResponse;
 import com.nftgram.web.common.dto.response.NftPropertyResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -172,6 +174,55 @@ public class NftFindService {
                 .build();
 
         return nftGalleryCommonResponse;
+    }
+
+    @Transactional(readOnly = true)
+    public List<NftMemberEditDto> memberBackgroundList(Pageable pageable, Long memberId) {
+        boolean editFlag = nftMemberRepository.findNftMemberBackgroundFlag(memberId);
+        List<Nft> nftEditList = nftRepository.findByNftMemberEditList(pageable, memberId);
+
+        List<NftMemberEditDto> nftMemberBgList = new ArrayList<>();
+
+        //
+        List<CommonNftResponse> nftList = new ArrayList<>();
+        List<CommonNftResponse> nftFrameList = new ArrayList<>();
+
+        nftEditList.forEach(nftInfo -> {
+            CommonNftResponse commonNftResponse = getCommonNftResponse(nftInfo);
+
+            NftMemberBackgroundResponse backgroundResponse = NftMemberBackgroundResponse.builder()
+                    .nft1(commonNftResponse)
+                    .build();
+
+        });
+
+        if(editFlag == true) {
+
+        } else {
+            List<CommonNftResponse> nftResponseList = setCommonNftResponses(nftEditList);
+            nftResponseList.forEach(nftInfo -> {
+
+            });
+            Long sliderCount = Long.valueOf((long) Math.ceil(nftResponseList.size()/(3 * 1.0)));
+
+            List<List<CommonNftResponse>> sliderResponseList = nftResponseList(sliderCount, nftResponseList);
+        }
+
+//        List<NftMemberBgDto> nftMemberBgDtoList = new ArrayList<>();
+//
+//        nftMemberBgList.forEach(nftBackground -> {
+//            NftOneJoinDto nftOneJoinDto = nftRepository.findByNftIdOne(nftBackground.getNft().getNftId());
+//
+//            NftMemberBgDto nftMemberBgDto = NftMemberBgDto.builder()
+//                    .nftMemberBackground(nftBackground)
+//                    .nft(nftOneJoinDto.getNft())
+//                    .nftAsset(nftOneJoinDto.getNftAsset())
+//                    .nftCollection(nftOneJoinDto.getNftCollection())
+//                    .build();
+//            nftMemberBgDtoList.add(nftMemberBgDto);
+//        });
+
+        return nftMemberBgList;
     }
 
     /**

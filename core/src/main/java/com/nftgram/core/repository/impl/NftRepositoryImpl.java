@@ -11,7 +11,9 @@ import com.nftgram.core.repository.custom.NftCustomRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -193,6 +195,27 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return nftResult;
     }
 
+
+    @Override
+    public List<Nft> findByNftMemberEditList(Pageable pageable, Long nftMemberId) {
+        // order_seq 컬럼 미설정시 맨뒤로
+        NumberExpression<Integer> caseBuilder = new CaseBuilder().when(nft.orderSeq.ne(Long.valueOf(0))).then(1).otherwise(2);
+
+        List<Nft> nftResult = queryFactory.select(nft)
+                .from(nft)
+                .join(nft.nftAsset, nftAsset)
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        nft.nft_member_id.eq(nftMemberId))
+                .orderBy(caseBuilder.asc(), nft.orderSeq.asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return nftResult;
+    }
+
     @Override
     public Long updateNftViewCount(Long nftId) {
         Long result = queryFactory.update(nft)
@@ -318,7 +341,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
     @Override
     public NftCommonDto findAllNftCommon(Pageable pageable, NftGalleryRequest nftGalleryRequest) {
-        Long totals = queryFactory.select(nft)
+        Long totals = queryFactory.select(nft.nftId)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
                 .where(nftAsset.contractType.eq(ContractType.NFT),

@@ -3,7 +3,6 @@ package com.nftgram.web.api.service;
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.NftLike;
 import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.domain.nftgram.NftMemberBackground;
 import com.nftgram.core.domain.nftgram.NftMemberWallet;
 import com.nftgram.core.dto.NftIdWalletList;
 import com.nftgram.core.dto.NftOneJoinDto;
@@ -14,7 +13,6 @@ import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.response.NftPropertiesGroupResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +30,6 @@ public class ApiRestService {
     private final NftRepository nftRepository;
     private final NftMemberRepository nftMemberRepository;
     private final NftMemberWalletRepository nftMemberWalletRepository;
-    private final NftMemberBackgroundRepository nftMemberBackgroundRepository;
     private final NftLikeRepository nftLikeRepository;
     private final NftPropertyRepository nftPropertyRepository;
 
@@ -123,28 +120,6 @@ public class ApiRestService {
 
         return updateLikeCountResponse;
 
-    }
-
-    @Transactional(readOnly = true)
-    public List<NftMemberBackground> memberBackgroundList(Pageable pageable, Long memberId) {
-
-        List<NftMemberBackground> nftMemberBgList = nftMemberBackgroundRepository.memberBackgrounds(pageable, memberId);
-
-//        List<NftMemberBgDto> nftMemberBgDtoList = new ArrayList<>();
-//
-//        nftMemberBgList.forEach(nftBackground -> {
-//            NftOneJoinDto nftOneJoinDto = nftRepository.findByNftIdOne(nftBackground.getNft().getNftId());
-//
-//            NftMemberBgDto nftMemberBgDto = NftMemberBgDto.builder()
-//                    .nftMemberBackground(nftBackground)
-//                    .nft(nftOneJoinDto.getNft())
-//                    .nftAsset(nftOneJoinDto.getNftAsset())
-//                    .nftCollection(nftOneJoinDto.getNftCollection())
-//                    .build();
-//            nftMemberBgDtoList.add(nftMemberBgDto);
-//        });
-
-        return nftMemberBgList;
     }
 
     @Transactional(readOnly = true)

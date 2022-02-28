@@ -3,15 +3,11 @@ package com.nftgram.web.member.dto;
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.domain.nftgram.NftAsset;
 import com.nftgram.core.domain.nftgram.NftCollection;
-import com.nftgram.core.domain.nftgram.NftMemberBackground;
 import lombok.*;
 
 @Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NftMemberBgDto {
-    private NftMemberBackground nftMemberBackground;
     private Nft nft;
     private NftAsset nftAsset;
     private NftCollection nftCollection;
@@ -20,9 +16,8 @@ public class NftMemberBgDto {
     private Nft bgNft3;
 
     @Builder
-    public NftMemberBgDto(Nft nft, NftAsset nftAsset, NftCollection nftCollection, NftMemberBackground nftMemberBackground,
+    public NftMemberBgDto(Nft nft, NftAsset nftAsset, NftCollection nftCollection,
                           Nft bgNft1, Nft bgNft2, Nft bgNft3) {
-        this.nftMemberBackground = nftMemberBackground;
         this.nft = nft;
         this.nftAsset = nftAsset;
         this.nftCollection = nftCollection;
