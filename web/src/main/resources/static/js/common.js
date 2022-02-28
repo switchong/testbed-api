@@ -3,7 +3,7 @@ let url_this_page = location.href;
 let title_this_page = document.title;
 let url_user_page = window.location.origin;
 let sort1 = 0;
-let newFlag = true;
+let homeCurrentPage = 0;
 
 $(document).ready(function(){
 
@@ -48,7 +48,7 @@ $(document).ready(function(){
     // scroll auto load
     $('body').scroll(function(){
         if($('body').scrollTop() + $('body').height() >= $(document).height()) {
-            if($('#navigation-top').outerHeight() + $('.main-gallery-container').outerHeight() > $(window).height()) {
+            if(homeCurrentPage !== 0) {
                 moreView();
             }
         }
@@ -68,6 +68,7 @@ $(document).ready(function(){
         $('input[name="dropdownsort"]').val($(this).attr("value"));
         sort1 = $(this).attr("value");
         currentPage = 0;
+        homeCurrentPage = 0;
         $('#dropdownsearch').prop('checked',false);
         if(currentPagePath === '/gallery') {
             MoreSlide( 'all','html', sort1, 0,0);
@@ -92,6 +93,7 @@ $(document).ready(function(){
             return false;
         }
         currentPage = 0;
+        homeCurrentPage = 0;
         if(currentPagePath === '/gallery') {
             MoreSlide('all','html', sort1, 0,0);
         }
@@ -145,7 +147,7 @@ function moreView(type) {
 
     let htmlBool = false;
     let total = (type=="html")?0:$('#nftgram-list .card').length;
-    let nextPage = parseInt(total / size);
+    let nextPage = Math.ceil(total / size);
     let keyword = $('#searchKeyword').val();
     let sort = $('input[name="dropdownsort"]').val();
     let url = "/api/main/page?page=" + nextPage + "&size=" + size + "&keyword=" + keyword;
@@ -193,7 +195,7 @@ function moreView(type) {
                     $("#nftgram-tag").html(insTag);
                 }
             }
-
+            homeCurrentPage++;
         },
         error: function (data) {
             alert("error");
