@@ -3,12 +3,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <div id="navigation-top" th:fragment="fragment-nav" th:with="memberInfo=${@memberLoginManager.getInfo()}">
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="padding-bottom: 0; padding-top: 1rem;">
         <div class="container">
             <div class="d-flex">
                 <ul class="navbar-nav-mobile">
                     <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs36" th:src="@{/img/icon/ic-nav-profile.svg}" /></a></li>
-                    <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" th:src="@{/img/icon/ic-nav-wallet.png}" /></a></li>
+                    <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" style="width: 2rem;" th:src="@{/img/icon/ic-nav-wallet.png}" /></a></li>
                     <li th:if="${memberInfo.loginYN == 'N'}" class="nav-item">
                         <a class="btn btn-outline-dark" th:onclick="|location.href='@{/auth/login}'|">Sign In</a>
                     </li>
@@ -47,7 +47,7 @@
                         <li class="nav-item"><a aria-current="page" class="nav-link explorer" href="/" th:classappend="${nav_active}== 'explorer' ? 'active' : ''">Explore</a></li>
                         <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorites</a></li>
                         <li class="nav-item"><a class="nav-link mypage" href="/gallery/mycollection"><img class="whIs36" th:src="@{/img/icon/ic-nav-profile.svg}" /></a></li>
-                        <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" th:src="@{/img/icon/ic-nav-wallet.png}" /></a></li>
+                        <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" style="width: 2rem;" th:src="@{/img/icon/ic-nav-wallet.png}" /></a></li>
 
 
                         <li th:if="${memberInfo.loginYN == 'N'}" class="nav-item">

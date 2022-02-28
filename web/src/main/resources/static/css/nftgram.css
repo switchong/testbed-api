@@ -391,7 +391,7 @@ body {
 }
 
 a.btn.btn-outline-dark {
-    border : 2px solid #fff;
+    border : 1px solid #fff;
     height: 85%;
     display: flex;
     align-items: center;
@@ -791,6 +791,7 @@ body {
 .main-gallery-container {
     max-width: 1750px;
     margin: 0 auto;
+    padding-top: 1rem !important;
 }
 
 #navigation-top {
