@@ -277,7 +277,7 @@ const contentListLoad = () => {
                     nowframe.querySelectorAll('.outer-frame').forEach((items, index)=>{
                         if(items.getAttribute('data-nftid') === item.childNodes[1].getAttribute('data-nftid')) {
                             items.setAttribute('src', '../../img/etc/no-image.png');
-                            items.setAttribute('data-nftid', 'null');
+                            items.setAttribute('data-nftid', '0');
                             items.classList.remove('of'+item.childNodes[1].getAttribute('data-nftid'));
                             items.parentNode.querySelector('.outer-frame-delete-btn').remove();
                             nowframe.setAttribute('frameNum',  (nowFrameNum - 1).toString());
@@ -308,23 +308,6 @@ const contentListLoad = () => {
                                     items.parentNode.appendChild(frameDelete);
                                     items.classList.add('of'+item.childNodes[1].getAttribute('data-nftid'));
                                     constEditContent.deleteBtnEvent(delBtnId);
-                                    // constEditContent.deleteBtnEvent();
-                                    /*frameDelete.addEventListener('click',(e)=>{
-                                        const nowFrameNum = Number(nowframe.getAttribute('frameNum'));
-                                        const searchNumFrame = e.target.parentNode.childNodes[1].getAttribute('data-nftid');
-                                        frameImages.forEach((items, index)=>{
-                                            if(items.childNodes[1].getAttribute('data-nftid') === searchNumFrame) {
-                                                items.childNodes[3].innerText = '';
-                                            }
-                                        })
-                                        items.classList.remove('of'+item.childNodes[1].getAttribute('data-nftid'));
-                                        e.target.parentNode.childNodes[1].setAttribute('src','../../img/etc/no-image.png');
-                                        e.target.parentNode.childNodes[1].setAttribute('data-nftid','null');
-                                        nowframe.setAttribute('frameNum',  (nowFrameNum - 1).toString());
-                                        nowframe.setAttribute('save','false');
-                                        frameNum--;
-                                        e.target.remove();
-                                    })*/
                                 }
                             }
                         })
@@ -345,7 +328,7 @@ const contentListLoad = () => {
                 if(Number(item.childNodes[3].innerText) === currentNum) {
                     item.childNodes[3].innerText = '';
                     nowBackground.querySelector('.back-frame').setAttribute('src', '../../img/etc/no-image.png');
-                    nowBackground.querySelector('.back-frame').setAttribute('data-nftid', 'null');
+                    nowBackground.querySelector('.back-frame').setAttribute('data-nftid', '0');
                     nowBackground.querySelector('.background-frame-delete-btn').remove();
                     nowBackground.setAttribute('backgroundNum', (nowBackgroundNum - 1).toString());
                     nowBackground.setAttribute('save','false');
@@ -371,22 +354,6 @@ const contentListLoad = () => {
                         nowBackground.setAttribute('save','false');
                         nowBackground.querySelector('.back-frame').classList.add('bf'+item.childNodes[1].getAttribute('data-nftid'));
                         constEditContent.deleteBtnEvent(delBtnId);
-                        /*backgroundDelete.addEventListener('click',(e)=>{
-                            const nowBackgroundNum = Number(nowBackground.getAttribute('backgroundNum'));
-                            const searchNumBackground = e.target.previousSibling.previousSibling.previousSibling.previousSibling.getAttribute('data-nftid');
-                            nowBackground.querySelector('.back-frame').classList.remove('bf'+item.childNodes[1].getAttribute('data-nftid'));
-                            backgroundImages.forEach((items, index)=>{
-                                if(items.childNodes[1].getAttribute('data-nftid') === searchNumBackground) {
-                                    items.childNodes[3].innerText='';
-                                    nowBackground.querySelector('.back-frame').setAttribute('src', '../../img/etc/no-image.png');
-                                    nowBackground.querySelector('.back-frame').setAttribute('data-nftid', 'null');
-                                    nowBackground.querySelector('.background-frame-delete-btn').remove();
-                                    nowBackground.setAttribute('backgroundNum', (nowBackgroundNum - 1).toString());
-                                    nowBackground.setAttribute('save','false');
-                                    backgroundNum--;
-                                }
-                            })
-                        })*/
                     }
                 }
             }
@@ -401,14 +368,15 @@ const pageData =  {
     bPage : 0,  // background
     size : 36
 }
+
 const constEditContent = {
     getBeforeNftData() {
         let nftList = this.getEditNftList("","edit");
         let nftNotVideothis = this.getEditNftNotVideoList();
 
-        this.containerHtml("nft", nftList);
-        this.containerHtml("frame", nftNotVideothis);
-        this.containerHtml("background", nftNotVideothis);
+        this.containerHtml("nft", nftList, "html");
+        this.containerHtml("frame", nftNotVideothis, "html");
+        this.containerHtml("background", nftNotVideothis, "html");
 
         editInfo.maxNft = nftList.total;
         editInfo.lastNft = nftList.total%3;
@@ -417,49 +385,60 @@ const constEditContent = {
         // window.addEventListener("DOMContentLoaded", contentListLoad);
         contentListLoad();
     },
-    containerHtml(editType, data) {
+    containerHtml(editType, data, htmlType) {
         let html = "";
         let edit_list = $('#edit-'+editType+'-list');
-        $.each(data.nftList, function(k, nft){
-            let imageUrlHtml = "<img class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"/>";
-            if(nft.tagType == 'video') {
-                imageUrlHtml = "<video class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" controls controlsList=\"nodownload\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"></video>";
+        let slideItemCnt = edit_list.find('.gallery-edit-slide-item').length
+        let leftCnt = data.total - slideItemCnt;
+        if(data.nftList.length > 0) {
+            $.each(data.nftList, function(k, nft){
+                let imageUrlHtml = "<img class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"/>";
+                if(nft.tagType == 'video') {
+                    imageUrlHtml = "<video class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" controls controlsList=\"nodownload\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"></video>";
+                }
+
+                html += "<div class=\"gallery-edit-slide-item edit-slice-item-"+editType+" nft_item_"+nft.nftId+"\"\">\n" +
+                    "              "+ imageUrlHtml +
+                    "               <div class=\"gallery-edit-select-number number-"+editType+"\"></div>\n" +
+                    "               <div class=\"gallery-edit-img-hover\"></div>\n" +
+                    "           </div>";
+                leftCnt--;
+            });
+            if(data.total > 36 && leftCnt > 0) {
+                html += "<div class=\"edit-image-moreBtn "+editType+"-moreBtn\" id=\""+editType+"-moreBtn\" edit_type=\""+editType+"\">\n" +
+                    "               <img src=\"/img/icon/ic-popup-right.png\">\n" +
+                    "           </div>";
+                // console.log(html);
             }
-
-            html += "<div class=\"gallery-edit-slide-item edit-slice-item-"+editType+" nft_item_"+nft.nftId+"\"\">\n" +
-                "              "+ imageUrlHtml +
-                "               <div class=\"gallery-edit-select-number number-"+editType+"\"></div>\n" +
-                "               <div class=\"gallery-edit-img-hover\"></div>\n" +
-                "           </div>";
-        });
-        if(data.total > 36) {
-            html += "<div class=\"edit-image-moreBtn "+editType+"-moreBtn\">\n" +
-                "               <img src=\"/img/icon/ic-popup-right.png\">\n" +
-                "           </div>";
-            // console.log(html);
         }
-
-        edit_list.html(html);
+        if(htmlType == "html") {
+            edit_list.html(html);
+        } else {
+            edit_list.append(html);
+        }
+        let moreBtnId = editType+"-moreBtn";
+        this.moreBtnClickEvent(moreBtnId);
     },
     // slider, nft 리스트 조회
-    getEditNftList(page, editType) {
-        let parentContainer = $('#gallery-slide-container');
-        let itemTotal = parentContainer.find('.image-container').length;
-        let nextPage = parseInt(itemTotal / pageData.size);
-        if(page == "nft") {
-            itemTotal = $('#edit-nft-list .gallery-edit-slide-item.edit-slice-item-nft').length;
+    getEditNftList(page, pageType) {
+        let itemTotal = 0;
+        let nextPage = 0;
+        if(page == "more" && pageType == "edit") {
+            itemTotal = $('#edit-nft-list .edit-slice-item-nft').length;
             nextPage = parseInt(itemTotal / pageData.size);
+
             pageData.nPage = nextPage;
         }
 
-        return commonAjaxUrl("GET", "/api/gallery/page?page="+nextPage+"&size="+pageData.size+"&pageType="+editType, {});
+        return commonAjaxUrl("GET", "/api/gallery/page?page="+nextPage+"&size="+pageData.size+"&pageType="+pageType, {});
     },
     // frame, background 리스트 조회
     getEditNftNotVideoList(editType) {
         let nextPage = 0;
         let itemTotal = 0;
         if(editType) {
-            itemTotal = $('#edit-'+editType+'-list .gallery-edit-slide-item.edit-slice-item-'+editType).length;
+            // itemTotal = $('#edit-'+editType+'-list .gallery-edit-slide-item.edit-slice-item-'+editType).length;
+            itemTotal = $('#edit-'+editType+'-list .edit-slice-item-'+editType).length;
             nextPage = parseInt(itemTotal / pageData.size);
             if(editType == "frame") {
                 pageData.fPage = nextPage;
@@ -471,13 +450,15 @@ const constEditContent = {
         return commonAjaxUrl("GET", "/api/gallery/page?page="+nextPage+"&size="+pageData.size+"&pageType=editNotVideo", {});
     },
 
-    MoreEdit(type) {
+    MoreEditSlider(type) {
         const parentNode = $('.gallery-slide-list-container');
         let nftList = this.getEditNftList("","editSlider");
         let editContent = ``;
         let ipDelBtnArr = new Array();
+        let ofDelBtnArr = new Array();
+        let bfDelBtnArr = new Array();
         if(nftList.total > 0) {
-
+            memberBackgroundList();
             $.each(nftList.nftSliderList, function(key, section){
                 let tIdx = ((key*3)+1);
                 let nftNum = parseInt(0);
@@ -485,32 +466,45 @@ const constEditContent = {
                 let backgroundNum = parseInt(0);
                 let moreValue = parseInt(0);
                 let select_number = key;
+                let section_seq = key+1;
                 let editSubContent = ``;
                 if(section.length) {
                     $.each(section, function(key2, slider){
                         nftNum++; // += parseInt(1);
-                        $('#edit-nft-list').find('.nft_item_'+slider.nftId+' .gallery-edit-select-number').text(select_number);
+                        let nftId = slider.nftId;
                         let date = timeToElapsed(slider.localDate);
-                        let imageHtmlContainer = `<img class="gallery-edit-img edit-nft" alt="${slider.name}" data-nftid="${slider.nftId}" src="${slider.nftImageUrl}" />`;
+                        let imageHtmlContainer = `<img class="gallery-edit-img edit-nft" alt="${slider.name}" data-nftid="${nftId}" src="${slider.nftImageUrl}" />`;
                         if(slider.tagType == "video") {
-                            imageHtmlContainer = `<video class="gallery-edit-img edit-nft" controls controlsList="nodownload" alt="${slider.name}" data-nftid="${slider.nftId}" src="${slider.nftImageUrl}"/>`;
+                            imageHtmlContainer = `<video class="gallery-edit-img edit-nft" controls controlsList="nodownload" alt="${slider.name}" data-nftid="${nftId}" src="${slider.nftImageUrl}"/>`;
                         }
-                        let ipDelBtnId = `ip-del-btn-${slider.nftId}`;
-                        ipDelBtnArr.push("#"+ipDelBtnId);
-                        let ipDelBtn = `<div class="inner-picture-delete-btn" id="${ipDelBtnId}" data-nftid="${slider.nftId}">X</div>`;
+                        // Nft List .gallery-edit-select-number.number-nft
+                        $('#edit-nft-list').find('.nft_item_'+nftId+' .gallery-edit-select-number').text(select_number);
 
-                        let frameNftHtml = `<img class="outer-frame" src="../img/etc/no-image.png" data-nftid="null"/>`;
+                        // nft .inner-picture
+                        let ipDelBtnId = `ip-del-btn-${nftId}`;
+                        ipDelBtnArr.push("#"+ipDelBtnId);
+                        let ipDelBtn = `<div class="inner-picture-delete-btn" id="${ipDelBtnId}" data-nftid="${nftId}">X</div>`;
+
+                        // frame .outer-frame
                         let ofDelBtn = ``;
+                        let frameNftHtml = `<img class="outer-frame" src="../img/etc/no-image.png" data-nftid="0"/>`;
                         if(slider.frameNftId > 0) {
-                            frameNft = getNftOne(slider.frameNftId);
-                            frameNftHtml = `<img class="outer-frame" src="${frameNft.nftImageUrl}" data-nftid="${slider.frameNftId}" />`;
-                            ofDelBtn = `<div class="outer-frame-delete-btn" data-nftid="${slider.frameNftId}" id="of-del-btn-${slider.frameNftId}">X</div>`;
+                            let frameNftId = slider.frameNftId;
+                            let frameNft = getNftOne(frameNftId);
+                            let ofDelBtnId = `of-del-btn-${frameNftId}`;
+                            ofDelBtn = `<div class="outer-frame-delete-btn" data-nftid="${frameNftId}" id="${ofDelBtnId}">X</div>`;
+                            frameNftHtml = `<img class="outer-frame of${frameNftId}" src="${frameNft.nftImageUrl}" data-nftid="${frameNftId}" />`;
+                            frameNum++;
+
+                            // Frame List .gallery-edit-select-number.number-frame
+                            $('#edit-frame-list').find('.nft_item_'+frameNftId+' .gallery-edit-select-number').text(select_number);
+                            ofDelBtnArr.push("#"+ofDelBtnId);
                         }
                         editSubContent += `
                             <div class="image-container" data-orderseq="${tIdx+key2}">
                                 <div class="image-container-content">
                                     `+frameNftHtml+`
-                                    <div class="inner-picture ip${slider.nftId}" style="border : 1px solid lightgray;">${imageHtmlContainer}</div>
+                                    <div class="inner-picture ip${nftId}" style="border : 1px solid lightgray;">${imageHtmlContainer}</div>
                                     `+ipDelBtn+`
                                     `+ofDelBtn+`
                                 </div>
@@ -535,22 +529,38 @@ const constEditContent = {
                                     </div>
                                 </div>
                             </div>
-                    `;
-
+                        `;
                     });
                     if(nftList.nftSliderList.length - 1 !== key ) {
                         moreValue++;
                     }
                 }
+                // Background List
+                let bfDelBtn = ``;
+                let bgNftHtml = `<img src="../img/etc/no-image.png" class="back-frame" alt="background" data-nftid="0" />`;
+                if(bgList[section_seq] != null) {
+                    let bgNft = bgList[section_seq];
+                    let bgNftId = bgNft.nftId;
+                    let bfDelBtnId = `bf-del-btn-${bgNftId}`;
+                    bfDelBtn = `<div class="background-frame-delete-btn" data-nftid="${bgNftId}" id="${bfDelBtnId}">X</div>`;
+                    bgNftHtml = `<img class="back-frame bf${bgNftId}" src="${bgNft.nftImageUrl}" data-nftid="${bgNftId}" />`;
+                    backgroundNum++;
+
+                    // Background List .gallery-edit-select-number.number-background
+                    $('#edit-background-list').find('.nft_item_'+bgNftId+' .gallery-edit-select-number').text(select_number);
+                    bfDelBtnArr.push("#"+bfDelBtnId);
+                }
+
                 editContent += `
-                    <div class="gallery-slide-list" save="true" moreValue="${moreValue}" nftNum="${nftNum}" frameNum="0" backgroundNum="0" data-sectionseq="${key+1}">
-                        <img src="../img/etc/no-image.png" class="back-frame" alt="background" data-nftid="null" />
+                    <div class="gallery-slide-list" save="true" moreValue="${moreValue}" nftNum="${nftNum}" frameNum="${frameNum}" backgroundNum="${backgroundNum}" data-sectionseq="${section_seq}">
+                        `+bgNftHtml+`
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
                                 <div class="gallery-slide-list-item-down"></div>
                                 ${editSubContent}
                             </div>
                         </div>
+                        `+bfDelBtn+`
                     </div>
             `;
             });
@@ -565,25 +575,30 @@ const constEditContent = {
             nftOk = false;
             // delete 버튼 이벤트
             constEditContent.deleteBtnEvent("", ipDelBtnArr);
+            if(ofDelBtnArr.length > 0) {
+                constEditContent.deleteBtnEvent("", ofDelBtnArr);
+            }
+            if(bfDelBtnArr.length > 0) {
+                constEditContent.deleteBtnEvent("", bfDelBtnArr);
+            }
         } else {
             this.addSection();
         }
 
     },
-
     addSection() {
         const parentNode = $('.gallery-slide-list-container');
         let count = $('.gallery-slide-list .image-container').length
         let maxSectionSeq = $('.gallery-slide-list').length;
         if(editInfo.maxNft > count) {
             let editContent = `<div class="gallery-slide-list" save="false" moreValue="0" nftNum="0" frameNum="0" backgroundNum="0" data-sectionseq="${maxSectionSeq+1}">
-                        <img src="../img/etc/no-image.png" class="back-frame" alt="background" data-nftid="null" />
+                        <img src="../img/etc/no-image.png" class="back-frame" alt="background" data-nftid="0" />
                         <div class="gallery-slide-list-item">
                             <div class="gallery-slide-list-item-picture">
                                 <div class="gallery-slide-list-item-down"></div>
                                 <div class="image-container" data-orderseq="${count+1}">
                                     <div class="image-container-content">
-                                        <img class="outer-frame" src="../img/etc/no-image.png" data-nftid="null"/>
+                                        <img class="outer-frame" src="../img/etc/no-image.png" data-nftid="0"/>
                                         <div class="inner-picture" style="border : 1px solid lightgray;"></div>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
@@ -609,7 +624,7 @@ const constEditContent = {
                                 </div>
                                 <div class="image-container" data-orderseq="${count+2}">
                                     <div class="image-container-content">
-                                        <img class="outer-frame" src="../img/etc/no-image.png" data-nftid="null"/>
+                                        <img class="outer-frame" src="../img/etc/no-image.png" data-nftid="0"/>
                                         <div class="inner-picture" style="border : 1px solid lightgray;"></div>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
@@ -635,7 +650,7 @@ const constEditContent = {
                                 </div>
                                 <div class="image-container" data-orderseq="${count+3}">
                                     <div class="image-container-content">
-                                        <img class="outer-frame" src="../img/etc/no-image.png" data-nftid="null"/>
+                                        <img class="outer-frame" src="../img/etc/no-image.png" data-nftid="0"/>
                                         <div class="inner-picture" style="border : 1px solid lightgray;"></div>
                                     </div>
                                     <div class="picture-explain" style="opacity: 0">
@@ -671,7 +686,6 @@ const constEditContent = {
         }
     },
     deleteBtnEvent(btnId, btnIdArr) {
-        // $('div[class$="delete-btn"]').on('click', function() {
         let delBtnNode = "";
         if(btnId == "") {
             let strBtnId = btnIdArr.join(",");
@@ -683,7 +697,7 @@ const constEditContent = {
     },
     deleteClickEvent(delBtnNode) {
         delBtnNode.on('click', function() {
-            let nftId = $(this).data('nftid');
+            let nftId = $(this).attr('data-nftid');
             let className = $(this).attr('class');
             let parentSlideList = $(this).parents('.gallery-slide-list');
             let numName = "";
@@ -704,7 +718,7 @@ const constEditContent = {
                     containerPrevCls = "of";
                     editSelectItem = $('#edit-frame-list');
                     currContainer = $('.of'+nftId);
-                    currContainer.attr('data-nftid','null');
+                    currContainer.attr('data-nftid','0');
                     currContainer.attr('src', noImage);
                     break;
                 case "background-frame-delete-btn" :
@@ -712,7 +726,7 @@ const constEditContent = {
                     containerPrevCls = "bf";
                     editSelectItem = $('#edit-background-list');
                     currContainer = $('.bf'+nftId);
-                    currContainer.attr('data-nftid','null');
+                    currContainer.attr('data-nftid','0');
                     currContainer.attr('src', noImage);
                     break;
             }
@@ -723,15 +737,39 @@ const constEditContent = {
             currContainer.removeClass(containerPrevCls + nftId);
             $(this).remove();
         });
+    },
+
+    moreBtnClickEvent(btnId) {
+        $('#'+btnId).on('click', function(){
+            $(this).remove();
+            let moreBtnId = $(this).attr("id");
+            let editType = $(this).attr("edit_type");
+            let moreList = "";
+
+            if(editType == "nft") {
+                moreList = constEditContent.getEditNftList("more","edit");
+            } else {
+                moreList = constEditContent.getEditNftNotVideoList(editType);
+            }
+
+            constEditContent.containerHtml(editType, moreList);
+
+            contentListLoad();
+
+            dontclick(nftImages);
+            dontclick(frameImages);
+            dontclick(backgroundImages);
+        });
     }
 }
 
 $(document).ready(function(){
     constEditContent.getBeforeNftData();
     // constEditContent.addSection();
-    constEditContent.MoreEdit("html");
+    constEditContent.MoreEditSlider("html");
 
     dontclick(nftImages);
     dontclick(frameImages);
     dontclick(backgroundImages);
+
 });

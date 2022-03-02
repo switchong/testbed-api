@@ -37,17 +37,21 @@ public class NftGalleryCommonDto {
     }
 
     public void nftMemberBuilder(NftMember nftMember) {
-        this.member = NftMemberResponse.builder()
-                .nftMemberId(nftMember.getNftMemberId())
-                .nftMemberUserId(nftMember.getNftMemberUserId())
-                .displayStyle(nftMember.getDisplayStyle())
-                .username(nftMember.getUsername())
-                .instagram(nftMember.getInstagram())
-                .twitter(nftMember.getTwitter())
-                .facebook(nftMember.getFacebook())
-                .discord(nftMember.getDiscord())
-                .lastLoginDate(nftMember.getLastLoginDate())
-                .build();
+        if(nftMember != null) {
+            this.member = NftMemberResponse.builder()
+                    .mId(nftMember.getNftMemberId())
+                    .userId(nftMember.getNftMemberUserId())
+                    .displayStyle(nftMember.getDisplayStyle())
+                    .username(nftMember.getUsername())
+                    .instagram(nftMember.getInstagram())
+                    .twitter(nftMember.getTwitter())
+                    .facebook(nftMember.getFacebook())
+                    .discord(nftMember.getDiscord())
+                    .lastLoginDate(nftMember.getLastLoginDate())
+                    .build();
+        } else {
+            this.member = NftMemberResponse.builder().build();
+        }
     }
 
 }

@@ -6,6 +6,8 @@ import com.nftgram.core.domain.nftgram.NftCollection;
 import com.nftgram.core.domain.nftgram.value.ContractType;
 import com.nftgram.core.repository.custom.NftCollectionCustomRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -42,6 +44,9 @@ public class NftCollectionRepositoryImpl implements NftCollectionCustomRepositor
 
     @Override
     public List<Nft> findAllNftGallery(Pageable pageable, Long memberId) {
+        // order_seq 컬럼 미설정시 맨뒤로
+        NumberExpression<Integer> caseBuilder = new CaseBuilder().when(nft.orderSeq.ne(Long.valueOf(0))).then(1).otherwise(2);
+
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
@@ -51,7 +56,7 @@ public class NftCollectionRepositoryImpl implements NftCollectionCustomRepositor
                         nft.nft_member_id.eq(memberId),
                         nft.orderSeq.ne(Long.valueOf(0))
                 )
-                .orderBy(nft.nftId.desc())
+                .orderBy(caseBuilder.asc(), nft.orderSeq.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

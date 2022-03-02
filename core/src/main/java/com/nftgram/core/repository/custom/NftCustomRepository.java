@@ -36,7 +36,7 @@ public interface NftCustomRepository {
 
     List<Nft> findByNftMemberEditList(Pageable pageable, Long nftMemberId);
 
-    List<Nft> findByNftMemberEditBgList(Pageable pageable, Long nftMemberId);
+    NftCommonDto findByNftMemberEditBgList(Long nftMemberId);
 
     Long updateNftViewCount(Long nftId);
 

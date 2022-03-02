@@ -5,6 +5,8 @@ import com.nftgram.core.domain.nftgram.NftMember;
 import com.nftgram.core.domain.nftgram.value.ContractType;
 import com.nftgram.core.dto.request.NftMemberRequestDto;
 import com.nftgram.core.repository.custom.NftMemberCustomRepository;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -68,6 +70,9 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
 
     @Override
     public boolean findNftMemberBackgroundFlag(Long memberId) {
+        // order_seq 컬럼 미설정시 맨뒤로
+        NumberExpression<Integer> caseBuilder = new CaseBuilder().when(nft.orderSeq.ne(Long.valueOf(0))).then(1).otherwise(2);
+
         Long nftResult = queryFactory.select(nft.nftId)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
@@ -76,7 +81,7 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(memberId),
                         nft.orderSeq.ne(Long.valueOf(0)))
-                .orderBy(nft.backgroundSeq.asc(), nft.orderSeq.desc())
+                .orderBy(caseBuilder.asc(), nft.orderSeq.asc())
                 .fetchCount();
         boolean editFlag = false;
 

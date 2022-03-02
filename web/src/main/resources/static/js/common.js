@@ -485,3 +485,14 @@ function getParameter(name) {
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+let bgList = [];
+function memberBackgroundList() {
+    let bgResult = commonAjaxUrl("POST", "/api/member/background", {});
+
+    if(bgResult.total > 0) {
+        $.each(bgResult.nftList, function(k, v){
+            bgList[v.backgroundSeq] = v;
+        });
+    }
+}

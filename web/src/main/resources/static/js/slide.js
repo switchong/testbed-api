@@ -132,6 +132,8 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
 }
 
 const makeGalleryList = (data) => {
+    memberBackgroundList();
+    let sectionSeq = 1;
     const newList = data.nftSliderList.map((item)=> {
         let innerNewList = ''
         item.forEach((inner)=>{
@@ -177,9 +179,16 @@ const makeGalleryList = (data) => {
                             </div>
                         `;
         });
+
+        let bgNftHtml= `<img class="back-frame" src="/img/etc/background-no-img.png" alt="background" />`;
+        if(bgList[sectionSeq] != null && bgList[sectionSeq].backgroundSeq == sectionSeq) {
+            let bgNft = bgList[sectionSeq];
+            bgNftHtml = `<img class="back-frame bf${bgNft.nftId}" src="${bgNft.nftImageUrl}" data-nftid="${bgNft.nftId}" />`;
+        }
+        sectionSeq++;
         return `
                         <div class="gallery-slide-list">
-                            <img src="/img/etc/background-no-img.png" alt="background" />
+                            `+bgNftHtml+`
                             <div class="gallery-slide-list-item">
                                 <div class="gallery-slide-list-item-picture">
                                     <div class="gallery-slide-list-item-down"></div>

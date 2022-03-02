@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.nftgram.core.domain.nftgram.QNft.nft;
@@ -180,6 +181,9 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
     @Override
     public List<Nft> findByNftMemberList(Pageable pageable, Long nftMemberId) {
+        // order_seq 컬럼 미설정시 맨뒤로
+        NumberExpression<Integer> caseBuilder = new CaseBuilder().when(nft.orderSeq.ne(Long.valueOf(0))).then(1).otherwise(2);
+
         List<Nft> nftResult = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
@@ -188,14 +192,13 @@ public class NftRepositoryImpl implements NftCustomRepository {
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(nftMemberId),
                         nft.orderSeq.ne(Long.valueOf(0)))
-                .orderBy(nft.nftId.desc())
+                .orderBy(caseBuilder.asc(), nft.orderSeq.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
         return nftResult;
     }
-
 
     @Override
     public List<Nft> findByNftMemberEditList(Pageable pageable, Long nftMemberId) {
@@ -218,23 +221,39 @@ public class NftRepositoryImpl implements NftCustomRepository {
     }
 
     @Override
-    public List<Nft> findByNftMemberEditBgList(Pageable pageable, Long nftMemberId) {
+    public NftCommonDto findByNftMemberEditBgList(Long nftMemberId) {
         // order_seq 컬럼 미설정시 맨뒤로
         NumberExpression<Integer> caseBuilder = new CaseBuilder().when(nft.backgroundSeq.ne(Long.valueOf(0))).then(1).otherwise(2);
 
-        List<Nft> nftResult = queryFactory.select(nft)
+        Long totals = queryFactory.select(nft.nftId)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
                 .where(nftAsset.contractType.eq(ContractType.NFT),
                         nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        nft.backgroundSeq.ne(Long.valueOf(0)),
                         nft.nft_member_id.eq(nftMemberId))
                 .orderBy(caseBuilder.asc(), nft.backgroundSeq.asc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .fetchCount();
+
+        List<Nft> results = queryFactory.select(nft)
+                .from(nft)
+                .join(nft.nftAsset, nftAsset)
+                .where(nftAsset.contractType.eq(ContractType.NFT),
+                        nft.imageUrl.isNotEmpty(),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        nft.backgroundSeq.ne(Long.valueOf(0)),
+                        nft.nft_member_id.eq(nftMemberId))
+                .orderBy(caseBuilder.asc(), nft.backgroundSeq.asc())
                 .fetch();
 
-        return nftResult;
+        NftCommonDto nftCommonDto = new NftCommonDto();
+        nftCommonDto.setTotals(totals);
+        nftCommonDto.setOffset(Long.valueOf(0));
+        nftCommonDto.setLimit(Long.valueOf(0));
+        nftCommonDto.setNftList(results);
+
+        return nftCommonDto;
     }
 
     @Override
@@ -362,6 +381,9 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
     @Override
     public NftCommonDto findAllNftCommon(Pageable pageable, NftGalleryRequest nftGalleryRequest) {
+        // order_seq 컬럼 미설정시 맨뒤로
+        NumberExpression<Integer> caseBuilder = new CaseBuilder().when(nft.orderSeq.ne(Long.valueOf(0))).then(1).otherwise(2);
+
         Long totals = queryFactory.select(nft.nftId)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
@@ -371,16 +393,30 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .orderBy(nft.orderSeq.asc())
                 .fetchCount();
 
-        List<Nft> results = queryFactory.select(nft)
-                .from(nft)
-                .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
-                        pageTypeWhere(nftGalleryRequest))
-                .orderBy(nft.nftId.desc(), nft.orderSeq.asc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+        List<Nft> results = new ArrayList<>();
+        if(nftGalleryRequest.getPageType().equals("editSlider")) {
+            results = queryFactory.select(nft)
+                    .from(nft)
+                    .join(nft.nftAsset, nftAsset)
+                    .where(nftAsset.contractType.eq(ContractType.NFT),
+                            nft.imageUrl.isNotEmpty(),
+                            pageTypeWhere(nftGalleryRequest))
+                    .orderBy(caseBuilder.asc(), nft.orderSeq.asc())
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .fetch();
+        } else {
+            results = queryFactory.select(nft)
+                    .from(nft)
+                    .join(nft.nftAsset, nftAsset)
+                    .where(nftAsset.contractType.eq(ContractType.NFT),
+                            nft.imageUrl.isNotEmpty(),
+                            pageTypeWhere(nftGalleryRequest))
+                    .orderBy(nft.nftId.desc())
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .fetch();
+        }
 
         NftCommonDto nftCommonDto = new NftCommonDto();
         nftCommonDto.setTotals(totals);
@@ -418,13 +454,13 @@ public class NftRepositoryImpl implements NftCustomRepository {
             case "edit" :
                 builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
                 break;
-            case "editSlider" :
-                builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
-                builder.and(nft.orderSeq.ne(Long.valueOf(0)));
-
             case "editNotVideo" :
                 builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
                 builder.and(nft.imageUrl.like(Expressions.asString("%").concat(".mp4").concat("%")).not());
+                break;
+            case "editSlider" :
+                builder.and(nft.nft_member_id.eq(nftGalleryRequest.getMemberId()));
+                builder.and(nft.orderSeq.ne(Long.valueOf(0)));
                 break;
             default:
                 builder.and(nft.activeStatus.eq(ActiveStatus.ACTIVE));

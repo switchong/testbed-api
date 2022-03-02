@@ -249,16 +249,14 @@ public class ApiRestService {
                     nftRepository.updateNftOrderSeq(memberId, nftId, order);
                 }
 
-                Long frameNftId = (frameList[i]!=null)? Long.valueOf(frameList[i]) :0;
-                if(frameNftId > 0) {
-                    nftRepository.updateNftFrame(memberId, nftId, frameNftId);
-                }
+                Long frameNftId = Long.valueOf(frameList[i]);
+                nftRepository.updateNftFrame(memberId, nftId, frameNftId);
             }
             resultFlag = true;
         }
 
         // background 설정
-        if(memberId != null && sectionSeq != null && background != null) {
+        if(memberId != null && sectionSeq != null && (background != null && background != "null")) {
             Long bgNo = Long.valueOf(background);
             Long sectionNo = Long.valueOf(sectionSeq);
             nftRepository.updateNftBackground(memberId, bgNo, sectionNo);

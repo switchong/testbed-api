@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Setter
 public class NftMemberResponse {
-    private Long nftMemberId;
+    private Long mId;
 
-    private String nftMemberUserId;
+    private String userId;
 
     private String displayStyle;
 
@@ -31,10 +31,10 @@ public class NftMemberResponse {
     private LocalDateTime lastLoginDate;
 
     @Builder
-    public NftMemberResponse(Long nftMemberId, String nftMemberUserId, String displayStyle,
+    public NftMemberResponse(Long mId, String userId, String displayStyle,
                              String username, String instagram, String twitter, String facebook, String discord, String memberStatus, Long bgImageId, LocalDateTime lastLoginDate) {
-        this.nftMemberId = nftMemberId;
-        this.nftMemberUserId = nftMemberUserId;
+        this.mId = mId;
+        this.userId = userId;
         this.displayStyle = displayStyle;
         this.username = username;
         this.instagram = instagram;
