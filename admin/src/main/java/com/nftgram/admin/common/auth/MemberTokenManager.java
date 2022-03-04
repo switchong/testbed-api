@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nftgram.admin.config.security.AES256Converter;
-import com.nftgram.admin.member.dto.NftMemberAuthDto;
+import com.nftgram.admin.admin.dto.AdminMemberAuthDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,7 @@ public class MemberTokenManager {
 
     private final AES256Converter aes256Converter;
 
-    public String makeToken(Long nftMemberId, String nftMemberUserId) throws GeneralSecurityException, UnsupportedEncodingException {
+    public String makeToken( String adminId) throws GeneralSecurityException, UnsupportedEncodingException {
         JsonFactory factory = new JsonFactory();
         StringWriter jsonObjectWriter = new StringWriter();
 
@@ -30,8 +30,7 @@ public class MemberTokenManager {
             JsonGenerator generator = factory.createGenerator(jsonObjectWriter);
             generator.writeStartObject();
             generator.writeStringField("loginYN", "Y");
-            generator.writeStringField("nftMemberId", Long.toString(nftMemberId));
-            generator.writeStringField("nftMemberUserId", nftMemberUserId);
+            generator.writeStringField("adminId", adminId);
             generator.writeEndObject();
             generator.close();
 
@@ -43,16 +42,16 @@ public class MemberTokenManager {
         }
     }
 
-    public NftMemberAuthDto getTokenToMember(String token) throws GeneralSecurityException, UnsupportedEncodingException {
-        NftMemberAuthDto nftMemberAuthDto = memberTokenToDto(token);
+    public AdminMemberAuthDto getTokenToMember(String token) throws GeneralSecurityException, UnsupportedEncodingException {
+        AdminMemberAuthDto nftMemberAuthDto = memberTokenToDto(token);
         return nftMemberAuthDto;
     }
 
-    private NftMemberAuthDto memberTokenToDto(String token) throws GeneralSecurityException, UnsupportedEncodingException {
+    private AdminMemberAuthDto memberTokenToDto(String token) throws GeneralSecurityException, UnsupportedEncodingException {
         try {
             String jsonAdminMember = aes256Converter.decode(token);
             ObjectMapper mapper = new ObjectMapper();
-            NftMemberAuthDto nftMemberAuthDto = mapper.readValue(jsonAdminMember, NftMemberAuthDto.class);
+            AdminMemberAuthDto nftMemberAuthDto = mapper.readValue(jsonAdminMember, AdminMemberAuthDto.class);
 
             return nftMemberAuthDto;
         } catch (JsonProcessingException | GeneralSecurityException | UnsupportedEncodingException e ) {

@@ -1,4 +1,4 @@
-package com.nftgram.admin.member.dto.request;
+package com.nftgram.admin.admin.dto.request;
 
 
 import lombok.AllArgsConstructor;
@@ -10,9 +10,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class NftMemberLoginRequest {
+public class AdminMemberLoginRequest {
 
-    private String id;
+
+
+    private String adminId;
+
+    private String adminName;
 
     private String password;
 

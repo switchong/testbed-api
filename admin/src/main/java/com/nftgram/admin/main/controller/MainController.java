@@ -1,25 +1,42 @@
 package com.nftgram.admin.main.controller;
 
+
+import com.nftgram.admin.admin.dto.AdminMemberAuthDto;
+import com.nftgram.admin.admin.dto.request.AdminMemberLoginRequest;
+import com.nftgram.admin.admin.service.AdminMemberAuthService;
+import com.nftgram.admin.common.auth.MemberLoginManager;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+
+
 @Controller
 @RequiredArgsConstructor
-@Slf4j
+
 public class MainController {
 
+
+    private final MemberLoginManager memberLoginManager;
+    private final AdminMemberAuthService memberAuthService;
+
+
     @GetMapping("/")
-    public String Main(Model model) {
+    public String Main(Model model) throws GeneralSecurityException, UnsupportedEncodingException {
+//        model.addAttribute("adminMemberRequest", new AdminMemberLoginRequest());
+//        AdminMemberAuthDto authDto = memberLoginManager.getInfo();
+//
+//        if(authDto.getLoginYN().equals("Y")) {
+//            return "index";
+//        } else {
+//            return  "redirect:/auth/login";
+//        }
 
         return "index";
-    }
 
-    @GetMapping("/login")
-    public String Login(Model model) {
-        return "auth/login";
     }
 
     @GetMapping("/allNft")
@@ -31,5 +48,4 @@ public class MainController {
     public String LoadNft(Model model) {
         return "pages/loadNft";
     }
-
 }

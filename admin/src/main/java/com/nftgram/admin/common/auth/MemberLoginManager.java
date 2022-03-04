@@ -1,6 +1,10 @@
 package com.nftgram.admin.common.auth;
 
-import com.nftgram.admin.member.dto.NftMemberAuthDto;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.nftgram.admin.admin.dto.AdminMemberAuthDto;
+import com.nftgram.admin.config.security.AES256Converter;
+import com.nftgram.core.domain.admin.dto.AdminMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,6 +14,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 
@@ -19,11 +25,25 @@ public class MemberLoginManager {
 
     private final MemberTokenManager memberTokenManager;
 
+//    @Value("${nftgram.cookie.key}")
+//    private String cookieKey;
+//
+//    @Value("${nftgram.cookie.domainName}")
+//    private String domainName;
+
+    private static String cookieKey;
+
     @Value("${nftgram.cookie.key}")
-    private String cookieKey;
+    public void setCookieKey(String cookieKey) {
+        this.cookieKey = cookieKey;
+    }
+
+    private static String domainName;
 
     @Value("${nftgram.cookie.domainName}")
-    private String domainName;
+    public void setDomainName(String domainName) {
+        this.domainName = domainName;
+    }
 
     /**
      * 로그인 쿠키정보 저장
@@ -60,10 +80,10 @@ public class MemberLoginManager {
      * 로그인 정보 가져오기
      * @return
      */
-    public NftMemberAuthDto getInfo() throws GeneralSecurityException, UnsupportedEncodingException {
+    public AdminMemberAuthDto getInfo() throws GeneralSecurityException, UnsupportedEncodingException {
         String memberToken = getToken();
         if (memberToken == null) {
-            return NftMemberAuthDto.builder().loginYN("N").build();
+            return AdminMemberAuthDto.builder().loginYN("N").build();
         }
         return memberTokenManager.getTokenToMember(memberToken);
     }
@@ -105,5 +125,31 @@ public class MemberLoginManager {
         }
 
 		return memberToken;
+    }
+
+
+    public static Cookie saveLogin(AdminMemberDto adminMemberDto) {
+
+        JsonFactory factory = new JsonFactory();
+        StringWriter jsonObjectWriter = new StringWriter();
+
+        try {
+            JsonGenerator generator = factory.createGenerator(jsonObjectWriter);
+            generator.writeStartObject();
+            generator.writeStringField("adminId", adminMemberDto.getAdminId());
+            generator.writeEndObject();
+            generator.close();
+
+            String encodeLoginData = AES256Converter.encode(jsonObjectWriter.toString());
+
+            Cookie adminCookie = new Cookie(cookieKey, encodeLoginData);
+            adminCookie.setPath("/");
+            adminCookie.setDomain(domainName);
+            adminCookie.setMaxAge(60*60*24); // 1일 유지
+
+            return adminCookie;
+        } catch ( GeneralSecurityException | IOException e) {
+            throw new IllegalStateException("로그인 정보 쿠키 생성 실패");
+        }
     }
 }

@@ -17,11 +17,11 @@ import java.io.PrintWriter;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class MemberAuthConfig {
+public class AdminMemberAuthConfig {
 
     private final MemberLoginManager memberLoginManager;
 
-    @Pointcut("execution(* com.nftgram.admin.*.*.*Controller.*(..)) || execution(* com.nftgram.admin.main.controller.MainController.*(..))")
+    @Pointcut("execution(* com.nftgram.admin.*.*.*Controller.*(..)) || execution(* com.nftgram.admin.admin.controller.AuthController.*(..))")
 	public void loginAuth() { }
 
 	@Around("loginAuth()")

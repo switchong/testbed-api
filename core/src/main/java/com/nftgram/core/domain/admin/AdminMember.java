@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table
+@Table(name = "admin_member")
 public class  AdminMember  extends BaseEntity {
 
     @Id
@@ -44,4 +44,6 @@ public class  AdminMember  extends BaseEntity {
         this.name = name;
         this.activeStatus = activeStatus.ACTIVE;
     }
+
+
 }

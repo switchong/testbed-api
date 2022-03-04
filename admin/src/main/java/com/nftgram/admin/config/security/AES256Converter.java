@@ -15,9 +15,15 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class AES256Converter {
 
-    @Value("${nftgram.aes256.secretKey}")
-    private String secretKey;
 
+    private static  String secretKey;
+
+//    @Value("${nftgram.aes256.secretKey}")
+//    private String secretKey;
+    @Value("${nftgram.aes256.secretKey}")
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
     /**
      * AES256 암호화
      * @param str
@@ -26,7 +32,7 @@ public class AES256Converter {
      * @throws GeneralSecurityException
      * @throws UnsupportedEncodingException
      */
-    public String encode(String str) throws GeneralSecurityException, UnsupportedEncodingException {
+    public static String encode(String str) throws GeneralSecurityException, UnsupportedEncodingException {
         String IVSpec = secretKey.substring(0,16);
 
         byte[] keyData = secretKey.getBytes();

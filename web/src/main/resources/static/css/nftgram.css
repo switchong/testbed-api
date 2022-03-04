@@ -167,7 +167,7 @@ img.card-img-top {
 .search-box .position-box {
     border-radius: 15px;
     width: 13.562rem;
-    height: 2.25rem;
+    height: 100%;
     background: #000000;
     color: #ffffff;
     padding: 6px 0.813rem 0.188rem 1rem;
@@ -596,7 +596,7 @@ video.card-img-top {
 .search-box .position-box {
     border-radius: 15px;
     width: 13.562rem;
-    height: 2.25rem;
+    height: 100%;
     background: #000000;
     color: #ffffff;
     display: flex;
