@@ -2,7 +2,6 @@ package com.nftgram.core.repository.impl;
 
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.Nft;
-import com.nftgram.core.domain.nftgram.value.ContractType;
 import com.nftgram.core.dto.NftCommonDto;
 import com.nftgram.core.dto.NftIdWalletList;
 import com.nftgram.core.dto.NftOneJoinDto;
@@ -74,8 +73,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                       nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
                        eqKeyword(keyword))
                 .orderBy(SortNftPage(String.valueOf(sort)))
@@ -96,8 +94,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         eqKeyword(keyword),
                         nameBuilder)
@@ -112,8 +109,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE))
                 .orderBy(nft.nftId.desc())
                 .offset(pageable.getOffset())
@@ -136,8 +132,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nftCollection.nftCollectionId.eq(nftCollectionId)
                 )
@@ -166,8 +161,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .from(nftLike)
                 .join(nftLike.nft, nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nftLike.activeStatus.eq(ActiveStatus.ACTIVE),
                         nftLike.nftMember.nftMemberId.eq(nftMemberId))
@@ -187,8 +181,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> nftResult = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(nftMemberId),
                         nft.orderSeq.ne(Long.valueOf(0)))
@@ -208,8 +201,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> nftResult = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(nftMemberId))
                 .orderBy(caseBuilder.asc(), nft.orderSeq.asc())
@@ -228,8 +220,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         Long totals = queryFactory.select(nft.nftId)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.backgroundSeq.ne(Long.valueOf(0)),
                         nft.nft_member_id.eq(nftMemberId))
@@ -239,8 +230,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> results = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.backgroundSeq.ne(Long.valueOf(0)),
                         nft.nft_member_id.eq(nftMemberId))
@@ -387,8 +377,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         Long totals = queryFactory.select(nft.nftId)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         pageTypeWhere(nftGalleryRequest))
                 .orderBy(nft.orderSeq.asc())
                 .fetchCount();
@@ -398,8 +387,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
             results = queryFactory.select(nft)
                     .from(nft)
                     .join(nft.nftAsset, nftAsset)
-                    .where(nftAsset.contractType.eq(ContractType.NFT),
-                            nft.imageUrl.isNotEmpty(),
+                    .where(nft.imageUrl.isNotEmpty(),
                             pageTypeWhere(nftGalleryRequest))
                     .orderBy(caseBuilder.asc(), nft.orderSeq.asc())
                     .offset(pageable.getOffset())
@@ -409,8 +397,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
             results = queryFactory.select(nft)
                     .from(nft)
                     .join(nft.nftAsset, nftAsset)
-                    .where(nftAsset.contractType.eq(ContractType.NFT),
-                            nft.imageUrl.isNotEmpty(),
+                    .where(nft.imageUrl.isNotEmpty(),
                             pageTypeWhere(nftGalleryRequest))
                     .orderBy(nft.nftId.desc())
                     .offset(pageable.getOffset())

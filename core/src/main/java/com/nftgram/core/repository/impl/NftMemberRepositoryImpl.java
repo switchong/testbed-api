@@ -2,7 +2,6 @@ package com.nftgram.core.repository.impl;
 
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.domain.nftgram.value.ContractType;
 import com.nftgram.core.dto.request.NftMemberRequestDto;
 import com.nftgram.core.repository.custom.NftMemberCustomRepository;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -76,8 +75,7 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
         Long nftResult = queryFactory.select(nft.nftId)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.isNotEmpty(),
+                .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(memberId),
                         nft.orderSeq.ne(Long.valueOf(0)))

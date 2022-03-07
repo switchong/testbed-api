@@ -3,7 +3,6 @@ package com.nftgram.core.repository.impl;
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.domain.nftgram.NftCollection;
-import com.nftgram.core.domain.nftgram.value.ContractType;
 import com.nftgram.core.repository.custom.NftCollectionCustomRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -50,8 +49,7 @@ public class NftCollectionRepositoryImpl implements NftCollectionCustomRepositor
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT),
-                        nft.imageUrl.ne(""),
+                .where(nft.imageUrl.ne(""),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(memberId),
                         nft.orderSeq.ne(Long.valueOf(0))
@@ -69,8 +67,7 @@ public class NftCollectionRepositoryImpl implements NftCollectionCustomRepositor
                 .from(nftLike)
                 .join(nftLike.nft, nft)
                 .join(nft.nftAsset, nftAsset)
-                .where(nftAsset.contractType.eq(ContractType.NFT)
-                        ,nft.imageUrl.ne("")
+                .where(nft.imageUrl.ne("")
                         ,nftLike.nftMember.nftMemberId.eq(memberId)
                         ,nftLike.activeStatus.eq(ActiveStatus.ACTIVE))
                 .orderBy(nft.nftId.desc())
