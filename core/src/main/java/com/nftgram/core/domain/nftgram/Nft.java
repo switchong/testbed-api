@@ -72,7 +72,19 @@ public class Nft  extends BaseEntity {
     private String imageUrl;
 
     @Column
+    private String imagePreviewUrl;
+
+    @Column
+    private String imageThumbnailUrl;
+
+    @Column
     private String imageOriginalUrl;
+
+    @Column
+    private String animationUrl;
+
+    @Column
+    private String animationOriginalUrl;
 
     @Column
     private String openseaLink;
@@ -149,7 +161,11 @@ public class Nft  extends BaseEntity {
         this.description = description;
         this.numSales = numSales;
         this.imageUrl = imageUrl;
+        this.imagePreviewUrl = imagePreviewUrl;
+        this.imageThumbnailUrl = imageThumbnailUrl;
         this.imageOriginalUrl = imageOriginalUrl;
+        this.animationUrl = animationUrl;
+        this.animationOriginalUrl = animationOriginalUrl;
         this.openseaLink = openseaLink;
         this.externalLink = externalLink;
         this.likeCount = likeCount;

@@ -308,7 +308,6 @@ public class NftFindService {
         Long likeCount = Long.valueOf(0);
         Long favoriteCount = Long.valueOf(0);
         Long viewCount = Long.valueOf(0);
-        String tagType = "image";
         String userUrl   = "/gallery/"+nftInfo.getNftCollection().getNftCollectionId();    // 기본 콜렉션|회원|비회원용 url
 
         if(nftInfo.getLastSaleProfileImageUrl() != null) {
@@ -344,11 +343,18 @@ public class NftFindService {
                 userUrl = "/user/username/" + userName;
             }
         }
+        // image or imageVideo or video
+        String imageUrl = nftInfo.getImageUrl();
+        String videoUrl = nftInfo.getAnimationUrl();
+        String tagType = "image";
         String regExp = ".mp4";
-        boolean imageUrl = nftInfo.getImageUrl().contains(regExp);
+        boolean boolImageUrl = nftInfo.getImageUrl().contains(regExp);
 
-        if(imageUrl) {
+        if(boolImageUrl) {
             tagType = "video";
+            videoUrl = nftInfo.getImageUrl();
+        } else if(nftInfo.getAnimationUrl() != null) {
+            tagType = "imagemp4";
         }
 /*
         Nft frameNft = Nft.builder().build();
@@ -366,7 +372,8 @@ public class NftFindService {
                 .viewCount(viewCount)
                 .marketLink(nftInfo.getOpenseaLink())
                 .userImageUrl(userImage)
-                .nftImageUrl(nftInfo.getImageUrl())
+                .nftImageUrl(imageUrl)
+                .nftVideoUrl(videoUrl)
                 .nftCollectionName(nftInfo.getCollectionName())
                 .nftCollectionId(nftInfo.getNftCollection().getNftCollectionId())
                 .assetContractAddress(nftInfo.getAssetContractAddress())
