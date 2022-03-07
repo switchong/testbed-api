@@ -132,7 +132,10 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
 }
 
 const makeGalleryList = (data) => {
-    memberBackgroundList();
+    // member data 
+    if(data.member.mid > 0) {
+        memberBackgroundList();
+    }
     let sectionSeq = 1;
     const newList = data.nftSliderList.map((item)=> {
         let innerNewList = ''
