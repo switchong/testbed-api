@@ -417,7 +417,6 @@ img[id*="image-edit-icon"] {
 .gallery-content .gallery-slide-container .gallery-slide-list .gallery-slide-list-item .gallery-slide-list-item-picture .image-container .inner-picture {
     width: 83%;
     height: 83%;
-    object-fit: fill;
     position: absolute;
     top : 50%;
     left: 50%;

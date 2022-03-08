@@ -257,7 +257,7 @@ function layerPopGallery(nftId) {
     }
     let videoHtml = '';
     if(imgSrc.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
-        videoHtml += '<video controls controlsList="nodownload">';
+        videoHtml += '<video controls autoplay muted controlsList="nodownload">';
         videoHtml += '<source src="'+imgSrc+'">';
         videoHtml += '</video>';
         $('#nft-home .nft-image').css({"background":""});
