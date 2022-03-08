@@ -22,15 +22,7 @@ public class GetNftOneResponse {
 
     private String name;
 
-    private String description;
-
-    private String assetContractAddress;
-
-    private String tokenId;
-
-    private MarketType marketType;
-
-    private Long marketId;
+    private String username;
 
     private Long likeCount;
 
@@ -40,23 +32,43 @@ public class GetNftOneResponse {
 
     private String marketLink;
 
-    private String username;
-
     private String userImageUrl;
 
     private String nftImageUrl;
 
-    private String collectionName;
+    private String nftImagePreviewUrl;
+
+    private String nftVideoUrl;
+
+    private String nftCollectionName;
 
     private Long nftCollectionId;
 
-    private Long nftAssetId;
+    private String assetContractAddress;
+
+    private String tokenId;
+
+    private String tagType;
 
     private Long frameNftId;
 
+    private Long orderSeq;
+
+    private Long backgroundSeq;
+
     private String userUrl;
 
-    private String tagType;
+    private LocalDateTime localDate;
+
+    private String description;
+
+    private MarketType marketType;
+
+    private Long marketId;
+
+    private String collectionName;
+
+    private Long assetId;
 
     private LocalDateTime createdDate;
 
@@ -67,31 +79,37 @@ public class GetNftOneResponse {
     private List<NftPropertyResponse> propList;
 
     @Builder
-    public GetNftOneResponse(String likeFlag, Long nftId, String name, String description, String assetContractAddress, String tokenId, MarketType marketType,Long marketId,
-                             Long likeCount, Long favoriteCount, Long viewCount, String marketLink, String username, String userImageUrl, String nftImageUrl,
-                             String collectionName, Long nftCollectionId, Long nftAssetId, Long frameNftId, String userUrl, String tagType, LocalDateTime createdDate,
+    public GetNftOneResponse(String likeFlag, Long nftId, String name, String username, Long likeCount, Long favoriteCount, Long viewCount, String marketLink, String userImageUrl, String nftImageUrl, String nftVideoUrl,
+                             String nftCollectionName, Long nftCollectionId, String assetContractAddress, String tokenId, String tagType, Long frameNftId, String userUrl, LocalDateTime localDate,
+                             String description, MarketType marketType, Long marketId, String collectionName, Long assetId, LocalDateTime createdDate, Long backgroundSeq, Long orderSeq,
                              NftAsset asset, NftCollection collections, List<NftPropertyResponse> propList ) {
         this.likeFlag = likeFlag;
         this.nftId = nftId;
         this.name = name;
-        this.description = description;
-        this.assetContractAddress = assetContractAddress;
-        this.tokenId = tokenId;
-        this.marketType = marketType;
-        this.marketId = marketId;
+        this.username = username;
         this.likeCount = likeCount;
         this.favoriteCount = favoriteCount;
         this.viewCount = viewCount;
         this.marketLink = marketLink;
-        this.username = username;
         this.userImageUrl = userImageUrl;
         this.nftImageUrl = nftImageUrl;
-        this.collectionName = collectionName;
+        this.nftVideoUrl = nftVideoUrl;
+        this.nftCollectionName = nftCollectionName;
         this.nftCollectionId = nftCollectionId;
-        this.nftAssetId = nftAssetId;
-        this.frameNftId = frameNftId;
-        this.userUrl = userUrl;
+        this.assetContractAddress = assetContractAddress;
+        this.tokenId = tokenId;
         this.tagType = tagType;
+        this.frameNftId = frameNftId;
+        this.orderSeq = orderSeq;
+        this.backgroundSeq = backgroundSeq;
+        this.userUrl = userUrl;
+        this.localDate = localDate;
+
+        this.description = description;
+        this.marketType = marketType;
+        this.marketId = marketId;
+        this.collectionName = collectionName;
+        this.assetId = assetId;
         this.createdDate = createdDate;
         this.asset = asset;
         this.collections = collections;

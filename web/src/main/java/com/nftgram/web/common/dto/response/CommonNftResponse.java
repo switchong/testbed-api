@@ -5,6 +5,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * class GetNftOneResponse 파일에도 추가
+ */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Setter
@@ -62,14 +65,14 @@ public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
 
     private String collectionName;
 
-    private Long nftAssetId;
+    private Long assetId;
 
     private LocalDateTime createdDate;
 
     @Builder
     public CommonNftResponse(Long nftId, String name, String username, Long likeCount, Long favoriteCount, Long viewCount, String marketLink, String userImageUrl, String nftImageUrl, String nftVideoUrl,
                              String nftCollectionName, Long nftCollectionId, String assetContractAddress, String tokenId, String tagType, Long frameNftId, String userUrl, LocalDateTime localDate,
-                             String description, MarketType marketType, Long marketId, String collectionName, Long nftAssetId, LocalDateTime createdDate, Long backgroundSeq, Long orderSeq) {
+                             String description, MarketType marketType, Long marketId, String collectionName, Long assetId, LocalDateTime createdDate, Long backgroundSeq, Long orderSeq) {
         this.nftId = nftId;
         this.name = name;
         this.username = username;
@@ -95,7 +98,7 @@ public class CommonNftResponse  implements  Comparable<CommonNftResponse>{
         this.marketType = marketType;
         this.marketId = marketId;
         this.collectionName = collectionName;
-        this.nftAssetId = nftAssetId;
+        this.assetId = assetId;
         this.createdDate = createdDate;
     }
 
