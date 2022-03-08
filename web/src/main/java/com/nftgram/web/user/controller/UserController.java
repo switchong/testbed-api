@@ -1,5 +1,6 @@
 package com.nftgram.web.user.controller;
 
+import com.nftgram.core.domain.nftgram.NftMember;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.dto.GalleryMemberDto;
 import com.nftgram.web.common.service.NftFindService;
@@ -40,13 +41,13 @@ public class UserController {
             page = "";
         }
 
-        GalleryMemberDto galleryMemberDto = userService.findNftUserMemberId(pageable, memberId, url_member_id, page);
+        NftMember nftMember = userService.findNftUserMemberId(pageable, memberId, url_member_id, page);
 
         model.addAttribute("nav_active", "");
-        if(galleryMemberDto.getNftMember() != null) {
-            model.addAttribute("member", galleryMemberDto.getNftMember());
-            model.addAttribute("sliderList", galleryMemberDto.getNftSliderList());
-            model.addAttribute("nftList", galleryMemberDto.getNftResponseList());
+        if(nftMember != null) {
+            model.addAttribute("member", nftMember);
+            model.addAttribute("sliderList", "");
+            model.addAttribute("nftList", "");
 
             return "user/index";
         } else {
@@ -67,13 +68,13 @@ public class UserController {
             page = "";
         }
 
-        GalleryMemberDto galleryMemberDto = userService.findNftUsernameMember(pageable, memberId, username, page);
+        NftMember nftMember = userService.findNftUsernameMember(pageable, memberId, username, page);
 
         model.addAttribute("nav_active", "");
-        if(galleryMemberDto.getNftMember() != null) {
-            model.addAttribute("member", galleryMemberDto.getNftMember());
-            model.addAttribute("sliderList", galleryMemberDto.getNftSliderList());
-            model.addAttribute("nftList", galleryMemberDto.getNftResponseList());
+        if(nftMember != null) {
+            model.addAttribute("member", nftMember);
+            model.addAttribute("sliderList", "");
+            model.addAttribute("nftList", "");
 
             return "user/index";
         } else {
