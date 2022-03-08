@@ -26,10 +26,12 @@ function nftImageClick (e, index) {
                 $('.pop_close').unbind();
             }
             e.stopPropagation();
+            window.addEventListener('resize', goFirst);
         });
         layerPopId(PopId);
         currentIndex = index;
         layerPopGallery(nftId);
+        window.removeEventListener('resize', goFirst);
     }
 }
 
@@ -295,6 +297,7 @@ function layerPopClose(e){
     e.stopPropagation();
     $('.layer_popup_bg').unbind();
     $('.pop_close').unbind();
+    window.addEventListener('resize', goFirst);
 }
 
 function layerPopByNft(data) {

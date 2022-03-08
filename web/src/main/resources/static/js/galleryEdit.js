@@ -176,9 +176,9 @@ const nftImagesEvent = (item) => {
                 item.childNodes[3].innerText = '';
                 nowNft.querySelectorAll('.inner-picture').forEach((items, index)=>{
                     if(items.childNodes.length > 0) {
-                        let clsGalleryEditImg = items.childNodes[0];
+                        let clsGalleryEditImg = items.lastChild;
                         if(clsGalleryEditImg.getAttribute('data-nftid') === data_nftid) {
-                            clsGalleryEditImg.remove();
+                            items.innerHTML = '';
                             items.classList.remove('ip'+data_nftid);
                             items.parentNode.querySelector('.inner-picture-delete-btn').remove();
                             nowNft.setAttribute('nftNum', (nowNftNum -1).toString());
@@ -195,18 +195,25 @@ const nftImagesEvent = (item) => {
                 if(nowNftNum < 3) {
                     let delBtnId = `ip-del-btn-${data_nftid}`;
                     const nftDelete = document.createElement('div');
+                    const videoBtn  = document.createElement('div');
+                    videoBtn.classList.add('playVideoBtn', 'new', 'editBtn');
                     nftDelete.classList.add('inner-picture-delete-btn');
                     nftDelete.innerText = 'X';
+                    videoBtn.setAttribute('nowplay','false');
                     nftDelete.setAttribute('data-nftid',data_nftid);
                     nftDelete.setAttribute("id", delBtnId);
                     item.childNodes[3].innerText = currentNum;
                     nowNft.setAttribute('nftNum', (nowNftNum + 1).toString());
+                    videoBtn.addEventListener('click',()=>{
+                        videoPlayEvent(videoBtn);
+                    })
                     let count=0;
                     nowNft.querySelectorAll('.inner-picture').forEach((items, index) =>{
 
                         if(items.childNodes.length == 0) {
                             if(count === 0) {
-                                if(item.childNodes[1].tagName === 'IMG') {
+                                console.log(item.childNodes[1].getAttribute('tagType'))
+                                if(item.childNodes[1].getAttribute('tagType') === 'image') {
                                     const imageNft = document.createElement('img');
                                     imageNft.classList.add('gallery-edit-img', 'edit-nft');
                                     imageNft.setAttribute('data-nftid',data_nftid);
@@ -214,13 +221,25 @@ const nftImagesEvent = (item) => {
                                     items.appendChild(imageNft);
                                     count++;
                                 }
-                                else if(item.childNodes[1].tagName === 'VIDEO') {
+                                else if(item.childNodes[1].getAttribute('tagType') === 'video') {
                                     const videoNft = document.createElement('video');
                                     videoNft.classList.add('gallery-edit-img', 'edit-nft');
                                     videoNft.setAttribute('data-nftid',data_nftid);
                                     videoNft.setAttribute('src',item.childNodes[1].getAttribute('src'));
-                                    videoNft.setAttribute('controls', true);
+                                    videoNft.setAttribute('playsinline', true);
+                                    items.appendChild(videoBtn);
                                     items.appendChild(videoNft);
+                                    count++;
+                                }
+                                else if(item.childNodes[1].getAttribute('tagType') === 'imagemp4') {
+                                    const imagemp4Nft = document.createElement('video');
+                                    imagemp4Nft.classList.add('gallery-edit-img', 'edit-nft');
+                                    imagemp4Nft.setAttribute('data-nftid', data_nftid);
+                                    imagemp4Nft.setAttribute('src', item.childNodes[1].getAttribute('data-video'));
+                                    imagemp4Nft.setAttribute('playsinline', true);
+                                    imagemp4Nft.setAttribute('poster', item.childNodes[1].getAttribute('src'));
+                                    items.appendChild(videoBtn);
+                                    items.appendChild(imagemp4Nft);
                                     count++;
                                 }
                                 items.parentNode.appendChild(nftDelete);
@@ -326,7 +345,7 @@ const nftImagesEvent = (item) => {
 
 const dontclick = (list) => {
     list.forEach((item, index)=>{
-        if(Number(item.childNodes[3].innerText) === currentNum || item.childNodes[3].innerText === '') {
+        if(Number(item.getElementsByClassName('gallery-edit-select-number')[0].innerText) === currentNum || item.childNodes[3].innerText === '') {
             item.classList.remove('dontClick');
         }
         else {
@@ -412,12 +431,15 @@ const constEditContent = {
         let leftCnt = data.total - slideItemCnt;
         if(data.nftList.length > 0) {
             $.each(data.nftList, function(k, nft){
-                let imageUrlHtml = "<img class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"/>";
+                let imageUrlHtml = "<img class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" tagtype="+nft.tagType+" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"/>";
                 if(nft.tagType == 'video') {
-                    imageUrlHtml = "<video class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" controls controlsList=\"nodownload\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"></video>";
+                    imageUrlHtml = "<video class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" tagtype="+nft.tagType+" playsinline controlsList=\"nodownload\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"></video>";
+                }
+                else if(nft.tagType === 'imagemp4') {
+                    imageUrlHtml = "<img class=\"gallery-edit-img edit-"+editType+" nft_"+nft.nftId+"\" playsinline tagtype="+nft.tagType+" data-video=\""+nft.nftVideoUrl+"\" controlsList=\"nodownload\" alt=\""+nft.name+"\" data-nftid=\""+nft.nftId+"\" src=\""+nft.nftImageUrl+"\"></img>";
                 }
 
-                html += "<div class=\"new "+"gallery-edit-slide-item edit-slice-item-"+editType+" nft_item_"+nft.nftId+"\"\">\n" +
+                html += "<div class=\"news "+"gallery-edit-slide-item edit-slice-item-"+editType+" nft_item_"+nft.nftId+"\"\">\n" +
                     "              "+ imageUrlHtml +
                     "               <div class=\"gallery-edit-select-number number-"+editType+"\"></div>\n" +
                     "               <div class=\"gallery-edit-img-hover\"></div>\n" +
@@ -493,8 +515,13 @@ const constEditContent = {
                         let nftId = slider.nftId;
                         let date = timeToElapsed(slider.localDate);
                         let imageHtmlContainer = `<img class="gallery-edit-img edit-nft" alt="${slider.name}" data-nftid="${nftId}" src="${slider.nftImageUrl}" />`;
-                        if(slider.tagType == "video") {
-                            imageHtmlContainer = `<video class="gallery-edit-img edit-nft" controls controlsList="nodownload" alt="${slider.name}" data-nftid="${nftId}" src="${slider.nftImageUrl}"/>`;
+                        if(slider.tagType == "imagemp4") {
+                            imageHtmlContainer = `<div class="playVideoBtn new editBtn" nowplay=${false}></div>` +
+                                `<video class="gallery-edit-img edit-nft" muted poster=${slider.nftImageUrl} playsinline controlsList="nodownload" alt="${slider.name}" data-nftid="${nftId}" src="${slider.nftVideoUrl}"/>`;
+                        }
+                        else if(slider.tagType === 'video') {
+                            imageHtmlContainer = `<div class="playVideoBtn new editBtn" nowplay=${false}></div>` +
+                                `<video class="gallery-edit-img edit-nft" muted playsinline controlsList="nodownload" alt="${slider.name}" data-nftid="${nftId}" src="${slider.nftImageUrl}"/>`;
                         }
                         // Nft List .gallery-edit-select-number.number-nft
                         $('#edit-nft-list').find('.nft_item_'+nftId+' .gallery-edit-select-number').text(select_number);
@@ -764,8 +791,8 @@ const constEditContent = {
             let moreBtnId = $(this).attr("id");
             let editType = $(this).attr("edit_type");
             let moreList = "";
-            document.querySelectorAll('.new').forEach((item)=>{
-                item.classList.remove('new');
+            document.querySelectorAll('.news').forEach((item)=>{
+                item.classList.remove('news');
             })
 
             if(editType == "nft") {
@@ -776,7 +803,7 @@ const constEditContent = {
 
             constEditContent.containerHtml(editType, moreList);
 
-            document.querySelectorAll('.new').forEach((item)=>{
+            document.querySelectorAll('.news').forEach((item)=>{
                item.addEventListener('click',()=>{
                    nftImagesEvent(item);
                })
@@ -793,6 +820,11 @@ $(document).ready(function(){
     constEditContent.getBeforeNftData();
     // constEditContent.addSection();
     constEditContent.MoreEditSlider("html");
+    document.querySelectorAll('.playVideoBtn.new').forEach((item)=>{
+        item.addEventListener('click',()=>{
+            videoPlayEvent(item)
+        })
+    })
 
 
     dontclick(nftImages);

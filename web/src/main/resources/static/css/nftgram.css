@@ -795,7 +795,6 @@ body {
 }
 
 #navigation-top {
-    max-width: 1950px;
     margin : 0 auto;
     background-color: #090909;
     box-shadow: 0 0 5px 5px rgba(57, 63, 72, 0.5);
@@ -822,4 +821,44 @@ body {
 .login-container {
     margin-left: 0;
     margin-right: 0;
+}
+
+.playVideoBtn {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    z-index: 10;
+    color: #6c757d;
+    background-image: url("/img/etc/play.svg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    top: 78.5%;
+    right: 10%;
+    cursor: pointer;
+}
+
+.homePlay {
+    top: 70%;
+    right: 5%;
+}
+
+.editBtn {
+    top: 85%;
+    right: 1.5%;
+}
+
+.attr-detail-row-text {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+@media  screen and (max-width: 930px){
+    .playVideoBtn {
+        top : 65.5%;
+    }
+
+    .homePlay {
+        top: 70.5%;
+    }
 }

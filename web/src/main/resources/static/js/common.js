@@ -5,6 +5,21 @@ let url_user_page = window.location.origin;
 let sort1 = 0;
 let homeCurrentPage = 0;
 
+const videoPlayEvent = (item) => {
+    let nowState = item.getAttribute('nowplay');
+    if(nowState === 'false') {
+        item.nextSibling.play();
+        item.setAttribute('nowplay', 'true');
+        item.style.backgroundImage = 'url("/img/etc/pause.svg")';
+    }
+    else {
+        item.nextSibling.load();
+        item.nextSibling.currentTime = 0;
+        item.setAttribute('nowplay', 'false');
+        item.style.backgroundImage = 'url("/img/etc/play.svg")';
+    }
+}
+
 $(document).ready(function(){
 
     if(currentPagePath === '/') {
@@ -159,6 +174,10 @@ function moreView(type) {
         '</div>'
     "</div>"
 
+    document.querySelectorAll('.playVideoBtn.new').forEach((item)=>{
+        item.classList.remove('new');
+    })
+
     if (sort != null) {
         url += "&sort=" + sort;
     }
@@ -202,6 +221,12 @@ function moreView(type) {
         }
     });
 
+    document.querySelectorAll('.playVideoBtn.new').forEach((item)=>{
+        item.addEventListener('click',()=>{
+            videoPlayEvent(item)
+        })
+    })
+
     $('input[name="page"]').val(nextPage);
     $('#nftgram-list .card-img-top').on('click', function () {
         let collectionId = $(this).data('collectionid');
@@ -216,8 +241,13 @@ function toList(list) {
         let pattern = "https://.*mp4";
         let date = timeToElapsed(nft.localDate);
         let imageUrlHtml = '<img class="card-img-top" src="'+nft.nftImageUrl+'" alt="'+nft.name+'" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'" width="301px"  height="301px"/>';
-        if(nft.nftImageUrl.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
-            imageUrlHtml = '<video class="card-img-top" controlslist="nodownload" loop="" playsinline="" preload="metadata" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'"  style="border-radius: 0px;"><source src="'+nft.nftImageUrl+'" type="video/mp4"></video>';
+        if(nft.tagType === 'imagemp4') {
+            imageUrlHtml = `<div class="playVideoBtn new homePlay" nowplay=${false}></div>` +
+                '<video class="card-img-top" controlslist="nodownload" muted playsinline loop="3" poster="'+nft.nftImageUrl+'" preload="metadata" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'"  style="border-radius: 0px;"><source src="'+nft.nftVideoUrl+'" type="video/mp4"></video>';
+        }
+        else if(nft.tagType === 'video') {
+            imageUrlHtml = `<div class="playVideoBtn new homePlay" nowplay=${false}></div>` +
+                '<video class="card-img-top" controlslist="nodownload" muted playsinline loop="3" preload="metadata" data-collectionid="'+nft.nftCollectionId+'" data-nid="'+nft.nftId+'"  style="border-radius: 0px;"><source src="'+nft.nftImageUrl+'" type="video/mp4"></video>';
         }
 
         html += '<div class="card" >\n' +

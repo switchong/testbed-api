@@ -735,6 +735,7 @@ img[id*="image-edit-icon"] {
 
 .gallery-edit-img-hover {
     position: absolute;
+    z-index: 11;
     top : 0;
     left: 0;
     width: 100%;

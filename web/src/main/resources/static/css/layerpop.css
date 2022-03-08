@@ -47,7 +47,7 @@ div#nft-info::-webkit-scrollbar {
 
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text{display:none;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td {padding:2% 3%;font-size: 1.1rem;}
-.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text.attr-properties-row td { display: grid; grid-template-columns: repeat(2, 1fr); grid-column-gap: 0.4rem; grid-row-gap: 0.4rem; margin-bottom: 6%; overflow: scroll;}
+.wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text.attr-properties-row td { display: grid; grid-template-columns: repeat(2, 1fr); grid-column-gap: 0.4rem; grid-row-gap: 0.4rem; overflow: scroll;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info{padding:0.3rem 1rem;background-color: #fff;color: #000;text-align: center;
     width: 100%;  height: 100px;}
 .wrap_layer_popup#nft-layer-pop .nft-detail-container .nft-detail-wrapper .nft-form#nft-info table tr.info-attribute-text td.attr-properties-row-text .prop-info .prop-info-nft{margin-bottom: auto;font-size: 0.5rem;}

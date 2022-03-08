@@ -66,6 +66,9 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
     if(username) {
         url += "&username=" + username;
     }
+    document.querySelectorAll('.playVideoBtn.new').forEach((item)=>{
+        item.classList.remove('new');
+    })
     $.ajax({
         url: url,
         type: "GET",
@@ -128,6 +131,11 @@ const MoreSlide = (uri, type, sort1, userno, cid, address, likeFlag, username) =
             console.log('error!');
         }
     })
+    document.querySelectorAll('.playVideoBtn.new').forEach((item)=>{
+        item.addEventListener('click',()=>{
+            videoPlayEvent(item)
+        })
+    })
     DontLongNumber();
 }
 
@@ -150,9 +158,15 @@ const makeGalleryList = (data) => {
                             <div class="image-container" id="nft-content-${inner.nftId}" >
                                 <div class="image-container-content" data-nftid="${inner.nftId}">`;
             innerNewList += frameNftHtml;
-            if(inner.tagType == "video") {
-                innerNewList += `<video class="inner-picture gimage${inner.nftId}" controls controlsList="nodownload"  data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}"/>`;
-            } else {
+            if(inner.tagType === "imagemp4") {
+                innerNewList += `<div class="playVideoBtn new" nowplay=${false}></div>`;
+                innerNewList += `<video class="inner-picture gimage${inner.nftId}" muted poster=${inner.nftImageUrl} loop="3" controlsList="nodownload" playsinline data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftVideoUrl}"/>`;
+            }
+            else if(inner.tagType === "video") {
+                innerNewList += `<div class="playVideoBtn new" nowplay=${false}></div>`;
+                innerNewList += `<video class="inner-picture gimage${inner.nftId}" muted loop="3" controlsList="nodownload" playsinline data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}"/>`;
+            }
+            else {
                 innerNewList += `<img class="inner-picture gimage${inner.nftId}" data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftImageUrl}" />`;
             }
 
