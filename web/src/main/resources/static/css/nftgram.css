@@ -836,6 +836,11 @@ body {
     top: 78.5%;
     right: 10%;
     cursor: pointer;
+    border-radius: 50%;
+}
+.playVideoBtn:hover {
+    box-shadow: rgb(4 17 29 / 25%) 0px 0px 8px 0px;
+    color: rgb(53, 56, 64);
 }
 
 .homePlay {
