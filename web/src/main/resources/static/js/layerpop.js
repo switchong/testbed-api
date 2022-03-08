@@ -258,6 +258,7 @@ function layerPopGallery(nftId) {
         frameSrc = $('.gomage' + nftId).attr('src');
     }
     let videoHtml = '';
+    let imgHtml = '';
     if(imgSrc.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
         videoHtml += '<video controls autoplay muted controlsList="nodownload">';
         videoHtml += '<source src="'+imgSrc+'">';
@@ -266,7 +267,8 @@ function layerPopGallery(nftId) {
         $('#nft-home .nft-image').html(videoHtml);
     } else {
         $('#nft-home .nft-image video').remove();
-        $('#nft-home .nft-image').css({"background":"url('"+imgSrc+"') no-repeat center","background-size":"contain"});
+        imgHtml += '<img src="'+imgSrc+'">';
+        $('#nft-home .nft-image').html(imgHtml);
     }
     $('#nft-home').css({"background" : "url('"+frameSrc+"') no-repeat center", "background-size":"cover"});
 
