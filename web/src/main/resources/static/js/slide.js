@@ -149,10 +149,10 @@ const makeGalleryList = (data) => {
         let innerNewList = ''
         item.forEach((inner)=>{
             let date = timeToElapsed(inner.localDate);
-            let frameNftHtml = `<img class="outer-frame" src="/img/etc/no-image.png"/>`;
+            let frameNftHtml = `<img class="outer-frame gomage${inner.nftId}" src="/img/etc/no-image.png"/>`;
             if(inner.frameNftId > 0) {
                 frameNft = getNftOne(inner.frameNftId);
-                frameNftHtml = `<img class="outer-frame" src="${frameNft.nftImageUrl}"/>`;
+                frameNftHtml = `<img class="outer-frame gomage${inner.nftId}" src="${frameNft.nftImageUrl}"/>`;
             }
             innerNewList = innerNewList + `
                             <div class="image-container" id="nft-content-${inner.nftId}" >
