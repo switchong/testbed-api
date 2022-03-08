@@ -1,9 +1,10 @@
-package com.nftgram.admin.common.auth;
+package com.nftgram.admin.admin.common;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.nftgram.admin.admin.dto.AdminMemberAuthDto;
-import com.nftgram.admin.config.security.AES256Converter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nftgram.admin.common.converter.AES256Converter;
 import com.nftgram.core.domain.admin.dto.AdminMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,18 +19,12 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
 public class MemberLoginManager {
 
-    private final MemberTokenManager memberTokenManager;
-
-//    @Value("${nftgram.cookie.key}")
-//    private String cookieKey;
-//
-//    @Value("${nftgram.cookie.domainName}")
-//    private String domainName;
 
     private static String cookieKey;
 
@@ -76,17 +71,17 @@ public class MemberLoginManager {
         return memberCookie;
     }
 
-    /**
-     * 로그인 정보 가져오기
-     * @return
-     */
-    public AdminMemberAuthDto getInfo() throws GeneralSecurityException, UnsupportedEncodingException {
-        String memberToken = getToken();
-        if (memberToken == null) {
-            return AdminMemberAuthDto.builder().loginYN("N").build();
-        }
-        return memberTokenManager.getTokenToMember(memberToken);
-    }
+//    /**
+//     * 로그인 정보 가져오기
+//     * @return
+//     */
+//    public AdminMemberAuthDto getInfo() throws GeneralSecurityException, UnsupportedEncodingException {
+//        String memberToken = getToken();
+//        if (memberToken == null) {
+//            return AdminMemberAuthDto.builder().loginYN("N").build();
+//        }
+//        return memberTokenManager.getTokenToMember(memberToken);
+//    }
 
     /**
      * 로그인 토큰 정보 검증
@@ -111,20 +106,20 @@ public class MemberLoginManager {
 
         Cookie[] cookies = request.getCookies();
         String memberToken = null;
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals(cookieKey)) {
-					memberToken = cookie.getValue();
-				}
-			}
-		}
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(cookieKey)) {
+                    memberToken = cookie.getValue();
+                }
+            }
+        }
 
-		if (StringUtils.isEmpty(memberToken))
+        if (StringUtils.isEmpty(memberToken))
         {
             return null;
         }
 
-		return memberToken;
+        return memberToken;
     }
 
 
@@ -136,7 +131,9 @@ public class MemberLoginManager {
         try {
             JsonGenerator generator = factory.createGenerator(jsonObjectWriter);
             generator.writeStartObject();
+            generator.writeStringField("aId", Long.toString(adminMemberDto.getAId()));
             generator.writeStringField("adminId", adminMemberDto.getAdminId());
+            generator.writeStringField("adminName", adminMemberDto.getAdminName());
             generator.writeEndObject();
             generator.close();
 
@@ -150,6 +147,39 @@ public class MemberLoginManager {
             return adminCookie;
         } catch ( GeneralSecurityException | IOException e) {
             throw new IllegalStateException("로그인 정보 쿠키 생성 실패");
+        }
+    }
+
+    /**
+     * Audit Id 설정
+     * @return
+     */
+    public static String getAuditId() {
+        HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+        String createUserId = request.getParameter("createUserId");
+        if(!Objects.isNull(createUserId)) {
+            return createUserId;
+        }
+
+        Cookie[] cookies = request.getCookies();
+        String stabyAdminMember = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(cookieKey)) {
+                    stabyAdminMember = cookie.getValue();
+                }
+            }
+        }
+
+        try {
+            String jsonAdminMember = AES256Converter.decode(stabyAdminMember);
+            ObjectMapper mapper = new ObjectMapper();
+            AdminMemberDto adminMemberDto = mapper.readValue(jsonAdminMember, AdminMemberDto.class);
+
+            return adminMemberDto.getAdminId();
+        } catch (JsonProcessingException | GeneralSecurityException | UnsupportedEncodingException e ) {
+            throw new IllegalStateException("로그인 정보 읽기 실패");
         }
     }
 }

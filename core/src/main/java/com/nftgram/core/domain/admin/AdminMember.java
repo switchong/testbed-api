@@ -30,7 +30,10 @@ public class  AdminMember  extends BaseEntity {
     @Column(nullable = false ,length = 100)
     private String name;
 
-    @Enumerated(value = EnumType.STRING)
+    @Column(length = 20)
+    private String salt;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "active_status" , nullable = false)
     private ActiveStatus activeStatus;
 
@@ -38,12 +41,11 @@ public class  AdminMember  extends BaseEntity {
     private LocalDateTime lastLoginDate;
 
     @Builder
-    public AdminMember (String adminId, String password, String name, ActiveStatus activeStatus) {
+    public AdminMember (String adminId, String password, String name, String salt) {
         this.adminId = adminId;
         this.password = password;
         this.name = name;
-        this.activeStatus = activeStatus.ACTIVE;
+        this.salt = salt;
+        this.activeStatus = ActiveStatus.ACTIVE;
     }
-
-
 }

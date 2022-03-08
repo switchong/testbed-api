@@ -1,4 +1,4 @@
-package com.nftgram.admin.config.security;
+package com.nftgram.admin.common.converter;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,8 +18,6 @@ public class AES256Converter {
 
     private static  String secretKey;
 
-//    @Value("${nftgram.aes256.secretKey}")
-//    private String secretKey;
     @Value("${nftgram.aes256.secretKey}")
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
@@ -55,7 +53,7 @@ public class AES256Converter {
      * @throws GeneralSecurityException
      * @throws UnsupportedEncodingException
      */
-    public String decode(String str) throws GeneralSecurityException, UnsupportedEncodingException {
+    public static String decode(String str) throws GeneralSecurityException, UnsupportedEncodingException {
         String IVSpec = secretKey.substring(0,16);
 
         byte[] keyData = secretKey.getBytes();

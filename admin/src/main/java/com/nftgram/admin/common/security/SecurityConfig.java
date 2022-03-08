@@ -1,4 +1,4 @@
-package com.nftgram.admin.config.security;
+package com.nftgram.admin.common.security;
 
 
 
@@ -19,10 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-
-
-
 
 
     @Override

@@ -41,6 +41,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
         this.queryFactory = queryFactory;
     }
 
+
     public Page<Nft> findAllPage(Pageable pageable) {
         Page<Nft> result = (Page<Nft>) queryFactory.selectFrom(nft)
                 .orderBy(nft.nftId.desc())
@@ -51,6 +52,19 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return result;
     }
 
+//    @Override
+//    public Page<Nft> findAllNftPage(Pageable pageable, String collectionName, String ownerUserName, ActiveStatus activeStatus) {
+//        Page<Nft> result = (Page<Nft>) queryFactory.selectFrom(nft)
+//                .orderBy(nft.nftId.desc())
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .fetch();
+//
+//        return  result;
+//    }
+
+
+
 
     public List<Nft> findAll() {
         List<Nft> result = queryFactory.selectFrom(nft)
@@ -59,6 +73,8 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         return result;
     }
+
+
 
 
     /**
@@ -74,8 +90,8 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .from(nft)
                 .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
-                       nft.activeStatus.eq(ActiveStatus.ACTIVE),
-                       eqKeyword(keyword))
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
+                        eqKeyword(keyword))
                 .orderBy(SortNftPage(String.valueOf(sort)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -335,10 +351,10 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<NftIdWalletList> result = queryFactory
                 .select(Projections.constructor(
                         NftIdWalletList.class,
-                                nft.nftId,
-                                nft.ownerContractAddress,
-                                nft.creatorContractAddress,
-                                nft.lastSaleContractAddress
+                        nft.nftId,
+                        nft.ownerContractAddress,
+                        nft.creatorContractAddress,
+                        nft.lastSaleContractAddress
                 ))
                 .from(nft)
                 .where(nft.nftId.in(
