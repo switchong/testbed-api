@@ -282,9 +282,10 @@ public class NftFindService {
                 .username(commonNftResponse.getUsername())
                 .userImageUrl(commonNftResponse.getUserImageUrl())
                 .nftImageUrl(commonNftResponse.getNftImageUrl())
+                .nftVideoUrl(commonNftResponse.getNftVideoUrl())
                 .collectionName(commonNftResponse.getCollectionName())
                 .nftCollectionId(commonNftResponse.getNftCollectionId())
-                .nftAssetId(commonNftResponse.getNftAssetId())
+                .assetId(commonNftResponse.getAssetId())
                 .frameNftId(commonNftResponse.getFrameNftId())
                 .userUrl(commonNftResponse.getUserUrl())
                 .tagType(commonNftResponse.getTagType())
@@ -388,7 +389,7 @@ public class NftFindService {
                 .marketType(nftInfo.getMarketType())
                 .marketId(nftInfo.getMarketId())
                 .collectionName(nftInfo.getCollectionName())
-                .nftAssetId(nftInfo.getNftAsset().getNftAssetId())
+                .assetId(nftInfo.getNftAsset().getNftAssetId())
                 .createdDate(nftInfo.getCreateDate())
                 .build();
 
