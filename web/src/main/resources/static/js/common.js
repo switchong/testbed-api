@@ -517,8 +517,10 @@ function getParameter(name) {
 }
 
 let bgList = [];
-function memberBackgroundList() {
-    let bgResult = commonAjaxUrl("POST", "/api/member/background", {});
+function memberBackgroundList(mId) {
+    let userno = (mId != null)?mId:0;
+    let param = {"userno" : userno};
+    let bgResult = commonAjaxUrl("POST", "/api/member/background", param);
 
     if(bgResult.total > 0) {
         $.each(bgResult.nftList, function(k, v){

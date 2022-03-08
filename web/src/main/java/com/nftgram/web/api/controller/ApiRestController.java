@@ -147,17 +147,21 @@ public class ApiRestController {
     }
 
     @PostMapping(value="/member/background", produces = "application/json")
-    public NftGalleryCommonDto memberBackgroundList() throws GeneralSecurityException, UnsupportedEncodingException {
+    public NftGalleryCommonDto memberBackgroundList(@RequestParam(name = "userno", required = false)Long userno) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         NftGalleryCommonDto nftCommonDto = NftGalleryCommonDto.builder().build();
-        if(authDto.getLoginYN().equals("Y")) {
+        if(authDto.getLoginYN().equals("Y") && (userno > 0 && authDto.getNftMemberId().equals(userno))) {
             memberId = authDto.getNftMemberId();
 
             nftCommonDto = nftFindService.memberBackgroundList(memberId);
         } else {
-            NftMember nftMember = NftMember.builder().build();
-            nftCommonDto = NftGalleryCommonDto.builder().member(nftMember).build();
+            if(userno > 0) {
+                nftCommonDto = nftFindService.memberBackgroundList(userno);
+            } else {
+                NftMember nftMember = NftMember.builder().build();
+                nftCommonDto = NftGalleryCommonDto.builder().member(nftMember).build();
+            }
         }
 
         return nftCommonDto;

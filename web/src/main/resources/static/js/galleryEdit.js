@@ -499,7 +499,9 @@ const constEditContent = {
         let ofDelBtnArr = new Array();
         let bfDelBtnArr = new Array();
         if(nftList.total > 0) {
-            memberBackgroundList();
+            if(nftList.member.mid > 0) {
+                memberBackgroundList(nftList.member.mid);
+            }
             $.each(nftList.nftSliderList, function(key, section){
                 let tIdx = ((key*3)+1);
                 let nftNum = parseInt(0);
