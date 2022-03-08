@@ -552,7 +552,7 @@ const constEditContent = {
                             <div class="image-container" data-orderseq="${tIdx+key2}">
                                 <div class="image-container-content">
                                     `+frameNftHtml+`
-                                    <div class="inner-picture ip${nftId}" style="border : 1px solid lightgray;">${imageHtmlContainer}</div>
+                                    <div class="inner-picture ip${nftId}">${imageHtmlContainer}</div>
                                     `+ipDelBtn+`
                                     `+ofDelBtn+`
                                 </div>
