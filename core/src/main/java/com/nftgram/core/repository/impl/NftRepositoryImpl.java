@@ -316,11 +316,11 @@ public class NftRepositoryImpl implements NftCustomRepository {
             return null;
         }
 
-        nameBuilder.or(nft.collectionName.contains(keyword));
-        nameBuilder.or(nft.name.contains(keyword));
+        nameBuilder.or(nft.collectionName.startsWith(keyword));
+        nameBuilder.or(nft.name.startsWith(keyword));
 //        nameBuilder.or(nft.lastSaleUserName.contains(keyword));
-        nameBuilder.or(nft.creatorUserName.contains(keyword));
-        nameBuilder.or(nft.ownerUserName.contains(keyword));
+        nameBuilder.or(nft.creatorUserName.startsWith(keyword));
+        nameBuilder.or(nft.ownerUserName.startsWith(keyword));
 
         return nameBuilder;
     }
