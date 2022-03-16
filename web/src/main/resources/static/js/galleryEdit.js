@@ -238,6 +238,7 @@ const nftImagesEvent = (item) => {
                                     imagemp4Nft.setAttribute('src', item.childNodes[1].getAttribute('data-video'));
                                     imagemp4Nft.setAttribute('playsinline', true);
                                     imagemp4Nft.setAttribute('poster', item.childNodes[1].getAttribute('src'));
+                                    imagemp4Nft.style.zIndex = -1;
                                     items.appendChild(videoBtn);
                                     items.appendChild(imagemp4Nft);
                                     count++;
@@ -519,7 +520,7 @@ const constEditContent = {
                         let imageHtmlContainer = `<img class="gallery-edit-img edit-nft" alt="${slider.name}" data-nftid="${nftId}" src="${slider.nftImageUrl}" />`;
                         if(slider.tagType == "imagemp4") {
                             imageHtmlContainer = `<div class="playVideoBtn new editBtn" nowplay=${false}></div>` +
-                                `<video class="gallery-edit-img edit-nft" muted poster=${slider.nftImageUrl} playsinline controlsList="nodownload" alt="${slider.name}" data-nftid="${nftId}" src="${slider.nftVideoUrl}"/>`;
+                                `<video class="gallery-edit-img edit-nft" style="z-inde : -1" muted poster=${slider.nftImageUrl} playsinline controlsList="nodownload" alt="${slider.name}" data-nftid="${nftId}" src="${slider.nftVideoUrl}"/>`;
                         }
                         else if(slider.tagType === 'video') {
                             imageHtmlContainer = `<div class="playVideoBtn new editBtn" nowplay=${false}></div>` +

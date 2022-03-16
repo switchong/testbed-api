@@ -5,7 +5,6 @@
     /*min-width: 1330px;*/
     position: relative;
     max-width: 1950px;
-    max-height: 900px;
     margin : 0 auto;
 }
 
@@ -118,6 +117,7 @@
     width: 85%;
     height: 58%;
     position: absolute;
+    max-height: 500px;
     top : 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -409,8 +409,10 @@ img[id*="image-edit-icon"] {
     height: 100%;
     object-fit: fill;
     position: absolute;
+    border-radius: 5px;
     top: 0;
     left: 0;
+    z-index: -2;
     background-color: #fff;
 }
 
@@ -446,7 +448,10 @@ img[id*="image-edit-icon"] {
 @media screen and (max-width: 1200px) {
 
     .image-container-content {
-        height: 90%;
+        height: 70%;
+        top : 50%;
+        position: absolute;
+        transform: translateY(-50%);
     }
 
     .picture-explain {

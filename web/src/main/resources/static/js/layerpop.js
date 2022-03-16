@@ -15,6 +15,7 @@ function nftImageClick (e, index) {
         })
         $('.layer_popup_bg').on('click', function(e){
             if($(window).width() > 900) {
+                $('.simple-keyboard').css({"display" : "none"});
                 $('.wrap_layer_popup').fadeOut();
                 $(this).fadeOut();
                 if(nowLocation === '/gallery/myfavorite') {
@@ -159,6 +160,7 @@ $(document).ready(function(){
     })
     // nft-comment
     $('#nft-comment .comment_btn').on('click',function() {
+        $('.simple-keyboard').css({"display" : "none"});
         let result;
         let nftId = $('input[name="nft_id"]').val();
         let comment = $('textarea[name="comment"]').val();
@@ -179,10 +181,10 @@ $(document).ready(function(){
 
                     return false;
                 } else if (result == 2) {
-                    alert("Please Login to use");
+                    swal("Please Login to use","","error");
                     return false;
                 } else {
-                    alert("Error");
+                    swal("Error","","error");
                     return false;
                 }
             }
@@ -245,8 +247,8 @@ function layerPopGallery(nftId) {
     $('#nft-layer-pop .nft-btn').find('.nft-btn-form').eq(0).trigger('click');
     $('.nft-form').css({"display":"none","height":"100%"});
     $('#nft-home').css("display","block");
-    $('#nft-home .nft-image').css("height","100%");
-    $('#nft-home .nft-image img').css("height","100%");
+    $('#nft-home .nft-image img').css({"height":"100%", "width" : "100%"});
+    $('img').remove('.outer-picture');
 
     let figure = $("#gr-gallery #nft_"+nftId);
     let imgSrc = '';
@@ -259,6 +261,7 @@ function layerPopGallery(nftId) {
     }
     let videoHtml = '';
     let imgHtml = '';
+    let frameHtml = '';
     if(imgSrc.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
         videoHtml += '<video controls autoplay muted playsinline controlsList="nodownload">';
         videoHtml += '<source src="'+imgSrc+'">';
@@ -270,7 +273,9 @@ function layerPopGallery(nftId) {
         imgHtml += '<img src="'+imgSrc+'">';
         $('#nft-home .nft-image').html(imgHtml);
     }
-    $('#nft-home').css({"background" : "url('"+frameSrc+"') no-repeat center", "background-size":"cover"});
+    frameHtml += '<img src="'+frameSrc+'" class="outer-picture">';
+    $('#nft-home').prepend(frameHtml);
+
 
     // 팝업 마켓 버튼 .on 처리
     $('#nft-btn-market').removeClass('on');
@@ -289,6 +294,7 @@ function layerPopGallery(nftId) {
 
 // 레이어 팝업창 닫기
 function layerPopClose(e){
+    $('.simple-keyboard').css({"display" : "none"});
     $('body').css({
         'touch-action' : 'initial'
     })

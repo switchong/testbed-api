@@ -80,7 +80,7 @@
         <div class="container">
             <div class="input-group">
                 <div class="input-group-left">
-                    <input class="form-control me-2"  id="searchKeyword"  name="keyword" autocomplete="off" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}" type="text"/>
+                    <input class="form-control me-2 input"  id="searchKeyword" inputmode="none"  name="keyword" autocomplete="off" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}" type="text"/>
                     <div class="input-group-append">
                         <button class="btn btn-secondary me-2" id="btnSearch">Search</button>
                     </div>
@@ -90,7 +90,7 @@
                         <input type="hidden" name="dropdownsort" id="dropdownsort" value="0" />
                         <input type="checkbox" name="dropdownsearch" id="dropdownsearch" />
                         <label for="dropdownsearch">
-                            <p class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <p class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 Sort By
                             </p>
                         </label>

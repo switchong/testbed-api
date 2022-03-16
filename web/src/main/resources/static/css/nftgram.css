@@ -833,8 +833,8 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    top: 78.5%;
-    right: 10%;
+    bottom: 2rem;
+    right: 2rem;
     cursor: pointer;
     border-radius: 50%;
 }
@@ -849,8 +849,8 @@ body {
 }
 
 .editBtn {
-    top: 85%;
-    right: 1.5%;
+    bottom: 2%;
+    right: 1%;
 }
 
 .attr-detail-row-text {
@@ -860,7 +860,13 @@ body {
 
 @media  screen and (max-width: 930px){
     .playVideoBtn {
-        top : 65.5%;
+        bottom : 0.8rem;
+        right: 0.8rem;
+    }
+
+    .editBtn {
+        bottom: 0.1rem;
+        right: 0.1rem;
     }
 
     .homePlay {

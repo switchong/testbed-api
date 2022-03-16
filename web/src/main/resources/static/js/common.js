@@ -21,6 +21,74 @@ const videoPlayEvent = (item) => {
 }
 
 $(document).ready(function(){
+    // navigator.userAgent.match(/Mobile|iP(hone|od)|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/)
+    if($(window).width() < 900){
+        let selectedInput;
+        let Keyboard = window.SimpleKeyboard.default;
+        console.log(Keyboard)
+
+
+        let keyboard = new Keyboard({
+            onChange: input => onChange(input),
+            onKeyPress: button => onKeyPress(button)
+        });
+
+
+        $('#searchKeyword').on('click',(e)=>{
+            if(currentPagePath === '/' || currentPagePath === '/gallery') {
+                $('#search-keyboard').css({"display" : "block"});
+                selectedInput = e.target.id;
+                keyboard.setInput(e.target.value);
+            }
+        })
+
+        $('#exampleFormControlTextarea3').on('click',(e)=>{
+            $('#search-keyboard').css({"display" : "block"});
+            selectedInput = e.target.id;
+            keyboard.setInput(e.target.value);
+        })
+
+
+        /**
+         * Update simple-keyboard when input is changed directly
+         */
+        // document.querySelector(".input").addEventListener("input", event => {
+        //
+        // });
+
+        console.log(keyboard);
+
+        function onChange(input) {
+            console.log(selectedInput)
+            $(`${'#'+ selectedInput || '.input'}`).val(input);
+            console.log("Input changed", input);
+        }
+
+
+        function onKeyPress(button) {
+            console.log("Button pressed", button);
+            if(button === "{enter}") {
+                setTimeout(()=>{
+                    $('.simple-keyboard').css({"display" : "none"});
+                },500)
+            }
+
+            /**
+             * If you want to handle the shift and caps lock buttons
+             */
+            if (button === "{shift}" || button === "{lock}") handleShift();
+        }
+
+        function handleShift() {
+            let currentLayout = keyboard.options.layoutName;
+            let shiftToggle = currentLayout === "default" ? "shift" : "default";
+
+            keyboard.setOptions({
+                layoutName: shiftToggle
+            });
+        }
+    }
+
 
     if(currentPagePath === '/') {
         $('#navigation-top').css({
@@ -113,6 +181,7 @@ $(document).ready(function(){
             MoreSlide('all','html', sort1, 0,0);
         }
         moreView("html");
+        $('.simple-keyboard').css({"display" : "none"});
     });
 
     if($('#nftgram_wrap #nftgram-list').length > 0) {

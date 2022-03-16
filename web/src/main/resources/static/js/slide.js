@@ -9,7 +9,7 @@ let prevSort=0;
 let prevKeyword = '';
 
 const setBackHeight = () => {
-    let newHeight = $(window).height() - $('#navigation-top').height() + 8;
+    let newHeight = $(window).height() - $('#navigation-top').height();
     if($(window).width() <= 900) {
         if($(window).width() < $(window).height()) {
             newHeight = $(window).width() - $('#navigation-top').height() + $('#navigation-top > nav:last-child').height() + 15;
@@ -160,7 +160,7 @@ const makeGalleryList = (data) => {
             innerNewList += frameNftHtml;
             if(inner.tagType === "imagemp4") {
                 innerNewList += `<div class="playVideoBtn new" nowplay=${false}></div>`;
-                innerNewList += `<video class="inner-picture gimage${inner.nftId}" muted poster=${inner.nftImageUrl} loop="3" controlsList="nodownload" playsinline data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftVideoUrl}"/>`;
+                innerNewList += `<video class="inner-picture gimage${inner.nftId}" muted poster=${inner.nftImageUrl} style="z-index: -1" loop="3" controlsList="nodownload" playsinline data-layer-btn="nft-layer-pop" alt="${inner.name}" data-nftid="${inner.nftId}" src="${inner.nftVideoUrl}"/>`;
             }
             else if(inner.tagType === "video") {
                 innerNewList += `<div class="playVideoBtn new" nowplay=${false}></div>`;
