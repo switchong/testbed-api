@@ -42,7 +42,7 @@ $(document).ready(function(){
             }
         })
 
-        $('#exampleFormControlTextarea3').on('click',(e)=>{
+        $('#exampleFormControlTextarea3, .form-control').on('click',(e)=>{
             $('#search-keyboard').css({"display" : "block"});
             selectedInput = e.target.id;
             keyboard.setInput(e.target.value);
@@ -170,6 +170,7 @@ $(document).ready(function(){
     });
 
     $('#btnSearch').on('click',function(){
+        $('.simple-keyboard').css({"display" : "none"});
         let searchVal = $('#searchKeyword').val();
         if(searchVal == '' || searchVal == null) {
             swal("Search the Value" , "" ,"error");
@@ -181,7 +182,6 @@ $(document).ready(function(){
             MoreSlide('all','html', sort1, 0,0);
         }
         moreView("html");
-        $('.simple-keyboard').css({"display" : "none"});
     });
 
     if($('#nftgram_wrap #nftgram-list').length > 0) {
@@ -286,7 +286,7 @@ function moreView(type) {
             homeCurrentPage++;
         },
         error: function (data) {
-            alert("error");
+            swal("error",'','error');
         }
     });
 

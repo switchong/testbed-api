@@ -128,13 +128,13 @@ $(document).ready(function(){
                     btnForm.removeClass('on');
                 }
             } else {
-                alert("Please Login to use");
+                swal("Please Login to use",'','error');
                 return false;
             }
         } else if( btnName == "market") {
             let link = btnForm.data('link');
             if(link == "") {
-                alert("Comming Soon.");
+                swal("Comming Soon.",'','info');
             } else{
                 window.open(link);
             }

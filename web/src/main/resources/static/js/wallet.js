@@ -67,7 +67,7 @@ if(typeof window.ethereum !== 'undefined') {
     window.ethereum.on('chainChanged', (networkId) => {
         webEth.chainId = parseInt(networkId, 16);
         if(webEth.chainId != 1) {
-            alert("Please select your Metamask wallet as your Ethereum Mainnet.");
+            swal("Please select your Metamask wallet as your Ethereum Mainnet.",'','error');
             return false;
         }
     });
