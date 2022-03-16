@@ -3,11 +3,11 @@ import com.nftgram.admin.carenft.dto.NftPagingResponse;
 import com.nftgram.admin.carenft.dto.request.NftSearchRequest;
 import com.nftgram.admin.carenft.dto.response.NftResponse;
 import com.nftgram.admin.common.converter.PagingConverter;
+import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.repository.NftRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +25,9 @@ public class NftInquiryService {
 
 
     @Transactional(readOnly = true)
-    public NftPagingResponse nftListquery(NftSearchRequest request){
+    public NftPagingResponse nftListquery(NftSearchRequest request , String keyword){
 
-        Page<Nft> nftByPaging = nftRepository.findAllPage(request.of());
+        Page<Nft> nftByPaging = nftRepository.findAllNftPage(request.of() , keyword);
         return  getNftPagingResponse(nftByPaging);
     }
 
@@ -45,8 +45,11 @@ public class NftInquiryService {
                             nft.getNftId(),
                             nft.getCollectionName(),
                             nft.getOwnerUserName(),
+                            nft.getImageUrl(),
+                            nft.getOpenseaLink(),
+                            nft.getCreateDate(),
                             nft.getActiveStatus()
-                    );
+                                        );
 
                     return mappedResponse;
                 }).collect(Collectors.toList());

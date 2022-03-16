@@ -23,10 +23,10 @@ public class AllNftController {
     private final NftInquiryService nftInquiryService;
 
     @GetMapping("/allNft")
-    public String AllNft(@Valid NftSearchRequest request , Model model )  {
+    public String AllNft(@Valid NftSearchRequest request , Model model  , String keyword)  {
 
 
-        NftPagingResponse nftPagingResponse = nftInquiryService.nftListquery(request);
+        NftPagingResponse nftPagingResponse = nftInquiryService.nftListquery(request , keyword);
 
         model.addAttribute(nftPagingResponse);
         return "pages/allNft";

@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
 public class PageRequest {
 
     private int page = 1;
-    private int size = 10;
+    private int size = 20;
     private Sort.Direction direction;
 
     public void setPage(int page) {
@@ -23,14 +23,13 @@ public class PageRequest {
     public void setDirection(Sort.Direction direction) {
         this.direction = direction;
     }
-    // getter
+
 
     public org.springframework.data.domain.PageRequest of() {
         if ( direction == null) {
             return org.springframework.data.domain.PageRequest.of(this.page -1, this.size);
         } else {
-            return org.springframework.data.domain.PageRequest.of(this.page -1, this.size, this.direction, "createDate" +
-                    "");
+            return org.springframework.data.domain.PageRequest.of(this.page -1, this.size, this.direction, "createDate" + "");
         }
     }
 }

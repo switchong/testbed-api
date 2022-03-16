@@ -18,23 +18,9 @@ public class MainController {
 
     }
 
-//
-//    @GetMapping("/allNft")
-//    public String AllNft(Model model) {
-//
-////        List<CommenNftRe> mainResponseAll = nftFindService.findAllList(pageable  , keyword , sort);
-////
-////        MainPageDto mainPageDto = MainPageDto.builder()
-////                .total(mainResponseAll.size())
-////                .nftList(mainResponseAll)
-////                .build();
-////
-////        return mainPageDto;
-//        return "pages/allNft";
-//    }
 
-    @GetMapping("/loadNft")
-    public String LoadNft(Model model) {
-        return "pages/loadNft";
-    }
+//    @GetMapping("/loadNft")
+//    public String LoadNft(Model model) {
+//        return "pages/loadNft";
+//    }
 }

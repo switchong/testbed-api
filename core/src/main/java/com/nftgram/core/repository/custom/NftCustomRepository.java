@@ -1,5 +1,6 @@
 package com.nftgram.core.repository.custom;
 
+
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.Nft;
 import com.nftgram.core.dto.NftCommonDto;
@@ -13,16 +14,13 @@ import java.util.List;
 
 public interface NftCustomRepository {
 
-
-
     List<Nft> findAll();
 
     Page<Nft> findAllPage(Pageable pageable);
 
-//    Page<Nft> findAllNftPage(Pageable pageable , String collectionName , String ownerUserName  , ActiveStatus activeStatus);
+    Page<Nft> findAllNftPage(Pageable pageable , String keyword );
 
     List<Nft> findAllNft(Pageable pageable, String keyword , Long sort  );
-
 
     List<Nft> findNftUsername(Pageable pageable, String keyword, String username);
 
@@ -63,4 +61,6 @@ public interface NftCustomRepository {
     Long updateNftOrderSeq(Long memberId, Long nftId, Long orderSeq);
 
     Long updateNftFrame(Long memberId, Long nftId, Long frameNftId);
+
+
 }

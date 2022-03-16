@@ -8,12 +8,14 @@ import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.request.NftGalleryRequest;
 import com.nftgram.core.repository.custom.NftCustomRepository;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,7 @@ import static com.nftgram.core.domain.nftgram.QNft.nft;
 import static com.nftgram.core.domain.nftgram.QNftAsset.nftAsset;
 import static com.nftgram.core.domain.nftgram.QNftCollection.nftCollection;
 import static com.nftgram.core.domain.nftgram.QNftLike.nftLike;
+import static org.springframework.data.repository.support.PageableExecutionUtils.getPage;
 
 
 @Repository
@@ -52,16 +55,21 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return result;
     }
 
-//    @Override
-//    public Page<Nft> findAllNftPage(Pageable pageable, String collectionName, String ownerUserName, ActiveStatus activeStatus) {
-//        Page<Nft> result = (Page<Nft>) queryFactory.selectFrom(nft)
-//                .orderBy(nft.nftId.desc())
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                .fetch();
-//
-//        return  result;
-//    }
+    @Override
+    public Page<Nft> findAllNftPage(Pageable pageable, String keyword){
+        JPQLQuery<Nft> resultList = queryFactory.selectFrom(nft)
+                .where(
+                        eqKeyword(keyword),
+                        nft.activeStatus.eq(ActiveStatus.ACTIVE)
+                )
+                .orderBy(nft.nftId.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+
+        QueryResults<Nft> nftQueryResults = resultList.fetchResults();
+
+        return getPage(nftQueryResults.getResults() , pageable , () -> nftQueryResults.getTotal());
+    }
 
 
 

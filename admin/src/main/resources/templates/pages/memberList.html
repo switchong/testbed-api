@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: header" />
+
+<style>
+    #pagingArea > li {
+        cursor: pointer;
+    }
+</style>
+<body class="nav-md">
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#searchMainCategory").createMainCateOption();
+        $("#searchMainCategory").createSubCateOption('searchSubCategory');
+    });
+</script>
+<div class="container body">
+    <div class="main_container">
+<!--        <div th:replace="common/navigation :: navigation"/>-->
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>회원목록</h3>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="col-md-12 col-sm-12 ">
+                    <div id="memberContentWrapper" class="x_panel">
+                        <div class="x_title">
+                            <h2 id="memberStatusCondition"><small></small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+
+                                <div class="dropdown">
+                                    <button id="memberStatusBtn" class="btn btn-secondary dropdown-toggle" type="button" aria-haspopup="true">
+                                        회원 상태
+                                    </button>
+                                    <div id="memberStatusMenu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a data-status="ALL" class="dropdown-item">전체</a>
+                                        <a data-status="ACTIVE" class="dropdown-item">활동중</a>
+                                        <a data-status="SUSPEND" class="dropdown-item">일시정지</a>
+                                        <a data-status="REMOVE_STANDBY" class="dropdown-item">탈퇴중</a>
+                                        <a data-status="REMOVED" class="dropdown-item">탈퇴완료</a>
+                                    </div>
+                                </div>
+
+                            </ul>
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="dataTables_length" id="datatable-checkbox_length">
+                                        노출 개수 :
+                                        <label>
+                                            <select id="memberLimit" name="datatable-checkbox_length"
+                                                    class="form-control input-sm">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li class="pr-1">
+                                            <select id="searchMainCategory" name="datatable-checkbox_length"
+                                                    class="form-control input-sm" onchange="$(this).createSubCateOption('searchSubCategory');">
+                                            </select>
+                                        </li>
+                                        <li class="pr-1">
+                                            <select id="searchSubCategory" name="datatable-checkbox_length"
+                                                    class="form-control input-sm">
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target=".bs-example-modal-lg" onclick="fetchTableData();">카테고리 검색</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+<!--                            <div class="row">-->
+<!--                                <div class="col-sm-4">-->
+<!--                                    <button id="excelDownloadBtn">Excel Download</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /page content -->
+    </div>
+</div>
+
+<script>
+    function MemberStatus() {
+    }
+
+    MemberStatus.prototype.ALL = {
+        status: null,
+        name: "전체"
+    };
+    MemberStatus.prototype.ACTIVE = {
+        status: "ACTIVE",
+        name: "활동중"
+    };
+    MemberStatus.prototype.SUSPEND = {
+        status: "SUSPEND",
+        name: "일시정지"
+    };
+    MemberStatus.prototype.REMOVE_STANDBY = {
+        status: "REMOVE_STANDBY",
+        name: "탈퇴중"
+    };
+    MemberStatus.prototype.REMOVED = {
+        status: "REMOVED",
+        name: "탈퇴완료"
+    };
+
+    let currentPage;
+    let currentSize;
+    let memberStatus = MemberStatus.prototype.ALL;
+
+    $(function () {
+        /* 회원 상태 드랍다운 버튼 */
+        $("#memberStatusBtn").click(function () {
+            const memberStatusMenu = $("#memberStatusMenu");
+            if (memberStatusMenu.hasClass("show")) {
+                memberStatusMenu.removeClass("show");
+            } else {
+                memberStatusMenu.addClass("show");
+            }
+        });
+
+        /* 초기 테이블 데이터 초기화 */
+        currentPage = 1;
+        currentSize = 10;
+        fetchTableData();
+
+        /* 노출 개수 설정 이벤트 */
+        $("#memberLimit").change(function () {
+            currentPage = 1;
+            currentSize = $(this).val();
+            fetchTableData();
+        });
+
+        /* 회원 상태 검색 이벤트 */
+        $("#memberStatusMenu > a").click(function () {
+            const status = $(this).data("status");
+
+            if (status === 'ALL') {
+                memberStatus = MemberStatus.prototype.ALL;
+            } else if (status === 'ACTIVE') {
+                memberStatus = MemberStatus.prototype.ACTIVE;
+            } else if (status === 'SUSPEND') {
+                memberStatus = MemberStatus.prototype.SUSPEND;
+            } else if (status === 'REMOVE_STANDBY') {
+                memberStatus = MemberStatus.prototype.REMOVE_STANDBY;
+            } else {
+                memberStatus = MemberStatus.prototype.REMOVED;
+            }
+
+            $("#memberStatusBtn").click();
+            fetchTableData();
+        });
+
+        // /* 현재 페이지 엑셀 다운로드 (검색으로 인해 필터링된 데이터까지 모두 출력) */
+        // $("#excelDownloadBtn").click(function () {
+        //     window.location.href = createMemberListURI(true);
+        // });
+
+        /* 현재 페이지 내 데이터 검색 함수 */
+        $("#searchInput").on("keyup", function() {
+            let value = $(this).val().toLowerCase();
+            $("#memberDataTbl tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+    function fetchTableData() {
+        $.ajax({
+            url: createMemberListURI(),
+            type: 'GET',
+            dataType: 'html',
+            cache: false,
+            processData: false,
+            success: function (res) {
+                $("#memberTableContent").remove();
+                $("#memberContentWrapper").append(res);
+                $("#memberStatusCondition").html(getTimeStampTag());
+
+                /* 페이지 네이션 이벤트 */
+                $("#pagingArea > li").click(function () {
+                    currentPage = $(this).children('a').data('page');
+                    fetchTableData();
+                });
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
+
+    function createMemberListURI(forExcel) {
+        let uri = '/allNft';
+        let mainCategoryId = $("#searchMainCategory").val() == null ? 0 : $("#searchMainCategory").val();
+        let subCategoryId = $("#searchSubCategory").val() == null ? 0 : $("#searchSubCategory").val();
+
+        if (forExcel === true) {
+            uri = uri + '.xls';
+        }
+
+        uri = uri + '?page=' + currentPage + '&size=' + currentSize + '&mainCategoryId=' + mainCategoryId + '&subCategoryId=' + subCategoryId;
+
+        if (memberStatus.status != null) {
+            uri = uri + '&stabyMemberStatus=' + memberStatus.status;
+        }
+
+        return uri;
+    }
+
+    function getTimeStampTag() {
+        let d = new Date();
+        let s = leadingZeros(d.getFullYear(), 4) + '-' +
+            leadingZeros(d.getMonth() + 1, 2) + '-' +
+            leadingZeros(d.getDate(), 2) + ' ' +
+
+            leadingZeros(d.getHours(), 2) + ':' +
+            leadingZeros(d.getMinutes(), 2) + ':' +
+            leadingZeros(d.getSeconds(), 2);
+
+        return memberStatus.name + "<small>" + s + "</small>";
+    }
+
+    function leadingZeros(n, digits) {
+        let zero = '';
+        n = n.toString();
+
+        if (n.length < digits) {
+            for (let i = 0; i < digits - n.length; i++)
+                zero += '0';
+        }
+        return zero + n;
+    }
+</script>
+</body>
+</html>
