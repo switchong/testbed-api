@@ -240,7 +240,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.backgroundSeq.ne(Long.valueOf(0)),
                         nft.nft_member_id.eq(nftMemberId))
-                .orderBy(caseBuilder.asc(), nft.backgroundSeq.asc())
+                .orderBy(nft.backgroundSeq.asc())
                 .fetchCount();
 
         List<Nft> results = queryFactory.select(nft)
@@ -250,7 +250,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.backgroundSeq.ne(Long.valueOf(0)),
                         nft.nft_member_id.eq(nftMemberId))
-                .orderBy(caseBuilder.asc(), nft.backgroundSeq.asc())
+                .orderBy(nft.backgroundSeq.asc())
                 .fetch();
 
         NftCommonDto nftCommonDto = new NftCommonDto();
@@ -318,7 +318,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         nameBuilder.or(nft.collectionName.contains(keyword));
         nameBuilder.or(nft.name.contains(keyword));
-        nameBuilder.or(nft.lastSaleUserName.contains(keyword));
+//        nameBuilder.or(nft.lastSaleUserName.contains(keyword));
         nameBuilder.or(nft.creatorUserName.contains(keyword));
         nameBuilder.or(nft.ownerUserName.contains(keyword));
 
