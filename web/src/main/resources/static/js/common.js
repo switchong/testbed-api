@@ -223,6 +223,25 @@ function DontLongNumber() {
 */
 const size = 20;
 
+// search enter key event
+function enterkey() {
+    if (window.event.keyCode == 13) {
+        $('.simple-keyboard').css({"display" : "none"});
+        let searchVal = $('#searchKeyword').val();
+        if(searchVal == '' || searchVal == null) {
+            swal("Search the Value" , "" ,"error");
+            return false;
+        }
+        currentPage = 0;
+        homeCurrentPage = 0;
+        if(currentPagePath === '/gallery') {
+            MoreSlide('all','html', sort1, 0,0);
+        }
+        moreView("html");
+        // 엔터키가 눌렸을 때 실행할 내용
+    }
+}
+
 function moreView(type) {
     if(currentPagePath !== "/") {
         $(window).unbind();
@@ -255,14 +274,15 @@ function moreView(type) {
         url: url,
         type: "GET",
         dataType: "json",
-        data: {total: this.value},
+        timeout : 20000,
+        data: {},
         async: false,
-        success: async function (data) {
+        success: function (data) {
             let html = toList(data.nftList);
 
             if(keyword && data.total <= 0) {
                 if(nextPage === 0) {
-                    await swal("Search No Data!!", '', 'error');
+                    swal("Search No Data!!", '', 'error');
                     $('#searchKeyword').val('');
                     $('#searchKeyword').focus();
                 }

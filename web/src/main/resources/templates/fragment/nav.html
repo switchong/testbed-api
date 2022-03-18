@@ -80,7 +80,7 @@
         <div class="container">
             <div class="input-group">
                 <div class="input-group-left">
-                    <input class="form-control me-2 input"  id="searchKeyword" inputmode="none"  name="keyword" autocomplete="off" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}" type="text"/>
+                    <input class="form-control me-2 input"  id="searchKeyword" inputmode="none"  name="keyword" autocomplete="off" placeholder=" " th:value="${#httpServletRequest.getParameter('keyword')}" type="text" onkeyup="enterkey()"/>
                     <div class="input-group-append">
                         <button class="btn btn-secondary me-2" id="btnSearch">Search</button>
                     </div>
