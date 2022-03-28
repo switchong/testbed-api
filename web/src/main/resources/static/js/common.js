@@ -105,8 +105,8 @@ $(document).ready(function(){
 
         if(!(e.keyCode >= 37 && e.keyCode <= 40)) {
             let inputVal = $(this).val();
-            var check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
-            $(this).val(inputVal.replace(check,''));
+            /*var check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
+            $(this).val(inputVal.replace(check,''));*/
         }
     })
 
@@ -505,17 +505,6 @@ $.br2nl = function(tmpText){
 };
 
 //SNS 공유 URL
-// const url_default_ks = "https://story.kakao.com/share?url=";
-// const url_default_fb = "https://www.facebook.com/sharer/sharer.php?u=";
-// const url_default_tw_txt = "https://twitter.com/intent/tweet?text=";
-// const url_default_tw_url = "&url="; var url_default_band = "http://band.us/plugin/share?body=";
-// const url_route_band = "&route="; var url_default_naver = "http://share.naver.com/web/shareView.nhn?url=";
-//const title_default_naver = "&title=";
-// const url_combine_ks = url_default_ks + url_this_page;
-// const url_combine_fb = url_default_fb + url_this_page;
-// const url_combine_tw = url_default_tw_txt + document.title + url_default_tw_url + url_this_page;
-// const url_combine_band = url_default_band + encodeURI(url_this_page)+ '%0A' + encodeURI(title_this_page)+'%0A' + '&route=tistory.com';
-// const url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page);
 
 //sns url copy // nftMemberId or nftMemberUserId
 function clip(memberId){

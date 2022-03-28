@@ -246,7 +246,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
-                        nft.backgroundSeq.ne(Long.valueOf(0)),
+                        nft.backgroundSeq.gt(Long.valueOf(0)),
                         nft.nft_member_id.eq(nftMemberId))
                 .orderBy(nft.backgroundSeq.asc())
                 .fetchCount();
@@ -256,7 +256,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
-                        nft.backgroundSeq.ne(Long.valueOf(0)),
+                        nft.backgroundSeq.gt(Long.valueOf(0)),
                         nft.nft_member_id.eq(nftMemberId))
                 .orderBy(nft.backgroundSeq.asc())
                 .fetch();
