@@ -16,10 +16,10 @@
 
             <div style="margin-top:100px;">
                 <h5 style="text-align:center">Sign In</h5>
-                <input style="font-size: 0.9rem;" type="text" name="id" id="signinId" class="form-control" inputmode="none"  placeholder="Id" required=""  th:field="*{id}"  />
+                <input style="font-size: 0.9rem;" type="text" name="id" id="signinId" class="form-control login" inputmode="none"  placeholder="Id" required=""  th:field="*{id}"  />
             </div>
             <div style="margin-top:5px;">
-                <input style="font-size: 0.9rem;" type="password" name="password" id="signinPassword" class="form-control" inputmode="none" placeholder="Password" required=""  th:field="*{password}" />
+                <input style="font-size: 0.9rem;" type="password" name="password" id="signinPassword" class="form-control login" inputmode="none" placeholder="Password" required=""  th:field="*{password}" />
             </div>
 
             <small class="text-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></small>
@@ -43,6 +43,6 @@
         </form>
     </div>
 </div> <!-- /container -->
-<div class="simple-keyboard" id="search-keyboard" style="color: black; position: absolute; bottom: 0; left: 0; display: none; z-index: 9999999999999999999;"></div>
+<div class="simple-keyboard" id="search-keyboard" style="color: black; position: absolute; bottom: 0; left: 0; display: none; z-index: 9999999999999999999; font-size: 11px;"></div>
 </body>
 </html>

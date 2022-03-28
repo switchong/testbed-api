@@ -42,7 +42,7 @@ $(document).ready(function(){
             }
         })
 
-        $('#exampleFormControlTextarea3, .form-control').on('click',(e)=>{
+        $('#exampleFormControlTextarea3, .login').on('click',(e)=>{
             $('#search-keyboard').css({"display" : "block"});
             selectedInput = e.target.id;
             keyboard.setInput(e.target.value);

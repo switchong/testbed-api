@@ -13,13 +13,13 @@
 
         <form th:action="@{/auth/signup}" method="post" th:object="${nftMemberSignupRequest}">
             <div style="margin-top:100px">
-                <input type="text" name="id" class="form-control" placeholder="name" id="signupId" inputmode="none" required=""  th:field="*{id}"  />
+                <input type="text" name="id" class="form-control login" placeholder="name" id="signupId" inputmode="none" required=""  th:field="*{id}"  />
             </div>
             <div class="mt-2">
-                <input type="password"  name="firstPassword" class="form-control" inputmode="none" id="signupPassword1" placeholder="Password"  required="" th:field="*{firstPassword}" />
+                <input type="password"  name="firstPassword" class="form-control login" inputmode="none" id="signupPassword1" placeholder="Password"  required="" th:field="*{firstPassword}" />
             </div>
             <div class="mt-2">
-                <input type="password"  name="secondPassword" class="form-control" inputmode="none" id="signupPassword2" placeholder="Confirm"  required=""  />
+                <input type="password"  name="secondPassword" class="form-control login" inputmode="none" id="signupPassword2" placeholder="Confirm"  required=""  />
             </div>
             <small class="text-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></small>
             <small class="text-danger" th:if="${#fields.hasErrors('firstPassword')}" th:errors="*{firstPassword}"></small>
@@ -30,6 +30,6 @@
     </div>
 
 </div> <!-- /container -->
-<div class="simple-keyboard" id="search-keyboard" style="color: black; position: absolute; bottom: 0; left: 0; display: none; z-index: 9999999999999999999;"></div>
+<div class="simple-keyboard" id="search-keyboard" style="color: black; position: absolute; bottom: 0; left: 0; display: none; z-index: 9999999999999999999; font-size: 11px;"></div>
 </body>
 </html>
