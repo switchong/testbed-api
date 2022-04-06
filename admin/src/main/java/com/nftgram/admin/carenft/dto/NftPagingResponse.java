@@ -3,6 +3,7 @@ package com.nftgram.admin.carenft.dto;
 import com.nftgram.admin.carenft.dto.response.NftResponse;
 import com.nftgram.admin.common.converter.PagingConverter;
 
+
 import lombok.Getter;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public class NftPagingResponse {
         this.nftResponse = nftResponse;
         this.pagingConverter = pagingConverter;
     }
+
 }

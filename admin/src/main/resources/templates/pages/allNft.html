@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+
 <head th:replace="common/header :: header" />
+
 
 <body id="page-top">
 <!-- Page Wrapper -->
+
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class= "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
@@ -112,20 +115,22 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class=" font-weight-bold text-primary">NFT 목록</h6>
-<!--                        <div class="dataTables_filter" style="text-align: right">-->
-<!--                            검색:-->
-<!--                            <label>-->
-<!--                                <input id="searchInput" type="search" class="form-control input-sm"-->
-<!--                                       placeholder="" aria-controls="datatable-checkbox"-->
-<!--                                />-->
-<!--                            </label>-->
-<!--                        </div>-->
                         <div class="dataTables_filter" style="text-align: right">
-                            <form  action="/allNft" method="GET">
+                            <form id="search-form" th:action="@{/allNft}" method="GET">
+
+                                <select name="searchCondition" class="btn btn-primary" form="search-form">
+                                    <option value="nftId">nftId</option>
+                                    <option value="nftCollectionId">nftCollectionId</option>
+                                    <option value="collectionName">collectionName</option>
+                                    <option value="collectionName">creatorUserName</option>
+                                    <option value="ownerUserName">ownerUserName</option>
+                                </select>
+
                                 <label>
+                                    <!--                                    <input type="text" name="keyword" class="search-input search-item">-->
                                     <input name="keyword" type="text" class="form-control input-sm" aria-label="Search">
                                 </label>
-                                    <button class="btn btn-outline-success">검색하기</button>
+                                <button class="btn btn-primary">검색하기</button>
                             </form>
 
                         </div>
@@ -136,35 +141,78 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
+                                    <!--                                    <th><input type="checkbox" class="check_all"></th>-->
+                                    <th>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="allCheckBox" class="chk" onclick="allChecked(this)">
+                                        </label>
+                                    </th>
                                     <th>NftId</th>
                                     <th>collectionName</th>
                                     <th>ownerUserName</th>
+                                    <th>creatorUserName</th>
+                                    <th>상태변경</th>
                                     <th>IMG</th>
-                                    <th>ownerUserName</th>
+                                    <th>openSeaLink</th>
                                     <th>createDate</th>
 
                                 </tr>
                                 </thead>
                                 <tbody id="memberDataTbl">
                                 <tr th:each="data : ${nftPagingResponse.nftResponse}" >
+                                    <!--                                    <td><input type="checkbox" class="check"></td>-->
+                                    <td>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" class="chk" name="cchk" onclick="cchkClicked()"  th:value="${data.nftId}">
+                                        </label>
+                                    </td>
                                     <td th:text="${data.nftId}"></td>
                                     <td th:text="${data.collectionName}"></td>
                                     <td th:text="${data.ownerUserName}"></td>
+                                    <td th:text="${data.creatorUserName}"></td>
+
+                                    <!--                                    <td th:text="${data.activeStatus}"></td>-->
+                                    <!--                                    <td th:value="${data.activeStatus}">-->
+                                    <!--                                        <span th:text="${data.activeStatus}"></span>-->
+                                    <!--                                        &nbsp;<button class="deleteitbtn optionbtn">delete</button>-->
+                                    <!--                                    </td>-->
+
+                                    <td>
+                                        <select name="change-omode" id="change-omode" class="omode"style="border: 1px solid #d1d3e2;" >
+
+                                            <option value="ACTIVE" th:selected="${#strings.equals( data.activeStatus, 'ACTIVE' )}">ACTIVE</option>
+                                            <option value="DELETE" th:selected="${#strings.equals( data.activeStatus, 'DELETE' )}">DELETE</option>
+                                        </select>
+                                        <input type="button" value="변경" class="changestatusbtn" style="border: 1px solid #d1d3e2;background: #fff;" >
+
+                                    </td>
+
+                                    <input  type="hidden" th:value="${data.nftId}" value="1">
                                     <td style="height: 100%; width: 200px; " th:if="${data.imgUrl} != null " >
                                         <img th:src="${data.imgUrl}" style="width: 100%; height: 100%;" />
                                     </td>
                                     <td style="height: 100%; width: 200px; text-align: center; " th:unless="${data.imgUrl} != null ">
                                         NO IMG
                                     </td>
-                                    <td><a th:href="${data.openSeaLink}" th:target="_black">OPENSEA LINK</a>
+                                    <td>
+
+                                        <a th:href="${data.openSeaLink}" th:target="_black">OPENSEA LINK</a>
                                     </td>
+
                                     <td th:text="${#temporals.format(data.createDate, 'yyyy.MM.dd HH:mm:ss')}"></td>
+
                                 </tr>
+
                                 <tr th:if="${nftPagingResponse.nftResponse.size() == 0}">
                                     <td colspan="8" style="text-align: center"> 찾으시는 회원 정보가 없습니다. </td>
                                 </tr>
                                 </tbody>
+
                             </table>
+                            <div class="text-right">
+                                <a  href='javascript:boardDelete();' class="btn btn-danger">변경</a>
+<!--                                <input type="button" value="변경" class="changestatusAll" style="border: 1px solid #d1d3e2;background: #fff;" >-->
+                            </div>
                             <nav style="position:center; padding-left: 40%; text-align: center;">
                                 <ul id="pagingArea" class="pagination">
                                     <li th:if="${nftPagingResponse.pagingConverter.startPageNo > 5}" class="page-item">
@@ -180,7 +228,7 @@
 
                                     <li th:if="${nftPagingResponse.pagingConverter.endPageNo} < ${nftPagingResponse.pagingConverter.finalPageNo}" class="page-item">
                                         <a th:href="@{/allNft(page=${nftPagingResponse.pagingConverter.nextPageNo})}" class="page-link" aria-label="Last">
-                                           Next
+                                            Next
                                         </a>
                                     </li>
                                 </ul>
@@ -200,7 +248,126 @@
 </div>
 <!-- End of Main Content -->
 
+<script>
 
+    //체크박스 전체 선택 클릭 이벤트
+    function allChecked(target){
+
+        if($(target).is(":checked")){
+            //체크박스 전체 체크
+            $(".chk").prop("checked", true);
+        }
+
+        else{
+            //체크박스 전체 해제
+            $(".chk").prop("checked", false);
+        }
+    }
+
+    //자식 체크박스 클릭 이벤트
+    function cchkClicked(){
+
+        //체크박스 전체개수
+        var allCount = $("input:checkbox[name=cchk]").length;
+
+        //체크된 체크박스 전체개수
+        var checkedCount = $("input:checkbox[name=cchk]:checked").length;
+
+        //체크박스 전체개수와 체크된 체크박스 전체개수가 같으면 체크박스 전체 체크
+        if(allCount == checkedCount){
+            $(".chk").prop("checked", true);
+        }
+
+        //같지않으면 전체 체크박스 해제
+        else{
+            $("#allCheckBox").prop("checked", false);
+        }
+    }
+
+    //게시판 삭제하기
+    function boardDelete(){
+
+        var boardIdxArray = [];
+
+        $("input:checkbox[name=cchk]:checked").each(function(){
+            boardIdxArray.push($(this).val());
+        });
+
+        console.log(boardIdxArray);
+
+        if(boardIdxArray == ""){
+            alert("항목을 선택해주세요.");
+            return false;
+        }
+
+        let confirmAlert = confirm('정말로 삭제하시겠습니까?');
+        if(confirmAlert){
+
+            $.ajax({
+                type : 'POST'
+                ,url : "/admin/deleteNft"
+                ,dataType : 'json'
+                ,data : JSON.stringify(boardIdxArray)
+                ,contentType: 'application/json'
+                ,success : function(result) {
+                    alert("sucess");
+                    window.location.href = '/allNft';
+                },
+                error: function(request, status, error) {
+
+                }
+            })
+        }
+    }
+    $(function(){
+
+        $('.changestatusAll').click(function(){
+
+
+
+            let boardIdxArray = [];
+            let changeNft = [];
+            $("input:checkbox[name=cchk]:checked").each(function(){
+                boardIdxArray.push($(this).val());
+                changeNft.push($(this).closest('tr').find('.omode').val());
+            });
+            console.log(boardIdxArray);
+            console.log(changeNft);
+            $.ajax({
+                type: 'POST',
+                url: '/admin/nftList/' + boardIdxArray,
+                data : JSON.stringify(changeNft),
+                contentType: 'application/json'
+            }).done(function(word){
+                alert(word);
+                window.location.href = '/allNft';
+            }).fail(function (error){
+                alert(JSON.stringify(error));
+            })
+        })
+    })
+
+    $(function(){
+
+        $('.changestatusbtn').click(function(){
+
+            let order_status = $(this).closest('tr').find('.omode').val();
+            let id = $(this).closest('tr').find('input[type=hidden]').val();
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/nftList/' + id,
+                data: {status : order_status},
+            }).done(function(word){
+                alert(word);
+                window.location.href = '/allNft';
+            }).fail(function (error){
+                alert(JSON.stringify(error));
+            })
+        })
+    })
+</script>
 
 <div th:replace="common/footer :: footer" />
 
@@ -235,4 +402,5 @@
 </div>
 
 </body>
+
 </html>

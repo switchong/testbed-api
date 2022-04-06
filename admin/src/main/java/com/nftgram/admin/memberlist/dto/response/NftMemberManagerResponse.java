@@ -8,11 +8,11 @@ import java.util.List;
 @Getter
 public class NftMemberManagerResponse {
 
-    private List<NftMemberResponse> responseList;
+    private List<NftMemberResponse> nftMemberResponse;
     private PagingConverter pagingConverter;
 
-    public NftMemberManagerResponse(List<NftMemberResponse> responseList, PagingConverter pagingConverter) {
-        this.responseList = responseList;
+    public NftMemberManagerResponse(List<NftMemberResponse> nftMemberResponse, PagingConverter pagingConverter) {
+        this.nftMemberResponse = nftMemberResponse;
         this.pagingConverter = pagingConverter;
     }
 }

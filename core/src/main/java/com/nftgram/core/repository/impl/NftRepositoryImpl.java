@@ -2,6 +2,7 @@ package com.nftgram.core.repository.impl;
 
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.Nft;
+import com.nftgram.core.domain.nftgram.NftCollection;
 import com.nftgram.core.dto.NftCommonDto;
 import com.nftgram.core.dto.NftIdWalletList;
 import com.nftgram.core.dto.NftOneJoinDto;
@@ -45,6 +46,14 @@ public class NftRepositoryImpl implements NftCustomRepository {
     }
 
 
+    @Override
+    public void findByNftId(Long nftId) {
+        long result = queryFactory.delete(nft)
+                .where(nft.nftId.eq(nftId))
+                .execute();
+
+    }
+
     public Page<Nft> findAllPage(Pageable pageable) {
         Page<Nft> result = (Page<Nft>) queryFactory.selectFrom(nft)
                 .orderBy(nft.nftId.desc())
@@ -55,14 +64,16 @@ public class NftRepositoryImpl implements NftCustomRepository {
         return result;
     }
 
+
     @Override
     public Page<Nft> findAllNftPage(Pageable pageable, String keyword){
         JPQLQuery<Nft> resultList = queryFactory.selectFrom(nft)
                 .where(
-                        eqKeyword(keyword),
-                        nft.activeStatus.eq(ActiveStatus.ACTIVE)
+
+                        eqKeyword(keyword)
+//                      nft.activeStatus.eq(ActiveStatus.ACTIVE)
                 )
-                .orderBy(nft.nftId.desc())
+                .orderBy(nft.nftId.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize());
 
@@ -70,6 +81,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         return getPage(nftQueryResults.getResults() , pageable , () -> nftQueryResults.getTotal());
     }
+
 
 
 
@@ -92,7 +104,7 @@ public class NftRepositoryImpl implements NftCustomRepository {
      * @return
      */
     @Override
-    public List<Nft> findAllNft(Pageable pageable  , String keyword , Long sort )  {
+    public List<Nft> findAllNft(Pageable pageable, String keyword, Long sort)  {
 
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
@@ -106,7 +118,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
                 .fetch();
         return result;
     }
-
     @Override
     public List<Nft> findNftUsername(Pageable pageable, String keyword, String username)  {
         BooleanBuilder nameBuilder = new BooleanBuilder();
@@ -324,9 +335,10 @@ public class NftRepositoryImpl implements NftCustomRepository {
             return null;
         }
 
+        nameBuilder.or(nft.nftId.like(keyword));
+        nameBuilder.or(nftCollection.nftCollectionId.like(keyword));
         nameBuilder.or(nft.collectionName.startsWith(keyword));
         nameBuilder.or(nft.name.startsWith(keyword));
-//        nameBuilder.or(nft.lastSaleUserName.contains(keyword));
         nameBuilder.or(nft.creatorUserName.startsWith(keyword));
         nameBuilder.or(nft.ownerUserName.startsWith(keyword));
 

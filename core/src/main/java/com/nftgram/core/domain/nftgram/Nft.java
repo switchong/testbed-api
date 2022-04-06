@@ -4,10 +4,7 @@ package com.nftgram.core.domain.nftgram;
 import com.nftgram.core.domain.common.BaseEntity;
 import com.nftgram.core.domain.common.value.ActiveStatus;
 import com.nftgram.core.domain.nftgram.value.MarketType;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,6 +15,7 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "nft")
+@Setter
 public class Nft  extends BaseEntity {
 
     @Id
@@ -145,7 +143,7 @@ public class Nft  extends BaseEntity {
 
     @Builder
     public Nft(String assetContractAddress, String tokenId,
-               String ownerUserName, String s, int i, int i1) {
+               String ownerUserName, String nftId , String s, int i, int i1) {
         this.nft_member_id = nft_member_id;
         this.assetContractAddress = assetContractAddress;
         this.tokenId = tokenId;
@@ -194,5 +192,7 @@ public class Nft  extends BaseEntity {
         this.nftProperties.add(nftProperty);
     }
 
-
+    public void deletePost() {
+        this.activeStatus = ActiveStatus.DELETE;
+    }
 }

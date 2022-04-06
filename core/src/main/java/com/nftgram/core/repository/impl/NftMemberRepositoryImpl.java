@@ -1,19 +1,27 @@
 package com.nftgram.core.repository.impl;
 
 import com.nftgram.core.domain.common.value.ActiveStatus;
+import com.nftgram.core.domain.member.MemberStatus;
 import com.nftgram.core.domain.nftgram.NftMember;
 import com.nftgram.core.dto.request.NftMemberRequestDto;
 import com.nftgram.core.repository.custom.NftMemberCustomRepository;
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import static com.nftgram.core.domain.nftgram.QNft.nft;
 import static com.nftgram.core.domain.nftgram.QNftAsset.nftAsset;
 import static com.nftgram.core.domain.nftgram.QNftMember.nftMember;
 import static com.nftgram.core.domain.nftgram.QNftMemberWallet.nftMemberWallet;
+import static org.springframework.data.repository.support.PageableExecutionUtils.getPage;
 
 @Repository
 @Slf4j
@@ -57,6 +65,31 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
         return result;
     }
 
+    @Override
+    public Page<NftMember> findByNftMemberList(Pageable pageable, String keyword) {
+        JPQLQuery<NftMember> resultMemberList = queryFactory.selectFrom(nftMember)
+                .where(
+                        likeUserId(keyword),
+                        nftMember.memberStatus.eq(MemberStatus.ACTIVE)
+                )
+                .orderBy(nftMember.createDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+
+        QueryResults<NftMember>  queryResults  = resultMemberList.fetchResults();
+
+        return  getPage(queryResults.getResults() , pageable ,  () -> queryResults.getTotal());
+
+    }
+    private BooleanExpression likeUserId(String nftMemberId) {
+
+        if (StringUtils.isEmpty(nftMemberId)){
+            return  null;
+        }
+
+
+        return nftMember.nftMemberId.like(nftMemberId + "%");
+    }
     @Override
     public NftMember findNftUsername(String username) {
         NftMember result = queryFactory.selectFrom(nftMember)

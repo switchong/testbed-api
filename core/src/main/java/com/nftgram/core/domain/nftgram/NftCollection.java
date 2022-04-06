@@ -16,6 +16,7 @@ import javax.persistence.*;
 @Table(name = "nft_collection")
 public class NftCollection  extends BaseEntity {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nftCollectionId;  //PK

@@ -11,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -28,11 +30,45 @@ public class NftInquiryService {
     public NftPagingResponse nftListquery(NftSearchRequest request , String keyword){
 
         Page<Nft> nftByPaging = nftRepository.findAllNftPage(request.of() , keyword);
+
         return  getNftPagingResponse(nftByPaging);
     }
 
+    @Transactional
+    public Long changeOrderStatus(Long nftId, ActiveStatus orderStatus) {
+        Optional<Nft> findOrderItem = nftRepository.findById(nftId);
+        Nft checkedOrderItem = Nft.builder().build();
+        if (findOrderItem.isPresent()) {
+            checkedOrderItem = findOrderItem.get();
+        }
+        checkedOrderItem.setNftId(nftId);
+        checkedOrderItem.setActiveStatus(orderStatus);
+
+        return checkedOrderItem.getNftId();
+    }
 
 
+    @Transactional
+    public  Long deleteById (Long id){
+        nftRepository.deleteById(id);
+        return id;
+    }
+
+
+    public void  deleteBoard(List<String> boardIdArray) {
+        for(int i=0; i<boardIdArray.size(); i++) {
+            String boardIdx = boardIdArray.get(i);
+            Optional<Nft> optional = nftRepository.findById(Long.parseLong(boardIdx));
+            if(optional.isPresent()){
+                Nft board = optional.get();
+                nftRepository.delete(board);
+            }
+            else{
+                throw new NullPointerException();
+            }
+        }
+
+    }
     private NftPagingResponse getNftPagingResponse(Page<Nft> nftByPaging){
 
         List<Nft> content = nftByPaging.getContent();
@@ -45,6 +81,7 @@ public class NftInquiryService {
                             nft.getNftId(),
                             nft.getCollectionName(),
                             nft.getOwnerUserName(),
+                            nft.getCreatorUserName(),
                             nft.getImageUrl(),
                             nft.getOpenseaLink(),
                             nft.getCreateDate(),

@@ -18,4 +18,5 @@ public class NftSearchRequest extends PageRequest {
     private String ownerUserName;
     private ActiveStatus activeStatus;
 
+
 }

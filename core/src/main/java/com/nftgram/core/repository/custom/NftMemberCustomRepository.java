@@ -2,6 +2,8 @@ package com.nftgram.core.repository.custom;
 
 import com.nftgram.core.domain.nftgram.NftMember;
 import com.nftgram.core.dto.request.NftMemberRequestDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface NftMemberCustomRepository {
 
@@ -11,6 +13,7 @@ public interface NftMemberCustomRepository {
 
     Long updateNftMember(NftMemberRequestDto nftMemberUpdate, Long nftMemberId);
 
+    Page<NftMember> findByNftMemberList(Pageable pageable , String keyword );
 
     NftMember findNftUsername(String username);
 
