@@ -1,16 +1,16 @@
 server:
-  port: 8081
+  port: 7260
 spring:
   profiles: local
 
 
   datasource :
     hikari:
-      #            driver-class-name: org.h2.Driver
-      #            jdbc-url: jdbc:h2:~/test;AUTO_SERVER=true
-      #            jdbc-url: jdbc:h2:tcp://localhost/~/testdb;AUTO_SERVER=true
-      #            username: sa
-      #            password:
+#            driver-class-name: org.h2.Driver
+#            jdbc-url: jdbc:h2:~/test;AUTO_SERVER=true
+#            jdbc-url: jdbc:h2:tcp://localhost/~/testdb;AUTO_SERVER=true
+#            username: sa
+#            password:
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: ""
