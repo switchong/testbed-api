@@ -27,7 +27,6 @@ import java.security.GeneralSecurityException;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-
 public class AuthController {
 
     private final MemberAuthService memberAuthService;

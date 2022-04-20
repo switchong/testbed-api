@@ -127,7 +127,6 @@
                                 </select>
 
                                 <label>
-                                    <!--                                    <input type="text" name="keyword" class="search-input search-item">-->
                                     <input name="keyword" type="text" class="form-control input-sm" aria-label="Search">
                                 </label>
                                 <button class="btn btn-primary">검색하기</button>
@@ -141,7 +140,6 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <!--                                    <th><input type="checkbox" class="check_all"></th>-->
                                     <th>
                                         <label class="checkbox-inline">
                                             <input type="checkbox" id="allCheckBox" class="chk" onclick="allChecked(this)">
@@ -170,13 +168,11 @@
                                     <td th:text="${data.collectionName}"></td>
                                     <td th:text="${data.ownerUserName}"></td>
                                     <td th:text="${data.creatorUserName}"></td>
-
                                     <!--                                    <td th:text="${data.activeStatus}"></td>-->
                                     <!--                                    <td th:value="${data.activeStatus}">-->
                                     <!--                                        <span th:text="${data.activeStatus}"></span>-->
                                     <!--                                        &nbsp;<button class="deleteitbtn optionbtn">delete</button>-->
                                     <!--                                    </td>-->
-
                                     <td>
                                         <select name="change-omode" id="change-omode" class="omode"style="border: 1px solid #d1d3e2;" >
 
@@ -208,10 +204,11 @@
                                 </tr>
                                 </tbody>
 
+
                             </table>
                             <div class="text-right">
                                 <a  href='javascript:boardDelete();' class="btn btn-danger">변경</a>
-<!--                                <input type="button" value="변경" class="changestatusAll" style="border: 1px solid #d1d3e2;background: #fff;" >-->
+                                <input type="button" value="변경" class="changestatusAll" style="border: 1px solid #d1d3e2;background: #fff;" >
                             </div>
                             <nav style="position:center; padding-left: 40%; text-align: center;">
                                 <ul id="pagingArea" class="pagination">
@@ -323,8 +320,6 @@
 
         $('.changestatusAll').click(function(){
 
-
-
             let boardIdxArray = [];
             let changeNft = [];
             $("input:checkbox[name=cchk]:checked").each(function(){
@@ -336,7 +331,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/admin/nftList/' + boardIdxArray,
-                data : JSON.stringify(changeNft),
+                data : {status : changeNft},
                 contentType: 'application/json'
             }).done(function(word){
                 alert(word);
@@ -350,6 +345,7 @@
     $(function(){
 
         $('.changestatusbtn').click(function(){
+
 
             let order_status = $(this).closest('tr').find('.omode').val();
             let id = $(this).closest('tr').find('input[type=hidden]').val();

@@ -99,27 +99,7 @@ public class MemberAuthService  {
     }
 
 
-//    @Transactional(rollbackFor = Exception.class)
-//    public Long memberSnsUrlSave(Long memberId , NftMemberUpdateDto mycollectionDto){
-//        Long isResult = Long.valueOf(1);
-//
-//
-//        Long nftMember = nftMemberRepository.updateNftMember(mycollectionDto , memberId);
-//
-//
-//        //if (isResult.equals(Long.valueOf(1))) {
-//            NftMember nftMember1 = NftMember.builder()
-//                    .username(mycollectionDto.getUsername())
-//                    .instagram(mycollectionDto.getInstagram())
-//                    .discord(mycollectionDto.getDiscord())
-//                    .facebook(mycollectionDto.getFacebook())
-//                    .twitter(mycollectionDto.getTwitter())
-//                    .build();
-//        //}
-//        nftMemberRepository.save(nftMember1);
-//        //return isResult;
-//        return nftMember;
-//    }
+
 
 
 }

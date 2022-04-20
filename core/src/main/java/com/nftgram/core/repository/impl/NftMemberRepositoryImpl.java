@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
+
 import static com.nftgram.core.domain.nftgram.QNft.nft;
 import static com.nftgram.core.domain.nftgram.QNftAsset.nftAsset;
 import static com.nftgram.core.domain.nftgram.QNftMember.nftMember;
@@ -29,14 +31,19 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
 
     private final JPAQueryFactory queryFactory;
 
+
     public NftMemberRepositoryImpl(JPAQueryFactory queryFactory) {
         this.queryFactory = queryFactory;
     }
 
     @Override
     public NftMember findByNftMemberUserId(String nftMemberUserId) {
+
+        LocalDateTime dateTime = LocalDateTime.now();
         NftMember result = queryFactory.selectFrom(nftMember)
-                .where(nftMember.nftMemberUserId.eq(nftMemberUserId))
+
+                .where(nftMember.nftMemberUserId.eq(nftMemberUserId)
+                        )
                 .fetchOne();
         return result;
     }
@@ -53,7 +60,9 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
 
     @Override
     public Long updateNftMember(NftMemberRequestDto updateDto, Long memberId) {
+        LocalDateTime dateTime = LocalDateTime.now();
         Long result = queryFactory.update(nftMember)
+                .set(nftMember.updateDate , dateTime)
                 .set(nftMember.username , updateDto.getUsername())
                 .set(   nftMember.instagram , updateDto.getInstagram())
                 .set(   nftMember.facebook ,  updateDto.getFacebook() )

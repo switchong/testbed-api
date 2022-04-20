@@ -23,16 +23,16 @@ public class MainController {
     private final MainService mainService;
     private final NftFindService nftFindService;
 
-    @GetMapping("/")
-    public String Main(Model model, Pageable pageable , String keyword, Long sort ) throws GeneralSecurityException, UnsupportedEncodingException, ParseException {
-
-        if (sort == null){
-            sort = Long.valueOf(0);
-        }
-
-        model.addAttribute("nav_active","explorer");
-
-        List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable , keyword ,sort );
-        return "index";
-    }
+//    @GetMapping("/")
+//    public String Main(Model model, Pageable pageable , String keyword, Long sort ) throws GeneralSecurityException, UnsupportedEncodingException, ParseException {
+//
+//        if (sort == null){
+//            sort = Long.valueOf(0);
+//        }
+//
+//        model.addAttribute("nav_active","explorer");
+//
+//        List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable , keyword ,sort );
+//        return "index";
+//    }
 }

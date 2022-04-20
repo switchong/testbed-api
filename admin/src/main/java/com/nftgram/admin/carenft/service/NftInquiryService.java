@@ -27,7 +27,7 @@ public class NftInquiryService {
 
 
     @Transactional(readOnly = true)
-    public NftPagingResponse nftListquery(NftSearchRequest request , String keyword){
+    public NftPagingResponse nftListquery(NftSearchRequest request , String keyword ){
 
         Page<Nft> nftByPaging = nftRepository.findAllNftPage(request.of() , keyword);
 

@@ -15,9 +15,13 @@ public interface NftCustomRepository {
 
     void findByNftId(Long nftId);
 
-    Page<Nft> findAllPage(Pageable pageable);
+//    Page<Nft> findAllPage(Pageable pageable , String keyword);
+
 
     Page<Nft> findAllNftPage(Pageable pageable , String keyword );
+
+//    List<Nft> findAllNftPage(Pageable pageable , String keyword);
+
 
     List<Nft> findAllNft(Pageable pageable, String keyword , Long sort  );
 
