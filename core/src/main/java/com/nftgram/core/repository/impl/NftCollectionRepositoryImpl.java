@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.nftgram.core.domain.nftgram.QNft.nft;
-import static com.nftgram.core.domain.nftgram.QNftAsset.nftAsset;
 import static com.nftgram.core.domain.nftgram.QNftCollection.nftCollection;
 import static com.nftgram.core.domain.nftgram.QNftLike.nftLike;
 
@@ -48,7 +47,6 @@ public class NftCollectionRepositoryImpl implements NftCollectionCustomRepositor
 
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.ne(""),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(memberId),
@@ -66,7 +64,6 @@ public class NftCollectionRepositoryImpl implements NftCollectionCustomRepositor
         List<Nft> nftResult = queryFactory.select(nft)
                 .from(nftLike)
                 .join(nftLike.nft, nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.ne("")
                         ,nftLike.nftMember.nftMemberId.eq(memberId)
                         ,nftLike.activeStatus.eq(ActiveStatus.ACTIVE))

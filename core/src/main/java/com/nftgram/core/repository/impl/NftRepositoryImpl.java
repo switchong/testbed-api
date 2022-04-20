@@ -8,7 +8,6 @@ import com.nftgram.core.dto.NftOneJoinDto;
 import com.nftgram.core.dto.request.NftGalleryRequest;
 import com.nftgram.core.repository.custom.NftCustomRepository;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -16,7 +15,6 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -32,7 +30,6 @@ import static com.nftgram.core.domain.nftgram.QNft.nft;
 import static com.nftgram.core.domain.nftgram.QNftAsset.nftAsset;
 import static com.nftgram.core.domain.nftgram.QNftCollection.nftCollection;
 import static com.nftgram.core.domain.nftgram.QNftLike.nftLike;
-import static org.springframework.data.repository.support.PageableExecutionUtils.getPage;
 
 
 @Repository
@@ -86,7 +83,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
     @Override
     public Page<Nft> findAllNftPage(Pageable pageable, String keyword){
         JPQLQuery<Nft> resultList = queryFactory.selectFrom(nft)
-                .leftJoin(nft.nftAsset, nftAsset)
                 .where(
                         eqKeyword(keyword)
 //                      nft.activeStatus.eq(ActiveStatus.ACTIVE)
@@ -132,7 +128,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         eqKeyword(keyword))
@@ -152,7 +147,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         eqKeyword(keyword),
@@ -167,7 +161,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
     public List<Nft> findAllNftGallery(Pageable pageable) {
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE))
                 .orderBy(nft.nftId.desc())
@@ -190,7 +183,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
     public List<Nft> findByNftCollectionId(Pageable pageable, Long nftCollectionId) {
         List<Nft> result = queryFactory.select(nft)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nftCollection.nftCollectionId.eq(nftCollectionId)
@@ -219,7 +211,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
         List<Nft> nftResult = queryFactory.select(nft)
                 .from(nftLike)
                 .join(nftLike.nft, nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nftLike.activeStatus.eq(ActiveStatus.ACTIVE),
@@ -239,7 +230,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         List<Nft> nftResult = queryFactory.select(nft)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(nftMemberId),
@@ -259,7 +249,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         List<Nft> nftResult = queryFactory.select(nft)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(nftMemberId))
@@ -278,7 +267,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         Long totals = queryFactory.select(nft.nftId)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.backgroundSeq.gt(Long.valueOf(0)),
@@ -288,7 +276,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         List<Nft> results = queryFactory.select(nft)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.backgroundSeq.gt(Long.valueOf(0)),
@@ -436,7 +423,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         Long totals = queryFactory.select(nft.nftId)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         pageTypeWhere(nftGalleryRequest))
                 .orderBy(nft.orderSeq.asc())
@@ -446,7 +432,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
         if(nftGalleryRequest.getPageType().equals("editSlider")) {
             results = queryFactory.select(nft)
                     .from(nft)
-                    .join(nft.nftAsset, nftAsset)
                     .where(nft.imageUrl.isNotEmpty(),
                             pageTypeWhere(nftGalleryRequest))
                     .orderBy(caseBuilder.asc(), nft.orderSeq.asc())
@@ -456,7 +441,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
         } else {
             results = queryFactory.select(nft)
                     .from(nft)
-                    .join(nft.nftAsset, nftAsset)
                     .where(nft.imageUrl.isNotEmpty(),
                             pageTypeWhere(nftGalleryRequest))
                     .orderBy(nft.nftId.desc())

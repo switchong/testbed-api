@@ -34,8 +34,8 @@ public class NftLikeRepositoryImpl implements NftLikeCustomRepository {
     @Override
     public List<NftLike> findByLikeNftId(Long nftId) {
         List<NftLike> nftLikeList = queryFactory.selectFrom(nftLike)
-                .where(nftLike.nft.nftId.eq(nftId))
-                .where(nftLike.activeStatus.eq(ACTIVE))
+                .where(nftLike.nft.nftId.eq(nftId),
+                        nftLike.activeStatus.eq(ACTIVE))
                 .fetch();
 
         return nftLikeList;
@@ -44,8 +44,8 @@ public class NftLikeRepositoryImpl implements NftLikeCustomRepository {
     @Override
     public NftLike findByLikeMemberId(Long nftMemberId) {
         NftLike nftLikeList = queryFactory.selectFrom(nftLike)
-                .where(nftLike.nftMember.nftMemberId.eq(nftMemberId))
-                .where(nftLike.activeStatus.eq(ACTIVE))
+                .where(nftLike.nftMember.nftMemberId.eq(nftMemberId),
+                        nftLike.activeStatus.eq(ACTIVE))
                 .fetchOne();
 
         return nftLikeList;
@@ -54,8 +54,8 @@ public class NftLikeRepositoryImpl implements NftLikeCustomRepository {
     @Override
     public NftLike findByLikeMemberIdOne(Long nftId, Long nftMemberId) {
         NftLike nftLikeList = queryFactory.selectFrom(nftLike)
-                .where(nftLike.nft.nftId.eq(nftId))
-                .where(nftLike.nftMember.nftMemberId.eq(nftMemberId))
+                .where(nftLike.nft.nftId.eq(nftId),
+                        nftLike.nftMember.nftMemberId.eq(nftMemberId))
                 .fetchOne();
 
         return nftLikeList;

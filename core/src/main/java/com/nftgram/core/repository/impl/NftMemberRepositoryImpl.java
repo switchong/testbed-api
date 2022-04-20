@@ -20,7 +20,6 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDateTime;
 
 import static com.nftgram.core.domain.nftgram.QNft.nft;
-import static com.nftgram.core.domain.nftgram.QNftAsset.nftAsset;
 import static com.nftgram.core.domain.nftgram.QNftMember.nftMember;
 import static com.nftgram.core.domain.nftgram.QNftMemberWallet.nftMemberWallet;
 import static org.springframework.data.repository.support.PageableExecutionUtils.getPage;
@@ -116,7 +115,6 @@ public class NftMemberRepositoryImpl implements NftMemberCustomRepository {
 
         Long nftResult = queryFactory.select(nft.nftId)
                 .from(nft)
-                .join(nft.nftAsset, nftAsset)
                 .where(nft.imageUrl.isNotEmpty(),
                         nft.activeStatus.eq(ActiveStatus.ACTIVE),
                         nft.nft_member_id.eq(memberId),
