@@ -192,13 +192,13 @@ public class ApiRestService {
         }
 
         /* 지갑 연동 시 NFT 동기화*/
-        if(isResult == 1 || isResult == 3 || isResult == 5) {
+        /*if(isResult == 1 || isResult == 3 || isResult == 5) {
             List<Long> nftIdList = memberWalletByNftMatching(walletContractAddress);
             System.out.println("nftIdList : " + nftIdList.size() + "   ");
             if(nftIdList.size() > 0) {
                 nftRepository.updateNftMemberWallet(nftIdList, memberId);
             }
-        }
+        }*/
 
         return isResult;
     }

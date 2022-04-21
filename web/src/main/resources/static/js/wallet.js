@@ -108,7 +108,7 @@ $(document).ready(function(){
                         return false;
                     } else {
                         // 지갑주소 저장
-                        walletSave(address);
+                        result = walletSave(address);
                     }
 
                 } else {    // 연결한 메타마스크 없을 경우
