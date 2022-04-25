@@ -22,7 +22,7 @@ public class PagingConverter {
     public PagingConverter(int currentPageNo, int maxPost) {
         this.currentPageNo = currentPageNo;
         this.sizeOfPage = 5; //기본 페이지를 5개로 표시함
-        this.maxPost = (maxPost != 0) ? maxPost : 10;
+        this.maxPost = (maxPost == 0) ? maxPost : 4;
         // 게시물 최대 갯수가 0개가 아니라면  현재 게시물 갯수(maxPost)이고, 만약 게시물수가 0개라면 10개표현이다(10은 그냥 고정값) => 3항연산자
     }
 

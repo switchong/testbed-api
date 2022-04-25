@@ -14,12 +14,11 @@ import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -34,12 +33,13 @@ import static com.nftgram.core.domain.nftgram.QNftLike.nftLike;
 
 @Repository
 @Slf4j
-public class NftRepositoryImpl implements NftCustomRepository {
+public class NftRepositoryImpl  implements NftCustomRepository{
 
     private final JPAQueryFactory queryFactory;
 
 
     public NftRepositoryImpl(JPAQueryFactory queryFactory) {
+
         this.queryFactory = queryFactory;
     }
 
@@ -52,24 +52,6 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
     }
 
-
-
-
-//
-//    public Page<Nft> findAllPage(Pageable pageable , String keyword) {
-//        Page<Nft> result = (Page<Nft>) queryFactory.selectFrom(nft)
-//                .where(eqKeyword(keyword))
-//                .orderBy(nft.nftId.desc())
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                .fetch();
-//
-//        return result;
-//    }
-
-
-
-
     public List<Nft> findAll() {
         List<Nft> result = queryFactory.selectFrom(nft)
                 .orderBy(nft.nftId.desc())
@@ -77,45 +59,20 @@ public class NftRepositoryImpl implements NftCustomRepository {
 
         return result;
     }
-
-
-
     @Override
     public Page<Nft> findAllNftPage(Pageable pageable, String keyword){
-        JPQLQuery<Nft> resultList = queryFactory.selectFrom(nft)
+
+        List<Nft> resultList = queryFactory.selectFrom(nft)
                 .where(
                         eqKeyword(keyword)
-//                      nft.activeStatus.eq(ActiveStatus.ACTIVE)
                 )
-
                 .orderBy(nft.nftId.asc())
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+                .limit(pageable.getPageSize())
+                .fetch();
 
-        List<Nft> nftQueryResults = resultList.fetch();
-
-
-        return  PageableExecutionUtils.getPage(nftQueryResults , pageable , resultList::fetchCount);
-
+        return  new PageImpl<>(resultList , pageable , resultList.size());
     }
-
-
-
-//    @Override
-//    public List<Nft> findAllNftPage(Pageable pageable, String keyword) {
-//
-//        List<Nft> result = queryFactory.select(nft)
-//                .from(nft)
-//                .join(nft.nftAsset, nftAsset)
-//                .where(nft.imageUrl.isNotEmpty(),
-//                        nft.activeStatus.eq(ActiveStatus.ACTIVE),
-//                        eqKeyword(keyword))
-//                .orderBy(nft.nftId.asc())
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                .fetch();
-//        return result;
-//    }
 
     /**
      *
