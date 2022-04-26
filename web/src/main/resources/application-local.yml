@@ -12,7 +12,7 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: nftbatch
       password: "!vhdkdnj1234"
-      jdbc-url: jdbc:mysql://streamauction.ctga1u23kfbh.ap-northeast-2.rds.amazonaws.com:3306/nftgram?serverTimezone=Asia/Seoul
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/nftgram?serverTimezone=Asia/Seoul
       #      jdbc-url: jdbc:mysql://13.209.158.179:3306/nftgram?serverTimezone=Asia/Seoul
       maximum-pool-size: 51
       data-source-properties.cachePrepStmts: true
@@ -21,6 +21,8 @@ spring:
       data-source-properties.useServerPrepStmts: true
       connection-timeout: 10000 #(10s)
       validation-timeout: 10000 #(10s)
+      idle-timeout: 10000 #(10s)
+      max-lifetime: 580000
 
   jpa:
     properties:
