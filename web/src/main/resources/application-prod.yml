@@ -4,8 +4,8 @@ spring:
   datasource :
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: nftbatch
-      password: "!vhdkdnj1234"
+      username: nftgramweb
+      password: "!vhdkdnjweb1234"
       jdbc-url: jdbc:mysql://streamauction.ctga1u23kfbh.ap-northeast-2.rds.amazonaws.com:3306/nftgram?serverTimezone=Asia/Seoul
       maximum-pool-size: 51
       data-source-properties.cachePrepStmts: true
