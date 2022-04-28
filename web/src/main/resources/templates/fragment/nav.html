@@ -42,8 +42,10 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"></ul>
                 <div class="d-flex"  >
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0"  >
+
                         <li class="nav-item"><a aria-current="page" class="nav-link explorer" href="/" th:classappend="${nav_active}== 'explorer' ? 'active' : ''">Explore</a></li>
-                        <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorites</a></li>
+<!--                        <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorites</a></li>-->
+                        <li class="nav-item"><a class="nav-link myfavorite" th:href="@{/user/} + ${memberInfo.nftMemberId} +'?page=favorite'" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorites</a></li>
                         <li class="nav-item" >
                             <a      th:if="${memberInfo.loginYN == 'Y'}"
                                     class="nav-link mypage"th:href="@{/user/} + ${memberInfo.nftMemberId} "><img class="whIs36" th:src="@{/img/icon/ic-nav-profile.svg}" />

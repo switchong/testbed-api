@@ -282,9 +282,12 @@ const goNext = () => {
         if(nowLocation === '/gallery') {
             MoreSlide('all', 'search', sort1,0, 0, '', '','');
         }
-        else if(nowLocation === '/gallery/myfavorite') {
+        else if(nowLocation == '/gallery/myfavorite') {
             MoreSlide('user','',sort1,userno, 0, '' , "Y", '')
         }
+        // else if(nowLocation === '/myfavorite/user/' + userno && currentPage === 0) {
+        //     MoreSlide('user','html',sort1,userno, 0, '', 'Y', '');
+        // }
         else if(nowLocation === '/gallery/mycollection') {
             MoreSlide('mycollection', '', sort1, 0,0, '','', '');
         }
@@ -402,9 +405,12 @@ const goSlide = () => {
     if(nowLocation === '/gallery' && currentPage === 0) {
         MoreSlide('all', 'html', sort1,0, 0, '', '', '');
     }
-    else if(nowLocation === '/gallery/myfavorite' && currentPage === 0) {
+    else if(nowLocation == '/gallery/myfavorite' && currentPage === 0) {
         MoreSlide('user','html',sort1,userno, 0, '', 'Y', '');
     }
+    // else if(nowLocation === '/myfavorite/user/' + userno && currentPage === 0) {
+    //     MoreSlide('user','html',sort1,userno, 0, '', 'Y', '');
+    // }
     else if(nowLocation === '/gallery/mycollection' && currentPage === 0) {
         MoreSlide('mycollection', 'html', sort1, 0,0, '', '', '');
     }
@@ -430,6 +436,7 @@ const goSlide = () => {
             MoreSlide('user','html',sort1,nowLocation.split('/')[2],0, '', 'N', '');
         }
     }
+
     prevBtn = document.querySelector('#prevBtn');
     nextBtn = document.querySelector('#nextBtn');
     slideContainer = document.querySelector('.gallery-slide-list-container');

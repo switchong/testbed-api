@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="fragment/header.html :: fragment-header" />
+
+<link th:href="@{/css/gallery/galleryPublish.css}" rel="stylesheet" />
+<link th:href="@{/css/gallery/edit.css}" rel="stylesheet" />
+<script th:src="@{/js/slide.js}"></script>
+
+<body>
+<nav th:replace="fragment/nav.html :: fragment-nav"></nav>
+
+<div class="container2" id="nftgram_wrap">
+    <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
+    <div class="gallery-container">
+        <div class="gallery-top" th:with="memberInfo=${@memberLoginManager.getInfo()}">
+            <div class="user-space">
+                <div class="user-space-left">
+                    <img th:src="@{/img/icon/ic-nav-profile.svg}" alt="profile" id="imgProfile" />
+                    <span th:text="${member.username} ?: 'USER NAME'">USER NAME</span>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="sns-container">
+            <a class="sns-link-img"  th:onclick="clip([[${member.nftMemberId}]])"><img th:src="@{/img/icon/ic-sns-share.svg}" /></a>
+            <img th:if="${member.instagram} != '' and ${member.instagram} != null"
+                 th:onclick="urlCheck([['https://www.instagram.com/'+${member.instagram}]])"  th:src="@{/img/icon/ic-sns-insta.svg}" />
+            <img th:unless="${member.instagram} != '' and ${member.instagram} != null"
+                 th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-insta.svg}" />
+            <img th:if="${member.twitter} != '' and ${member.twitter} != null"
+                 th:onclick="urlCheck([['https://twitter.com/'+${member.twitter}]])"  th:src="@{/img/icon/ic-sns-twiter.svg}"/>
+            <img th:unless="${member.twitter} != '' and ${member.twitter} != null"
+                 th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-twiter.svg}" />
+            <img th:if="${member.facebook} != '' and ${member.twitter} != null"
+                 th:onclick="urlCheck([['https://www.facebook.com/'+${member.facebook}]])" th:src="@{/img/icon/ic-sns-facebook.svg}"/>
+            <img th:unless="${member.facebook} != '' and ${member.twitter} != null"
+                 th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-facebook.svg}" />
+            <img th:if="${member.discord} != '' and ${member.twitter} != null"
+                 th:onclick="urlCheck([['https://discord.com/channels/'+${member.discord}]])" th:src="@{/img/icon/ic-sns-discord.svg}"/>
+            <img th:unless="${member.discord} != '' and ${member.twitter} != null"
+                 th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-discord.svg}" />
+
+        </div>
+
+        <div class="gallery-content">
+            <img th:src="@{/img/icon/ic-Left-icon.png}" id="prevBtn"/>
+            <div class="gallery-slide-container" id="gallery-slide-container">
+                <div class="gallery-slide-list-container">
+
+                </div>
+            </div>
+            <img th:src="@{/img/icon/ic-Right_icon.png}" id="nextBtn" />
+        </div>
+    </div>
+</div><!-- /container -->
+<div th:replace="fragment/footer.html :: fragment-footer" />
+</body>
+</html>
