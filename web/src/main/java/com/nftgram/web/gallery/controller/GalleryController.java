@@ -107,7 +107,7 @@ public class GalleryController {
     }
 
     @PostMapping(value = "/gallery/mycollection/save")
-    public String nftMemberUpdate(@Valid NftMemberRequestDto update , Errors error , Model model) throws GeneralSecurityException , UnsupportedEncodingException{
+    public String nftMemberUpdate(@Valid  NftMemberRequestDto update , Errors error , Model model) throws GeneralSecurityException , UnsupportedEncodingException{
         Long isResult = Long.valueOf(0);
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
@@ -119,7 +119,7 @@ public class GalleryController {
         } else {
             isResult = Long.valueOf(2); //Error
         }
-        return "redirect:/gallery/mycollection";
+        return "redirect:/user/" + memberId;
 
     }
 

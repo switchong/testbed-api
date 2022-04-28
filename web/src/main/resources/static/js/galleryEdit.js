@@ -55,6 +55,7 @@ const plusBtnEvent = () => {
 
 const closeBtnEvent = async () => {
     let nowList1 = document.querySelector('.gallery-slide-list.on');
+    let referrer  = document.referrer;
     if(choiceOne) {
         if(nowList1.getAttribute('save') === 'false') {
             // if(!window.confirm('지금 나가면 저장이 되지 않습니다. 정말로 나가시겠습니까?')){
@@ -83,16 +84,20 @@ const closeBtnEvent = async () => {
             }).then((result) => {
                 if(!result) {
                     return;
+
                 }
                 else {
                     choiceOne = false;
-                    window.location.href = '/gallery/mycollection';
+                    window.location.href = referrer;
+
+
                 }
             })
         }
         else {
             choiceOne = false;
-            window.location.href = '/gallery/mycollection';
+            window.location.href = referrer;
+
         }
     }
 }

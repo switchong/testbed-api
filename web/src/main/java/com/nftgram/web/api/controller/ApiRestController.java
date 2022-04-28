@@ -49,9 +49,15 @@ public class ApiRestController {
     private final GalleryService galleryService;
 
     @GetMapping(value="/main/page")
-    public MainPageDto getMainPage(Pageable pageable, String keyword , Long sort) throws ParseException {
+    public MainPageDto getMainPage(Model model , Pageable pageable, String keyword , Long sort ) throws ParseException, GeneralSecurityException, UnsupportedEncodingException {
         List<CommonNftResponse> mainResponseAll = nftFindService.findAllList(pageable  , keyword , sort);
 
+        Long memberId = Long.valueOf(0);
+        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+        if(authDto.getLoginYN().equals("Y")) {
+            memberId = authDto.getNftMemberId();
+        }
+        model.addAttribute("memberId" , memberId);
         MainPageDto mainPageDto = MainPageDto.builder()
                 .total(mainResponseAll.size())
                 .nftList(mainResponseAll)

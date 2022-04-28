@@ -5,6 +5,7 @@
 <head th:replace="fragment/header.html :: fragment-header" />
 
 <link th:href="@{/css/gallery/galleryPublish.css}" rel="stylesheet" />
+<link th:href="@{/css/gallery/edit.css}" rel="stylesheet" />
 <script th:src="@{/js/slide.js}"></script>
 
 <body>
@@ -13,12 +14,30 @@
 <div class="container2" id="nftgram_wrap">
     <img th:src="@{/img/gallery/realWall.jpg}" alt="imgWall" id="imgWall" />
     <div class="gallery-container">
-        <div class="gallery-top">
+        <div class="gallery-top" th:with="memberInfo=${@memberLoginManager.getInfo()}">
             <div class="user-space">
                 <div class="user-space-left">
                     <img th:src="@{/img/icon/ic-nav-profile.svg}" alt="profile" id="imgProfile" />
                     <span th:text="${member.username} ?: 'USER NAME'">USER NAME</span>
                 </div>
+
+            </div>
+            <div th:if="${userCheck == true}">
+            <div class="myCollection-user-top">
+                <input type="checkbox" id="collection-edit2" />
+                <label for="collection-edit2" th:onclick="|location.href='@{/gallery/edit}'|">
+                    <p style="color: white;">Edit Gallery</p>
+                    <img th:src="@{/img/icon/ic-edit-btn.png}" alt="edit" id="editIcon2" />
+                </label>
+            </div>
+            <div class="myCollection-user-top">
+                <input type="checkbox" id="collection-edit1" />
+                <label for="collection-edit1">
+                    <p style="color: white;">Edit Profile</p>
+                    <img th:src="@{/img/icon/ic-edit-btn.png}" alt="edit" id="editIcon1" />
+                </label>
+                <div th:replace="fragment/editFrameCollection.html :: frame-edit-collection" />
+            </div>
             </div>
         </div>
         <div class="sns-container">
@@ -39,7 +58,9 @@
                  th:onclick="urlCheck([['https://discord.com/channels/'+${member.discord}]])" th:src="@{/img/icon/ic-sns-discord.svg}"/>
             <img th:unless="${member.discord} != '' and ${member.twitter} != null"
                  th:onclick="swal('Sorry','Don`t have any information.' , 'error')"  th:src="@{/img/icon/ic-sns-discord.svg}" />
+
         </div>
+
         <div class="gallery-content">
             <img th:src="@{/img/icon/ic-Left-icon.png}" id="prevBtn"/>
             <div class="gallery-slide-container" id="gallery-slide-container">

@@ -190,8 +190,10 @@ $(document).ready(function(){
 
     $('#editProfileBtn').on('click',function(){
         let form = $('#editProfileForm');
+        let referrer  = document.referrer;
         if(!checkId()) { // 중복값 없을때
             form.submit();
+            // window.location.href = referrer;
         } else {    // 중복값 존재
 
             swal("Is username Conflict" , "" ,"error");

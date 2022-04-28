@@ -1,6 +1,7 @@
 package com.nftgram.web.user.controller;
 
 import com.nftgram.core.domain.nftgram.NftMember;
+import com.nftgram.core.dto.request.NftMemberRequestDto;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.dto.GalleryMemberDto;
 import com.nftgram.web.common.service.NftFindService;
@@ -12,10 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
@@ -35,12 +39,18 @@ public class UserController {
     public String userMemberId(Model model, Pageable pageable, String keyword , Long sort, String page, @PathVariable("member_id") Long url_member_id) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
-
+        authDto.getLoginYN().equals("Y");
         memberId = authDto.getNftMemberId();
         if(page == null) {
             page = "";
         }
 
+
+        boolean userCheck = false;
+
+        if (url_member_id == memberId) {
+            userCheck  = true;
+        }
         NftMember nftMember = userService.findNftUserMemberId(pageable, memberId, url_member_id, page);
 
         model.addAttribute("nav_active", "");
@@ -48,6 +58,7 @@ public class UserController {
             model.addAttribute("member", nftMember);
             model.addAttribute("sliderList", "");
             model.addAttribute("nftList", "");
+            model.addAttribute("userCheck" , userCheck);
 
             return "user/index";
         } else {
@@ -58,6 +69,23 @@ public class UserController {
 
     }
 
+//    @PostMapping(value = "/user/save/{memberId}")
+//    public String nftMemberUpdate(@Valid @PathVariable("memberId") NftMemberRequestDto update , Errors error , Model model , Pageable pageable , String page , Long url_member_id) throws GeneralSecurityException , UnsupportedEncodingException{
+//        Long isResult = Long.valueOf(0);
+//        Long memberId = Long.valueOf(0);
+//        NftMemberAuthDto authDto = memberLoginManager.getInfo();
+//
+//        if(authDto.getLoginYN().equals("Y")) {
+//
+//            memberId = authDto.getNftMemberId();
+//            isResult = galleryService.nftMemberUpdate(update, memberId);
+//
+//        } else {
+//            isResult = Long.valueOf(2); //Error
+//        }
+//        return "redirect:/user/index";
+//
+//    }
     @GetMapping("/name/{username}")
     public String usernameMember(Model model, Pageable pageable, String keyword , Long sort, String page, @PathVariable("username") String username) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
