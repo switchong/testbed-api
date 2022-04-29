@@ -1,7 +1,6 @@
 package com.nftgram.web.user.controller;
 
 import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.dto.request.NftMemberRequestDto;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.dto.GalleryMemberDto;
 import com.nftgram.web.common.service.NftFindService;
@@ -13,13 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
@@ -62,8 +58,14 @@ public class UserController {
 
             if (page == "") {
                 return "user/index";
-            }else {
+            } else if (page == "favorite") {
+                model.addAttribute("nav_active","myfavorite");
+
                 return "user/myfavorite";
+            } else {
+                model.addAttribute("message","Not Found Page!!");
+
+                return "error/not_found";
             }
 
         } else {

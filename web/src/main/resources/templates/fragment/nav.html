@@ -45,13 +45,16 @@
 
                         <li class="nav-item"><a aria-current="page" class="nav-link explorer" href="/" th:classappend="${nav_active}== 'explorer' ? 'active' : ''">Explore</a></li>
 <!--                        <li class="nav-item"><a class="nav-link myfavorite" href="/gallery/myfavorite" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorites</a></li>-->
-                        <li class="nav-item"><a class="nav-link myfavorite" th:href="@{/user/} + ${memberInfo.nftMemberId} +'?page=favorite'" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorites</a></li>
+                        <li class="nav-item">
+                            <a th:if="${memberInfo.loginYN == 'Y'}" class="nav-link myfavorite"th:href="@{/user/} + ${memberInfo.nftMemberId} +'?page=favorite'" th:classappend="${nav_active}== 'myfavorite' ? 'active' : ''">My Favorites</a>
+                            <a th:if="${memberInfo.loginYN == 'N'}" class="nav-link myfavorite"th:href="@{/auth/login}">My Favorites</a>
+                        </li>
                         <li class="nav-item" >
-                            <a      th:if="${memberInfo.loginYN == 'Y'}"
-                                    class="nav-link mypage"th:href="@{/user/} + ${memberInfo.nftMemberId} "><img class="whIs36" th:src="@{/img/icon/ic-nav-profile.svg}" />
+                            <a th:if="${memberInfo.loginYN == 'Y'}" class="nav-link mypage"th:href="@{/user/} + ${memberInfo.nftMemberId} ">
+                                <img class="whIs36" th:src="@{/img/icon/ic-nav-profile.svg}" />
                             </a>
-                            <a      th:if="${memberInfo.loginYN == 'N'}"
-                                    class="nav-link mypage"th:href="@{/auth/login}"><img class="whIs36" th:src="@{/img/icon/ic-nav-profile.svg}" />
+                            <a th:if="${memberInfo.loginYN == 'N'}" class="nav-link mypage"th:href="@{/auth/login}">
+                                <img class="whIs36" th:src="@{/img/icon/ic-nav-profile.svg}" />
                             </a>
                         </li>
                         <li class="nav-item"><a class="nav-link mywallet" href="javascript:void(0);"><img class="whIs30" style="width: 2rem;" th:src="@{/img/icon/ic-nav-wallet.png}" /></a></li>
