@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -32,7 +33,7 @@ public class UserController {
     private final MemberLoginManager memberLoginManager;
 
     @GetMapping("/{member_id}")
-    public String userMemberId(Model model, Pageable pageable, String keyword , Long sort, String page, @PathVariable("member_id") Long url_member_id) throws GeneralSecurityException, UnsupportedEncodingException {
+    public String userMemberId(Model model, Pageable pageable, String keyword , Long sort, @PathVariable("member_id") Long url_member_id, @RequestParam(name = "page", required = false)String page) throws GeneralSecurityException, UnsupportedEncodingException {
         Long memberId = Long.valueOf(0);
         NftMemberAuthDto authDto = memberLoginManager.getInfo();
         authDto.getLoginYN().equals("Y");
@@ -40,7 +41,6 @@ public class UserController {
         if(page == null) {
             page = "";
         }
-
 
         boolean userCheck = false;
 
@@ -56,9 +56,9 @@ public class UserController {
             model.addAttribute("nftList", "");
             model.addAttribute("userCheck" , userCheck);
 
-            if (page == "") {
+            if (page.isEmpty()) {
                 return "user/index";
-            } else if (page == "favorite") {
+            } else if (page.equals("favorite")) {
                 model.addAttribute("nav_active","myfavorite");
 
                 return "user/myfavorite";
