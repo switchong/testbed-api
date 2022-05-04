@@ -1,114 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="fragment-footer" class="footer">
-    <div class="wrap_layer_popup" id="nft-layer-pop" style="z-index: 9999999999;">
-        <input type="hidden" name="nft_id" value="" />
-        <input type="hidden" name="nft_comment_page" value="0" />
+<th:block th:fragment="fragment-footer">
+    <div class="footer">
+        <div class="wrap_layer_popup" id="nft-layer-pop" style="z-index: 9999999999;">
+            <input type="hidden" name="nft_id" value="" />
+            <input type="hidden" name="nft_comment_page" value="0" />
 
-        <div class="nft-detail-container">
-            <div class="nft-detail-wrapper">
-                <div class="nft-form" id="nft-home">
-                    <div class="nft-image">
-                        <!--<img class="nft-image-home" src="" />-->
-                    </div>
-                </div>
-                <div class="nft-form" id="nft-info">
-                    <table class="info-table">
-                        <tr class="info-attribute" data-attr="description">
-                            <td>
-                                <div class="attr-description">Description</div>
-                            </td>
-                        </tr>
-                        <tr class="info-attribute-text attr-description-row">
-                            <td class="attr-description-row-text">a</td>
-                        </tr>
-
-                        <tr class="info-attribute" data-attr="properties">
-                            <td>
-                                <div class="attr-properties">Properties</div>
-                            </td>
-                        </tr>
-                        <tr class="info-attribute-text attr-properties-row">
-                            <td class="attr-properties-row-text">
-                                <div class="prop-info">
-                                    <p class="prop-info-nft prop-type">Accessory</p>
-                                    <p class="prop-info-nft prop-value">Earning</p>
-                                    <p class="prop-info-nft prop-per">25%</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="info-attribute" data-attr="detail">
-                            <td>
-                                <div class="attr-detail">Detail</div>
-                            </td>
-                        </tr>
-                        <tr class="info-attribute-text attr-detail-row">
-                            <td class="attr-detail-row-text">
-                                <div class="detail-info">
-                                    <p class="prop-info-nft data-type">Accessory</p>
-                                    <p class="prop-info-nft detail-type">Accessory</p>
-
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="info-attribute" data-attr="about">
-                            <td>
-                                <div class="attr-about">About</div>
-                            </td>
-                        </tr>
-                        <tr class="info-attribute-text attr-about-row">
-                            <td class="attr-about-row-text">d</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="nft-form" id="nft-comment">
-                    <div class="comment-area">
-                        <div class="comment-top">
-                            <img th:src="@{/img/icon/ic-gallery-profile.svg}" class="whIs30"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea3"></label>
-                            <textarea class="form-control input" inputmode="none" id="exampleFormControlTextarea3" rows="2" name="comment" value="" ></textarea>
-                            <button class="btn btn-primary comment_btn" >Gram</button>
+            <div class="nft-detail-container">
+                <div class="nft-detail-wrapper">
+                    <div class="nft-form" id="nft-home">
+                        <div class="nft-image">
+                            <!--<img class="nft-image-home" src="" />-->
                         </div>
                     </div>
-                    <div class="comment-list">
-                    </div>
-                </div>
-                <div class="nft-btn">
-                    <p><button class="btn nft-btn-form on" id="nft-btn-home" data-btn="home" >Home</button></p>
-                    <p><button class="btn nft-btn-form" id="nft-btn-info" data-btn="info" >Info</button></p>
-                    <p><button class="btn nft-btn-form " id="nft-btn-comment" data-btn="comment" >Comment</button></p>
-                    <p><button class="btn nft-btn-form" id="nft-btn-like" data-btn="like" >Like</button></p>
-                    <p><button class="btn nft-btn-form" id="nft-btn-market" data-btn="market" data-link="">Market</button></p>
-                </div>
-            </div>
-        </div>
+                    <div class="nft-form" id="nft-info">
+                        <table class="info-table">
+                            <tr class="info-attribute" data-attr="description">
+                                <td>
+                                    <div class="attr-description">Description</div>
+                                </td>
+                            </tr>
+                            <tr class="info-attribute-text attr-description-row">
+                                <td class="attr-description-row-text">a</td>
+                            </tr>
 
-        <div class="chg-list">
-            <button type="button" class="arrows prev">PREV</button>
-            <button type="button" class="arrows next">NEXT</button>
-        </div>
-        <div class="nft-title-area">
-            <div class="nft-title">
-                <h4 class="nft-title-info">NFT TITLE #1232</h4>
-            </div>
-            <div class="nft-title-user">
-                <div class="nft-title-user-image"><img th:src="@{/img/icon/ic-nav-profile.svg}" class="whIs30"/></div>
-                <div class="nft-title-user-info">USERNAME<br><span class="time">1 minute ago</span></div>
-                <div class="nft-title-etc">
-                    <div class="etc-eth">
-                        <img th:src="@{/img/icon/ic-gallery-eyes.svg}" class="hIs24 wIs20" style="width : 1.5rem"/><span class="ethPrice count-text">0</span>
+                            <tr class="info-attribute" data-attr="properties">
+                                <td>
+                                    <div class="attr-properties">Properties</div>
+                                </td>
+                            </tr>
+                            <tr class="info-attribute-text attr-properties-row">
+                                <td class="attr-properties-row-text">
+                                    <div class="prop-info">
+                                        <p class="prop-info-nft prop-type">Accessory</p>
+                                        <p class="prop-info-nft prop-value">Earning</p>
+                                        <p class="prop-info-nft prop-per">25%</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="info-attribute" data-attr="detail">
+                                <td>
+                                    <div class="attr-detail">Detail</div>
+                                </td>
+                            </tr>
+                            <tr class="info-attribute-text attr-detail-row">
+                                <td class="attr-detail-row-text">
+                                    <div class="detail-info">
+                                        <p class="prop-info-nft data-type">Accessory</p>
+                                        <p class="prop-info-nft detail-type">Accessory</p>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="info-attribute" data-attr="about">
+                                <td>
+                                    <div class="attr-about">About</div>
+                                </td>
+                            </tr>
+                            <tr class="info-attribute-text attr-about-row">
+                                <td class="attr-about-row-text">d</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="etc-like">
-                        <img th:src="@{/img/icon/ic-gallery-like.svg}" class="hIs24 wIs20"/><span class="likeCount count-text" id="likeCount">0</span>
+                    <div class="nft-form" id="nft-comment">
+                        <div class="comment-area">
+                            <div class="comment-top">
+                                <img th:src="@{/img/icon/ic-gallery-profile.svg}" class="whIs30"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea3"></label>
+                                <textarea class="form-control input" inputmode="none" id="exampleFormControlTextarea3" rows="2" name="comment" value="" ></textarea>
+                                <button class="btn btn-primary comment_btn" >Gram</button>
+                            </div>
+                        </div>
+                        <div class="comment-list">
+                        </div>
+                    </div>
+                    <div class="nft-btn">
+                        <p><button class="btn nft-btn-form on" id="nft-btn-home" data-btn="home" >Home</button></p>
+                        <p><button class="btn nft-btn-form" id="nft-btn-info" data-btn="info" >Info</button></p>
+                        <p><button class="btn nft-btn-form " id="nft-btn-comment" data-btn="comment" >Comment</button></p>
+                        <p><button class="btn nft-btn-form" id="nft-btn-like" data-btn="like" >Like</button></p>
+                        <p><button class="btn nft-btn-form" id="nft-btn-market" data-btn="market" data-link="">Market</button></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chg-list">
+                <button type="button" class="arrows prev">PREV</button>
+                <button type="button" class="arrows next">NEXT</button>
+            </div>
+            <div class="nft-title-area">
+                <div class="nft-title">
+                    <h4 class="nft-title-info">NFT TITLE #1232</h4>
+                </div>
+                <div class="nft-title-user">
+                    <div class="nft-title-user-image"><img th:src="@{/img/icon/ic-nav-profile.svg}" class="whIs30"/></div>
+                    <div class="nft-title-user-info">USERNAME<br><span class="time">1 minute ago</span></div>
+                    <div class="nft-title-etc">
+                        <div class="etc-eth">
+                            <img th:src="@{/img/icon/ic-gallery-eyes.svg}" class="hIs24 wIs20" style="width : 1.5rem"/><span class="ethPrice count-text">0</span>
+                        </div>
+                        <div class="etc-like">
+                            <img th:src="@{/img/icon/ic-gallery-like.svg}" class="hIs24 wIs20"/><span class="likeCount count-text" id="likeCount">0</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="simple-keyboard" id="search-keyboard" style="color: black; position: absolute; bottom: 0; left: 0; display: none; z-index: 9999999999999999999; font-size: 11px;"></div>
+        <!-- 레이어 팝업 콘텐츠는 바디 엔드 태그 바로 위에 위치시키는 것이 좋습니다. -->
     </div>
-    <div class="simple-keyboard" id="search-keyboard" style="color: black; position: absolute; bottom: 0; left: 0; display: none; z-index: 9999999999999999999; font-size: 11px;"></div>
-    <!-- 레이어 팝업 콘텐츠는 바디 엔드 태그 바로 위에 위치시키는 것이 좋습니다. -->
-</div>
+    <div th:if="${@environment.getProperty('spring.profiles')} == 'prod'" class="gtag">
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-227897829-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-227897829-1');
+        </script>
+    </div>
+</th:block>
 </html>
 
