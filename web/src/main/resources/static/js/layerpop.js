@@ -253,19 +253,27 @@ function layerPopGallery(nftId) {
     let figure = $("#gr-gallery #nft_"+nftId);
     let imgSrc = '';
     let frameSrc = '';
+    let srcTagName = '';
     if(figure.length > 0) {
         imgSrc = figure.find('.card-img-top').attr('src');
     } else {
+        srcTagName = $('.gimage'+nftId).attr('data-tagtype');
         imgSrc = $('.gimage'+nftId).attr('src');
         frameSrc = $('.gomage' + nftId).attr('src');
     }
     let videoHtml = '';
+    let videoPoster = '';   // video src 내 확장타입 url
     let imgHtml = '';
     let frameHtml = '';
-    if(imgSrc.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i)) {
-        videoHtml += '<video controls autoplay muted playsinline controlsList="nodownload">';
-        videoHtml += '<source src="'+imgSrc+'">';
-        videoHtml += '</video>';
+    if(imgSrc.match(/^https?:\/\/(.+\/)+.+(\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i) || srcTagName == "video") {
+        videoHtml += '<video controls autoplay muted loop="3" playsinline controlsList="nodownload" src="'+imgSrc+'" />';
+        // videoHtml += '<source src="'+imgSrc+'">';
+        // videoHtml += '</video>';
+        $('#nft-home .nft-image').css({"background":""});
+        $('#nft-home .nft-image').html(videoHtml);
+    } else if(srcTagName == "imagemp4") {
+        videoPoster = $('.gimage'+nftId).attr('poster');
+        videoHtml += '<video autoplay muted poster="'+videoPoster+'" style="z-index: -1" loop="3" playsinline controlsList="nodownload" src="'+imgSrc+'" />';
         $('#nft-home .nft-image').css({"background":""});
         $('#nft-home .nft-image').html(videoHtml);
     } else {
