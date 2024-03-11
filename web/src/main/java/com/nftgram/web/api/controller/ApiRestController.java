@@ -1,7 +1,7 @@
 package com.nftgram.web.api.controller;
 
-import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.dto.request.NftGalleryRequest;
+import com.testbed.core.domain.nftgram.NftMember;
+import com.testbed.core.dto.request.NftGalleryRequest;
 import com.nftgram.web.api.dto.MainPageDto;
 import com.nftgram.web.api.dto.MemberWalletDto;
 import com.nftgram.web.api.dto.request.GetNftOneRequest;

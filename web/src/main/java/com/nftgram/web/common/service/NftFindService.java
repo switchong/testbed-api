@@ -1,13 +1,12 @@
 package com.nftgram.web.common.service;
 
-import com.nftgram.core.domain.nftgram.Nft;
-import com.nftgram.core.domain.nftgram.NftCollection;
-import com.nftgram.core.domain.nftgram.NftLike;
-import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.dto.NftCommonDto;
-import com.nftgram.core.dto.NftOneJoinDto;
-import com.nftgram.core.dto.request.NftGalleryRequest;
-import com.nftgram.core.repository.*;
+import com.testbed.core.domain.nftgram.Nft;
+import com.testbed.core.domain.nftgram.NftCollection;
+import com.testbed.core.domain.nftgram.NftLike;
+import com.testbed.core.domain.nftgram.NftMember;
+import com.testbed.core.dto.NftCommonDto;
+import com.testbed.core.dto.NftOneJoinDto;
+import com.testbed.core.dto.request.NftGalleryRequest;
 import com.nftgram.web.api.dto.response.GetNftOneResponse;
 import com.nftgram.web.common.dto.GalleryDto;
 import com.nftgram.web.common.dto.NftGalleryCommonDto;
@@ -15,6 +14,7 @@ import com.nftgram.web.common.dto.NftMemberEditDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import com.nftgram.web.common.dto.response.NftMemberBackgroundResponse;
 import com.nftgram.web.common.dto.response.NftPropertyResponse;
+import com.testbed.core.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +25,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.nftgram.core.domain.common.value.ActiveStatus.ACTIVE;
+import static com.testbed.core.domain.common.value.ActiveStatus.ACTIVE;
 
 @RequiredArgsConstructor
 @Service

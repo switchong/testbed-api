@@ -1,17 +1,17 @@
 package com.nftgram.web.api.service;
 
-import com.nftgram.core.domain.common.value.ActiveStatus;
-import com.nftgram.core.domain.nftgram.NftLike;
-import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.domain.nftgram.NftMemberWallet;
-import com.nftgram.core.dto.NftIdWalletList;
-import com.nftgram.core.dto.NftOneJoinDto;
-import com.nftgram.core.dto.NftPropGroupDto;
-import com.nftgram.core.repository.*;
+import com.testbed.core.domain.common.value.ActiveStatus;
+import com.testbed.core.domain.nftgram.NftLike;
+import com.testbed.core.domain.nftgram.NftMember;
+import com.testbed.core.domain.nftgram.NftMemberWallet;
+import com.testbed.core.dto.NftIdWalletList;
+import com.testbed.core.dto.NftOneJoinDto;
+import com.testbed.core.dto.NftPropGroupDto;
 import com.nftgram.web.api.dto.response.MemberWalletResponses;
 import com.nftgram.web.api.dto.response.UpdateLikeCountResponse;
 import com.nftgram.web.common.dto.NftPropertiesGroupDto;
 import com.nftgram.web.common.dto.response.NftPropertiesGroupResponse;
+import com.testbed.core.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.nftgram.core.domain.common.value.ActiveStatus.ACTIVE;
-import static com.nftgram.core.domain.common.value.ActiveStatus.DELETE;
+import static com.testbed.core.domain.common.value.ActiveStatus.ACTIVE;
+import static com.testbed.core.domain.common.value.ActiveStatus.DELETE;
 
 @RequiredArgsConstructor
 @Service

@@ -1,13 +1,13 @@
 package com.nftgram.web.gallery.service;
 
-import com.nftgram.core.domain.nftgram.Nft;
-import com.nftgram.core.domain.nftgram.NftCollection;
-import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.dto.request.NftMemberRequestDto;
-import com.nftgram.core.repository.NftAssetRepository;
-import com.nftgram.core.repository.NftCollectionRepository;
-import com.nftgram.core.repository.NftMemberRepository;
-import com.nftgram.core.repository.NftRepository;
+import com.testbed.core.domain.nftgram.Nft;
+import com.testbed.core.domain.nftgram.NftCollection;
+import com.testbed.core.domain.nftgram.NftMember;
+import com.testbed.core.dto.request.NftMemberRequestDto;
+import com.testbed.core.repository.NftAssetRepository;
+import com.testbed.core.repository.NftCollectionRepository;
+import com.testbed.core.repository.NftMemberRepository;
+import com.testbed.core.repository.NftRepository;
 import com.nftgram.web.common.dto.GalleryDto;
 import com.nftgram.web.common.dto.GalleryMemberDto;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManagerFactory;
 import java.text.ParseException;
 import java.util.*;

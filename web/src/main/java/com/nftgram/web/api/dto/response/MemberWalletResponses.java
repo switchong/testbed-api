@@ -1,6 +1,6 @@
 package com.nftgram.web.api.dto.response;
 
-import com.nftgram.core.domain.nftgram.value.WalletType;
+import com.testbed.core.domain.nftgram.value.WalletType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

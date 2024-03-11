@@ -1,9 +1,9 @@
 package com.nftgram.web.main.dto.service;
 
-import com.nftgram.core.domain.nftgram.Nft;
-import com.nftgram.core.repository.NftAssetRepository;
-import com.nftgram.core.repository.NftCollectionRepository;
-import com.nftgram.core.repository.NftRepository;
+import com.testbed.core.domain.nftgram.Nft;
+import com.testbed.core.repository.NftAssetRepository;
+import com.testbed.core.repository.NftCollectionRepository;
+import com.testbed.core.repository.NftRepository;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

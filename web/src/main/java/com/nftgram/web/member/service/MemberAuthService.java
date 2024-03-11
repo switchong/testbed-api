@@ -1,8 +1,8 @@
 package com.nftgram.web.member.service;
 
-import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.repository.NftMemberAuthTokenRepository;
-import com.nftgram.core.repository.NftMemberRepository;
+import com.testbed.core.domain.nftgram.NftMember;
+import com.testbed.core.repository.NftMemberAuthTokenRepository;
+import com.testbed.core.repository.NftMemberRepository;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.auth.MemberTokenManager;
 import com.nftgram.web.member.dto.request.NftMemberLoginRequest;

@@ -1,7 +1,7 @@
 package com.nftgram.web.api.dto.response;
 
-import com.nftgram.core.domain.nftgram.NftLike;
-import com.nftgram.core.domain.nftgram.NftMember;
+import com.testbed.core.domain.nftgram.NftLike;
+import com.testbed.core.domain.nftgram.NftMember;
 import com.nftgram.web.common.dto.response.NftCommentResponse;
 import lombok.AccessLevel;
 import lombok.Getter;

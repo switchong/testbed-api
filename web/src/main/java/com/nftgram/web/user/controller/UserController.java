@@ -1,6 +1,6 @@
 package com.nftgram.web.user.controller;
 
-import com.nftgram.core.domain.nftgram.NftMember;
+import com.testbed.core.domain.nftgram.NftMember;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.dto.GalleryMemberDto;
 import com.nftgram.web.common.service.NftFindService;

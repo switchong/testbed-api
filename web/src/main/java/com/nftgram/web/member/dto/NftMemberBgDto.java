@@ -1,8 +1,8 @@
 package com.nftgram.web.member.dto;
 
-import com.nftgram.core.domain.nftgram.Nft;
-import com.nftgram.core.domain.nftgram.NftAsset;
-import com.nftgram.core.domain.nftgram.NftCollection;
+import com.testbed.core.domain.nftgram.Nft;
+import com.testbed.core.domain.nftgram.NftAsset;
+import com.testbed.core.domain.nftgram.NftCollection;
 import lombok.*;
 
 @Getter

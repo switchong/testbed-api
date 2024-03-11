@@ -1,12 +1,12 @@
 package com.nftgram.web.common.service;
 
-import com.nftgram.core.domain.nftgram.NftComment;
-import com.nftgram.core.domain.nftgram.NftMember;
-import com.nftgram.core.dto.NftCommentMemberDto;
-import com.nftgram.core.dto.NftOneJoinDto;
-import com.nftgram.core.repository.NftCommentRepository;
-import com.nftgram.core.repository.NftMemberRepository;
-import com.nftgram.core.repository.NftRepository;
+import com.testbed.core.domain.nftgram.NftComment;
+import com.testbed.core.domain.nftgram.NftMember;
+import com.testbed.core.dto.NftCommentMemberDto;
+import com.testbed.core.dto.NftOneJoinDto;
+import com.testbed.core.repository.NftCommentRepository;
+import com.testbed.core.repository.NftMemberRepository;
+import com.testbed.core.repository.NftRepository;
 import com.nftgram.web.common.auth.MemberLoginManager;
 import com.nftgram.web.common.dto.NftCommentDto;
 import com.nftgram.web.common.dto.request.NftCommentRequest;

@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'com.nftgram'
+group 'com.testbed'
 version '1.1.4-SNAPSHOT'
 
 bootJar{
@@ -10,11 +10,11 @@ bootJar{
 }
 jar {
     enabled = false;
-    archivesBaseName = 'nftgram-web';
+    archivesBaseName = 'testbed-api';
 }
 
 dependencies {
-    implementation 'com.nftgram:core:0.0.1-SNAPSHOT'
+    implementation 'com.testbed:core:0.0.1-SNAPSHOT'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

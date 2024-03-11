@@ -1,6 +1,6 @@
 package com.nftgram.web.common.dto.response;
 
-import com.nftgram.core.domain.nftgram.value.MarketType;
+import com.testbed.core.domain.nftgram.value.MarketType;
 import lombok.*;
 
 import java.time.LocalDateTime;

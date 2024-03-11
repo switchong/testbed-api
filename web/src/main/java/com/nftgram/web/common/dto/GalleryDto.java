@@ -1,6 +1,6 @@
 package com.nftgram.web.common.dto;
 
-import com.nftgram.core.domain.nftgram.NftCollection;
+import com.testbed.core.domain.nftgram.NftCollection;
 import com.nftgram.web.common.dto.response.CommonNftResponse;
 import lombok.AccessLevel;
 import lombok.Builder;

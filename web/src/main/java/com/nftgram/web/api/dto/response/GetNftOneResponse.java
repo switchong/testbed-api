@@ -1,8 +1,8 @@
 package com.nftgram.web.api.dto.response;
 
-import com.nftgram.core.domain.nftgram.NftAsset;
-import com.nftgram.core.domain.nftgram.NftCollection;
-import com.nftgram.core.domain.nftgram.value.MarketType;
+import com.testbed.core.domain.nftgram.NftAsset;
+import com.testbed.core.domain.nftgram.NftCollection;
+import com.testbed.core.domain.nftgram.value.MarketType;
 import com.nftgram.web.common.dto.response.NftPropertyResponse;
 import lombok.AccessLevel;
 import lombok.Builder;
