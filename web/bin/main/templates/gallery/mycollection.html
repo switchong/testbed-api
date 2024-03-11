@@ -17,7 +17,7 @@
         <div class="gr-main" id="nftLayout">
             <figure class="figure" th:data-nftid="${nft.nftId}" th:each="nft: ${nftList}" th:id="@{'nft_'+${nft.nftId}}" >
                 <!--/*@thymesVar id="nft" type="com.nftgram.core.domain.nftgram.Nft"*/-->
-                <!--/*@thymesVar id="nft" type="com.nftgram.web.gallery.dto.response.GalleryResponse"*/-->
+                <!--/*@thymesVar id="nft" type="com.testbed.web.gallery.dto.response.GalleryResponse"*/-->
                 <div class="mt-4" th:classappend="${nft.tagType} == 'image' ? 'image' : 'video'">
                     <img th:if="${nft.tagType == 'image'}" class="card-img-top" th:classappend="@{'gimage'+${nft.nftId}}" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" th:src="${nft.nftImageUrl}"/>
                     <video controls controlsList="nodownload" th:if="${nft.tagType == 'video'}" class="card-img-top" th:classappend="@{'gimage'+${nft.nftId}}" data-layer-btn="nft-layer-pop" style="box-shadow: inset 0 0 0.5rem 0 rgb(0 0 0);background-color: #fff;" th:alt="${nft.name}" th:data-nftid="${nft.nftId}" th:src="${nft.nftImageUrl}"/>
