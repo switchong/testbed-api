@@ -9,9 +9,9 @@ spring:
       #            username: sa
       #            password:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: nftbatch
-      password: "!vhdkdnj1234"
-      jdbc-url: jdbc:mysql://13.209.158.179:3306/nftgram?serverTimezone=Asia/Seoul
+      username: testbeddev
+      password: "xptmxmqpem12!@"
+      jdbc-url: jdbc:mysql://localhost:3306/testbed?serverTimezone=Asia/Seoul
 
   jpa:
     properties:
@@ -43,7 +43,7 @@ spring:
 logging:
   level:
     com:
-      nftgram: debug
+      testbed: debug
     org:
       springframework:
         #        security: debug
@@ -54,29 +54,7 @@ logging:
         type: trace
 #  profiles: local
 
-nftgram:
-  cookie:
-    key: local.nftgram.ai
-    domainName: local.nftgram.ai
-#    domainName: edac-14-52-144-35.ngrok.io
-  aes256:
-    secretKey: 3021ACABD914C42D80C4E9D2D1BBA293
-
-
-
-
-#web:
-#  resources:
-#    add-mappings: false
-
-opensea:
-  api_url: https://api.opensea.io/api/v1
-  opensea_contract_address: "0x495f947276749ce646f68ac8c248420045cb7b5e"
-  stpl_contract_address: "0x4da1c8fa0c73f65e3854c1b42d85acbb336dda1e"
-  wallet_master_id: "25543b82b9fe96223bd903b7037aab9d"
-  assets_uri: "/assets"
-  bundles_uri: "/bundles"
-  single_asset_uri: "/asset/"
-  single_contract_uri: "/asset_contract/"
-  events_uri: "/events"
-  collections_uri: "/collections"
+testbed:
+  api_url: https://openapi.openbanking.or.kr/v2.0/
+  client_id: b13d9333-727a-4644-8392-02eef0c39359
+  client_secret: 9de6108f-fc49-4721-b232-1aad11096204

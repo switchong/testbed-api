@@ -1,5 +1,4 @@
-package com.testbed.core.config.opensea.property;
-
+package com.testbed.core.config.testbed.property;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +10,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Getter
 @Setter
-@ConfigurationProperties("resurrection")
-public class ResurrectionToken {
+@ConfigurationProperties("testbed")
+public class TestbedProperty {
 
-    private String accessToken;
-    private String refreshToken;
-    private String secretKey;
+    private String apiUrl;
+    private String clientId;
+    private String clientSecret;
 }
+
