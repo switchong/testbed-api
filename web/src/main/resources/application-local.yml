@@ -70,3 +70,4 @@ testbed:
   api_url: https://openapi.openbanking.or.kr/v2.0/
   client_id: b13d9333-727a-4644-8392-02eef0c39359
   client_secret: 9de6108f-fc49-4721-b232-1aad11096204
+  oauth: /oauth/

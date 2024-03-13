@@ -4,9 +4,9 @@ spring:
   datasource :
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: nftgramweb
-      password: "!vhdkdnjweb1234"
-      jdbc-url: jdbc:mysql://streamauction.ctga1u23kfbh.ap-northeast-2.rds.amazonaws.com:3306/nftgram?serverTimezone=Asia/Seoul
+      username: testbeddev
+      password: "xptmxmqpem12!@"
+      jdbc-url: jdbc:mysql://13.125.12.108:3306/testbed?serverTimezone=Asia/Seoul
       maximum-pool-size: 51
       data-source-properties.cachePrepStmts: true
       data-source-properties.prepStmtCacheSize: 250
@@ -44,40 +44,9 @@ logging:
         SQL: info
 
 
-nftgram:
-  cookie:
-    key: nftgram.ai
-    domainName: nftgram.ai
-  aes256:
-    secretKey: 3021ACABD914C42D80C4E9D2D1BBA293
 
-# 프로퍼티 암호화 설정
-#jasypt:
-#  encryptor:
-#    algorithm: PBEWithMD5AndDES
-#    pool-size: 1
-#    property:
-#      prefix: ENC(
-#      suffix: )
-#    salt-generator-classname: org.jasypt.salt.RandomSaltGenerator
-#    string-output-type: base64
-#    provider-name: SunJCE
-#    key-obtention-iterations: 1000
-
-
-
-#web:
-#  resources:
-#    add-mappings: false
-
-opensea:
-  api_url: https://api.opensea.io/api/v1
-  opensea_contract_address: "0x495f947276749ce646f68ac8c248420045cb7b5e"
-  stpl_contract_address: "0x4da1c8fa0c73f65e3854c1b42d85acbb336dda1e"
-  wallet_master_id: "25543b82b9fe96223bd903b7037aab9d"
-  assets_uri: "/assets"
-  bundles_uri: "/bundles"
-  single_asset_uri: "/asset/"
-  single_contract_uri: "/asset_contract/"
-  events_uri: "/events"
-  collections_uri: "/collections"
+testbed:
+  api_url: https://openapi.openbanking.or.kr/v2.0/
+  client_id: b13d9333-727a-4644-8392-02eef0c39359
+  client_secret: 9de6108f-fc49-4721-b232-1aad11096204
+  oauth: /oauth/
