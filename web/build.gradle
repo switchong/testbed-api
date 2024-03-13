@@ -10,7 +10,7 @@ bootJar{
 }
 jar {
     enabled = false;
-    archivesBaseName = 'testbed-api';
+    archivesBaseName = 'testbed-web';
 }
 
 dependencies {
