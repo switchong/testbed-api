@@ -6,8 +6,6 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
 @Component
 @RequiredArgsConstructor
 @Getter
@@ -15,9 +13,9 @@ import java.util.Map;
 @ConfigurationProperties("testbed")
 public class TestbedProperty {
 
-    private String apiUrl;
+    private String apiUri;
     private String clientId;
     private String clientSecret;
-    private Map<String, String> path;
+    private String uriPath;
 }
 

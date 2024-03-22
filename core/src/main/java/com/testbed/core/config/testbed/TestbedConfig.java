@@ -22,7 +22,7 @@ public class TestbedConfig {
         RestTemplate restTemplate = restTemplateBuilder
                 .defaultHeader("Accept", MediaType.APPLICATION_JSON_VALUE)
                 .build();
-        restTemplate.setUriTemplateHandler(new DefaultUriBuilderFactory(this.testbedProperty.getApiUrl()));
+        restTemplate.setUriTemplateHandler(new DefaultUriBuilderFactory(this.testbedProperty.getApiUri()));
         return restTemplate;
     }
 }
