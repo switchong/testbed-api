@@ -1,4 +1,4 @@
 package com.testbed.core.repository.custom;
 
-public interface NftFavoriteCustomRepository {
+public interface ApiLogCustomRepository {
 }

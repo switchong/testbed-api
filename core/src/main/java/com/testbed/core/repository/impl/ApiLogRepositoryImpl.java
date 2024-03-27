@@ -1,14 +1,16 @@
 package com.testbed.core.repository.impl;
 
-import com.testbed.core.repository.custom.NftFavoriteCustomRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.testbed.core.repository.custom.ApiLogCustomRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class NftFavoriteRepositoryImpl implements NftFavoriteCustomRepository {
+public class ApiLogRepositoryImpl implements ApiLogCustomRepository {
+
     private final JPAQueryFactory queryFactory;
 
-    public NftFavoriteRepositoryImpl(JPAQueryFactory queryFactory) {
+    public  ApiLogRepositoryImpl(JPAQueryFactory queryFactory){
         this.queryFactory = queryFactory;
     }
+
 }

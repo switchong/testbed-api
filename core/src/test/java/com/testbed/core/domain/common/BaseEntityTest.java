@@ -1,6 +1,5 @@
 package com.testbed.core.domain.common;
 
-import com.testbed.core.repository.NftRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
