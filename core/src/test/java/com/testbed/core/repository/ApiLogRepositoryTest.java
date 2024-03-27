@@ -4,13 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
 @SpringBootTest
-class NftRepositoryTest {
-
+public class ApiLogRepositoryTest {
 
     @Autowired
-    private NftRepository nftRepository;
+    private ApiLogRepository apiLogRepository;
 
 
     @Test

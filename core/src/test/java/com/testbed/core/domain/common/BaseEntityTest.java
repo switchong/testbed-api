@@ -1,5 +1,6 @@
 package com.testbed.core.domain.common;
 
+import com.testbed.core.repository.ApiLogRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 class BaseEntityTest {
 
     @Autowired
-    NftRepository nftRepository;
+    ApiLogRepository apiLogRepository;
 
     @Test
     public void BaseTimeEntity_등록() {

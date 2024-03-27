@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.xml.soap.Text;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,11 +27,11 @@ public class ApiLog extends BaseEntity {
     @Column(name = "method", length=10)
     private String method;
 
-    @Column(name = "request")
-    private Text request;
+    @Column(name = "request", length=3000)
+    private String request;
 
-    @Column(name = "response")
-    private Text response;
+    @Column(name = "response", length=3000)
+    private String response;
 
     @Column(name = "rsp_code", length=5)
     private String rspCode;
@@ -44,7 +43,7 @@ public class ApiLog extends BaseEntity {
     private LocalDateTime createDate;
 
     @Builder
-    public ApiLog(String uriId, String uriPath, String method, Text request, Text response, String rspCode, String rspMessage, LocalDateTime createDate) {
+    public ApiLog(String uriId, String uriPath, String method, String request, String response, String rspCode, String rspMessage) {
         this.uriId = uriId;
         this.uriPath = uriPath;
         this.method = method;
@@ -52,6 +51,5 @@ public class ApiLog extends BaseEntity {
         this.response = response;
         this.rspCode = rspCode;
         this.rspMessage = rspMessage;
-        this.createDate = createDate;
     }
 }
