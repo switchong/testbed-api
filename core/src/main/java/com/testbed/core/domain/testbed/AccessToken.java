@@ -1,6 +1,7 @@
 package com.testbed.core.domain.testbed;
 
 import com.testbed.core.domain.common.BaseEntity;
+import com.testbed.core.domain.common.value.ActiveStatus;
 import com.testbed.core.domain.testbed.value.Scope;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,6 +30,10 @@ public class AccessToken extends BaseEntity {
     @Column(name = "scope", length=20)
     private Scope scope;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "activa_status", length=10)
+    private ActiveStatus activeStatus;
+
     @Column(name = "expires_in", length=10, nullable = false)
     private Long expiresIn;
 
@@ -42,10 +47,11 @@ public class AccessToken extends BaseEntity {
     private LocalDateTime createDate;
 
     @Builder
-    public AccessToken(String accessToken, String refreshToken, Scope scope, Long userSeqNo, Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate) {
+    public AccessToken(String accessToken, String refreshToken, Scope scope, ActiveStatus activeStatus, Long userSeqNo, Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.scope = scope;
+        this.activeStatus = activeStatus;
         this.userSeqNo = userSeqNo;
         this.expiresIn = expiresIn;
         this.expiresDate = expiresDate;

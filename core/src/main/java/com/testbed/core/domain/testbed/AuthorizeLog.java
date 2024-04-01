@@ -1,6 +1,7 @@
 package com.testbed.core.domain.testbed;
 
 import com.testbed.core.domain.common.BaseEntity;
+import com.testbed.core.domain.common.value.ActiveStatus;
 import com.testbed.core.domain.testbed.value.Scope;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -26,6 +27,10 @@ public class AuthorizeLog extends BaseEntity {
     @Column(name = "scope", length=20)
     private Scope scope;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "activa_status", length=10)
+    private ActiveStatus activeStatus;
+
     @Column(name = "authorization_code", length=300 , nullable = false)
     private String authorizationCode;
 
@@ -42,10 +47,11 @@ public class AuthorizeLog extends BaseEntity {
     private LocalDateTime updateDate;
 
     @Builder
-    public AuthorizeLog(String state, String authorizationCode, Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate, LocalDateTime updateDate) {
+    public AuthorizeLog(String state, String authorizationCode, Scope scope, ActiveStatus activeStatus , Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate, LocalDateTime updateDate) {
         this.state = state;
-        this.scope = Scope.AUTHORIZE;
         this.authorizationCode = authorizationCode;
+        this.scope = scope;
+        this.activeStatus = activeStatus;
         this.expiresIn = expiresIn;
         this.expiresDate = expiresDate;
         this.createDate = createDate;
