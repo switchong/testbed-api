@@ -11,7 +11,8 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: testbeddev
       password: "xptmxmqpem12!@"
-      jdbc-url: jdbc:mysql://13.125.12.108:3306/testbed?serverTimezone=Asia/Seoul
+      jdbc-url: jdbc:mysql://localhost:3306/testbed?serverTimezone=Asia/Seoul
+      #      jdbc-url: jdbc:mysql://13.125.12.108:3306/testbed?serverTimezone=Asia/Seoul
       maximum-pool-size: 51
       data-source-properties.cachePrepStmts: true
       data-source-properties.prepStmtCacheSize: 250

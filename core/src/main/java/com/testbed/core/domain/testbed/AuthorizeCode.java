@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class AuthorizeLog extends BaseEntity {
+@Table(name = "authorize_log")
+public class AuthorizeCode extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +48,7 @@ public class AuthorizeLog extends BaseEntity {
     private LocalDateTime updateDate;
 
     @Builder
-    public AuthorizeLog(String state, String authorizationCode, Scope scope, ActiveStatus activeStatus , Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate, LocalDateTime updateDate) {
+    public AuthorizeCode(String state, String authorizationCode, Scope scope, ActiveStatus activeStatus , Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate, LocalDateTime updateDate) {
         this.state = state;
         this.authorizationCode = authorizationCode;
         this.scope = scope;

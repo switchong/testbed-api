@@ -1,9 +1,10 @@
 package com.testbed.web.common.service;
 
 import com.testbed.core.domain.testbed.ApiLog;
+import com.testbed.core.domain.testbed.AuthorizeCode;
 import com.testbed.core.repository.AccessTokenRepository;
 import com.testbed.core.repository.ApiLogRepository;
-import com.testbed.core.repository.AuthorizeLogRepository;
+import com.testbed.core.repository.AuthorizeCodeRepository;
 import com.testbed.web.common.dto.request.ApiLogRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TestbedDbService {
 
     private final ApiLogRepository apiLogRepository;
-    private final AuthorizeLogRepository authorizeLogRepository;
+    private final AuthorizeCodeRepository authorizeCodeRepository;
     private final AccessTokenRepository accessTokenRepository;
 
     /**
@@ -40,6 +41,15 @@ public class TestbedDbService {
         apiLogRepository.save(apiLogInsert);
 
 
+
+        return isResult;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Long saveAuthorizeLog(AuthorizeCode authorizeCode) {
+        Long isResult = Long.valueOf(1);
+
+        AuthorizeCode authLog = AuthorizeCode.builder().build();
 
         return isResult;
     }
