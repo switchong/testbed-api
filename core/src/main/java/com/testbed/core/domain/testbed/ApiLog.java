@@ -1,6 +1,7 @@
 package com.testbed.core.domain.testbed;
 
 import com.testbed.core.domain.common.BaseEntity;
+import com.testbed.core.domain.testbed.value.Method;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +26,12 @@ public class ApiLog extends BaseEntity {
     @Column(name = "uri_path", length=100)
     private String uriPath;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "method", length=10)
-    private String method;
+    private Method method;
+
+    @Column(name = "state", length=32)
+    private String state;
 
     @Column(name = "request", length=3000)
     private String request;
@@ -44,10 +49,11 @@ public class ApiLog extends BaseEntity {
     private LocalDateTime createDate;
 
     @Builder
-    public ApiLog(String uriId, String uriPath, String method, String request, String response, String rspCode, String rspMessage) {
+    public ApiLog(String uriId, String uriPath, Method method, String state, String request, String response, String rspCode, String rspMessage) {
         this.uriId = uriId;
         this.uriPath = uriPath;
         this.method = method;
+        this.state = state;
         this.request = request;
         this.response = response;
         this.rspCode = rspCode;

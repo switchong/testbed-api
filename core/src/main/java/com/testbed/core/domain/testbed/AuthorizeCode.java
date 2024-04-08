@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "authorize_log")
+@Table(name = "authorize_code")
 public class AuthorizeCode extends BaseEntity {
 
     @Id
@@ -29,7 +29,7 @@ public class AuthorizeCode extends BaseEntity {
     private Scope scope;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "activa_status", length=10)
+    @Column(name = "active_status", length=10)
     private ActiveStatus activeStatus;
 
     @Column(name = "authorization_code", length=300 , nullable = false)

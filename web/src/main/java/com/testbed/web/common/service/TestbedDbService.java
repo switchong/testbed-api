@@ -1,11 +1,17 @@
 package com.testbed.web.common.service;
 
+import com.testbed.core.common.util.date.DateTimeUtil;
+import com.testbed.core.domain.common.value.ActiveStatus;
 import com.testbed.core.domain.testbed.ApiLog;
 import com.testbed.core.domain.testbed.AuthorizeCode;
+import com.testbed.core.domain.testbed.value.Scope;
+import com.testbed.core.dto.AuthorizeCodeDto;
 import com.testbed.core.repository.AccessTokenRepository;
 import com.testbed.core.repository.ApiLogRepository;
 import com.testbed.core.repository.AuthorizeCodeRepository;
-import com.testbed.web.common.dto.request.ApiLogRequest;
+import com.testbed.web.common.dto.request.AccessTokenInDto;
+import com.testbed.web.common.dto.request.ApiLogInDto;
+import com.testbed.web.common.dto.request.AuthorizeCodeInDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,21 +27,22 @@ public class TestbedDbService {
 
     /**
      * API LOG 테이블 저장
-     * @param apiLogRequest
+     * @param apiLogInDto
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public Long saveApiLog(ApiLogRequest apiLogRequest) {
+    public Long saveApiLog(ApiLogInDto apiLogInDto) {
         Long isResult = Long.valueOf(1);
 
         ApiLog apiLogInsert = ApiLog.builder()
-                .uriId(apiLogRequest.getUri_id())
-                .uriPath(apiLogRequest.getUri_path())
-                .method(apiLogRequest.getMethod())
-                .request(apiLogRequest.getRequest())
-                .response(apiLogRequest.getResponse())
-                .rspCode(apiLogRequest.getRsp_code())
-                .rspMessage(apiLogRequest.getRsp_message())
+                .uriId(apiLogInDto.getUriId())
+                .uriPath(apiLogInDto.getUriPath())
+                .method(apiLogInDto.getMethod())
+                .state(apiLogInDto.getState())
+                .request(apiLogInDto.getRequest())
+                .response(apiLogInDto.getResponse())
+                .rspCode(apiLogInDto.getRspCode())
+                .rspMessage(apiLogInDto.getRspMessage())
                 .build();
 
         apiLogRepository.save(apiLogInsert);
@@ -45,14 +52,54 @@ public class TestbedDbService {
         return isResult;
     }
 
+    /**
+     * AUTHORIZE_CODE 테이블 저장
+     * @param authorizeCodeInDto
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
-    public Long saveAuthorizeLog(AuthorizeCode authorizeCode) {
+    public Long saveAuthorizeCode(AuthorizeCodeInDto authorizeCodeInDto) {
         Long isResult = Long.valueOf(1);
+        Scope scope = (authorizeCodeInDto.getScope()=="AUTHORIZE") ? Scope.AUTHORIZE : Scope.OOB;
 
-        AuthorizeCode authLog = AuthorizeCode.builder().build();
+        AuthorizeCode authCodeInsert = AuthorizeCode.builder()
+                .state(authorizeCodeInDto.getState())
+                .scope(scope)
+                .authorizationCode(authorizeCodeInDto.getAuthorizationCode())
+                .activeStatus(ActiveStatus.ACTIVE)
+                .expiresIn(null)
+                .expiresDate(null)
+                .createDate(DateTimeUtil.getNowDateTimeSecond())
+                .build();
+
+        authorizeCodeRepository.save(authCodeInsert);
 
         return isResult;
     }
 
 
+    @Transactional(rollbackFor = Exception.class)
+    public Long saveAccessToken(AccessTokenInDto accessTokenInDto) {
+        Long isResult = Long.valueOf(1);
+
+        return isResult;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateApiLog(ApiLogInDto apiLogInDto) {
+        ApiLog apiLog = ApiLog.builder()
+                .state(apiLogInDto.getState())
+                .response(apiLogInDto.getResponse())
+                .rspCode(apiLogInDto.getRspCode())
+                .build();
+        apiLogRepository.updateApiLog(apiLog);
+    }
+
+
+    public AuthorizeCodeDto findByAuthorizeState(String state) {
+        AuthorizeCodeDto authorizeCodeDto = authorizeCodeRepository.findByState(state);
+
+
+        return authorizeCodeDto;
+    }
 }

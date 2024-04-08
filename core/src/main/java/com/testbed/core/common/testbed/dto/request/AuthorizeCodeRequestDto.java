@@ -10,9 +10,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class AuthorizeRequest {
+public class AuthorizeCodeRequestDto {
 
-    private static AuthorizeRequest authorizeRequest;
+    private static AuthorizeCodeRequestDto authorizeCodeRequestDto;
     /*
     'response_type' => 'code',
     'client_id' => $client_id,
@@ -42,7 +42,7 @@ public class AuthorizeRequest {
 
 
 
-    public AuthorizeRequest(String responseType, String clientId, String redirectUri, String scope, String state, String authType) {
+    public AuthorizeCodeRequestDto(String responseType, String clientId, String redirectUri, String scope, String state, String authType) {
         this.responseType = responseType;
         this.clientId = clientId;
         this.redirectUri = redirectUri;
@@ -51,7 +51,7 @@ public class AuthorizeRequest {
         this.authType = authType;
     }
 
-    public static AuthorizeRequest of (String responseType, String clientId, String redirectUri, String scope, String state, String authType) {
-        return new AuthorizeRequest(responseType, clientId, redirectUri, scope, state, authType);
+    public static AuthorizeCodeRequestDto of (String responseType, String clientId, String redirectUri, String scope, String state, String authType) {
+        return new AuthorizeCodeRequestDto(responseType, clientId, redirectUri, scope, state, authType);
     }
 }

@@ -14,9 +14,6 @@ public class AuthorizeRequest {
     @Value("${testbed.clientId}")
     private String clientId;
 
-    @Value("${testbed.clientSecret}")
-    private String clientSecret;
-
     private String redirectUri; // 리다이렉트 URL
     private String scope;
     private String state;

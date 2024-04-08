@@ -8,7 +8,10 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorizeResponse {
+public class AuthorizeCodeResponseDto {
+
+    @JsonProperty("requestUrl")
+    private String requestUrl;
 
     @JsonProperty("html")
     private String html;

@@ -5,5 +5,6 @@ public enum ActiveStatus {
 
     ACTIVE,
     HIDE,
-    DELETE
+    DELETE,
+    FAIL
 }

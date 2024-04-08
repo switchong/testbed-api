@@ -1,5 +1,6 @@
 package com.testbed.core.domain.testbed;
 
+import com.testbed.core.domain.testbed.value.Method;
 import com.testbed.core.repository.ApiLogRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class ApiLogTest {
         apiLogRepository.save(ApiLog.builder()
                         .uriId("")
                         .uriPath("")
-                        .method("GET")
+                        .method(Method.GET)
                         .request("{requestTest}")
                         .response("responseTest")
                         .rspCode("")

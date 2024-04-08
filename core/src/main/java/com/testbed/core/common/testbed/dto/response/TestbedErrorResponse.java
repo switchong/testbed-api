@@ -16,4 +16,10 @@ public class TestbedErrorResponse {
     @JsonProperty("rspMessage")
     private String rspMessage;
 
+    @JsonProperty("error")
+    private String error;
+
+    @JsonProperty("errorDescription")
+    private String errorDescription;
+
 }
