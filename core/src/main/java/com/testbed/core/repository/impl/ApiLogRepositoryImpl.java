@@ -25,6 +25,7 @@ public class ApiLogRepositoryImpl implements ApiLogCustomRepository {
                 .set(apiLog.response, apiLogDto.getResponse())
                 .set(apiLog.rspCode, apiLogDto.getRspCode())
                 .set(apiLog.rspMessage, apiLogDto.getRspMessage())
+                .set(apiLog.updateDate, nowDatetime)
                 .where(apiLog.state.eq(apiLogDto.getState()))
                 .execute();
 

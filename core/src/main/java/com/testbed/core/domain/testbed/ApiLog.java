@@ -48,8 +48,11 @@ public class ApiLog extends BaseEntity {
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
+    @Column(name = "update_date", nullable = false)
+    private LocalDateTime updateDate;
+
     @Builder
-    public ApiLog(String uriId, String uriPath, Method method, String state, String request, String response, String rspCode, String rspMessage) {
+    public ApiLog(String uriId, String uriPath, Method method, String state, String request, String response, String rspCode, String rspMessage, LocalDateTime createDate) {
         this.uriId = uriId;
         this.uriPath = uriPath;
         this.method = method;
@@ -58,5 +61,6 @@ public class ApiLog extends BaseEntity {
         this.response = response;
         this.rspCode = rspCode;
         this.rspMessage = rspMessage;
+        this.createDate = createDate;
     }
 }

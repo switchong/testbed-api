@@ -21,6 +21,9 @@ public class AuthorizeCode extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long authSeq;   // PK
 
+    @Column(name = "user_id", length = 100)
+    private String userId;
+
     @Column(name = "state", length=32)
     private String state;
 
@@ -48,14 +51,13 @@ public class AuthorizeCode extends BaseEntity {
     private LocalDateTime updateDate;
 
     @Builder
-    public AuthorizeCode(String state, String authorizationCode, Scope scope, ActiveStatus activeStatus , Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate, LocalDateTime updateDate) {
+    public AuthorizeCode(String userId, String state, String authorizationCode, Scope scope, ActiveStatus activeStatus , Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate, LocalDateTime updateDate) {
+        this.userId = userId;
         this.state = state;
         this.authorizationCode = authorizationCode;
         this.scope = scope;
         this.activeStatus = activeStatus;
         this.expiresIn = expiresIn;
         this.expiresDate = expiresDate;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
     }
 }

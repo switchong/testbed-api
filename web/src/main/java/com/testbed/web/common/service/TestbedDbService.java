@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -32,6 +34,7 @@ public class TestbedDbService {
      */
     @Transactional(rollbackFor = Exception.class)
     public Long saveApiLog(ApiLogInDto apiLogInDto) {
+        LocalDateTime now = LocalDateTime.now();
         Long isResult = Long.valueOf(1);
 
         ApiLog apiLogInsert = ApiLog.builder()
@@ -43,6 +46,7 @@ public class TestbedDbService {
                 .response(apiLogInDto.getResponse())
                 .rspCode(apiLogInDto.getRspCode())
                 .rspMessage(apiLogInDto.getRspMessage())
+                .createDate(now)
                 .build();
 
         apiLogRepository.save(apiLogInsert);
@@ -63,6 +67,7 @@ public class TestbedDbService {
         Scope scope = (authorizeCodeInDto.getScope()=="AUTHORIZE") ? Scope.AUTHORIZE : Scope.OOB;
 
         AuthorizeCode authCodeInsert = AuthorizeCode.builder()
+                .userId(authorizeCodeInDto.getUserId())
                 .state(authorizeCodeInDto.getState())
                 .scope(scope)
                 .authorizationCode(authorizeCodeInDto.getAuthorizationCode())
@@ -91,6 +96,7 @@ public class TestbedDbService {
                 .state(apiLogInDto.getState())
                 .response(apiLogInDto.getResponse())
                 .rspCode(apiLogInDto.getRspCode())
+                .rspMessage(apiLogInDto.getRspMessage())
                 .build();
         apiLogRepository.updateApiLog(apiLog);
     }

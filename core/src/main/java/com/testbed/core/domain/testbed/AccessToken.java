@@ -21,6 +21,9 @@ public class AccessToken extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long tokenSeq;   // PK
 
+    @Column(name = "user_id", length = 100)
+    private String userId;
+
     @Column(name = "access_token", length=200 , nullable = false)
     private String accessToken;
 
@@ -50,8 +53,12 @@ public class AccessToken extends BaseEntity {
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
+    @Column(name = "update_date", nullable = false)
+    private LocalDateTime updateDate;
+
     @Builder
-    public AccessToken(String accessToken, String refreshToken, String state, Scope scope, ActiveStatus activeStatus, Long userSeqNo, Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate) {
+    public AccessToken(String userId, String accessToken, String refreshToken, String state, Scope scope, ActiveStatus activeStatus, Long userSeqNo, Long expiresIn, LocalDateTime expiresDate) {
+        this.userId = userId;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.state = state;
@@ -60,6 +67,5 @@ public class AccessToken extends BaseEntity {
         this.userSeqNo = userSeqNo;
         this.expiresIn = expiresIn;
         this.expiresDate = expiresDate;
-        this.createDate = createDate;
     }
 }

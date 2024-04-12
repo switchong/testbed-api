@@ -6,10 +6,7 @@ import com.testbed.web.auth.dto.response.AuthorizeResponse;
 import com.testbed.web.auth.service.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,17 +21,20 @@ public class AuthRestController {
     private final AuthService authService;
 
 
-    @GetMapping("/authorize")
-    public Map<String, Object> AuthorizeCall() {
-        Map<String, Object> result = new HashMap<>();
+    @GetMapping(value = "/authorize/{userId}")
+    public Map<String, String> AuthorizeCall(@PathVariable("userId") String userId) {
+        Map<String, String> result = new HashMap<>();
+
+        System.out.println("requestParam.uesrId : " + userId);
 
         String callbackUrl = "http://localhost:8080/auth/authResult";
 
-        String url = authService.getAuthorizeUrl(callbackUrl);
+        String url = authService.getAuthorizeUrl(userId, callbackUrl);
 
 //        String response = testbedHttpClient.getAuthorizeUrl(callbackUrl);
 
         result.put("url", url);
+        result.put("user_id", userId);
 
         return result;
     }
@@ -45,9 +45,15 @@ public class AuthRestController {
         String code = paramMap.get("code");
         String scope = paramMap.get("scope");
         String state = paramMap.get("state");
+        String clientInfo = paramMap.get(("client_info"));
+        if(!scope.equals("oob")) {
+            scope = "AUTHORIZE";
+        } else {
+            scope = "OOB";
+        }
 
         // 중복체크
-        AuthorizeResponse authorizeResponse = authService.getAuthorizeCode(code, scope, state);
+        AuthorizeResponse authorizeResponse = authService.getAuthorizeCode(code, scope, state, clientInfo);
 
         return authorizeResponse;
     }

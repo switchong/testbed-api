@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AuthorizeCodeInDto {
 
+    private String userId;
     private String state;
     private String scope;
     private String authorizationCode;
@@ -21,7 +22,8 @@ public class AuthorizeCodeInDto {
     private LocalDateTime createDate;
 
     @Builder
-    public AuthorizeCodeInDto(String state, String scope, String authorizationCode) {
+    public AuthorizeCodeInDto(String userId, String state, String scope, String authorizationCode) {
+        this.userId = userId;
         this.state = state;
         this.scope = scope;
         this.authorizationCode = authorizationCode;
