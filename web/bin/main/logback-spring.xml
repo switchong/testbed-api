@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOGS" value="${user.home}/app/logs/nftgram-web" />
+    <property name="LOGS" value="${user.home}/app/logs/testbed-web" />
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -13,9 +13,9 @@
         <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M [%L]- %msg%n</Pattern>
         </encoder>
-        <file>${LOGS}/nftgram-web.log</file>
+        <file>${LOGS}/testbed-web.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOGS}/nftgram-web-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOGS}/testbed-web-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
     </appender>

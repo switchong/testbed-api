@@ -1,11 +1,10 @@
 package com.testbed.web.common.service;
 
-import com.testbed.core.common.util.date.DateTimeUtil;
 import com.testbed.core.domain.common.value.ActiveStatus;
+import com.testbed.core.domain.testbed.AccessToken;
 import com.testbed.core.domain.testbed.ApiLog;
 import com.testbed.core.domain.testbed.AuthorizeCode;
 import com.testbed.core.domain.testbed.value.Scope;
-import com.testbed.core.dto.AuthorizeCodeDto;
 import com.testbed.core.repository.AccessTokenRepository;
 import com.testbed.core.repository.ApiLogRepository;
 import com.testbed.core.repository.AuthorizeCodeRepository;
@@ -51,8 +50,6 @@ public class TestbedDbService {
 
         apiLogRepository.save(apiLogInsert);
 
-
-
         return isResult;
     }
 
@@ -65,6 +62,7 @@ public class TestbedDbService {
     public Long saveAuthorizeCode(AuthorizeCodeInDto authorizeCodeInDto) {
         Long isResult = Long.valueOf(1);
         Scope scope = (authorizeCodeInDto.getScope()=="AUTHORIZE") ? Scope.AUTHORIZE : Scope.OOB;
+        LocalDateTime now = LocalDateTime.now();
 
         AuthorizeCode authCodeInsert = AuthorizeCode.builder()
                 .userId(authorizeCodeInDto.getUserId())
@@ -74,7 +72,7 @@ public class TestbedDbService {
                 .activeStatus(ActiveStatus.ACTIVE)
                 .expiresIn(null)
                 .expiresDate(null)
-                .createDate(DateTimeUtil.getNowDateTimeSecond())
+                .createDate(now)
                 .build();
 
         authorizeCodeRepository.save(authCodeInsert);
@@ -86,6 +84,21 @@ public class TestbedDbService {
     @Transactional(rollbackFor = Exception.class)
     public Long saveAccessToken(AccessTokenInDto accessTokenInDto) {
         Long isResult = Long.valueOf(1);
+
+        AccessToken accessTokenInsert = AccessToken.builder()
+                .userId(accessTokenInDto.getUserId())
+                .accessToken(accessTokenInDto.getAccessToken())
+                .refreshToken(accessTokenInDto.getRefreshToken())
+                .state(accessTokenInDto.getState())
+                .scope(accessTokenInDto.getScope())
+                .activeStatus(ActiveStatus.ACTIVE)
+                .userSeqNo(accessTokenInDto.getUserSeqNo())
+                .expiresIn(accessTokenInDto.getExpiresIn())
+                .expiresDate(accessTokenInDto.getExpiresDate())
+                .createDate(accessTokenInDto.getCreateDate())
+                .build();
+        accessTokenRepository.save(accessTokenInsert);
+
 
         return isResult;
     }
@@ -101,11 +114,23 @@ public class TestbedDbService {
         apiLogRepository.updateApiLog(apiLog);
     }
 
+    /**
+     * 사용자 인증 데이터 중복체크
+     * @param state
+     * @return
+     */
+    public AuthorizeCode findByAuthorizeState(String state) {
+        AuthorizeCode dbioAuthorizeCode = authorizeCodeRepository.findByState(state);
 
-    public AuthorizeCodeDto findByAuthorizeState(String state) {
-        AuthorizeCodeDto authorizeCodeDto = authorizeCodeRepository.findByState(state);
+        return dbioAuthorizeCode;
+    }
 
+    /**
+     *
+     */
+    public AccessToken findByAccessToken(String userId, Scope scope) {
+        AccessToken dbioAccessToken = accessTokenRepository.findByUserIdAndScopeOrderByCreateDate(userId, scope);
 
-        return authorizeCodeDto;
+        return dbioAccessToken;
     }
 }

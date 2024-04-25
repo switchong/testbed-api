@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("testbed")
 public class TestbedProperty {
 
+    private String localUrl;
     private String apiUri;
     private String clientId;
     private String clientSecret;

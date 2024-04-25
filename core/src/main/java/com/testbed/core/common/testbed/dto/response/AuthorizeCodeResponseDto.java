@@ -16,4 +16,10 @@ public class AuthorizeCodeResponseDto {
     @JsonProperty("html")
     private String html;
 
+    @JsonProperty("rsp_code")
+    private String rspCode;
+
+    @JsonProperty("rsp_message")
+    private String rspMessage;
+
 }

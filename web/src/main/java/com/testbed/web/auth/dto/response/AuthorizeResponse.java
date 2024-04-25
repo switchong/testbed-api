@@ -12,17 +12,21 @@ public class AuthorizeResponse {
     private String code;
     private String scope;
     private String state;
-    private String clientInfo;
+    private String userId;
+    private String tokenUrl;
+    private String tokenScope;
 //    private String rspCode;
 //    private String rspMessage;
 //    private String error;
 //    private String errorDescription;
 
     @Builder
-    public AuthorizeResponse(String code, String scope, String state, String clientInfo) {
+    public AuthorizeResponse(String code, String scope, String state, String userId, String tokenUrl, String tokenScope) {
         this.code = code;
         this.scope = scope;
         this.state = state;
-        this.clientInfo = clientInfo;
+        this.userId = userId;
+        this.tokenUrl = tokenUrl;
+        this.tokenScope = tokenScope;
     }
 }

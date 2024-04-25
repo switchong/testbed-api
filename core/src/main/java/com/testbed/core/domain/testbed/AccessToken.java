@@ -24,13 +24,13 @@ public class AccessToken extends BaseEntity {
     @Column(name = "user_id", length = 100)
     private String userId;
 
-    @Column(name = "access_token", length=200 , nullable = false)
+    @Column(name = "access_token", length=300 , nullable = false)
     private String accessToken;
 
-    @Column(name = "refresh_token", length=200 , nullable = false)
+    @Column(name = "refresh_token", length=300 , nullable = false)
     private String refreshToken;
 
-    @Column(name = "state", length=32)
+    @Column(name = "state", length=32, nullable = false)
     private String state;
 
     @Enumerated(value = EnumType.STRING)
@@ -38,7 +38,7 @@ public class AccessToken extends BaseEntity {
     private Scope scope;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "activa_status", length=10)
+    @Column(name = "active_status", length=10)
     private ActiveStatus activeStatus;
 
     @Column(name = "expires_in", length=10, nullable = false)
@@ -57,7 +57,7 @@ public class AccessToken extends BaseEntity {
     private LocalDateTime updateDate;
 
     @Builder
-    public AccessToken(String userId, String accessToken, String refreshToken, String state, Scope scope, ActiveStatus activeStatus, Long userSeqNo, Long expiresIn, LocalDateTime expiresDate) {
+    public AccessToken(String userId, String accessToken, String refreshToken, String state, Scope scope, ActiveStatus activeStatus, Long userSeqNo, Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate) {
         this.userId = userId;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
@@ -67,5 +67,6 @@ public class AccessToken extends BaseEntity {
         this.userSeqNo = userSeqNo;
         this.expiresIn = expiresIn;
         this.expiresDate = expiresDate;
+        this.createDate = createDate;
     }
 }

@@ -59,5 +59,6 @@ public class AuthorizeCode extends BaseEntity {
         this.activeStatus = activeStatus;
         this.expiresIn = expiresIn;
         this.expiresDate = expiresDate;
+        this.createDate = createDate;
     }
 }

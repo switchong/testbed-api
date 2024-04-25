@@ -20,7 +20,7 @@ public class AuthorizeCodeRepositoryImpl implements AuthorizeCodeCustomRepositor
     }
 
     @Override
-    public AuthorizeCodeDto findByState(String findState) {
+    public AuthorizeCodeDto findByAuthorizeState(String findState) {
 
         AuthorizeCodeDto result = queryFactory.select(Projections.constructor(AuthorizeCodeDto.class, authorizeCode))
             .from(authorizeCode)
