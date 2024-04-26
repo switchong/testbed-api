@@ -38,7 +38,7 @@ spring:
 logging:
   level:
     com:
-      nftgram: info
+      testbed: info
     org:
       hibernate:
         SQL: info

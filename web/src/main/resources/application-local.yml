@@ -53,7 +53,7 @@ spring:
 logging:
   level:
     com:
-      nftgram: trace
+      testbed: trace
     org:
       springframework:
         #        security: debug
