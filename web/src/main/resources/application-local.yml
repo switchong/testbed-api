@@ -1,7 +1,6 @@
 spring:
   profiles: local
 
-
   datasource :
     hikari:
       #            driver-class-name: org.h2.Driver

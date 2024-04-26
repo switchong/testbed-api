@@ -66,7 +66,7 @@ logging:
 
 testbed:
   localUrl: https://api.finger.run
-  apiUrl: https://testapi.openbanking.or.kr/v2.0/
+  apiUrl: https://testapi.openbanking.or.kr
   clientId: b13d9333-727a-4644-8392-02eef0c39359
   clientSecret: 9de6108f-fc49-4721-b232-1aad11096204
   cookie:
