@@ -24,7 +24,13 @@ public class AccessTokenInDto {
     private LocalDateTime createDate;
 
     @Builder
-    public AccessTokenInDto(String userId, String accessToken, String refreshToken, String state, Scope scope, Long userSeqNo, Long expiresIn, LocalDateTime expiresDate, LocalDateTime createDate) {
+    public AccessTokenInDto(String userId, String accessToken, String refreshToken, String state, Scope scope, Long userSeqNo, Long expiresIn) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expiresDate = null;
+        if(expiresIn.intValue() > 0) {
+            expiresDate = now.minusSeconds(expiresIn);
+        }
+
         this.userId = userId;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
@@ -34,7 +40,7 @@ public class AccessTokenInDto {
         this.activeStatus = ActiveStatus.ACTIVE;
         this.expiresIn = expiresIn;
         this.expiresDate = expiresDate;
-        this.createDate = createDate;
+        this.createDate = now;
     }
 
 }

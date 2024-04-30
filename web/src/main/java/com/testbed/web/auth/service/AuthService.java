@@ -153,7 +153,7 @@ public class AuthService {
         // DB 조회
         AccessToken dbio = dbService.findByAccessToken(userId, scope);
 
-        System.out.print("dbio >>>>>>>>>>>>> " + dbio);
+        System.out.print("findByAccessToken >>>>>>>>>>>>> " + dbio);
 
         AccessTokenDto accessTokenDto = null;
 
@@ -201,8 +201,6 @@ public class AuthService {
                 .accessToken(accessTokenResponseDto.getAccessToken())
                 .expiresIn(accessTokenResponseDto.getExpiresIn())
                 .scope(scope)
-                .expiresDate(expiresDate)
-                .createDate(now)
                 .build();
         dbService.saveAccessToken(accessTokenInDto);
 

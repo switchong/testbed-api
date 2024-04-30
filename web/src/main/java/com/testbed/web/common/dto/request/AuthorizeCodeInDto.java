@@ -17,18 +17,25 @@ public class AuthorizeCodeInDto {
     private String scope;
     private String authorizationCode;
     private ActiveStatus activeStatus;
-    private int expiresIn;
+    private Long expiresIn;
     private LocalDateTime expiresDate;
     private LocalDateTime createDate;
 
     @Builder
-    public AuthorizeCodeInDto(String userId, String state, String scope, String authorizationCode) {
+    public AuthorizeCodeInDto(String userId, String state, String scope, String authorizationCode, Long expiresIn) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expiresDate = null;
+        if(expiresIn.intValue() > 0) {
+            expiresDate = now.minusSeconds(expiresIn);
+        }
         this.userId = userId;
         this.state = state;
         this.scope = scope;
         this.authorizationCode = authorizationCode;
         this.activeStatus = ActiveStatus.ACTIVE;
-        this.expiresIn = 100000;
+        this.expiresIn = expiresIn;
+        this.expiresDate = expiresDate;
+        this.createDate = now;
     }
 
 }

@@ -23,21 +23,15 @@ public class ApiLogInDto {
     private String rspMessage;
 
     @Builder
-    public ApiLogInDto(String uriId, String uriPath, Method method, String state, String request, String response) {
+    public ApiLogInDto(String uriId, String uriPath, Method method, String state, String request, String response
+                        ,String rspCode, String rspMessage) {
         this.uriId = uriId;
         this.uriPath = uriPath;
         this.method = method;
         this.state = state;
         this.request = request;
         this.response = response;
-    }
-
-    @Builder
-    public ApiLogInDto(String state, String response, String rspCode, String rspMessage) {
-        this.state = state;
-        this.response = response;
         this.rspCode = rspCode;
         this.rspMessage = rspMessage;
     }
-
 }
