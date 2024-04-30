@@ -1,5 +1,6 @@
 package com.testbed.web.common.controller;
 
+import com.testbed.web.common.dto.ResultMessage;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,13 +11,17 @@ import java.util.Map;
 public class TestbedApiController {
 
     @GetMapping("/")
-    public Map<String, Object> Main() {
+    public ResultMessage Main() {
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("code", "99999");
-        result.put("message", "정상적인 경로가 아닙니다.");
+        String code = "99999";
+        String message = "정상적인 경로가 아닙니다.";
 
-        return result;
+        ResultMessage resultMessage = ResultMessage.builder()
+                .code(code)
+                .message(message)
+                .build();
+
+        return resultMessage;
     }
 
     @GetMapping("/hello")
