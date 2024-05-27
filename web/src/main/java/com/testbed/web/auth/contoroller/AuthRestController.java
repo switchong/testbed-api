@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.testbed.core.common.testbed.TestbedHttpClient;
 import com.testbed.core.domain.testbed.value.Scope;
 import com.testbed.core.dto.AccessTokenDto;
-import com.testbed.web.auth.dto.request.AccessTokenRequest;
-import com.testbed.web.auth.dto.response.AccessTokenAuthorizeResponse;
-import com.testbed.web.auth.dto.response.AccessTokenResponse;
-import com.testbed.web.auth.dto.response.AuthorizeResponse;
+import com.testbed.web.auth.dto.request.AccessTokenWebRequest;
+import com.testbed.web.auth.dto.response.AccessTokenAuthorizeWebResponse;
+import com.testbed.web.auth.dto.response.AccessTokenWebResponse;
+import com.testbed.web.auth.dto.response.AuthorizeWebResponse;
 import com.testbed.web.auth.service.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +59,7 @@ public class AuthRestController {
     }
 
     @GetMapping(value="/authResult")
-    public AuthorizeResponse AuthResult(@RequestParam Map<String, String> paramMap) {
+    public AuthorizeWebResponse AuthResult(@RequestParam Map<String, String> paramMap) {
         String strResult = "";
         String code = paramMap.get("code");
         String scope = paramMap.get("scope");
@@ -72,13 +72,13 @@ public class AuthRestController {
         }
 
         // 중복체크
-        AuthorizeResponse authorizeResponse = authService.getAuthorizeCode(code, scope, state, clientInfo);
+        AuthorizeWebResponse authorizeWebResponse = authService.getAuthorizeCode(code, scope, state, clientInfo);
 
-        return authorizeResponse;
+        return authorizeWebResponse;
     }
 
     @PostMapping(value="/accessToken", produces = "application/json")
-    public AccessTokenResponse AccessTokenCall(@RequestBody AccessTokenRequest accessTokenRequest) throws JsonProcessingException {
+    public AccessTokenWebResponse AccessTokenCall(@RequestBody AccessTokenWebRequest accessTokenRequest) throws JsonProcessingException {
         String userId = accessTokenRequest.getUserId();
         Scope scope = (accessTokenRequest.getScope().equals("OOB")) ? Scope.OOB : Scope.AUTHORIZE;
         String authorization_code = accessTokenRequest.getCode();   // AUTHORIZE 때만.
@@ -88,16 +88,16 @@ public class AuthRestController {
 
         System.out.print("AccessToken >>>> " + accessTokenDto);
 
-        AccessTokenResponse accessTokenResponse = null;
+        AccessTokenWebResponse accessTokenWebResponse = null;
 
         if(scope.equals(Scope.OOB)) {
             if(accessTokenDto == null) {
-                accessTokenResponse = authService.callAccessTokenOob(userId, scope);
+                accessTokenWebResponse = authService.callAccessTokenOob(userId, scope);
             } else {
                 if(accessTokenDto.getExpiresDate().isAfter(LocalDateTime.now())) {
-                    accessTokenResponse = authService.callAccessTokenOob(userId, scope);
+                    accessTokenWebResponse = authService.callAccessTokenOob(userId, scope);
                 } else {
-                    accessTokenResponse = AccessTokenResponse.builder()
+                    accessTokenWebResponse = AccessTokenWebResponse.builder()
                             .userId(userId)
                             .accessToken(accessTokenDto.getAccessToken())
                             .scope(accessTokenDto.getScope())
@@ -107,12 +107,12 @@ public class AuthRestController {
             }
         } else if(scope.equals(Scope.AUTHORIZE)){
             if(accessTokenDto == null) {
-                accessTokenResponse = authService.callAccessTokenAuthorize(userId, authorization_code, "N");
+                accessTokenWebResponse = authService.callAccessTokenAuthorize(userId, authorization_code, "N");
             } else {
                 if(accessTokenDto.getExpiresDate().isAfter(LocalDateTime.now())) {
-                    accessTokenResponse = authService.callAccessTokenAuthorize(userId, authorization_code, "N");
+                    accessTokenWebResponse = authService.callAccessTokenAuthorize(userId, authorization_code, "N");
                 } else{
-                    accessTokenResponse = AccessTokenResponse.builder()
+                    accessTokenWebResponse = AccessTokenWebResponse.builder()
                             .userId(userId)
                             .accessToken(accessTokenDto.getAccessToken())
                             .scope(accessTokenDto.getScope())
@@ -121,10 +121,10 @@ public class AuthRestController {
                 }
             }
         } else {
-            accessTokenResponse = AccessTokenResponse.builder().build();
+            accessTokenWebResponse = AccessTokenWebResponse.builder().build();
         }
 
-        return accessTokenResponse;
+        return accessTokenWebResponse;
     }
 
 
@@ -136,7 +136,7 @@ public class AuthRestController {
      * @return
      */
     @GetMapping("/accessTokenResult")
-    public AccessTokenAuthorizeResponse AccessTokenResult(@RequestParam Map<String, String> paramMap) {
+    public AccessTokenAuthorizeWebResponse AccessTokenResult(@RequestParam Map<String, String> paramMap) {
         String callbackUrl = "/auth/accessTokenResult";
 
         JSONObject jsonResponse = new JSONObject(paramMap);
@@ -144,7 +144,7 @@ public class AuthRestController {
         System.out.print("jsonResponse >>>>> " + jsonResponse);
 
 
-        AccessTokenAuthorizeResponse tokenAuthResponse = null;
+        AccessTokenAuthorizeWebResponse tokenAuthResponse = null;
 
         return tokenAuthResponse;
     }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AccessTokenInDto {
+public class AccessTokenCommonDto {
     private String userId;
     private String accessToken;
     private String refreshToken;
@@ -24,7 +24,7 @@ public class AccessTokenInDto {
     private LocalDateTime createDate;
 
     @Builder
-    public AccessTokenInDto(String userId, String accessToken, String refreshToken, String state, Scope scope, Long userSeqNo, Long expiresIn) {
+    public AccessTokenCommonDto(String userId, String accessToken, String refreshToken, String state, Scope scope, Long userSeqNo, Long expiresIn) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expiresDate = null;
         if(expiresIn.intValue() > 0) {

@@ -8,9 +8,9 @@ import com.testbed.core.domain.testbed.value.Scope;
 import com.testbed.core.repository.AccessTokenRepository;
 import com.testbed.core.repository.ApiLogRepository;
 import com.testbed.core.repository.AuthorizeCodeRepository;
-import com.testbed.web.common.dto.request.AccessTokenInDto;
-import com.testbed.web.common.dto.request.ApiLogInDto;
-import com.testbed.web.common.dto.request.AuthorizeCodeInDto;
+import com.testbed.web.common.dto.request.AccessTokenCommonDto;
+import com.testbed.web.common.dto.request.ApiLogCommonDto;
+import com.testbed.web.common.dto.request.AuthorizeCodeCommonDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,23 +28,23 @@ public class TestbedDbService {
 
     /**
      * API LOG 테이블 저장
-     * @param apiLogInDto
+     * @param apiLogCommonDto
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public Long saveApiLog(ApiLogInDto apiLogInDto) {
+    public Long saveApiLog(ApiLogCommonDto apiLogCommonDto) {
         LocalDateTime now = LocalDateTime.now();
         Long isResult = Long.valueOf(1);
 
         ApiLog apiLogInsert = ApiLog.builder()
-                .uriId(apiLogInDto.getUriId())
-                .uriPath(apiLogInDto.getUriPath())
-                .method(apiLogInDto.getMethod())
-                .state(apiLogInDto.getState())
-                .request(apiLogInDto.getRequest())
-                .response(apiLogInDto.getResponse())
-                .rspCode(apiLogInDto.getRspCode())
-                .rspMessage(apiLogInDto.getRspMessage())
+                .uriId(apiLogCommonDto.getUriId())
+                .uriPath(apiLogCommonDto.getUriPath())
+                .method(apiLogCommonDto.getMethod())
+                .state(apiLogCommonDto.getState())
+                .request(apiLogCommonDto.getRequest())
+                .response(apiLogCommonDto.getResponse())
+                .rspCode(apiLogCommonDto.getRspCode())
+                .rspMessage(apiLogCommonDto.getRspMessage())
                 .createDate(now)
                 .build();
 
@@ -55,20 +55,20 @@ public class TestbedDbService {
 
     /**
      * AUTHORIZE_CODE 테이블 저장
-     * @param authorizeCodeInDto
+     * @param authorizeCodeCommonDto
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public Long saveAuthorizeCode(AuthorizeCodeInDto authorizeCodeInDto) {
+    public Long saveAuthorizeCode(AuthorizeCodeCommonDto authorizeCodeCommonDto) {
         Long isResult = Long.valueOf(1);
-        Scope scope = (authorizeCodeInDto.getScope()=="AUTHORIZE") ? Scope.AUTHORIZE : Scope.OOB;
+        Scope scope = (authorizeCodeCommonDto.getScope()=="AUTHORIZE") ? Scope.AUTHORIZE : Scope.OOB;
         LocalDateTime now = LocalDateTime.now();
 
         AuthorizeCode authCodeInsert = AuthorizeCode.builder()
-                .userId(authorizeCodeInDto.getUserId())
-                .state(authorizeCodeInDto.getState())
+                .userId(authorizeCodeCommonDto.getUserId())
+                .state(authorizeCodeCommonDto.getState())
                 .scope(scope)
-                .authorizationCode(authorizeCodeInDto.getAuthorizationCode())
+                .authorizationCode(authorizeCodeCommonDto.getAuthorizationCode())
                 .activeStatus(ActiveStatus.ACTIVE)
                 .expiresIn(null)
                 .expiresDate(null)
@@ -82,20 +82,20 @@ public class TestbedDbService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Long saveAccessToken(AccessTokenInDto accessTokenInDto) {
+    public Long saveAccessToken(AccessTokenCommonDto accessTokenCommonDto) {
         Long isResult = Long.valueOf(1);
 
         AccessToken accessTokenInsert = AccessToken.builder()
-                .userId(accessTokenInDto.getUserId())
-                .accessToken(accessTokenInDto.getAccessToken())
-                .refreshToken(accessTokenInDto.getRefreshToken())
-                .state(accessTokenInDto.getState())
-                .scope(accessTokenInDto.getScope())
+                .userId(accessTokenCommonDto.getUserId())
+                .accessToken(accessTokenCommonDto.getAccessToken())
+                .refreshToken(accessTokenCommonDto.getRefreshToken())
+                .state(accessTokenCommonDto.getState())
+                .scope(accessTokenCommonDto.getScope())
                 .activeStatus(ActiveStatus.ACTIVE)
-                .userSeqNo(accessTokenInDto.getUserSeqNo())
-                .expiresIn(accessTokenInDto.getExpiresIn())
-                .expiresDate(accessTokenInDto.getExpiresDate())
-                .createDate(accessTokenInDto.getCreateDate())
+                .userSeqNo(accessTokenCommonDto.getUserSeqNo())
+                .expiresIn(accessTokenCommonDto.getExpiresIn())
+                .expiresDate(accessTokenCommonDto.getExpiresDate())
+                .createDate(accessTokenCommonDto.getCreateDate())
                 .build();
         accessTokenRepository.save(accessTokenInsert);
 
@@ -104,12 +104,12 @@ public class TestbedDbService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void updateApiLog(ApiLogInDto apiLogInDto) {
+    public void updateApiLog(ApiLogCommonDto apiLogCommonDto) {
         ApiLog apiLog = ApiLog.builder()
-                .state(apiLogInDto.getState())
-                .response(apiLogInDto.getResponse())
-                .rspCode(apiLogInDto.getRspCode())
-                .rspMessage(apiLogInDto.getRspMessage())
+                .state(apiLogCommonDto.getState())
+                .response(apiLogCommonDto.getResponse())
+                .rspCode(apiLogCommonDto.getRspCode())
+                .rspMessage(apiLogCommonDto.getRspMessage())
                 .build();
         apiLogRepository.updateApiLog(apiLog);
     }

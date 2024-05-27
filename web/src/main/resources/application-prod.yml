@@ -46,7 +46,74 @@ logging:
 
 
 testbed:
-  api_url: https://openapi.openbanking.or.kr/v2.0/
-  client_id: b13d9333-727a-4644-8392-02eef0c39359
-  client_secret: 9de6108f-fc49-4721-b232-1aad11096204
-  oauth: /oauth/
+  localUrl: https://api.finger.run
+  apiUri: https://testapi.openbanking.or.kr
+  clientId: b13d9333-727a-4644-8392-02eef0c39359
+  clientSecret: 9de6108f-fc49-4721-b232-1aad11096204
+  cookie:
+    key: api.finger.run
+    domainName: api.finger.run
+    #    domainName: edac-14-52-144-35.ngrok.io
+  aes256:
+    secretKey: 3021ACABD914C42D80C4E9D2D1BBA293
+  O0001:
+    119: 인증에 필요한 헤더 값이 존재하지 않을 때
+    801: 사용자일련번호와 token의 사용자가 맞지 않을 때
+    803: 인증요청 시 사용자 세션 값과 인증코드발급 시 사용자 세션 값이 맞지 않을 때
+    804: 사용자가 인증 페이지에서 동의하지 않을 때
+    992: Http Header에 Authorization Bearer access token이 없을 때
+    3000103: 인증에 필요한 필수 파라미터 값이 존재하지 않을 때 or 특정 파라미터 값이 중복으로 들어왔을 때
+    3000201: client_id가 존재하지 않을 때 or key/secret이 맞지 않을 때 or 비활성화되어 사용할 수 없을 때
+    3000113: 유효하지 않은 authorization code (만료 or 기사용)
+    3000114: 등록한 callback url과 요청한 callback url이 맞지 않을 때
+    3000115: scope이 맞지 않을 때(기본 제공하는 scope명[oob|login|inquiry|transfer|sa]이 맞지 않을 때)
+    3000116: response_type 유형이 맞지 않을 때
+    3000117: grant_type이 맞지 않을 때
+    3002110: 만료된 session 값을 사용하였을 때
+  uriPath:
+    oauthAuthorize: /oauth/2.0/authorize
+    oauthToken: /oauth/2.0/token
+    oauthRevoke: /oauth/2.0/revoke
+    oauthAuthorizeAccount: /oauth/2.0/authorize_account
+    userMe: /v2.0/user/me
+    userUnlink: /v2.0/user/unlink
+    accountList: /v2.0/account/list
+    accountUpdateInfo: /v2.0/account/update_info
+    accountCancel: /v2.0/account/cancel
+    cardsCancel: /v2.0/cards/cancel
+    paysCancel: /v2.0/pays/cancel
+    insurancesCancel: /v2.0/insurances/cancel
+    loansCancel: /v2.0/loans/cancel
+    userClose: /v2.0/user/close
+    accountBalanceFin: /v2.0/account/balance/fin_num
+    accountTransactionListFin: /v2.0/account/transaction_list/fin_num
+    inquiryRealName: /v2.0/inquiry/real_name
+    inquiryRemitList: /v2.0/inquiry/remit_list
+    inquiryReceive: /v2.0/inquiry/receive
+    transferWithdrawFin: /v2.0/transfer/withdraw/fin_num
+    transferDepositFin: /v2.0/transfer/deposit/fin_num
+    transferDepositAcnt: /v2.0/transfer/deposit/acnt_num
+    transferResult: /v2.0/transfer/result
+    returnClaim: /v2.0/return/claim
+    returnResult: /v2.0/return/result
+    transferUserRemainAmt: /v2.0/transfer/user_remain_amt
+    cards: /v2.0/cards
+    cardsIssueInfo: /v2.0/cards/issue_info
+    cardsBills: /v2.0/cards/bills
+    cardsBillsDetail: /v2.0/cards/bills/detail
+    pays: /v2.0/pays
+    paysReload: /v2.0/pays/reload
+    paysBalances: /v2.0/pays/balances
+    paysTransactions: /v2.0/pays/transactions
+    insurances: /v2.0/insurances
+    insurancesPayment: /v2.0/insurances/payment
+    loans: /v2.0/loans
+    loansBasic: /v2.0/loans/basic
+    accountinfoIdentification: /v2.0/accountinfo/identification
+    accountinfoList: /v2.0/accountinfo/list
+    bankStatus: /v2.0/bank/status
+    manageFee: /v2.0/manage/fee
+    manageCount: /v2.0/manage/count
+    manageWdLimit: /v2.0/manage/wd_limit
+    inquiryFdsDetect: /v2.0/inquiry/fds_detect
+    manageTerms: /v2.0/manage/terms

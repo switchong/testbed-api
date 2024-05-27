@@ -1,4 +1,4 @@
-package com.testbed.web.auth.dto.request;
+package com.testbed.web.account.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-public class AccessTokenRequest {
+public class BalanceRequest {
 
     private String userId;
-    private String scope;   // AUTHORIZE , OOB
-    private String code;    // authoruzation_code
+    private String bankTranId;
+    private String fintechUseNum;
+    private String tranDtime;
+
 }

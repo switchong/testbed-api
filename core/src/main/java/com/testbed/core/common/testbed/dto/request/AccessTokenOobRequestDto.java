@@ -26,8 +26,6 @@ public class AccessTokenOobRequestDto {
     @JsonProperty("grant_type")
     private String grantType;
 
-
-
     public AccessTokenOobRequestDto(String clientId, String clientSecret, String scope, String grantType) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;

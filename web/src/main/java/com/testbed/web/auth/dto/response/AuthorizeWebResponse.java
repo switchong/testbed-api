@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AuthorizeResponse {
+public class AuthorizeWebResponse {
 
     private String code;
     private String scope;
@@ -21,7 +21,7 @@ public class AuthorizeResponse {
 //    private String errorDescription;
 
     @Builder
-    public AuthorizeResponse(String code, String scope, String state, String userId, String tokenUrl, String tokenScope) {
+    public AuthorizeWebResponse(String code, String scope, String state, String userId, String tokenUrl, String tokenScope) {
         this.code = code;
         this.scope = scope;
         this.state = state;

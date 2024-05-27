@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class AccessTokenResponse {
+public class AccessTokenWebResponse {
 
     private String userId;
     private Scope scope;
@@ -18,15 +18,17 @@ public class AccessTokenResponse {
     private LocalDateTime expiresDate;
     private String rspCode;
     private String rspMessage;
+    private String errMesaage;
 
     @Builder
-    public AccessTokenResponse(String userId, Scope scope, String accessToken, LocalDateTime expiresDate, String rspCode, String rspMessage) {
+    public AccessTokenWebResponse(String userId, Scope scope, String accessToken, LocalDateTime expiresDate, String rspCode, String rspMessage, String errMesaage) {
         this.userId = userId;
         this.scope = scope;
         this.accessToken = accessToken;
         this.expiresDate = expiresDate;
         this.rspCode = rspCode;
         this.rspMessage = rspMessage;
+        this.errMesaage = errMesaage;
     }
 }
 

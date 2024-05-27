@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AccessTokenOobResponse {
+public class AccessTokenAuthorizeWebResponse {
 
     private String accessToken;
     private String tokenType;
     private String expiresIn;
+    private String refreshToken;
     private String scope;
-    private String clientUseCode;
+    private String userSeqNo;
+
 }

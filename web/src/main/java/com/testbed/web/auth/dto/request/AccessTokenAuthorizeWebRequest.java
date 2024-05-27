@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Setter
 @Getter
 @NoArgsConstructor
-public class AccessTokenAuthorizeRequest {
+public class AccessTokenAuthorizeWebRequest {
 
     private String code;
     @Value("${testbed.clientId}")

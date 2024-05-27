@@ -6,14 +6,16 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ResultMessage {
+public class ResultMessageCommonDto {
 
     private String code;
     private String message;
+    private String errorMessage;
 
     @Builder
-    public ResultMessage(String code, String message) {
+    public ResultMessageCommonDto(String code, String message, String errorMessage) {
         this.code = code;
         this.message = message;
+        this.errorMessage = errorMessage;
     }
 }

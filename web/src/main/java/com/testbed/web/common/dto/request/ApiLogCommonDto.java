@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ApiLogInDto {
+public class ApiLogCommonDto {
 
     private String uriId;
     private String uriPath;
@@ -23,8 +23,8 @@ public class ApiLogInDto {
     private String rspMessage;
 
     @Builder
-    public ApiLogInDto(String uriId, String uriPath, Method method, String state, String request, String response
-                        ,String rspCode, String rspMessage) {
+    public ApiLogCommonDto(String uriId, String uriPath, Method method, String state, String request, String response
+                        , String rspCode, String rspMessage) {
         this.uriId = uriId;
         this.uriPath = uriPath;
         this.method = method;

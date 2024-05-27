@@ -2,6 +2,7 @@ package com.testbed.core.common.testbed;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.testbed.core.common.testbed.dto.request.AccessTokenAuthorizeRequestDto;
 import com.testbed.core.common.testbed.dto.request.AccessTokenOobRequestDto;
 import com.testbed.core.common.testbed.dto.request.AuthorizeCodeRequestDto;
 import com.testbed.core.common.testbed.dto.response.AccessTokenResponseDto;
@@ -10,13 +11,13 @@ import com.testbed.core.common.util.string.RandomStringUtils;
 import com.testbed.core.config.testbed.property.TestbedProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -122,7 +123,10 @@ public class TestbedHttpClient {
         String callUriPath = "/auth/accessTokenResult";
 
         try {
-            HttpEntity<AccessTokenOobRequestDto> requestEntity = new HttpEntity<>(null);
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+
+            HttpEntity<AccessTokenAuthorizeRequestDto> requestEntity = new HttpEntity<>(headers);
 
             //adding the query params to the URL
             String url = api_uri + "/oauth/2.0/token";
@@ -203,5 +207,88 @@ public class TestbedHttpClient {
             AccessTokenResponseDto AccessTokenResponseDto = mapper.readValue(result, AccessTokenResponseDto.class);
             return AccessTokenResponseDto;
         }
+    }
+
+    public ResponseEntity callGetHttpClient(HttpRequest httpRequest, String uri, MultiValueMap request) throws JsonProcessingException {
+        String api_uri = testbedProperty.getApiUri();
+        String client_id = testbedProperty.getClientId();
+        String client_secret = testbedProperty.getClientSecret();
+
+        ResponseEntity<Map> resoponseEntity = null;
+
+        HttpHeaders headers = new HttpHeaders();
+//        headers.set("Bearer ", token);
+
+        try {
+            //adding the query params to the URL
+            String url = api_uri + uri;
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                    .queryParam("client_id", client_id)
+                    .queryParam("client_secret", client_secret)
+                    .queryParams(request);
+
+            System.out.println("url.uriBuilder : " + uriBuilder.toUriString());
+
+            resoponseEntity = this.testbedRestTemplate.exchange(
+                    uriBuilder.toUriString(),
+                    HttpMethod.GET,
+                    (HttpEntity<?>) httpRequest,
+                    Map.class
+            );
+            System.out.println("resoponseEntity.getBody() : " + resoponseEntity.getBody());
+            System.out.println("resoponseEntity.getStatusCode() : " + resoponseEntity.getStatusCode());
+            if (resoponseEntity.getStatusCode() == HttpStatus.OK) {
+                return resoponseEntity;
+            } else if (resoponseEntity.getStatusCode() == HttpStatus.MOVED_PERMANENTLY) {
+                return resoponseEntity;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return resoponseEntity;
+    }
+
+    public ResponseEntity callPostHttpClient(HttpEntity httpRequest, String uri, MultiValueMap request) throws JsonProcessingException {
+        String api_uri = testbedProperty.getApiUri();
+        String client_id = testbedProperty.getClientId();
+        String client_secret = testbedProperty.getClientSecret();
+
+        ResponseEntity<Map> resoponseEntity = null;
+
+        try {
+            //adding the query params to the URL
+            String url = api_uri + uri;
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                    .queryParam("client_id", client_id)
+                    .queryParam("client_secret", client_secret)
+                    .queryParams(request);
+
+            System.out.println("url.uriBuilder : " + uriBuilder.toUriString());
+
+            resoponseEntity = this.testbedRestTemplate.exchange(
+                    uriBuilder.toUriString(),
+                    HttpMethod.POST,
+                    httpRequest,
+                    Map.class
+            );
+            System.out.println("resoponseEntity.getBody() : " + resoponseEntity.getBody());
+            System.out.println("resoponseEntity.getStatusCode() : " + resoponseEntity.getStatusCode());
+            if(resoponseEntity.getStatusCode() == HttpStatus.OK) {
+                return resoponseEntity;
+            } else if(resoponseEntity.getStatusCode() == HttpStatus.MOVED_PERMANENTLY) {
+                return resoponseEntity;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return resoponseEntity;
     }
 }

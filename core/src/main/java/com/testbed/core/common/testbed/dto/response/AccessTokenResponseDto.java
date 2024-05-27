@@ -19,8 +19,14 @@ public class AccessTokenResponseDto {
     @JsonProperty("expires_in")
     private Long expiresIn;
 
+    @JsonProperty("refresh_token")
+    private String refreshToken;
+
     @JsonProperty("scope")
     private String scope;
+
+    @JsonProperty("user_seq_no")
+    private String userSeqNo;
 
     @JsonProperty("client_use_code")
     private String clientUseCode;

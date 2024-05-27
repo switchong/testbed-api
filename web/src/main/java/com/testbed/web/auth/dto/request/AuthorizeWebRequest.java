@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class AuthorizeRequest {
+public class AuthorizeWebRequest {
 
     private String userId;
 //

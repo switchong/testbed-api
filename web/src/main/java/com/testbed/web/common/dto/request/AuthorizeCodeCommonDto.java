@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AuthorizeCodeInDto {
+public class AuthorizeCodeCommonDto {
 
     private String userId;
     private String state;
@@ -22,9 +22,10 @@ public class AuthorizeCodeInDto {
     private LocalDateTime createDate;
 
     @Builder
-    public AuthorizeCodeInDto(String userId, String state, String scope, String authorizationCode, Long expiresIn) {
+    public AuthorizeCodeCommonDto(String userId, String state, String scope, String authorizationCode, Long expiresIn) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expiresDate = null;
+
         if(expiresIn.intValue() > 0) {
             expiresDate = now.minusSeconds(expiresIn);
         }

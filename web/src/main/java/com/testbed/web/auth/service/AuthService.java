@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testbed.core.common.testbed.TestbedHttpClient;
 import com.testbed.core.common.testbed.dto.response.AccessTokenResponseDto;
+import com.testbed.core.common.util.message.AuthErrorConstants;
 import com.testbed.core.common.util.string.RandomStringUtils;
 import com.testbed.core.config.testbed.property.TestbedProperty;
 import com.testbed.core.domain.testbed.AccessToken;
@@ -14,11 +15,11 @@ import com.testbed.core.dto.AccessTokenDto;
 import com.testbed.core.dto.AuthorizeCodeDto;
 import com.testbed.core.repository.AccessTokenRepository;
 import com.testbed.core.repository.AuthorizeCodeRepository;
-import com.testbed.web.auth.dto.response.AccessTokenResponse;
-import com.testbed.web.auth.dto.response.AuthorizeResponse;
-import com.testbed.web.common.dto.request.AccessTokenInDto;
-import com.testbed.web.common.dto.request.ApiLogInDto;
-import com.testbed.web.common.dto.request.AuthorizeCodeInDto;
+import com.testbed.web.auth.dto.response.AccessTokenWebResponse;
+import com.testbed.web.auth.dto.response.AuthorizeWebResponse;
+import com.testbed.web.common.dto.request.AccessTokenCommonDto;
+import com.testbed.web.common.dto.request.ApiLogCommonDto;
+import com.testbed.web.common.dto.request.AuthorizeCodeCommonDto;
 import com.testbed.web.common.service.TestbedDbService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -36,7 +37,7 @@ public class AuthService {
 
     private final TestbedHttpClient testbedHttpClient;
     private final TestbedProperty testbedProperty;
-    private String state;
+    private final AuthErrorConstants authErrorConstants;
 
     private final TestbedDbService dbService;
 
@@ -57,14 +58,14 @@ public class AuthService {
         System.out.println("testbedHttpClient.getAuthorizeUrl >>>> " + authUrl);
 
         // API_LOG 테이블 로그 저장
-        ApiLogInDto apiLogInDto = ApiLogInDto.builder()
+        ApiLogCommonDto apiLogCommonDto = ApiLogCommonDto.builder()
                 .uriId("oauthAuthorize")
                 .uriPath(uriPath)
                 .method(Method.GET)
                 .state(state)
                 .request(authUrl)
                 .build();
-        dbService.saveApiLog(apiLogInDto);
+        dbService.saveApiLog(apiLogCommonDto);
 
         return authUrl;
     }
@@ -76,9 +77,9 @@ public class AuthService {
      * @param scope
      * @return
      */
-    public AuthorizeResponse getAuthorizeCode(String authorizationCode, String scope, String state, String clientInfo) {
+    public AuthorizeWebResponse getAuthorizeCode(String authorizationCode, String scope, String state, String clientInfo) {
         String tokenUrl = testbedProperty.getLocalUrl() + "/auth/accessToken";
-        AuthorizeResponse authorizeResponse = AuthorizeResponse.builder()
+        AuthorizeWebResponse authorizeWebResponse = AuthorizeWebResponse.builder()
                 .code(authorizationCode)
                 .scope(scope)
                 .state(state)
@@ -88,35 +89,36 @@ public class AuthService {
                 .build();
         // Map 정리
         Map<String, String> mapResponse = new HashMap<>();
-        mapResponse.put("code", authorizeResponse.getCode());
-        mapResponse.put("scope", authorizeResponse.getScope());
-        mapResponse.put("state", authorizeResponse.getState());
-        mapResponse.put("client_info", authorizeResponse.getUserId());
+        mapResponse.put("code", authorizeWebResponse.getCode());
+        mapResponse.put("scope", authorizeWebResponse.getScope());
+        mapResponse.put("state", authorizeWebResponse.getState());
+        mapResponse.put("client_info", authorizeWebResponse.getUserId());
 
         JSONObject jsonResponse = new JSONObject(mapResponse);
 
         // API_LOG 테이블 로그 저장
-        ApiLogInDto apiLogInDto = ApiLogInDto.builder()
+        ApiLogCommonDto apiLogCommonDto = ApiLogCommonDto.builder()
                 .state(state)
                 .response(jsonResponse.toJSONString())
                 .build();
-        dbService.updateApiLog(apiLogInDto);
+        dbService.updateApiLog(apiLogCommonDto);
 
         System.out.print("this.chkAuthorizeCode"+this.chkAuthorizeCode(state).getAuthorizationCode());
         if(this.chkAuthorizeCode(state).getAuthorizationCode() == null) {
             // DB 저장
-            AuthorizeCodeInDto authorizeCodeInDto = AuthorizeCodeInDto.builder()
-                    .userId(authorizeResponse.getUserId())
-                    .state(authorizeResponse.getState())
-                    .scope(authorizeResponse.getScope())
-                    .authorizationCode(authorizeResponse.getCode())
+            AuthorizeCodeCommonDto authorizeCodeCommonDto = AuthorizeCodeCommonDto.builder()
+                    .userId(authorizeWebResponse.getUserId())
+                    .state(authorizeWebResponse.getState())
+                    .scope(authorizeWebResponse.getScope())
+                    .expiresIn(Long.valueOf(0))
+                    .authorizationCode(authorizeWebResponse.getCode())
                     .build();
-            dbService.saveAuthorizeCode(authorizeCodeInDto);
+            dbService.saveAuthorizeCode(authorizeCodeCommonDto);
 
             System.out.print("this.chkAuthorizeCode END");
         }
 
-        return authorizeResponse;
+        return authorizeWebResponse;
 
     }
 
@@ -179,7 +181,7 @@ public class AuthService {
      * @return
      * @throws JsonProcessingException
      */
-    public AccessTokenResponse callAccessTokenOob(String userId, Scope scope) throws JsonProcessingException{
+    public AccessTokenWebResponse callAccessTokenOob(String userId, Scope scope) throws JsonProcessingException{
         AccessTokenResponseDto accessTokenResponseDto = testbedHttpClient.accessTokenOobCall();
 
         LocalDateTime now = LocalDateTime.now();
@@ -188,7 +190,7 @@ public class AuthService {
             expiresDate = now.minusSeconds(accessTokenResponseDto.getExpiresIn());
         }
 
-        AccessTokenResponse accessTokenResponse = AccessTokenResponse.builder()
+        AccessTokenWebResponse accessTokenWebResponse = AccessTokenWebResponse.builder()
                 .userId(userId)
                 .accessToken(accessTokenResponseDto.getAccessToken())
                 .scope(scope)
@@ -196,13 +198,13 @@ public class AuthService {
                 .build();
 
         // DB 저장
-        AccessTokenInDto accessTokenInDto = AccessTokenInDto.builder()
+        AccessTokenCommonDto accessTokenCommonDto = AccessTokenCommonDto.builder()
                 .userId(userId)
                 .accessToken(accessTokenResponseDto.getAccessToken())
                 .expiresIn(accessTokenResponseDto.getExpiresIn())
                 .scope(scope)
                 .build();
-        dbService.saveAccessToken(accessTokenInDto);
+        dbService.saveAccessToken(accessTokenCommonDto);
 
         // Map 정리
         // ObjectMapper
@@ -210,6 +212,7 @@ public class AuthService {
         Map mapResponse = objectMapper.convertValue(accessTokenResponseDto, Map.class);
 
         Map<String, String> mapRequest = new HashMap<>();
+        mapRequest.put("userId", userId);
         mapRequest.put("client_id", testbedProperty.getClientId());
         mapRequest.put("client_secret", testbedProperty.getClientSecret());
         mapRequest.put("scope", "oob");
@@ -219,7 +222,7 @@ public class AuthService {
         JSONObject jsonResponse = new JSONObject(mapResponse);
 
         // API_LOG 테이블 로그 저장
-        ApiLogInDto apiLogInDto = ApiLogInDto.builder()
+        ApiLogCommonDto apiLogCommonDto = ApiLogCommonDto.builder()
                 .uriId("oauthToken")
                 .uriPath("/oauth/2.0/token")
                 .method(Method.POST)
@@ -227,67 +230,85 @@ public class AuthService {
                 .request(jsonRequest.toString())
                 .response(jsonResponse.toString())
                 .build();
-        dbService.saveApiLog(apiLogInDto);
+        dbService.saveApiLog(apiLogCommonDto);
 
-        return accessTokenResponse;
+        return accessTokenWebResponse;
     }
 
-    public AccessTokenResponse callAccessTokenAuthorize(String userId, String authorization_code, String refreshYn) throws JsonProcessingException{
+    public AccessTokenWebResponse callAccessTokenAuthorize(String userId, String authorization_code, String refreshYn) throws JsonProcessingException{
         Scope scope = Scope.AUTHORIZE;
         AccessTokenResponseDto accessTokenResponseDto = testbedHttpClient.accessTokenAuthorizeCall(authorization_code, refreshYn);
 
 //        System.out.print("accessTokenResponseDto >>>>>> " + new JSONObject((Map) accessTokenResponseDto));
+        String rspCode = accessTokenResponseDto.getRspCode();
+        String rspMessage = null;
+        String errCode = null;
+        String errMessage = null;
+        AccessTokenWebResponse accessTokenWebResponse = null;
 
-        AccessTokenResponse accessTokenResponse = null;
+        if(rspCode != null) {
+            rspMessage  = accessTokenResponseDto.getRspMessage();
+            errCode = rspMessage.substring(rspMessage.indexOf("([") + 2, rspMessage.indexOf("])"));
 
-        if(accessTokenResponseDto.getRspCode() != null) {
-            accessTokenResponse = AccessTokenResponse.builder()
+            System.out.println("message.errCode.message >>>> " + errCode);
+
+            System.out.println("message.errCode >>>> " + errCode);
+
+            errMessage = authErrorConstants.ERROR_AUTH_CODE.get(errCode);
+
+            accessTokenWebResponse = AccessTokenWebResponse.builder()
+                    .userId(userId)
                     .rspCode(accessTokenResponseDto.getRspCode())
                     .rspMessage(accessTokenResponseDto.getRspMessage())
+                    .errMesaage(errMessage)
                     .build();
         } else {
-            accessTokenResponse = AccessTokenResponse.builder()
+            accessTokenWebResponse = AccessTokenWebResponse.builder()
                     .userId(userId)
                     .accessToken(accessTokenResponseDto.getAccessToken())
                     .scope(scope)
                     .build();
 
             // DB 저장
-            AccessTokenInDto accessTokenInDto = AccessTokenInDto.builder()
+            AccessTokenCommonDto accessTokenCommonDto = AccessTokenCommonDto.builder()
                     .userId(userId)
                     .accessToken(accessTokenResponseDto.getAccessToken())
                     .expiresIn(accessTokenResponseDto.getExpiresIn())
                     .scope(scope)
                     .build();
-            dbService.saveAccessToken(accessTokenInDto);
+            dbService.saveAccessToken(accessTokenCommonDto);
 
-            // Map 정리
-            // ObjectMapper
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map mapResponse = objectMapper.convertValue(accessTokenResponseDto, Map.class);
-
-            Map<String, String> mapRequest = new HashMap<>();
-            mapRequest.put("client_id", testbedProperty.getClientId());
-            mapRequest.put("client_secret", testbedProperty.getClientSecret());
-            mapRequest.put("scope", "authorize");
-            mapRequest.put("grant_type", "authorization_code");
-
-            JSONObject jsonRequest = new JSONObject(mapRequest);
-            JSONObject jsonResponse = new JSONObject(mapResponse);
-
-            // API_LOG 테이블 로그 저장
-            ApiLogInDto apiLogInDto = ApiLogInDto.builder()
-                    .uriId("oauthToken")
-                    .uriPath("/oauth/2.0/token")
-                    .method(Method.POST)
-                    .state("")
-                    .request(jsonRequest.toString())
-                    .response(jsonResponse.toString())
-                    .build();
-            dbService.saveApiLog(apiLogInDto);
         }
 
-        return accessTokenResponse;
+        // Map 정리
+        // ObjectMapper
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map mapResponse = objectMapper.convertValue(accessTokenResponseDto, Map.class);
+
+        Map<String, String> mapRequest = new HashMap<>();
+        mapRequest.put("userId", userId);
+        mapRequest.put("client_id", testbedProperty.getClientId());
+        mapRequest.put("client_secret", testbedProperty.getClientSecret());
+        mapRequest.put("scope", "authorize");
+        mapRequest.put("grant_type", "authorization_code");
+        mapRequest.put("rsp_code", rspCode);
+        mapRequest.put("rsp_message", rspMessage);
+
+        JSONObject jsonRequest = new JSONObject(mapRequest);
+        JSONObject jsonResponse = new JSONObject(mapResponse);
+
+        // API_LOG 테이블 로그 저장
+        ApiLogCommonDto apiLogCommonDto = ApiLogCommonDto.builder()
+                .uriId("oauthToken")
+                .uriPath("/oauth/2.0/token")
+                .method(Method.POST)
+                .state("")
+                .request(jsonRequest.toString())
+                .response(jsonResponse.toString())
+                .build();
+        dbService.saveApiLog(apiLogCommonDto);
+
+        return accessTokenWebResponse;
     }
 
 }
