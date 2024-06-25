@@ -57,14 +57,14 @@ public class InquiryRemitListWebResponse {
     private String bankName;
     private String savingsBankName;
     private String balanceAmt;
-    private String totalRecord_cnt;
-    private String pageRecord_cnt;
+    private String totalRecordCnt;
+    private String pageRecordCnt;
     private String nextPageYn;
     private String beforInquiryTraceInfo;
     private List<InquiryRemitListSubWebResponse> resList;
 
     @Builder
-    public InquiryRemitListWebResponse(String userId, String apiTranId, String apiTranDtm, String rspCode, String rspMessage, String bankTranId, String bankTranDate, String bankCodeTran, String bankRspCode, String bankRspMessage, String bankCodeStd, String accountNum, String bankName, String savingsBankName, String balanceAmt, String totalRecord_cnt, String pageRecord_cnt, String nextPageYn, String beforInquiryTraceInfo, List<InquiryRemitListSubWebResponse> resList) {
+    public InquiryRemitListWebResponse(String userId, String apiTranId, String apiTranDtm, String rspCode, String rspMessage, String bankTranId, String bankTranDate, String bankCodeTran, String bankRspCode, String bankRspMessage, String bankCodeStd, String accountNum, String bankName, String savingsBankName, String balanceAmt, String totalRecordCnt, String pageRecordCnt, String nextPageYn, String beforInquiryTraceInfo, List<InquiryRemitListSubWebResponse> resList) {
         this.userId = userId;
         this.apiTranId = apiTranId;
         this.apiTranDtm = apiTranDtm;
@@ -80,8 +80,8 @@ public class InquiryRemitListWebResponse {
         this.bankName = bankName;
         this.savingsBankName = savingsBankName;
         this.balanceAmt = balanceAmt;
-        this.totalRecord_cnt = totalRecord_cnt;
-        this.pageRecord_cnt = pageRecord_cnt;
+        this.totalRecordCnt = totalRecordCnt;
+        this.pageRecordCnt = pageRecordCnt;
         this.nextPageYn = nextPageYn;
         this.beforInquiryTraceInfo = beforInquiryTraceInfo;
         this.resList = resList;

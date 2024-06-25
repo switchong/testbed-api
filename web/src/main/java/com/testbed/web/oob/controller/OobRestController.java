@@ -62,6 +62,9 @@ public class OobRestController {
             token = accessTokenDto.getAccessToken();
         }
 
+        result.put("userId", userId);
+        result.put("token", token);
+
         return result;
     }
 
